@@ -1,5 +1,10 @@
 <template>
   <section class="contragent-edit-wrapper">
+    <loading
+      :active.sync="isLoading"
+      :can-cancel="true"
+      :is-full-page="fullPage"
+    ></loading>
     <router-link to="/" class="btn btn-secondary">Back</router-link>
     <br />
     <br />
@@ -71,15 +76,19 @@
 </template>
 <script>
 import vSelect from "vue-select";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
 import "vue-select/dist/vue-select.css";
 export default {
   components: {
-    vSelect: vSelect
+    vSelect: vSelect,
+    Loading: Loading
   },
 
   mounted() {
     let app = this;
+    app.isLoading = true;
     app.getFederalDistricts();
     app.getRegions();
     app.getTypes();
@@ -95,9 +104,13 @@ export default {
       types: [],
       stores: []
     };
+    app.isLoading = false;
   },
   data: function() {
     return {
+      isLoading: true,
+      onCancel: false,
+      fullPage: true,
       federalDistricts: [],
       types: [],
       regions: [],
@@ -146,6 +159,7 @@ export default {
     saveForm() {
       event.preventDefault();
       var app = this;
+      app.isLoading = true;
       var newContragent = app.contragent;
       newContragent.federal_district_id = newContragent.federal_district.id;
       newContragent.region_id = newContragent.region.id;
@@ -157,10 +171,12 @@ export default {
         .then(function(resp) {
           app.contragent = resp.data;
           app.$router.replace("/api/v1/contragents/edit/" + app.contragent.id);
+          app.isLoading = false;
         })
         .catch(function(resp) {
           console.log(resp);
           alert("Не удалось создать компанию");
+          app.isLoading = false;
         });
     }
   }

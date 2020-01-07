@@ -1,5 +1,10 @@
 <template>
   <section class="contragent-edit-wrapper">
+    <loading
+      :active.sync="isLoading"
+      :can-cancel="true"
+      :is-full-page="fullPage"
+    ></loading>
     <router-link to="/" class="btn btn-secondary">Back</router-link>
     <br />
     <br />
@@ -47,12 +52,12 @@
                 <input type="text" v-model="contragent.stores[index].coords" class="form-control" />
                 <label class="control-label">Store {{ index + 1 }} address</label>
                 <input type="text" v-model="contragent.stores[index].address" class="form-control" />
-                <br>
-               <a
+                <br />
+                <a
                   href="javascript:void(0)"
                   class="btn btn-danger btn-sm"
                   v-on:click="deleteStore(index)"
-               >Delete store</a>
+                >Delete store</a>
               </div>
             </li>
           </ul>
@@ -70,14 +75,18 @@
   </section>
 </template>
 <script>
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 export default {
   components: {
-    vSelect: vSelect
+    vSelect: vSelect,
+    Loading: Loading
   },
   mounted() {
     let app = this;
+    app.isLoading = true;
     let id = app.$route.params.id;
     app.getFederalDistricts();
     app.getRegions();
@@ -87,13 +96,18 @@ export default {
       .get("/api/v1/contragents/" + id)
       .then(function(resp) {
         app.contragent = resp.data;
+        app.isLoading = false;
       })
       .catch(function() {
         alert("Не удалось загрузить компанию");
+        app.isLoading = false;
       });
   },
   data: function() {
     return {
+      isLoading: true,
+      onCancel: false,
+      fullPage: true,
       federalDistricts: [],
       types: [],
       regions: [],
@@ -143,6 +157,7 @@ export default {
       event.preventDefault();
       var app = this;
       var newContragent = app.contragent;
+      app.isLoading = true;
       newContragent.federal_district_id = newContragent.federal_district.id;
       newContragent.region_id = newContragent.region.id;
       newContragent.typeIds = [];
@@ -151,12 +166,14 @@ export default {
       axios
         .patch("/api/v1/contragents/" + app.contragentId, newContragent)
         .then(function(resp) {
-         app.contragent = resp.data;
+          app.contragent = resp.data;
+          app.isLoading = false;
           //app.$router.replace("/");
         })
         .catch(function(resp) {
           console.log(resp);
           alert("Не удалось создать компанию");
+          app.isLoading = false;
         });
     }
   }
