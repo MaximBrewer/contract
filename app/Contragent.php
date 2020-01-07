@@ -10,7 +10,9 @@ class Contragent extends Model
         'title',
         'inn',
         'federal_district_id',
-        'region_id'
+        'region_id',
+        'phone',
+        'legal_address'
     ];
     protected $hidden = [
         'federal_district_id',
