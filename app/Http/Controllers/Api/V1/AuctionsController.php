@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use \App\Contragent;
+use \App\Auction;
 use \App\Store;
 
-class ContragentsController extends Controller
+class AuctionsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class ContragentsController extends Controller
      */
     public function index()
     {
-        return Contragent::all();
+        return Auction::all();
     }
 
     /**
@@ -27,37 +27,32 @@ class ContragentsController extends Controller
      */
     public function store(Request $request)
     {
-        $contragent = Contragent::create($request->all());
-        $contragent->types()->sync($request->all()['typeIds']);
+        $auction = Auction::create($request->all());
+        $auction->types()->sync($request->all()['typeIds']);
         $storesIds = [];
-        $contragent->update($request->all());
+        $auction->update($request->all());
         if(count($request->all()['stores'])){
             foreach($request->all()['stores'] as $store){
                 if($store['coords'] && $store['address']){
                     if($store['id']){
                         Store::find($store['id'])->update([
-                            'contragent_id' => $contragent->id,
                             'coords' => $store['coords'], 
-                            'address' => $store['address'],
-                            'federal_district_id' => $store['federal_district']['id'],
-                            'region_id' => $store['region']['id']
+                            'address' => $store['address']
                         ]);
                         $storesIds[] = $store['id'];
                     } else {
                         $storesIds[] = Store::create([
-                            'contragent_id' => $contragent->id,
+                            'contragent_id' => $auction->id,
                             'coords' => $store['coords'],
                             'address' => $store['address'],
-                            'federal_district_id' => $store['federal_district']['id'],
-                            'region_id' => $store['region']['id']
                         ])->id;
                     }
                 }
             }
-            Store::whereNotIn('id', $storesIds)->where("contragent_id", $contragent->id)->delete();
+            Store::whereNotIn('id', $storesIds)->where("contragent_id", $auction->id)->delete();
         }
-        $contragent = Contragent::findOrFail($contragent->id);
-        return $contragent;
+        $auction = Auction::findOrFail($auction->id);
+        return $auction;
     }
 
     /**
@@ -68,7 +63,7 @@ class ContragentsController extends Controller
      */
     public function show($id)
     {
-        return Contragent::findOrFail($id);
+        return Auction::findOrFail($id);
     }
 
     /**
@@ -80,37 +75,32 @@ class ContragentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $contragent = Contragent::findOrFail($id);
-        $contragent->types()->sync($request->all()['typeIds']);
+        $auction = Auction::findOrFail($id);
+        $auction->types()->sync($request->all()['typeIds']);
         $storesIds = [];
-        $contragent->update($request->all());
+        $auction->update($request->all());
         if(count($request->all()['stores'])){
             foreach($request->all()['stores'] as $store){
                 if($store['coords'] && $store['address']){
                     if($store['id']){
                         Store::find($store['id'])->update([
-                            'contragent_id' => $contragent->id,
                             'coords' => $store['coords'], 
-                            'address' => $store['address'], 
-                            'federal_district_id' => $store['federal_district']['id'],
-                            'region_id' => $store['region']['id']
+                            'address' => $store['address']
                         ]);
                         $storesIds[] = $store['id'];
                     } else {
                         $storesIds[] = Store::create([
-                            'contragent_id' => $contragent->id,
+                            'contragent_id' => $auction->id,
                             'coords' => $store['coords'],
                             'address' => $store['address'],
-                            'federal_district_id' => $store['federal_district']['id'],
-                            'region_id' => $store['region']['id']
                         ])->id;
                     }
                 }
             }
-            Store::whereNotIn('id', $storesIds)->where("contragent_id", $contragent->id)->delete();
+            Store::whereNotIn('id', $storesIds)->where("contragent_id", $auction->id)->delete();
         }
-        $contragent = Contragent::findOrFail($id);
-        return $contragent;
+        $auction = Auction::findOrFail($id);
+        return $auction;
     }
 
     /**
@@ -121,8 +111,8 @@ class ContragentsController extends Controller
      */
     public function destroy($id)
     {
-        $contragent = Contragent::findOrFail($id);
-        $contragent->delete();
+        $auction = Auction::findOrFail($id);
+        $auction->delete();
         return '';
     }
 }

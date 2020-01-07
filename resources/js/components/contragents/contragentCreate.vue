@@ -5,7 +5,7 @@
       :can-cancel="true"
       :is-full-page="fullPage"
     ></loading>
-    <router-link to="/" class="btn btn-secondary">Back</router-link>
+    <router-link :to="{name: 'contragentIndex'}" class="btn btn-secondary">Back</router-link>
     <br />
     <br />
     <form v-on:submit="saveForm()">
@@ -52,6 +52,10 @@
                 <input type="text" v-model="contragent.stores[index].coords" class="form-control" />
                 <label class="control-label">Store {{ index + 1 }} address</label>
                 <input type="text" v-model="contragent.stores[index].address" class="form-control" />
+                <label class="control-label">Store {{ index + 1 }} federal district</label>
+                <v-select label="title" :options="federalDistricts" v-model="contragent.stores[index].federal_district"></v-select>
+                <label class="control-label">Store {{ index + 1 }} region</label>
+                <v-select label="title" :options="regions" v-model="contragent.stores[index].region"></v-select>
                 <br />
                 <a
                   href="javascript:void(0)"
@@ -170,7 +174,7 @@ export default {
         .post("/api/v1/contragents", newContragent)
         .then(function(resp) {
           app.contragent = resp.data;
-          app.$router.replace("/api/v1/contragents/edit/" + app.contragent.id);
+          app.$router.replace("/contragents/edit/" + app.contragent.id);
           app.isLoading = false;
         })
         .catch(function(resp) {

@@ -5,7 +5,7 @@
       :can-cancel="true"
       :is-full-page="fullPage"
     ></loading>
-    <router-link to="/" class="btn btn-secondary">Back</router-link>
+    <router-link :to="{name: 'auctionIndex'}" class="btn btn-secondary">Back</router-link>
     <br />
     <br />
     <form v-on:submit="saveForm()">
@@ -75,33 +75,36 @@
   </section>
 </template>
 <script>
+import vSelect from "vue-select";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
-import vSelect from "vue-select";
+
 import "vue-select/dist/vue-select.css";
 export default {
   components: {
     vSelect: vSelect,
     Loading: Loading
   },
+
   mounted() {
     let app = this;
     app.isLoading = true;
-    let id = app.$route.params.id;
     app.getFederalDistricts();
     app.getRegions();
     app.getTypes();
-    app.contragentId = id;
-    axios
-      .get("/api/v1/contragents/" + id)
-      .then(function(resp) {
-        app.contragent = resp.data;
-        app.isLoading = false;
-      })
-      .catch(function() {
-        alert("Не удалось загрузить компанию");
-        app.isLoading = false;
-      });
+    app.contragent = {
+      title: "",
+      inn: "",
+      typeIds: [],
+      fio: "",
+      phone: "",
+      legal_address: "",
+      federal_district: 0,
+      region: 0,
+      types: [],
+      stores: []
+    };
+    app.isLoading = false;
   },
   data: function() {
     return {
@@ -156,23 +159,23 @@ export default {
     saveForm() {
       event.preventDefault();
       var app = this;
-      var newContragent = app.contragent;
       app.isLoading = true;
+      var newContragent = app.contragent;
       newContragent.federal_district_id = newContragent.federal_district.id;
       newContragent.region_id = newContragent.region.id;
       newContragent.typeIds = [];
       for (let t in newContragent.types)
         newContragent.typeIds.push(newContragent.types[t].id);
       axios
-        .patch("/api/v1/contragents/" + app.contragentId, newContragent)
+        .post("/api/v1/contragents", newContragent)
         .then(function(resp) {
           app.contragent = resp.data;
+          app.$router.replace("/auctions/edit/" + app.contragent.id);
           app.isLoading = false;
-          //app.$router.replace("/");
         })
         .catch(function(resp) {
           console.log(resp);
-          alert("Не удалось создать компанию");
+          alert("Не удалось создать аукцион");
           app.isLoading = false;
         });
     }

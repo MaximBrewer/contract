@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Personal;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
-class ContragentsController extends Controller
+class PersonalController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function getIndex()
+    public function index()
     {
         return view('personal.index');
     }

@@ -4,28 +4,53 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
- 
-window.Vue = require('vue');
-import VueRouter from 'vue-router';
- 
+require("./bootstrap");
+
+window.Vue = require("vue");
+import VueRouter from "vue-router";
+
 window.Vue.use(VueRouter);
- 
-import ContragentsIndex from './components/contragents/contragentsIndex.vue';
-import ContragentsCreate from './components/contragents/contragentsCreate.vue';
-import ContragentsEdit from './components/contragents/contragentsEdit.vue';
- 
+
+import ContragentIndex from "./components/contragents/contragentIndex.vue";
+import ContragentCreate from "./components/contragents/contragentCreate.vue";
+import ContragentEdit from "./components/contragents/contragentEdit.vue";
+import AuctionIndex from "./components/auctions/auctionIndex.vue";
+import AuctionCreate from "./components/auctions/auctionCreate.vue";
+import AuctionEdit from "./components/auctions/auctionEdit.vue";
+
 const routes = [
- {
-    path: '/',
-    components: {
-        contragentsIndex: ContragentsIndex
-    }  
- },
- {path: '/api/v1/contragents/create', component: ContragentsCreate, name: 'createContragent'},
- {path: '/api/v1/contragents/edit/:id', component: ContragentsEdit, name: 'editContragent'},
-]
- 
-const router = new VueRouter({ routes })
- 
-const app = new Vue({ router }).$mount('#app');
+    {
+        path: "/contragents",
+        component: ContragentIndex ,
+        name: "contragentIndex"
+    },
+    {
+        path: "/contragents/create",
+        component: ContragentCreate,
+        name: "createContragent"
+    },
+    {
+        path: "/contragents/edit/:id",
+        component: ContragentEdit,
+        name: "editContragent"
+    },
+    {
+        path: "/auctions",
+        component: AuctionIndex ,
+        name: "auctionIndex"
+    },
+    {
+        path: "/auction/create",
+        component: AuctionCreate,
+        name: "createAuction"
+    },
+    {
+        path: "/auction/edit/:id",
+        component: AuctionEdit,
+        name: "editAuction"
+    }
+];
+
+const router = new VueRouter({ routes });
+
+const app = new Vue({ router }).$mount("#app");

@@ -36,4 +36,10 @@ class User extends \TCG\Voyager\Models\User
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function contragent(){
+        return $this->belongsToMany('App\Contragent', 'user_contragent');
+    }
+
+
 }

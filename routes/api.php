@@ -21,7 +21,11 @@ Route::group(['prefix' => '/v1',
    'namespace' => 'Api\V1', 'as' => 'api.'
 ], function () {
     Route::resource('contragents', 'ContragentsController', ['except' => ['edit', 'create']]);
+    Route::resource('auctions', 'AuctionsController', ['except' => ['edit', 'create']]);
     Route::resource('federalDistricts', 'FederalDistrictsController', ['except' => ['create', 'edit', 'update', 'delete']]);
     Route::resource('regions', 'RegionsController', ['except' => ['create', 'edit', 'update', 'delete']]);
+    Route::resource('stores', 'StoresController', ['except' => ['create', 'edit', 'update', 'delete']]);
+    Route::resource('products', 'ProductsController', ['except' => ['create', 'edit', 'update', 'delete']]);
+    Route::resource('multiplicities', 'MultiplicitiesController', ['except' => ['create', 'edit', 'update', 'delete']]);
     Route::resource('types', 'TypesController', ['except' => ['create', 'edit', 'update', 'delete']]);
 });

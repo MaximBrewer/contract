@@ -28,12 +28,10 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-
-Route::group(['prefix' => '/personal', 
-   'namespace' => 'Personal'
-], function () {
-    Route::get('contragents','ContragentsController@getIndex');
-});
+Route::get('/personal', 'PersonalController@index')->name('personal');
+Route::get('/about', 'AboutController@index')->name('about');
+Route::get('/rating', 'RatingController@index')->name('rating');
+Route::get('/auction', 'AuctionController@index')->name('auction');
 
 
 Route::group(['prefix' => 'admin'], function () {
