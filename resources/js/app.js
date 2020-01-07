@@ -22,8 +22,8 @@ const routes = [
         contragentsIndex: ContragentsIndex
     }  
  },
- {path: '/manager/contragents/create', component: ContragentsCreate, name: 'createContragent'},
- {path: '/manager/contragents/edit/:id', component: ContragentsEdit, name: 'editContragent'},
+ {path: '/api/v1/contragents/create', component: ContragentsCreate, name: 'createContragent'},
+ {path: '/api/v1/contragents/edit/:id', component: ContragentsEdit, name: 'editContragent'},
 ]
  
 const router = new VueRouter({ routes })

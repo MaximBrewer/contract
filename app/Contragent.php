@@ -6,11 +6,48 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contragent extends Model
 {
-    
-    public function setFederalDistrictIdAttribute($value)
+    protected $fillable = [
+        'title',
+        'inn',
+        'federal_district_id',
+        'region_id'
+    ];
+    protected $hidden = [
+        'federal_district_id',
+        'region_id'
+    ];
+
+    protected $appends = [
+        'filled',
+    ];
+
+    public function getFilledAttribute()
     {
-        $fd_id = Region::find($this->attributes['region_id'])->federal_district_id;
-        $this->attributes['federal_district_id'] = $fd_id;
+        $this->stores;
+        $this->types;
+        $this->federalDistrict;
+        $this->region;
+        return true;
+    }
+    
+    public function region()
+    {
+        return $this->belongsTo('App\Region');
+    }
+    
+    public function federalDistrict()
+    {
+        return $this->belongsTo('App\FederalDistrict');
+    }
+    
+    public function types()
+    {
+        return $this->belongsToMany('App\Type', 'contragent_type');
+    }
+
+    public function stores()
+    {
+        return $this->hasMany('App\Store');
     }
 
 }

@@ -11356,3 +11356,23 @@ a.text-dark:focus {
   }
 }
 
+.contragent-edit-wrapper .stores {
+  padding: 1rem 0.7rem;
+  border: 1px solid #aaa;
+}
+
+.contragent-edit-wrapper .stores ul {
+  list-style: outside none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+
+.contragent-edit-wrapper .stores .store {
+  border-bottom: 1px solid #aaa;
+  padding: 1rem 0.7rem;
+}
+
+.contragent-edit-wrapper .stores .store:last-child {
+  border-bottom: 0px solid #aaa;
+}
+
