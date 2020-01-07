@@ -8,6 +8,7 @@ class Contragent extends Model
 {
     protected $fillable = [
         'title',
+        'fio',
         'inn',
         'federal_district_id',
         'region_id',

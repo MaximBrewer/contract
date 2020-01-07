@@ -28,6 +28,30 @@ class ContragentsController extends Controller
     public function store(Request $request)
     {
         $contragent = Contragent::create($request->all());
+        $contragent->types()->sync($request->all()['typeIds']);
+        $storesIds = [];
+        $contragent->update($request->all());
+        if(count($request->all()['stores'])){
+            foreach($request->all()['stores'] as $store){
+                if($store['coords'] && $store['address']){
+                    if($store['id']){
+                        Store::find($store['id'])->update([
+                            'coords' => $store['coords'], 
+                            'address' => $store['address']
+                        ]);
+                        $storesIds[] = $store['id'];
+                    } else {
+                        $storesIds[] = Store::create([
+                            'contragent_id' => $contragent->id,
+                            'coords' => $store['coords'],
+                            'address' => $store['address'],
+                        ])->id;
+                    }
+                }
+            }
+            Store::whereNotIn('id', $storesIds)->where("contragent_id", $contragent->id)->delete();
+        }
+        $contragent = Contragent::findOrFail($contragent->id);
         return $contragent;
     }
 

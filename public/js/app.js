@@ -1838,6 +1838,10 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
+/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -1883,26 +1887,116 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    vSelect: vue_select__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
+  mounted: function mounted() {
+    var app = this;
+    app.getFederalDistricts();
+    app.getRegions();
+    app.getTypes();
+    app.contragent = {
+      title: "",
+      inn: "",
+      typeIds: [],
+      fio: "",
+      phone: "",
+      legal_address: "",
+      federal_district: 0,
+      region: 0,
+      types: [],
+      stores: []
+    };
+  },
   data: function data() {
     return {
-      Contragent: {
-        name: '',
-        address: '',
-        website: '',
-        email: ''
+      federalDistricts: [],
+      types: [],
+      regions: [],
+      contragentId: null,
+      contragent: {
+        name: "",
+        address: "",
+        website: "",
+        email: ""
       }
     };
   },
   methods: {
+    addStore: function addStore() {
+      var app = this;
+      app.contragent.stores.push({
+        id: 0,
+        coords: "",
+        addres: ""
+      });
+    },
+    deleteStore: function deleteStore(index) {
+      var app = this;
+      app.contragent.stores.splice(index, 1);
+    },
+    getFederalDistricts: function getFederalDistricts() {
+      var app = this;
+      axios.get("/api/v1/federalDistricts").then(function (resp) {
+        app.federalDistricts = resp.data;
+      });
+    },
+    getRegions: function getRegions() {
+      var app = this;
+      axios.get("/api/v1/regions?", this.contragent.federal_district).then(function (resp) {
+        app.regions = resp.data;
+      });
+    },
+    getTypes: function getTypes() {
+      var app = this;
+      axios.get("/api/v1/types").then(function (resp) {
+        app.types = resp.data;
+      });
+    },
     saveForm: function saveForm() {
       event.preventDefault();
       var app = this;
-      var newContragent = app.Contragent;
-      axios.post('/api/v1/Contragents', newContragent).then(function (resp) {
-        app.$router.push({
-          path: '/'
-        });
+      var newContragent = app.contragent;
+      newContragent.federal_district_id = newContragent.federal_district.id;
+      newContragent.region_id = newContragent.region.id;
+      newContragent.typeIds = [];
+
+      for (var t in newContragent.types) {
+        newContragent.typeIds.push(newContragent.types[t].id);
+      }
+
+      axios.post("/api/v1/contragents", newContragent).then(function (resp) {
+        app.contragent = resp.data;
+        app.$router.replace("/api/v1/contragents/edit/" + app.contragent.id);
       })["catch"](function (resp) {
         console.log(resp);
         alert("Не удалось создать компанию");
@@ -38168,172 +38262,384 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      { staticClass: "form-group" },
-      [
-        _c(
-          "router-link",
-          { staticClass: "btn btn-default", attrs: { to: "/" } },
-          [_vm._v("Back")]
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "panel panel-default" }, [
-      _c("div", { staticClass: "panel-heading" }, [
-        _vm._v("Create new Contragent")
-      ]),
+  return _c(
+    "section",
+    { staticClass: "contragent-edit-wrapper" },
+    [
+      _c(
+        "router-link",
+        { staticClass: "btn btn-secondary", attrs: { to: "/" } },
+        [_vm._v("Back")]
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "panel-body" }, [
-        _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                return _vm.saveForm()
-              }
+      _c("br"),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              return _vm.saveForm()
             }
-          },
-          [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-xs-12 form-group" }, [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Contragent name")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.Contragent.name,
-                      expression: "Contragent.name"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.Contragent.name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.Contragent, "name", $event.target.value)
-                    }
-                  }
-                })
-              ])
+          }
+        },
+        [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { staticClass: "control-label" }, [
+              _vm._v("Contragent title")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-xs-12 form-group" }, [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Contragent address")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.Contragent.address,
-                      expression: "Contragent.address"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.Contragent.address },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.Contragent, "address", $event.target.value)
-                    }
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.contragent.title,
+                  expression: "contragent.title"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.contragent.title },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
                   }
-                })
-              ])
+                  _vm.$set(_vm.contragent, "title", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Contragent federal district")
+              ]),
+              _vm._v(" "),
+              _c("v-select", {
+                attrs: { label: "title", options: _vm.federalDistricts },
+                model: {
+                  value: _vm.contragent.federal_district,
+                  callback: function($$v) {
+                    _vm.$set(_vm.contragent, "federal_district", $$v)
+                  },
+                  expression: "contragent.federal_district"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Contragent region")
+              ]),
+              _vm._v(" "),
+              _c("v-select", {
+                attrs: { label: "title", options: _vm.regions },
+                model: {
+                  value: _vm.contragent.region,
+                  callback: function($$v) {
+                    _vm.$set(_vm.contragent, "region", $$v)
+                  },
+                  expression: "contragent.region"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Contragent type")
+              ]),
+              _vm._v(" "),
+              _c("v-select", {
+                attrs: { label: "title", options: _vm.types, multiple: true },
+                model: {
+                  value: _vm.contragent.types,
+                  callback: function($$v) {
+                    _vm.$set(_vm.contragent, "types", $$v)
+                  },
+                  expression: "contragent.types"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { staticClass: "control-label" }, [
+              _vm._v("Contragent INN")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-xs-12 form-group" }, [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Contragent website")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.Contragent.website,
-                      expression: "Contragent.website"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.Contragent.website },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.Contragent, "website", $event.target.value)
-                    }
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.contragent.inn,
+                  expression: "contragent.inn"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.contragent.inn },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
                   }
-                })
-              ])
+                  _vm.$set(_vm.contragent, "inn", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { staticClass: "control-label" }, [
+              _vm._v("Contragent Legal address")
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-xs-12 form-group" }, [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v("Contragent email")
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.Contragent.email,
-                      expression: "Contragent.email"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.Contragent.email },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.Contragent, "email", $event.target.value)
-                    }
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.contragent.legal_address,
+                  expression: "contragent.legal_address"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.contragent.legal_address },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
                   }
-                })
-              ])
+                  _vm.$set(_vm.contragent, "legal_address", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { staticClass: "control-label" }, [
+              _vm._v("Contragent FIO")
             ]),
             _vm._v(" "),
-            _vm._m(0)
-          ]
-        )
-      ])
-    ])
-  ])
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.contragent.fio,
+                  expression: "contragent.fio"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.contragent.fio },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.contragent, "fio", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { staticClass: "control-label" }, [
+              _vm._v("Contragent phone")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.contragent.phone,
+                  expression: "contragent.phone"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.contragent.phone },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.contragent, "phone", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { staticClass: "control-label" }, [
+              _vm._v("Contragent stores")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "stores" }, [
+              _c(
+                "ul",
+                _vm._l(_vm.contragent.stores, function(store, index) {
+                  return _c("li", { staticClass: "store" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.contragent.stores[index].id,
+                            expression: "contragent.stores[index].id"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "hidden" },
+                        domProps: { value: _vm.contragent.stores[index].id },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.contragent.stores[index],
+                              "id",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("label", { staticClass: "control-label" }, [
+                        _vm._v("Store " + _vm._s(index + 1) + " coords")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.contragent.stores[index].coords,
+                            expression: "contragent.stores[index].coords"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text" },
+                        domProps: {
+                          value: _vm.contragent.stores[index].coords
+                        },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.contragent.stores[index],
+                              "coords",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("label", { staticClass: "control-label" }, [
+                        _vm._v("Store " + _vm._s(index + 1) + " address")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.contragent.stores[index].address,
+                            expression: "contragent.stores[index].address"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text" },
+                        domProps: {
+                          value: _vm.contragent.stores[index].address
+                        },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.contragent.stores[index],
+                              "address",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-danger btn-sm",
+                          attrs: { href: "javascript:void(0)" },
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteStore(index)
+                            }
+                          }
+                        },
+                        [_vm._v("Delete store")]
+                      )
+                    ])
+                  ])
+                }),
+                0
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-primary btn-sm",
+                  attrs: { href: "javascript:void(0)" },
+                  on: { click: _vm.addStore }
+                },
+                [_vm._v("Add store")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(0)
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xs-12 form-group" }, [
-        _c("button", { staticClass: "btn btn-success" }, [_vm._v("Create")])
-      ])
+    return _c("div", { staticClass: "form-group" }, [
+      _c("button", { staticClass: "btn btn-primary btn-lg" }, [_vm._v("Save")])
     ])
   }
 ]
@@ -54046,14 +54352,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*!*******************************************************************!*\
   !*** ./resources/js/components/contragents/contragentsCreate.vue ***!
   \*******************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _contragentsCreate_vue_vue_type_template_id_1aa7572e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./contragentsCreate.vue?vue&type=template&id=1aa7572e& */ "./resources/js/components/contragents/contragentsCreate.vue?vue&type=template&id=1aa7572e&");
 /* harmony import */ var _contragentsCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./contragentsCreate.vue?vue&type=script&lang=js& */ "./resources/js/components/contragents/contragentsCreate.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _contragentsCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _contragentsCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -54083,7 +54390,7 @@ component.options.__file = "resources/js/components/contragents/contragentsCreat
 /*!********************************************************************************************!*\
   !*** ./resources/js/components/contragents/contragentsCreate.vue?vue&type=script&lang=js& ***!
   \********************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

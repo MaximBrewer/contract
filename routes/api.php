@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix' => '/v1', 
    'namespace' => 'Api\V1', 'as' => 'api.'
 ], function () {
-    Route::resource('contragents', 'ContragentsController', ['except' => ['create', 'edit']]);
+    Route::resource('contragents', 'ContragentsController', ['except' => ['edit', 'create']]);
     Route::resource('federalDistricts', 'FederalDistrictsController', ['except' => ['create', 'edit', 'update', 'delete']]);
     Route::resource('regions', 'RegionsController', ['except' => ['create', 'edit', 'update', 'delete']]);
     Route::resource('types', 'TypesController', ['except' => ['create', 'edit', 'update', 'delete']]);
