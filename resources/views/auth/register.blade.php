@@ -65,7 +65,13 @@
                             <label for="inn" class="col-md-4 col-form-label text-md-right">{{ __('TIN') }}</label>
 
                             <div class="col-md-6">
-                                <input id="inn" type="text" class="form-control" name="inn" required>
+                                <input id="inn" type="text" class="form-control @error('inn') is-invalid @enderror" name="inn" required>
+
+                                @error('inn')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
 

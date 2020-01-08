@@ -1,6 +1,5 @@
 <template>
   <section>
-    <router-link :to="{name: 'createContragent'}" class="btn btn-primary">{{ __('Create new contragent') }}</router-link><br><br>
     <div class="table-responsive">
       <table class="table table-bordered table-striped">
         <thead>
@@ -50,12 +49,12 @@ export default {
       })
       .catch(function(resp) {
         console.log(resp);
-        alert( __('Failed to load contragents') );
+        alert( app.__('Failed to load contragents') );
       });
   },
   methods: {
     deleteEntry(id, index) {
-      if (confirm( __('Are you sure you want to delete the contragent?') )) {
+      if (confirm( app.__('Are you sure you want to delete the contragent?') )) {
         var app = this;
         axios
           .delete("/api/v1/contragents/" + id)
@@ -63,7 +62,7 @@ export default {
             app.contragents.splice(index, 1);
           })
           .catch(function(resp) {
-            alert( __('Не удалось удалить контрагента') );
+            alert( app.__('Не удалось удалить контрагента') );
           });
       }
     }

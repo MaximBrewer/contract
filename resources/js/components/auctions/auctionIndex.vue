@@ -1,6 +1,5 @@
 <template>
   <section>
-    <router-link :to="{name: 'createAuction'}" class="btn btn-primary">{{ __('Create new auction') }}</router-link><br><br>
     <div class="table-responsive">
       <table class="table table-bordered table-striped">
         <thead>
@@ -64,7 +63,7 @@ export default {
       })
       .catch(function(resp) {
         console.log(resp);
-        alert( __("Failed to load auctions") );
+        alert( app.__("Failed to load auctions") );
       });
   },
 
@@ -74,15 +73,15 @@ export default {
       return date.toLocaleString();
     },
     deleteEntry(id, index) {
-      if (confirm( __('Are you sure you want to delete the auction?') )) {
-        var app = this;
+      var app = this;
+      if (confirm( app.__('Are you sure you want to delete the auction?') )) {
         axios
           .delete("/api/v1/auctions/" + id)
           .then(function(resp) {
             app.auctions.splice(index, 1);
           })
           .catch(function(resp) {
-            alert( __('Failed to delete auction') );
+            alert( app.__('Failed to delete auction') );
           });
       }
     }

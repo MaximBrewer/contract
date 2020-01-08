@@ -5,9 +5,6 @@
       :can-cancel="true"
       :is-full-page="fullPage"
     ></loading>
-    <router-link :to="{name: 'contragentIndex'}" class="btn btn-secondary">{{ __('Back') }}</router-link>
-    <br />
-    <br />
     <form v-on:submit="saveForm()">
       <div class="form-group">
         <label class="control-label">{{ __('Contragent title') }}</label>
@@ -103,7 +100,7 @@ export default {
         app.isLoading = false;
       })
       .catch(function() {
-        alert( __("Failed to load contragent") );
+        alert( app.__("Failed to load contragent") );
         app.isLoading = false;
       });
   },
@@ -162,8 +159,8 @@ export default {
       var app = this;
       var newContragent = app.contragent;
       app.isLoading = true;
-      newContragent.federal_district_id = newContragent.federal_district.id;
-      newContragent.region_id = newContragent.region.id;
+      if(newContragent.federal_district) newContragent.federal_district_id = newContragent.federal_district.id;
+      if(newContragent.region) newContragent.region_id = newContragent.region.id;
       newContragent.typeIds = [];
       for (let t in newContragent.types)
         newContragent.typeIds.push(newContragent.types[t].id);
@@ -177,7 +174,7 @@ export default {
         })
         .catch(function(resp) {
           console.log(resp);
-          alert( __('Failed to edit contragent') );
+          alert( app.__('Failed to edit contragent') );
           app.isLoading = false;
         });
     }

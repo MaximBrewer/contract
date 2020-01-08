@@ -77,10 +77,10 @@ return [
         'array' => 'The :attribute must not have more than :value items.',
     ],
     'max' => [
-        'numeric' => 'The :attribute may not be greater than :max.',
-        'file' => 'The :attribute may not be greater than :max kilobytes.',
-        'string' => 'The :attribute may not be greater than :max characters.',
-        'array' => 'The :attribute may not have more than :max items.',
+        'numeric' => ':attribute не может быть больше чем :max.',
+        'file' => ':attribute не может быть больше чем :max кБ.',
+        'string' => ':attribute не может быть больше :max символов.',
+        'array' => ':attribute не может быть больше :max шт.',
     ],
     'mimes' => 'The :attribute must be a file of type: :values.',
     'mimetypes' => 'The :attribute must be a file of type: :values.',
@@ -146,6 +146,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'inn' => "ИНН"
+    ],
 
 ];

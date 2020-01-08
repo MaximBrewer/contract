@@ -5,9 +5,6 @@
       :can-cancel="true"
       :is-full-page="fullPage"
     ></loading>
-    <router-link :to="{name: 'contragentIndex'}" class="btn btn-secondary">{{ __('Back') }}</router-link>
-    <br />
-    <br />
     <form v-on:submit="saveForm()">
       <div class="form-group">
         <label class="control-label">{{ __('Contragent title') }}</label>
@@ -180,7 +177,7 @@ export default {
         })
         .catch(function(resp) {
           console.log(resp);
-          alert( __('Failed to create contragent') );
+          alert( app.__('Failed to create contragent') );
           app.isLoading = false;
         });
     }

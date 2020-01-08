@@ -5,9 +5,6 @@
       :can-cancel="true"
       :is-full-page="fullPage"
     ></loading>
-    <router-link :to="{name: 'auctionIndex'}" class="btn btn-secondary">{{ __('Back') }}</router-link>
-    <br />
-    <br />
     <form v-on:submit="saveForm()">
       <div class="form-group">
         <label class="control-label">{{ __('Auction lot') }}</label>
@@ -72,7 +69,7 @@ export default {
         app.isLoading = false;
       })
       .catch(function() {
-        alert( __('Failed to load auction') );
+        alert( app.__('Failed to load auction') );
         app.isLoading = false;
       });
   },
@@ -136,7 +133,7 @@ export default {
         })
         .catch(function(resp) {
           console.log(resp);
-          alert( __('Failed to create auction') );
+          alert( app.__('Failed to update auction') );
           app.isLoading = false;
         });
     }

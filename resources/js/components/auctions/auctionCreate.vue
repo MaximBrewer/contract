@@ -1,9 +1,6 @@
 <template>
   <section class="auction-edit-wrapper">
     <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
-    <router-link :to="{name: 'auctionIndex'}" class="btn btn-secondary">{{ __('Back') }}</router-link>
-    <br />
-    <br />
     <form v-on:submit="saveForm()">
       <div class="form-group">
         <label class="control-label">{{ __('Auction lot') }}</label>
@@ -129,7 +126,7 @@ export default {
         })
         .catch(function(resp) {
           console.log(resp);
-          alert("Не удалось создать аукцион");
+          alert( app.__('Failed to create auction') );
           app.isLoading = false;
         });
     }

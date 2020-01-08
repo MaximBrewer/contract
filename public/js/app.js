@@ -1898,9 +1898,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -1977,7 +1974,7 @@ __webpack_require__.r(__webpack_exports__);
         return true;
       })["catch"](function (resp) {
         console.log(resp);
-        alert("Не удалось создать аукцион");
+        alert(app.__('Failed to create auction'));
         app.isLoading = false;
       });
     }
@@ -2049,9 +2046,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -2077,7 +2071,7 @@ __webpack_require__.r(__webpack_exports__);
       app.auction = resp.data;
       app.isLoading = false;
     })["catch"](function () {
-      alert(__('Failed to load auction'));
+      alert(app.__('Failed to load auction'));
       app.isLoading = false;
     });
   },
@@ -2135,7 +2129,7 @@ __webpack_require__.r(__webpack_exports__);
         return true; //app.$router.replace("/");
       })["catch"](function (resp) {
         console.log(resp);
-        alert(__('Failed to create auction'));
+        alert(app.__('Failed to update auction'));
         app.isLoading = false;
       });
     }
@@ -2202,7 +2196,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2215,7 +2208,7 @@ __webpack_require__.r(__webpack_exports__);
       app.auctions = resp.data;
     })["catch"](function (resp) {
       console.log(resp);
-      alert(__("Failed to load auctions"));
+      alert(app.__("Failed to load auctions"));
     });
   },
   methods: {
@@ -2224,12 +2217,13 @@ __webpack_require__.r(__webpack_exports__);
       return date.toLocaleString();
     },
     deleteEntry: function deleteEntry(id, index) {
-      if (confirm(__('Are you sure you want to delete the auction?'))) {
-        var app = this;
+      var app = this;
+
+      if (confirm(app.__('Are you sure you want to delete the auction?'))) {
         axios["delete"]("/api/v1/auctions/" + id).then(function (resp) {
           app.auctions.splice(index, 1);
         })["catch"](function (resp) {
-          alert(__('Failed to delete auction'));
+          alert(app.__('Failed to delete auction'));
         });
       }
     }
@@ -2255,9 +2249,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
 /* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_3__);
-//
-//
-//
 //
 //
 //
@@ -2432,7 +2423,7 @@ __webpack_require__.r(__webpack_exports__);
         return true;
       })["catch"](function (resp) {
         console.log(resp);
-        alert(__('Failed to create contragent'));
+        alert(app.__('Failed to create contragent'));
         app.isLoading = false;
       });
     }
@@ -2535,9 +2526,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -2559,7 +2547,7 @@ __webpack_require__.r(__webpack_exports__);
       app.contragent = resp.data;
       app.isLoading = false;
     })["catch"](function () {
-      alert(__("Failed to load contragent"));
+      alert(app.__("Failed to load contragent"));
       app.isLoading = false;
     });
   },
@@ -2616,8 +2604,8 @@ __webpack_require__.r(__webpack_exports__);
       var app = this;
       var newContragent = app.contragent;
       app.isLoading = true;
-      newContragent.federal_district_id = newContragent.federal_district.id;
-      newContragent.region_id = newContragent.region.id;
+      if (newContragent.federal_district) newContragent.federal_district_id = newContragent.federal_district.id;
+      if (newContragent.region) newContragent.region_id = newContragent.region.id;
       newContragent.typeIds = [];
 
       for (var t in newContragent.types) {
@@ -2631,7 +2619,7 @@ __webpack_require__.r(__webpack_exports__);
         return true;
       })["catch"](function (resp) {
         console.log(resp);
-        alert(__('Failed to edit contragent'));
+        alert(app.__('Failed to edit contragent'));
         app.isLoading = false;
       });
     }
@@ -2684,7 +2672,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2697,17 +2684,17 @@ __webpack_require__.r(__webpack_exports__);
       app.contragents = resp.data;
     })["catch"](function (resp) {
       console.log(resp);
-      alert(__('Failed to load contragents'));
+      alert(app.__('Failed to load contragents'));
     });
   },
   methods: {
     deleteEntry: function deleteEntry(id, index) {
-      if (confirm(__('Are you sure you want to delete the contragent?'))) {
+      if (confirm(app.__('Are you sure you want to delete the contragent?'))) {
         var app = this;
         axios["delete"]("/api/v1/contragents/" + id).then(function (resp) {
           app.contragents.splice(index, 1);
         })["catch"](function (resp) {
-          alert(__('Не удалось удалить контрагента'));
+          alert(app.__('Не удалось удалить контрагента'));
         });
       }
     }
@@ -48009,19 +47996,6 @@ var render = function() {
       }),
       _vm._v(" "),
       _c(
-        "router-link",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { to: { name: "auctionIndex" } }
-        },
-        [_vm._v(_vm._s(_vm.__("Back")))]
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c(
         "form",
         {
           on: {
@@ -48243,19 +48217,6 @@ var render = function() {
       }),
       _vm._v(" "),
       _c(
-        "router-link",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { to: { name: "auctionIndex" } }
-        },
-        [_vm._v(_vm._s(_vm.__("Back")))]
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c(
         "form",
         {
           on: {
@@ -48459,115 +48420,98 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "section",
-    [
-      _c(
-        "router-link",
-        {
-          staticClass: "btn btn-primary",
-          attrs: { to: { name: "createAuction" } }
-        },
-        [_vm._v(_vm._s(_vm.__("Create new auction")))]
-      ),
-      _c("br"),
-      _c("br"),
-      _vm._v(" "),
-      _c("div", { staticClass: "table-responsive" }, [
-        _c("table", { staticClass: "table table-bordered table-striped" }, [
-          _c("thead", [
-            _c("tr", [
-              _c("th", [_vm._v(_vm._s(_vm.__("Contragent")))]),
+  return _c("section", [
+    _c("div", { staticClass: "table-responsive" }, [
+      _c("table", { staticClass: "table table-bordered table-striped" }, [
+        _c("thead", [
+          _c("tr", [
+            _c("th", [_vm._v(_vm._s(_vm.__("Contragent")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm.__("Product")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm.__("Multiplicity")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm.__("Federal district")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm.__("Region")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm.__("Address")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm.__("Coords")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm.__("Start")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm.__("Finish")))]),
+            _vm._v(" "),
+            _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.auctions, function(auction, index) {
+            return _c("tr", [
+              _c("td", [_vm._v(_vm._s(auction.contragent.title))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.__("Product")))]),
+              _c("td", [_vm._v(_vm._s(auction.product.title))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.__("Multiplicity")))]),
+              _c("td", [_vm._v(_vm._s(auction.multiplicity.title))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.__("Federal district")))]),
+              _c("td", [_vm._v(_vm._s(auction.store.federal_district.title))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.__("Region")))]),
+              _c("td", [_vm._v(_vm._s(auction.store.region.title))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.__("Address")))]),
+              _c("td", [_vm._v(_vm._s(auction.store.address))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.__("Coords")))]),
+              _c("td", [_vm._v(_vm._s(auction.store.coords))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.__("Start")))]),
+              _c("td", [_vm._v(_vm._s(_vm.formatDate(auction.start_at)))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.__("Finish")))]),
+              _c("td", [_vm._v(_vm._s(_vm.formatDate(auction.finish_at)))]),
               _vm._v(" "),
-              _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.auctions, function(auction, index) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(auction.contragent.title))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(auction.product.title))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(auction.multiplicity.title))]),
-                _vm._v(" "),
-                _c("td", [
-                  _vm._v(_vm._s(auction.store.federal_district.title))
-                ]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(auction.store.region.title))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(auction.store.address))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(auction.store.coords))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm.formatDate(auction.start_at)))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(_vm.formatDate(auction.finish_at)))]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "div",
-                    { staticClass: "btn-group", attrs: { role: "group" } },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-sm btn-primary",
-                          attrs: {
-                            to: {
-                              name: "editAuction",
-                              params: { id: auction.id }
-                            }
+              _c("td", [
+                _c(
+                  "div",
+                  { staticClass: "btn-group", attrs: { role: "group" } },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-sm btn-primary",
+                        attrs: {
+                          to: {
+                            name: "editAuction",
+                            params: { id: auction.id }
                           }
-                        },
-                        [_vm._v(_vm._s(_vm.__("Edit")))]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-sm btn-danger",
-                          attrs: { href: "#" },
-                          on: {
-                            click: function($event) {
-                              return _vm.deleteEntry(auction.id, index)
-                            }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.__("Edit")))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-sm btn-danger",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteEntry(auction.id, index)
                           }
-                        },
-                        [_vm._v(_vm._s(_vm.__("Delete")))]
-                      )
-                    ],
-                    1
-                  )
-                ])
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.__("Delete")))]
+                    )
+                  ],
+                  1
+                )
               ])
-            }),
-            0
-          )
-        ])
+            ])
+          }),
+          0
+        )
       ])
-    ],
-    1
-  )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -48607,19 +48551,6 @@ var render = function() {
           }
         }
       }),
-      _vm._v(" "),
-      _c(
-        "router-link",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { to: { name: "contragentIndex" } }
-        },
-        [_vm._v(_vm._s(_vm.__("Back")))]
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("br"),
       _vm._v(" "),
       _c(
         "form",
@@ -49088,19 +49019,6 @@ var render = function() {
       }),
       _vm._v(" "),
       _c(
-        "router-link",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { to: { name: "contragentIndex" } }
-        },
-        [_vm._v(_vm._s(_vm.__("Back")))]
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c(
         "form",
         {
           on: {
@@ -49549,85 +49467,70 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "section",
-    [
-      _c(
-        "router-link",
-        {
-          staticClass: "btn btn-primary",
-          attrs: { to: { name: "createContragent" } }
-        },
-        [_vm._v(_vm._s(_vm.__("Create new contragent")))]
-      ),
-      _c("br"),
-      _c("br"),
-      _vm._v(" "),
-      _c("div", { staticClass: "table-responsive" }, [
-        _c("table", { staticClass: "table table-bordered table-striped" }, [
-          _c("thead", [
-            _c("tr", [
-              _c("th", [_vm._v(_vm._s(_vm.__("Title")))]),
+  return _c("section", [
+    _c("div", { staticClass: "table-responsive" }, [
+      _c("table", { staticClass: "table table-bordered table-striped" }, [
+        _c("thead", [
+          _c("tr", [
+            _c("th", [_vm._v(_vm._s(_vm.__("Title")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm.__("TIN")))]),
+            _vm._v(" "),
+            _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.contragents, function(contragent, index) {
+            return _c("tr", [
+              _c("td", [_vm._v(_vm._s(contragent.title))]),
               _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.__("TIN")))]),
+              _c("td", [_vm._v(_vm._s(contragent.inn))]),
               _vm._v(" "),
-              _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.contragents, function(contragent, index) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(contragent.title))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(contragent.inn))]),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "div",
-                    { staticClass: "btn-group", attrs: { role: "group" } },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-sm btn-primary",
-                          attrs: {
-                            to: {
-                              name: "editContragent",
-                              params: { id: contragent.id }
-                            }
+              _c("td", [
+                _c(
+                  "div",
+                  { staticClass: "btn-group", attrs: { role: "group" } },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-sm btn-primary",
+                        attrs: {
+                          to: {
+                            name: "editContragent",
+                            params: { id: contragent.id }
                           }
-                        },
-                        [_vm._v(_vm._s(_vm.__("Edit")))]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-sm btn-danger",
-                          attrs: { href: "#" },
-                          on: {
-                            click: function($event) {
-                              return _vm.deleteEntry(contragent.id, index)
-                            }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.__("Edit")))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-sm btn-danger",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteEntry(contragent.id, index)
                           }
-                        },
-                        [_vm._v(_vm._s(_vm.__("Delete")))]
-                      )
-                    ],
-                    1
-                  )
-                ])
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.__("Delete")))]
+                    )
+                  ],
+                  1
+                )
               ])
-            }),
-            0
-          )
-        ])
+            ])
+          }),
+          0
+        )
       ])
-    ],
-    1
-  )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

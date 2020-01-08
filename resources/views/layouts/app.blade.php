@@ -29,7 +29,7 @@
     <div id="app">
         <nav class="navbar  navbar-expand-lg navbar-dark flex-column flex-md-row  bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="//cross-contract.ru">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -55,9 +55,29 @@
                         </li>
                         @endif
                         @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('personal') }}">{{ __('Cabinet') }}</a>
+
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ __('Contragents') }} <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <router-link :to="{name: 'contragentIndex'}" class="dropdown-item">{{ __('All contragents') }}</router-link>
+                                <router-link :to="{name: 'createContragent'}" class="dropdown-item">{{ __('Create new contragent') }}</router-link>
+                            </div>
                         </li>
+
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ __('Auctions') }} <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <router-link :to="{name: 'auctionIndex'}" class="dropdown-item">{{ __('All auctions') }}</router-link>
+                                <router-link :to="{name: 'auctionIndex'}" class="dropdown-item">{{ __('My auctions') }}</router-link>
+                                <router-link :to="{name: 'auctionIndex'}" class="dropdown-item">{{ __('Bidder') }}</router-link>
+                                <router-link :to="{name: 'createAuction'}" class="dropdown-item">{{ __('Create new auction') }}</router-link>
+                            </div>
+                        </li>
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }} <span class="caret"></span>

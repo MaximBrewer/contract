@@ -41,5 +41,4 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
         return $this->belongsToMany('App\Contragent', 'user_contragent');
     }
 
-
 }
