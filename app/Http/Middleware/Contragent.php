@@ -28,7 +28,7 @@ class Contragent
                     "inn" => Auth::user()->inn
                 ]);
             }
-            var_dump($contragent->id);
+            var_dump(Auth::user()->inn);
             die;
 
             Auth::user()->contragents()->sync([$contragent->id]);
