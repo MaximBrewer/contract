@@ -20,7 +20,7 @@
         <tbody>
           <tr v-for="auction, index in auctions">
             <td>
-              <button v-on:click="bidAuction(auction.id)" class="btn btn-warning">{{ __('Bid') }}</button>
+              <button v-on:click="bidAuction(auction.id)" class="btn btn-danger">{{ __('Bid') }}</button>
             </td>
             <td>{{ auction.contragent.title }}</td>
             <td>{{ auction.product.title }}</td>

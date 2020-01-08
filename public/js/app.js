@@ -48462,7 +48462,7 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-warning",
+                    staticClass: "btn btn-danger",
                     on: {
                       click: function($event) {
                         return _vm.bidAuction(auction.id)
