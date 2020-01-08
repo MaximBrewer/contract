@@ -11402,3 +11402,8 @@ body {
   color: #3490dc;
 }
 
+#auctions,
+#contragents {
+  font-size: 0.8em;
+}
+

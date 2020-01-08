@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="table-responsive">
+    <div class="table-responsive" id="auctions">
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
@@ -11,9 +11,9 @@
             <th>{{ __('Federal district') }}</th>
             <th>{{ __('Region') }}</th>
             <th>{{ __('Address') }}</th>
-            <th>{{ __('Coords') }}</th>
             <th>{{ __('Start') }}</th>
             <th>{{ __('Finish') }}</th>
+            <th>{{ __('Comment') }}</th>
             <th width="100">&nbsp;</th>
           </tr>
         </thead>
@@ -28,9 +28,9 @@
             <td>{{ auction.store.federal_district.title }}</td>
             <td>{{ auction.store.region.title }}</td>
             <td>{{ auction.store.address }}</td>
-            <td>{{ auction.store.coords }}</td>
             <td>{{ formatDate(auction.start_at) }}</td>
             <td>{{ formatDate(auction.finish_at) }}</td>
+            <td>{{ auction.store.comment }}</td>
             <td>
               <div class="btn-group" role="group">
               <router-link

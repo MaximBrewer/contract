@@ -48426,7 +48426,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("section", [
-    _c("div", { staticClass: "table-responsive" }, [
+    _c("div", { staticClass: "table-responsive", attrs: { id: "auctions" } }, [
       _c("table", { staticClass: "table table-bordered table-striped" }, [
         _c("thead", [
           _c("tr", [
@@ -48444,11 +48444,11 @@ var render = function() {
             _vm._v(" "),
             _c("th", [_vm._v(_vm._s(_vm.__("Address")))]),
             _vm._v(" "),
-            _c("th", [_vm._v(_vm._s(_vm.__("Coords")))]),
-            _vm._v(" "),
             _c("th", [_vm._v(_vm._s(_vm.__("Start")))]),
             _vm._v(" "),
             _c("th", [_vm._v(_vm._s(_vm.__("Finish")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm.__("Comment")))]),
             _vm._v(" "),
             _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
           ])
@@ -48485,11 +48485,11 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(auction.store.address))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(auction.store.coords))]),
-              _vm._v(" "),
               _c("td", [_vm._v(_vm._s(_vm.formatDate(auction.start_at)))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(_vm.formatDate(auction.finish_at)))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(auction.store.comment))]),
               _vm._v(" "),
               _c("td", [
                 _c(
@@ -49490,68 +49490,72 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("section", [
-    _c("div", { staticClass: "table-responsive" }, [
-      _c("table", { staticClass: "table table-bordered table-striped" }, [
-        _c("thead", [
-          _c("tr", [
-            _c("th", [_vm._v(_vm._s(_vm.__("Title")))]),
-            _vm._v(" "),
-            _c("th", [_vm._v(_vm._s(_vm.__("TIN")))]),
-            _vm._v(" "),
-            _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.contragents, function(contragent, index) {
-            return _c("tr", [
-              _c("td", [_vm._v(_vm._s(contragent.title))]),
+    _c(
+      "div",
+      { staticClass: "table-responsive", attrs: { id: "contragents" } },
+      [
+        _c("table", { staticClass: "table table-bordered table-striped" }, [
+          _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v(_vm._s(_vm.__("Title")))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(contragent.inn))]),
+              _c("th", [_vm._v(_vm._s(_vm.__("TIN")))]),
               _vm._v(" "),
-              _c("td", [
-                _c(
-                  "div",
-                  { staticClass: "btn-group", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-sm btn-primary",
-                        attrs: {
-                          to: {
-                            name: "editContragent",
-                            params: { id: contragent.id }
-                          }
-                        }
-                      },
-                      [_vm._v(_vm._s(_vm.__("Edit")))]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-sm btn-danger",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteEntry(contragent.id, index)
-                          }
-                        }
-                      },
-                      [_vm._v(_vm._s(_vm.__("Delete")))]
-                    )
-                  ],
-                  1
-                )
-              ])
+              _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
             ])
-          }),
-          0
-        )
-      ])
-    ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.contragents, function(contragent, index) {
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(contragent.title))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(contragent.inn))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "div",
+                    { staticClass: "btn-group", attrs: { role: "group" } },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-sm btn-primary",
+                          attrs: {
+                            to: {
+                              name: "editContragent",
+                              params: { id: contragent.id }
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(_vm.__("Edit")))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-sm btn-danger",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteEntry(contragent.id, index)
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(_vm.__("Delete")))]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              ])
+            }),
+            0
+          )
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = []

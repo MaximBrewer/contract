@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="table-responsive">
+    <div class="table-responsive" id="contragents">
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
