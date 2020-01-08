@@ -43,6 +43,7 @@ class VerificationController extends Controller
      */
     public function verify(Request $request)
     {
+        
         if (! hash_equals((string) $request->route('id'), (string) $request->user()->getKey())) {
             throw new AuthorizationException;
         }
@@ -59,7 +60,6 @@ class VerificationController extends Controller
             event(new Verified($request->user()));
         }
 
-        var_dump($request->user()->inn);die;
 
         return redirect($this->redirectPath())->with('verified', true);
     }

@@ -28,7 +28,7 @@ Auth::routes(['verify' => true]);
 Route::get('/home', function () {return redirect('/personal');});
 Route::get('/', function () {return redirect('/personal');});
 
-Route::get('/personal', 'PersonalController@index')->middleware('verified')->name('personal');
+Route::get('/personal', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
 
 // Route::get('/about', 'AboutController@index')->name('about');
 // Route::get('/rating', 'RatingController@index')->name('rating');
