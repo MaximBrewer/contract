@@ -11356,6 +11356,20 @@ a.text-dark:focus {
   }
 }
 
+html,
+body {
+  height: 100%;
+}
+
+#app {
+  -webkit-box-flex: 1;
+          flex: 1 0 auto;
+}
+
+#sticky-footer {
+  flex-shrink: none;
+}
+
 .contragent-edit-wrapper .stores {
   padding: 1rem 0.7rem;
   border: 1px solid #aaa;

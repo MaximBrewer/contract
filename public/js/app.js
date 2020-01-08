@@ -2077,7 +2077,7 @@ __webpack_require__.r(__webpack_exports__);
       app.auction = resp.data;
       app.isLoading = false;
     })["catch"](function () {
-      alert("Не удалось загрузить аукцион");
+      alert(__('Failed to load auction'));
       app.isLoading = false;
     });
   },
@@ -2135,7 +2135,7 @@ __webpack_require__.r(__webpack_exports__);
         return true; //app.$router.replace("/");
       })["catch"](function (resp) {
         console.log(resp);
-        alert("Не удалось создать компанию");
+        alert(__('Failed to create auction'));
         app.isLoading = false;
       });
     }
@@ -2215,7 +2215,7 @@ __webpack_require__.r(__webpack_exports__);
       app.auctions = resp.data;
     })["catch"](function (resp) {
       console.log(resp);
-      alert("Не удалось загрузить аукционы");
+      alert(__("Failed to load auctions"));
     });
   },
   methods: {
@@ -2224,12 +2224,12 @@ __webpack_require__.r(__webpack_exports__);
       return date.toLocaleString();
     },
     deleteEntry: function deleteEntry(id, index) {
-      if (confirm("Вы действительно хотите удалить аукцион?")) {
+      if (confirm(__('Are you sure you want to delete the auction?'))) {
         var app = this;
         axios["delete"]("/api/v1/auctions/" + id).then(function (resp) {
           app.auctions.splice(index, 1);
         })["catch"](function (resp) {
-          alert("Не удалось удалить аукцион");
+          alert(__('Failed to delete auction'));
         });
       }
     }
@@ -2432,7 +2432,7 @@ __webpack_require__.r(__webpack_exports__);
         return true;
       })["catch"](function (resp) {
         console.log(resp);
-        alert("Не удалось создать компанию");
+        alert(__('Не удалось создать контрагента'));
         app.isLoading = false;
       });
     }
@@ -2559,7 +2559,7 @@ __webpack_require__.r(__webpack_exports__);
       app.contragent = resp.data;
       app.isLoading = false;
     })["catch"](function () {
-      alert("Не удалось загрузить компанию");
+      alert(__("Failed to load contragent"));
       app.isLoading = false;
     });
   },
@@ -2631,7 +2631,7 @@ __webpack_require__.r(__webpack_exports__);
         return true;
       })["catch"](function (resp) {
         console.log(resp);
-        alert("Не удалось создать компанию");
+        alert(__('Failed to edit contragent'));
         app.isLoading = false;
       });
     }
@@ -2697,17 +2697,17 @@ __webpack_require__.r(__webpack_exports__);
       app.contragents = resp.data;
     })["catch"](function (resp) {
       console.log(resp);
-      alert("Не удалось загрузить компании");
+      alert(__('Failed to load contragents'));
     });
   },
   methods: {
     deleteEntry: function deleteEntry(id, index) {
-      if (confirm("Вы действительно хотите удалить компанию?")) {
+      if (confirm(__('Are you sure you want to delete the contragent?'))) {
         var app = this;
         axios["delete"]("/api/v1/contragents/" + id).then(function (resp) {
           app.contragents.splice(index, 1);
         })["catch"](function (resp) {
-          alert("Не удалось удалить компанию");
+          alert(__('Не удалось удалить контрагента'));
         });
       }
     }
@@ -48014,7 +48014,7 @@ var render = function() {
           staticClass: "btn btn-secondary",
           attrs: { to: { name: "auctionIndex" } }
         },
-        [_vm._v("Back")]
+        [_vm._v(_vm._s(_vm.__("Back")))]
       ),
       _vm._v(" "),
       _c("br"),
@@ -48036,7 +48036,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Auction lot")
+                _vm._v(_vm._s(_vm.__("Auction lot")))
               ]),
               _vm._v(" "),
               _c("v-select", {
@@ -48058,7 +48058,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Auction multiplicity")
+                _vm._v(_vm._s(_vm.__("Auction multiplicity")))
               ]),
               _vm._v(" "),
               _c("v-select", {
@@ -48080,7 +48080,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Auction contragent")
+                _vm._v(_vm._s(_vm.__("Auction contragent")))
               ]),
               _vm._v(" "),
               _c("v-select", {
@@ -48102,7 +48102,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Auction store")
+                _vm._v(_vm._s(_vm.__("Auction store")))
               ]),
               _vm._v(" "),
               _c("v-select", {
@@ -48124,7 +48124,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Auction start")
+                _vm._v(_vm._s(_vm.__("Auction start")))
               ]),
               _vm._v(" "),
               _c("datetime", {
@@ -48147,7 +48147,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Auction finish")
+                _vm._v(_vm._s(_vm.__("Auction finish")))
               ]),
               _vm._v(" "),
               _c("datetime", {
@@ -48167,7 +48167,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", { staticClass: "control-label" }, [
-              _vm._v("Auction comment")
+              _vm._v(_vm._s(_vm.__("Auction comment")))
             ]),
             _vm._v(" "),
             _c("textarea", {
@@ -48192,23 +48192,18 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "form-group" }, [
+            _c("button", { staticClass: "btn btn-primary btn-lg" }, [
+              _vm._v(_vm._s(_vm.__("Create auction")))
+            ])
+          ])
         ]
       )
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("button", { staticClass: "btn btn-primary btn-lg" }, [_vm._v("Save")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -48253,7 +48248,7 @@ var render = function() {
           staticClass: "btn btn-secondary",
           attrs: { to: { name: "auctionIndex" } }
         },
-        [_vm._v("Back")]
+        [_vm._v(_vm._s(_vm.__("Back")))]
       ),
       _vm._v(" "),
       _c("br"),
@@ -48275,7 +48270,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Auction lot")
+                _vm._v(_vm._s(_vm.__("Auction lot")))
               ]),
               _vm._v(" "),
               _c("v-select", {
@@ -48297,7 +48292,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Auction multiplicity")
+                _vm._v(_vm._s(_vm.__("Auction multiplicity")))
               ]),
               _vm._v(" "),
               _c("v-select", {
@@ -48319,7 +48314,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Auction contragent")
+                _vm._v(_vm._s(_vm.__("Auction contragent")))
               ]),
               _vm._v(" "),
               _c("v-select", {
@@ -48341,7 +48336,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Auction store")
+                _vm._v(_vm._s(_vm.__("Auction store")))
               ]),
               _vm._v(" "),
               _c("v-select", {
@@ -48363,7 +48358,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Auction start")
+                _vm._v(_vm._s(_vm.__("Auction start")))
               ]),
               _vm._v(" "),
               _c("datetime", {
@@ -48386,7 +48381,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Auction finish")
+                _vm._v(_vm._s(_vm.__("Auction finish")))
               ]),
               _vm._v(" "),
               _c("datetime", {
@@ -48406,7 +48401,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", { staticClass: "control-label" }, [
-              _vm._v("Auction comment")
+              _vm._v(_vm._s(_vm.__("Auction comment")))
             ]),
             _vm._v(" "),
             _c("textarea", {
@@ -48431,23 +48426,18 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "form-group" }, [
+            _c("button", { staticClass: "btn btn-primary btn-lg" }, [
+              _vm._v(_vm._s(_vm.__("Edit")))
+            ])
+          ])
         ]
       )
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("button", { staticClass: "btn btn-primary btn-lg" }, [_vm._v("Save")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -48478,14 +48468,36 @@ var render = function() {
           staticClass: "btn btn-primary",
           attrs: { to: { name: "createAuction" } }
         },
-        [_vm._v("Create new auction")]
+        [_vm._v(_vm._s(_vm.__("Create new auction")))]
       ),
       _c("br"),
       _c("br"),
       _vm._v(" "),
       _c("div", { staticClass: "table-responsive" }, [
         _c("table", { staticClass: "table table-bordered table-striped" }, [
-          _vm._m(0),
+          _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v(_vm._s(_vm.__("Contragent")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.__("Product")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.__("Multiplicity")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.__("Federal district")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.__("Region")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.__("Address")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.__("Coords")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.__("Start")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.__("Finish")))]),
+              _vm._v(" "),
+              _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "tbody",
@@ -48527,7 +48539,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Edit")]
+                        [_vm._v(_vm._s(_vm.__("Edit")))]
                       ),
                       _vm._v(" "),
                       _c(
@@ -48541,7 +48553,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Delete")]
+                        [_vm._v(_vm._s(_vm.__("Delete")))]
                       )
                     ],
                     1
@@ -48557,36 +48569,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Contragent")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Product")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Multiplicity")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Federal district")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Region")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Address")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Coords")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Start")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Finish")]),
-        _vm._v(" "),
-        _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -48631,7 +48614,7 @@ var render = function() {
           staticClass: "btn btn-secondary",
           attrs: { to: { name: "contragentIndex" } }
         },
-        [_vm._v("Back")]
+        [_vm._v(_vm._s(_vm.__("Back")))]
       ),
       _vm._v(" "),
       _c("br"),
@@ -48650,7 +48633,7 @@ var render = function() {
         [
           _c("div", { staticClass: "form-group" }, [
             _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent title")
+              _vm._v(_vm._s(_vm.__("Contragent title")))
             ]),
             _vm._v(" "),
             _c("input", {
@@ -48681,7 +48664,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Contragent federal district")
+                _vm._v(_vm._s(_vm.__("Contragent federal district")))
               ]),
               _vm._v(" "),
               _c("v-select", {
@@ -48703,7 +48686,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Contragent region")
+                _vm._v(_vm._s(_vm.__("Contragent region")))
               ]),
               _vm._v(" "),
               _c("v-select", {
@@ -48725,7 +48708,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Contragent type")
+                _vm._v(_vm._s(_vm.__("Contragent type")))
               ]),
               _vm._v(" "),
               _c("v-select", {
@@ -48744,7 +48727,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent INN")
+              _vm._v(_vm._s(_vm.__("Contragent TIN")))
             ]),
             _vm._v(" "),
             _c("input", {
@@ -48772,7 +48755,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent Legal address")
+              _vm._v(_vm._s(_vm.__("Contragent Legal address")))
             ]),
             _vm._v(" "),
             _c("input", {
@@ -48800,7 +48783,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent FIO")
+              _vm._v(_vm._s(_vm.__("Contragent contact")))
             ]),
             _vm._v(" "),
             _c("input", {
@@ -48828,7 +48811,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent phone")
+              _vm._v(_vm._s(_vm.__("Contragent phone")))
             ]),
             _vm._v(" "),
             _c("input", {
@@ -48856,7 +48839,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent stores")
+              _vm._v(_vm._s(_vm.__("Contragent stores")))
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "stores" }, [
@@ -48895,7 +48878,11 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("label", { staticClass: "control-label" }, [
-                          _vm._v("Store " + _vm._s(index + 1) + " coords")
+                          _vm._v(
+                            _vm._s(
+                              _vm.__("Store coords #", { store: index + 1 })
+                            )
+                          )
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -48927,7 +48914,11 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("label", { staticClass: "control-label" }, [
-                          _vm._v("Store " + _vm._s(index + 1) + " address")
+                          _vm._v(
+                            _vm._s(
+                              _vm.__("Store address #", { store: index + 1 })
+                            )
+                          )
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -48960,7 +48951,11 @@ var render = function() {
                         _vm._v(" "),
                         _c("label", { staticClass: "control-label" }, [
                           _vm._v(
-                            "Store " + _vm._s(index + 1) + " federal district"
+                            _vm._s(
+                              _vm.__("Store federal district #", {
+                                store: index + 1
+                              })
+                            )
                           )
                         ]),
                         _vm._v(" "),
@@ -48985,7 +48980,11 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("label", { staticClass: "control-label" }, [
-                          _vm._v("Store " + _vm._s(index + 1) + " region")
+                          _vm._v(
+                            _vm._s(
+                              _vm.__("Store region #", { store: index + 1 })
+                            )
+                          )
                         ]),
                         _vm._v(" "),
                         _c("v-select", {
@@ -49016,7 +49015,7 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Delete store")]
+                          [_vm._v(_vm._s(_vm.__("Delete store")))]
                         )
                       ],
                       1
@@ -49033,28 +49032,23 @@ var render = function() {
                   attrs: { href: "javascript:void(0)" },
                   on: { click: _vm.addStore }
                 },
-                [_vm._v("Add store")]
+                [_vm._v(_vm._s(_vm.__("Add store")))]
               )
             ])
           ]),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "form-group" }, [
+            _c("button", { staticClass: "btn btn-primary btn-lg" }, [
+              _vm._v(_vm._s(_vm.__("Save")))
+            ])
+          ])
         ]
       )
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("button", { staticClass: "btn btn-primary btn-lg" }, [_vm._v("Save")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -49099,7 +49093,7 @@ var render = function() {
           staticClass: "btn btn-secondary",
           attrs: { to: { name: "contragentIndex" } }
         },
-        [_vm._v("Back")]
+        [_vm._v(_vm._s(_vm.__("Back")))]
       ),
       _vm._v(" "),
       _c("br"),
@@ -49118,7 +49112,7 @@ var render = function() {
         [
           _c("div", { staticClass: "form-group" }, [
             _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent title")
+              _vm._v(_vm._s(_vm.__("Contragent title")))
             ]),
             _vm._v(" "),
             _c("input", {
@@ -49149,7 +49143,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Contragent federal district")
+                _vm._v(_vm._s(_vm.__("Contragent federal district")))
               ]),
               _vm._v(" "),
               _c("v-select", {
@@ -49171,7 +49165,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Contragent region")
+                _vm._v(_vm._s(_vm.__("Contragent region")))
               ]),
               _vm._v(" "),
               _c("v-select", {
@@ -49193,7 +49187,7 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Contragent type")
+                _vm._v(_vm._s(_vm.__("Contragent type")))
               ]),
               _vm._v(" "),
               _c("v-select", {
@@ -49212,7 +49206,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent INN")
+              _vm._v(_vm._s(_vm.__("Contragent TIN")))
             ]),
             _vm._v(" "),
             _c("input", {
@@ -49240,7 +49234,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent Legal address")
+              _vm._v(_vm._s(_vm.__("Contragent Legal address")))
             ]),
             _vm._v(" "),
             _c("input", {
@@ -49268,7 +49262,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent FIO")
+              _vm._v(_vm._s(_vm.__("Contragent contact")))
             ]),
             _vm._v(" "),
             _c("input", {
@@ -49296,7 +49290,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent phone")
+              _vm._v(_vm._s(_vm.__("Contragent phone")))
             ]),
             _vm._v(" "),
             _c("input", {
@@ -49324,7 +49318,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent stores")
+              _vm._v(_vm._s(_vm.__("Contragent stores")))
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "stores" }, [
@@ -49363,7 +49357,11 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("label", { staticClass: "control-label" }, [
-                          _vm._v("Store " + _vm._s(index + 1) + " coords")
+                          _vm._v(
+                            _vm._s(
+                              _vm.__("Store coords #", { store: index + 1 })
+                            )
+                          )
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -49395,7 +49393,11 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("label", { staticClass: "control-label" }, [
-                          _vm._v("Store " + _vm._s(index + 1) + " address")
+                          _vm._v(
+                            _vm._s(
+                              _vm.__("Store address #", { store: index + 1 })
+                            )
+                          )
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -49428,7 +49430,11 @@ var render = function() {
                         _vm._v(" "),
                         _c("label", { staticClass: "control-label" }, [
                           _vm._v(
-                            "Store " + _vm._s(index + 1) + " federal district"
+                            _vm._s(
+                              _vm.__("Store federal district #", {
+                                store: index + 1
+                              })
+                            )
                           )
                         ]),
                         _vm._v(" "),
@@ -49453,7 +49459,11 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("label", { staticClass: "control-label" }, [
-                          _vm._v("Store " + _vm._s(index + 1) + " region")
+                          _vm._v(
+                            _vm._s(
+                              _vm.__("Store region #", { store: index + 1 })
+                            )
+                          )
                         ]),
                         _vm._v(" "),
                         _c("v-select", {
@@ -49484,7 +49494,7 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Delete store")]
+                          [_vm._v(_vm._s(_vm.__("Delete store")))]
                         )
                       ],
                       1
@@ -49501,28 +49511,23 @@ var render = function() {
                   attrs: { href: "javascript:void(0)" },
                   on: { click: _vm.addStore }
                 },
-                [_vm._v("Add store")]
+                [_vm._v(_vm._s(_vm.__("Add store")))]
               )
             ])
           ]),
           _vm._v(" "),
-          _vm._m(0)
+          _c("div", { staticClass: "form-group" }, [
+            _c("button", { staticClass: "btn btn-primary btn-lg" }, [
+              _vm._v(_vm._s(_vm.__("Save")))
+            ])
+          ])
         ]
       )
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("button", { staticClass: "btn btn-primary btn-lg" }, [_vm._v("Save")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -49553,14 +49558,22 @@ var render = function() {
           staticClass: "btn btn-primary",
           attrs: { to: { name: "createContragent" } }
         },
-        [_vm._v("Create new contragent")]
+        [_vm._v(_vm._s(_vm.__("Create new contragent")))]
       ),
       _c("br"),
       _c("br"),
       _vm._v(" "),
       _c("div", { staticClass: "table-responsive" }, [
         _c("table", { staticClass: "table table-bordered table-striped" }, [
-          _vm._m(0),
+          _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v(_vm._s(_vm.__("Title")))]),
+              _vm._v(" "),
+              _c("th", [_vm._v(_vm._s(_vm.__("TIN")))]),
+              _vm._v(" "),
+              _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
+            ])
+          ]),
           _vm._v(" "),
           _c(
             "tbody",
@@ -49586,7 +49599,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Edit")]
+                        [_vm._v(_vm._s(_vm.__("Edit")))]
                       ),
                       _vm._v(" "),
                       _c(
@@ -49600,7 +49613,7 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v("Delete")]
+                        [_vm._v(_vm._s(_vm.__("Delete")))]
                       )
                     ],
                     1
@@ -49616,22 +49629,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Inn")]),
-        _vm._v(" "),
-        _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -65228,6 +65226,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+window.Vue.mixin(__webpack_require__(/*! ./trans */ "./resources/js/trans.js"));
 
 window.Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
@@ -65726,6 +65725,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_contragentIndex_vue_vue_type_template_id_02a280d1___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/trans.js":
+/*!*******************************!*\
+  !*** ./resources/js/trans.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  methods: {
+    /**
+     * Translate the given key.
+     */
+    __: function __(key, replace) {
+      var translation,
+          translationNotFound = true;
+
+      try {
+        translation = key.split('.').reduce(function (t, i) {
+          return t[i] || null;
+        }, window._translations.php);
+
+        if (translation) {
+          translationNotFound = false;
+        }
+      } catch (e) {
+        translation = key;
+      }
+
+      if (translationNotFound) {
+        translation = window._translations.json[key] ? window._translations.json[key] : key;
+      }
+
+      _.forEach(replace, function (value, key) {
+        translation = translation.replace(':' + key, value);
+      });
+
+      return translation;
+    }
+  }
+};
 
 /***/ }),
 

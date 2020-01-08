@@ -1,12 +1,12 @@
 <template>
   <section>
-    <router-link :to="{name: 'createContragent'}" class="btn btn-primary">Create new contragent</router-link><br><br>
+    <router-link :to="{name: 'createContragent'}" class="btn btn-primary">{{ __('Create new contragent') }}</router-link><br><br>
     <div class="table-responsive">
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Inn</th>
+            <th>{{ __('Title') }}</th>
+            <th>{{ __('TIN') }}</th>
             <th width="100">&nbsp;</th>
           </tr>
         </thead>
@@ -19,12 +19,12 @@
               <router-link
                 :to="{name: 'editContragent', params: {id: contragent.id}}"
                 class="btn btn-sm btn-primary"
-              >Edit</router-link>
+              >{{ __('Edit') }}</router-link>
               <a
                 href="#"
                 class="btn btn-sm btn-danger"
                 v-on:click="deleteEntry(contragent.id, index)"
-              >Delete</a>
+              >{{ __('Delete') }}</a>
               </div>
             </td>
           </tr>
@@ -50,12 +50,12 @@ export default {
       })
       .catch(function(resp) {
         console.log(resp);
-        alert("Не удалось загрузить компании");
+        alert( __('Failed to load contragents') );
       });
   },
   methods: {
     deleteEntry(id, index) {
-      if (confirm("Вы действительно хотите удалить компанию?")) {
+      if (confirm( __('Are you sure you want to delete the contragent?') )) {
         var app = this;
         axios
           .delete("/api/v1/contragents/" + id)
@@ -63,7 +63,7 @@ export default {
             app.contragents.splice(index, 1);
           })
           .catch(function(resp) {
-            alert("Не удалось удалить компанию");
+            alert( __('Не удалось удалить контрагента') );
           });
       }
     }

@@ -8,6 +8,20 @@
 @import '~bootstrap/scss/bootstrap';
 
 
+html,
+body {
+  height: 100%;
+}
+
+#app {
+  flex: 1 0 auto;
+}
+
+#sticky-footer {
+  flex-shrink: none;
+}
+
+
 .contragent-edit-wrapper .stores{
     padding:1rem .7rem;
     border:1px solid #aaa;

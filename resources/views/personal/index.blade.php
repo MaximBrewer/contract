@@ -5,10 +5,10 @@
     <div class="col-xs-12 col-md-3 col-lg-2">
         <ul class="list-group mb-3">
             <li class="list-group-item d-flex justify-content-between lh-condensed">
-                <router-link :to="{name: 'auctionIndex'}">Auctions</router-link>
+                <router-link :to="{name: 'auctionIndex'}">{{ __('Auctions') }}</router-link>
             </li>
             <li class="list-group-item d-flex justify-content-between lh-condensed">
-                <router-link :to="{name: 'contragentIndex'}">Contragents</router-link>
+                <router-link :to="{name: 'contragentIndex'}">{{ __('Contragents') }}</router-link>
             </li>
         </ul>
     </div>

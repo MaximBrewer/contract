@@ -8,6 +8,8 @@ require("./bootstrap");
 
 window.Vue = require("vue");
 
+window.Vue.mixin(require('./trans'))
+
 
 import VueRouter from "vue-router";
 

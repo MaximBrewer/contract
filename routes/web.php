@@ -24,6 +24,12 @@
 //     ..
 //     });
 
+
+Route::get('/home', function () {
+    return redirect('/');
+});
+
+
 Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();

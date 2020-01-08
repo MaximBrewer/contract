@@ -1,28 +1,28 @@
 <template>
   <section class="auction-edit-wrapper">
     <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
-    <router-link :to="{name: 'auctionIndex'}" class="btn btn-secondary">Back</router-link>
+    <router-link :to="{name: 'auctionIndex'}" class="btn btn-secondary">{{ __('Back') }}</router-link>
     <br />
     <br />
     <form v-on:submit="saveForm()">
       <div class="form-group">
-        <label class="control-label">Auction lot</label>
+        <label class="control-label">{{ __('Auction lot') }}</label>
         <v-select label="title" :options="products" v-model="auction.product"></v-select>
       </div>
       <div class="form-group">
-        <label class="control-label">Auction multiplicity</label>
+        <label class="control-label">{{ __('Auction multiplicity') }}</label>
         <v-select label="title" :options="multiplicities" v-model="auction.multiplicity"></v-select>
       </div>
       <div class="form-group">
-        <label class="control-label">Auction contragent</label>
+        <label class="control-label">{{ __('Auction contragent') }}</label>
         <v-select label="title" :options="contragents" v-model="auction.contragent"></v-select>
       </div>
       <div class="form-group">
-        <label class="control-label">Auction store</label>
+        <label class="control-label">{{ __('Auction store') }}</label>
         <v-select label="address" :options="stores" v-model="auction.store"></v-select>
       </div>
       <div class="form-group">
-        <label class="control-label">Auction start</label>
+        <label class="control-label">{{ __('Auction start') }}</label>
         <datetime
           type="datetime"
           class="theme-primary"
@@ -31,7 +31,7 @@
         ></datetime>
       </div>
       <div class="form-group">
-        <label class="control-label">Auction finish</label>
+        <label class="control-label">{{ __('Auction finish') }}</label>
         <datetime
           type="datetime"
           class="theme-primary"
@@ -40,11 +40,11 @@
         ></datetime>
       </div>
       <div class="form-group">
-        <label class="control-label">Auction comment</label>
+        <label class="control-label">{{ __('Auction comment') }}</label>
         <textarea v-model="auction.comment" class="form-control"></textarea>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary btn-lg">Save</button>
+        <button class="btn btn-primary btn-lg">{{ __('Create auction') }}</button>
       </div>
     </form>
   </section>

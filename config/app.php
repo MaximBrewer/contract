@@ -137,6 +137,7 @@ return [
     'providers' => [
 
         TCG\Voyager\VoyagerServiceProvider::class,
+        App\Providers\TranslationServiceProvider::class,
         /*
          * Laravel Framework Service Providers...
          */

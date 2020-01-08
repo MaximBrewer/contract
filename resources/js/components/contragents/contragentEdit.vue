@@ -5,63 +5,63 @@
       :can-cancel="true"
       :is-full-page="fullPage"
     ></loading>
-    <router-link :to="{name: 'contragentIndex'}" class="btn btn-secondary">Back</router-link>
+    <router-link :to="{name: 'contragentIndex'}" class="btn btn-secondary">{{ __('Back') }}</router-link>
     <br />
     <br />
     <form v-on:submit="saveForm()">
       <div class="form-group">
-        <label class="control-label">Contragent title</label>
+        <label class="control-label">{{ __('Contragent title') }}</label>
         <input type="text" v-model="contragent.title" class="form-control" />
       </div>
       <div class="form-group">
-        <label class="control-label">Contragent federal district</label>
+        <label class="control-label">{{ __('Contragent federal district') }}</label>
         <v-select label="title" :options="federalDistricts" v-model="contragent.federal_district"></v-select>
       </div>
       <div class="form-group">
-        <label class="control-label">Contragent region</label>
+        <label class="control-label">{{ __('Contragent region') }}</label>
         <v-select label="title" :options="regions" v-model="contragent.region"></v-select>
       </div>
       <div class="form-group">
-        <label class="control-label">Contragent type</label>
+        <label class="control-label">{{ __('Contragent type') }}</label>
         <v-select label="title" :options="types" v-model="contragent.types" :multiple="true"></v-select>
       </div>
       <div class="form-group">
-        <label class="control-label">Contragent INN</label>
+        <label class="control-label">{{ __('Contragent TIN') }}</label>
         <input type="text" v-model="contragent.inn" class="form-control" />
       </div>
       <div class="form-group">
-        <label class="control-label">Contragent Legal address</label>
+        <label class="control-label">{{ __('Contragent Legal address') }}</label>
         <input type="text" v-model="contragent.legal_address" class="form-control" />
       </div>
       <div class="form-group">
-        <label class="control-label">Contragent FIO</label>
+        <label class="control-label">{{ __('Contragent contact') }}</label>
         <input type="text" v-model="contragent.fio" class="form-control" />
       </div>
       <div class="form-group">
-        <label class="control-label">Contragent phone</label>
+        <label class="control-label">{{ __('Contragent phone') }}</label>
         <input type="text" v-model="contragent.phone" class="form-control" />
       </div>
       <div class="form-group">
-        <label class="control-label">Contragent stores</label>
+        <label class="control-label">{{ __('Contragent stores') }}</label>
         <div class="stores">
           <ul>
             <li class="store" v-for="store, index in contragent.stores">
               <div class="form-group">
                 <input type="hidden" v-model="contragent.stores[index].id" class="form-control" />
-                <label class="control-label">Store {{ index + 1 }} coords</label>
+                <label class="control-label">{{ __('Store coords #', {store: index + 1}) }}</label>
                 <input type="text" v-model="contragent.stores[index].coords" class="form-control" />
-                <label class="control-label">Store {{ index + 1 }} address</label>
+                <label class="control-label">{{ __('Store address #', {store: index + 1}) }}</label>
                 <input type="text" v-model="contragent.stores[index].address" class="form-control" />
-                <label class="control-label">Store {{ index + 1 }} federal district</label>
+                <label class="control-label">{{ __('Store federal district #', {store: index + 1}) }}</label>
                 <v-select label="title" :options="federalDistricts" v-model="contragent.stores[index].federal_district"></v-select>
-                <label class="control-label">Store {{ index + 1 }} region</label>
+                <label class="control-label">{{ __('Store region #', {store: index + 1}) }}</label>
                 <v-select label="title" :options="regions" v-model="contragent.stores[index].region"></v-select>
                 <br />
                 <a
                   href="javascript:void(0)"
                   class="btn btn-danger btn-sm"
                   v-on:click="deleteStore(index)"
-                >Delete store</a>
+                >{{ __('Delete store') }}</a>
               </div>
             </li>
           </ul>
@@ -69,11 +69,11 @@
             href="javascript:void(0)"
             class="btn btn-primary btn-sm"
             v-on:click="addStore"
-          >Add store</a>
+          >{{ __('Add store') }}</a>
         </div>
       </div>
       <div class="form-group">
-        <button class="btn btn-primary btn-lg">Save</button>
+        <button class="btn btn-primary btn-lg">{{ __('Save') }}</button>
       </div>
     </form>
   </section>
@@ -103,7 +103,7 @@ export default {
         app.isLoading = false;
       })
       .catch(function() {
-        alert("Не удалось загрузить компанию");
+        alert( __("Failed to load contragent") );
         app.isLoading = false;
       });
   },
@@ -177,7 +177,7 @@ export default {
         })
         .catch(function(resp) {
           console.log(resp);
-          alert("Не удалось создать компанию");
+          alert( __('Failed to edit contragent') );
           app.isLoading = false;
         });
     }

@@ -1,19 +1,19 @@
 <template>
   <section>
-    <router-link :to="{name: 'createAuction'}" class="btn btn-primary">Create new auction</router-link><br><br>
+    <router-link :to="{name: 'createAuction'}" class="btn btn-primary">{{ __('Create new auction') }}</router-link><br><br>
     <div class="table-responsive">
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
-            <th>Contragent</th>
-            <th>Product</th>
-            <th>Multiplicity</th>
-            <th>Federal district</th>
-            <th>Region</th>
-            <th>Address</th>
-            <th>Coords</th>
-            <th>Start</th>
-            <th>Finish</th>
+            <th>{{ __('Contragent') }}</th>
+            <th>{{ __('Product') }}</th>
+            <th>{{ __('Multiplicity') }}</th>
+            <th>{{ __('Federal district') }}</th>
+            <th>{{ __('Region') }}</th>
+            <th>{{ __('Address') }}</th>
+            <th>{{ __('Coords') }}</th>
+            <th>{{ __('Start') }}</th>
+            <th>{{ __('Finish') }}</th>
             <th width="100">&nbsp;</th>
           </tr>
         </thead>
@@ -33,12 +33,12 @@
               <router-link
                 :to="{name: 'editAuction', params: {id: auction.id}}"
                 class="btn btn-sm btn-primary"
-              >Edit</router-link>
+              >{{ __('Edit') }}</router-link>
               <a
                 href="#"
                 class="btn btn-sm btn-danger"
                 v-on:click="deleteEntry(auction.id, index)"
-              >Delete</a>
+              >{{ __('Delete') }}</a>
               </div>
             </td>
           </tr>
@@ -64,16 +64,17 @@ export default {
       })
       .catch(function(resp) {
         console.log(resp);
-        alert("Не удалось загрузить аукционы");
+        alert( __("Failed to load auctions") );
       });
   },
+
   methods: {
     formatDate(indate){
       let date = new Date(indate);
       return date.toLocaleString();
     },
     deleteEntry(id, index) {
-      if (confirm("Вы действительно хотите удалить аукцион?")) {
+      if (confirm( __('Are you sure you want to delete the auction?') )) {
         var app = this;
         axios
           .delete("/api/v1/auctions/" + id)
@@ -81,10 +82,11 @@ export default {
             app.auctions.splice(index, 1);
           })
           .catch(function(resp) {
-            alert("Не удалось удалить аукцион");
+            alert( __('Failed to delete auction') );
           });
       }
     }
   }
 };
+
 </script>

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,10 +20,14 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script>
+        window._translations = {!! cache('translations') !!};
+    </script>
 </head>
-<body>
+
+<body class="d-flex flex-column">
     <div id="app">
-        <nav class="navbar navbar-expand navbar-dark flex-column flex-md-row  bg-dark">
+        <nav class="navbar  navbar-expand-lg navbar-dark flex-column flex-md-row  bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -42,46 +47,45 @@
                         <!-- Authentication Links -->
 
                         <li class="nav-item">
-                                <a class="nav-link" href="{{ route('about') }}">{{ __('About') }}</a>
-                            </li>
+                            <a class="nav-link" href="{{ route('about') }}">{{ __('About') }}</a>
+                        </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('rating') }}">{{ __('Rating') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('auction') }}">{{ __('Auction') }}</a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('rating') }}">{{ __('Rating') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('auction') }}">{{ __('Auction') }}</a>
+                        </li>
                         @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        @if (Route::has('register'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
+                        @endif
                         @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('personal') }}">{{ __('Cabinet') }}</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('personal') }}">{{ __('Cabinet') }}</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
                         @endguest
                     </ul>
                 </div>
@@ -93,5 +97,13 @@
             </div>
         </main>
     </div>
+    <!-- Footer -->
+    <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+        <div class="container text-center">
+            <small>&copy; 2023 cross-contract.ru</small>
+        </div>
+    </footer>
+    <!-- Footer -->
 </body>
+
 </html>
