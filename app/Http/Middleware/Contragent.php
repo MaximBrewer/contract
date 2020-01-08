@@ -37,17 +37,17 @@ class Contragent
 
         }
 
-        var_dump($request->fullUrl());
-        die;
-
-        if(
-            !$contragent->title
-            || !$contragent->federal_district_id
-            || !$contragent->region
-            || !$contragent->fio
-            || !$contragent->phone
-        ) return redirect('/personal#/contragents/edit/' . $contragent->id);
+        if($request->path() != 'personal/contragents/edit/' . $contragent->id)
+            if(
+                !$contragent->title
+                || !$contragent->federal_district_id
+                || !$contragent->region
+                || !$contragent->fio
+                || !$contragent->phone
+            ) return redirect('/personal/contragents/edit/' . $contragent->id);
 
         return $next($request);
+
     }
+    
 }
