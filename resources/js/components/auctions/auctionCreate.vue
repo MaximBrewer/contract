@@ -1,10 +1,6 @@
 <template>
   <section class="auction-edit-wrapper">
-    <loading
-      :active.sync="isLoading"
-      :can-cancel="true"
-      :is-full-page="fullPage"
-    ></loading>
+    <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
     <router-link :to="{name: 'auctionIndex'}" class="btn btn-secondary">Back</router-link>
     <br />
     <br />
@@ -27,11 +23,21 @@
       </div>
       <div class="form-group">
         <label class="control-label">Auction start</label>
-        <datetime type="datetime" class="theme-primary" input-class="form-control" v-model="auction.start_at"></datetime>
+        <datetime
+          type="datetime"
+          class="theme-primary"
+          input-class="form-control"
+          v-model="auction.start_at"
+        ></datetime>
       </div>
       <div class="form-group">
         <label class="control-label">Auction finish</label>
-        <datetime type="datetime" class="theme-primary" input-class="form-control" v-model="auction.finish_at"></datetime>
+        <datetime
+          type="datetime"
+          class="theme-primary"
+          input-class="form-control"
+          v-model="auction.finish_at"
+        ></datetime>
       </div>
       <div class="form-group">
         <label class="control-label">Auction comment</label>
@@ -46,8 +52,8 @@
 <script>
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
-import { Datetime } from 'vue-datetime';
-import 'vue-datetime/dist/vue-datetime.css'
+import { Datetime } from "vue-datetime";
+import "vue-datetime/dist/vue-datetime.css";
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 export default {
@@ -79,7 +85,7 @@ export default {
         finish_at: null,
         comment: "",
         product: null,
-        multiplicity: null,
+        multiplicity: null
       }
     };
   },
@@ -92,11 +98,9 @@ export default {
     },
     getProducts() {
       let app = this;
-      axios
-        .get("/api/v1/products")
-        .then(function(resp) {
-          app.products = resp.data;
-        });
+      axios.get("/api/v1/products").then(function(resp) {
+        app.products = resp.data;
+      });
     },
     getStores() {
       let app = this;
@@ -114,14 +118,12 @@ export default {
       event.preventDefault();
       var app = this;
       app.isLoading = true;
+      var newAuction = app.auction;
       axios
-        .post("/api/v1/auctions", app.auction)
+        .post("/api/v1/auctions", newAuction)
         .then(function(resp) {
           app.auction = resp.data;
-          app.isLoading = false;
-          //app.$router.replace("/");
-
-          app.$router.replace("/auctions/edit/" + app.contragent.id);
+          app.$router.replace("/auctions/edit/" + resp.data.id);
           app.isLoading = false;
           return true;
         })

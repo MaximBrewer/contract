@@ -1895,6 +1895,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1963,11 +1969,10 @@ __webpack_require__.r(__webpack_exports__);
       event.preventDefault();
       var app = this;
       app.isLoading = true;
-      axios.post("/api/v1/auctions", app.auction).then(function (resp) {
+      var newAuction = app.auction;
+      axios.post("/api/v1/auctions", newAuction).then(function (resp) {
         app.auction = resp.data;
-        app.isLoading = false; //app.$router.replace("/");
-
-        app.$router.replace("/auctions/edit/" + app.contragent.id);
+        app.$router.replace("/auctions/edit/" + resp.data.id);
         app.isLoading = false;
         return true;
       })["catch"](function (resp) {
