@@ -2196,6 +2196,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2212,6 +2216,7 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    bidAuction: function bidAuction(id) {},
     formatDate: function formatDate(indate) {
       var date = new Date(indate);
       return date.toLocaleString();
@@ -48425,6 +48430,8 @@ var render = function() {
       _c("table", { staticClass: "table table-bordered table-striped" }, [
         _c("thead", [
           _c("tr", [
+            _c("th"),
+            _vm._v(" "),
             _c("th", [_vm._v(_vm._s(_vm.__("Contragent")))]),
             _vm._v(" "),
             _c("th", [_vm._v(_vm._s(_vm.__("Product")))]),
@@ -48451,6 +48458,21 @@ var render = function() {
           "tbody",
           _vm._l(_vm.auctions, function(auction, index) {
             return _c("tr", [
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-warning",
+                    on: {
+                      click: function($event) {
+                        return _vm.bidAuction(auction.id)
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(_vm.__("Bid")))]
+                )
+              ]),
+              _vm._v(" "),
               _c("td", [_vm._v(_vm._s(auction.contragent.title))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(auction.product.title))]),

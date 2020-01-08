@@ -4,6 +4,7 @@
       <table class="table table-bordered table-striped">
         <thead>
           <tr>
+            <th></th>
             <th>{{ __('Contragent') }}</th>
             <th>{{ __('Product') }}</th>
             <th>{{ __('Multiplicity') }}</th>
@@ -18,6 +19,9 @@
         </thead>
         <tbody>
           <tr v-for="auction, index in auctions">
+            <td>
+              <button v-on:click="bidAuction(auction.id)" class="btn btn-warning">{{ __('Bid') }}</button>
+            </td>
             <td>{{ auction.contragent.title }}</td>
             <td>{{ auction.product.title }}</td>
             <td>{{ auction.multiplicity.title }}</td>
@@ -68,6 +72,7 @@ export default {
   },
 
   methods: {
+    bidAuction(id){},
     formatDate(indate){
       let date = new Date(indate);
       return date.toLocaleString();
