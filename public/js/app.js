@@ -48489,7 +48489,7 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(_vm.formatDate(auction.finish_at)))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(auction.store.comment))]),
+              _c("td", [_vm._v(_vm._s(auction.comment))]),
               _vm._v(" "),
               _c("td", [
                 _c(

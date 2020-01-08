@@ -30,7 +30,7 @@
             <td>{{ auction.store.address }}</td>
             <td>{{ formatDate(auction.start_at) }}</td>
             <td>{{ formatDate(auction.finish_at) }}</td>
-            <td>{{ auction.store.comment }}</td>
+            <td>{{ auction.comment }}</td>
             <td>
               <div class="btn-group" role="group">
               <router-link
