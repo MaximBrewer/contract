@@ -14,7 +14,6 @@
             <th>{{ __('Start') }}</th>
             <th>{{ __('Finish') }}</th>
             <th>{{ __('Comment') }}</th>
-            <th width="100">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -31,19 +30,6 @@
             <td>{{ formatDate(auction.start_at) }}</td>
             <td>{{ formatDate(auction.finish_at) }}</td>
             <td>{{ auction.comment }}</td>
-            <td>
-              <div class="btn-group" role="group">
-              <router-link
-                :to="{name: 'editAuction', params: {id: auction.id}}"
-                class="btn btn-sm btn-primary"
-              >{{ __('Edit') }}</router-link>
-              <a
-                href="#"
-                class="btn btn-sm btn-danger"
-                v-on:click="deleteEntry(auction.id, index)"
-              >{{ __('Delete') }}</a>
-              </div>
-            </td>
           </tr>
         </tbody>
       </table>

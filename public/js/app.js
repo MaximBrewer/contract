@@ -2186,20 +2186,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -48448,9 +48434,7 @@ var render = function() {
             _vm._v(" "),
             _c("th", [_vm._v(_vm._s(_vm.__("Finish")))]),
             _vm._v(" "),
-            _c("th", [_vm._v(_vm._s(_vm.__("Comment")))]),
-            _vm._v(" "),
-            _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
+            _c("th", [_vm._v(_vm._s(_vm.__("Comment")))])
           ])
         ]),
         _vm._v(" "),
@@ -48489,44 +48473,7 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(_vm.formatDate(auction.finish_at)))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(auction.comment))]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "div",
-                  { staticClass: "btn-group", attrs: { role: "group" } },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-sm btn-primary",
-                        attrs: {
-                          to: {
-                            name: "editAuction",
-                            params: { id: auction.id }
-                          }
-                        }
-                      },
-                      [_vm._v(_vm._s(_vm.__("Edit")))]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-sm btn-danger",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            return _vm.deleteEntry(auction.id, index)
-                          }
-                        }
-                      },
-                      [_vm._v(_vm._s(_vm.__("Delete")))]
-                    )
-                  ],
-                  1
-                )
-              ])
+              _c("td", [_vm._v(_vm._s(auction.comment))])
             ])
           }),
           0
