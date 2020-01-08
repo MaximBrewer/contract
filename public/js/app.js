@@ -2432,7 +2432,7 @@ __webpack_require__.r(__webpack_exports__);
         return true;
       })["catch"](function (resp) {
         console.log(resp);
-        alert(__('Не удалось создать контрагента'));
+        alert(__('Failed to create contragent'));
         app.isLoading = false;
       });
     }

@@ -180,7 +180,7 @@ export default {
         })
         .catch(function(resp) {
           console.log(resp);
-          alert( __('Не удалось создать контрагента') );
+          alert( __('Failed to create contragent') );
           app.isLoading = false;
         });
     }

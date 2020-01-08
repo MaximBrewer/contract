@@ -23,22 +23,16 @@
 // Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], function(){
 //     ..
 //     });
+Auth::routes(['verify' => true]);
 
+Route::get('/home', function () {return redirect('/personal');});
+Route::get('/', function () {return redirect('/personal');});
 
-Route::get('/home', function () {
-    return redirect('/');
-});
+Route::get('/personal', 'PersonalController@index')->middleware('verified')->name('personal');
 
-
-Route::get('/', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/personal', 'PersonalController@index')->name('personal');
-Route::get('/about', 'AboutController@index')->name('about');
-Route::get('/rating', 'RatingController@index')->name('rating');
-Route::get('/auction', 'AuctionController@index')->name('auction');
-
+// Route::get('/about', 'AboutController@index')->name('about');
+// Route::get('/rating', 'RatingController@index')->name('rating');
+// Route::get('/auction', 'AuctionController@index')->name('auction');
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
