@@ -17,7 +17,7 @@ class Contragent
     public function handle($request, Closure $next)
     {
         if (!Auth::user()) return redirect('/login');
-        // if (Auth::user()->role_id == 1 || Auth::user()->role_id == 3) return $next($request);
+        if (Auth::user()->role_id == 1 || Auth::user()->role_id == 3) return $next($request);
 
         if (empty(Auth::user()->contragents->toArray())){
 
