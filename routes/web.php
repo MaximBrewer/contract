@@ -29,6 +29,15 @@ Route::get('/home', function () {return redirect('/personal');});
 Route::get('/', function () {return redirect('/personal');});
 
 Route::get('/personal', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
+Route::get('/personal/contragents', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
+Route::get('/personal/contragents/create', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
+Route::get('/personal/contragents/edit/{id}', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
+Route::get('/personal/auctions', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
+Route::get('/personal/auctions/create', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
+Route::get('/personal/auctions/edit/{id}', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
+
+
+Route::get('/personal', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
 
 // Route::get('/about', 'AboutController@index')->name('about');
 // Route::get('/rating', 'RatingController@index')->name('rating');

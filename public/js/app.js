@@ -65139,27 +65139,27 @@ window.Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
 var routes = [{
-  path: "/contragents",
+  path: "/personal/contragents",
   component: _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
   name: "contragentIndex"
 }, {
-  path: "/contragents/create",
+  path: "/personal/contragents/create",
   component: _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
   name: "createContragent"
 }, {
-  path: "/contragents/edit/:id",
+  path: "/personal/contragents/edit/:id",
   component: _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
   name: "editContragent"
 }, {
-  path: "/auctions",
+  path: "/personal/auctions",
   component: _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
   name: "auctionIndex"
 }, {
-  path: "/auctions/create",
+  path: "/personal/auctions/create",
   component: _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
   name: "createAuction"
 }, {
-  path: "/auctions/edit/:id",
+  path: "/personal/auctions/edit/:id",
   component: _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
   name: "editAuction"
 }];

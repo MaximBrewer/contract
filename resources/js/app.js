@@ -26,32 +26,32 @@ import AuctionEdit from "./components/auctions/auctionEdit.vue";
 
 const routes = [
     {
-        path: "/contragents",
+        path: "/personal/contragents",
         component: ContragentIndex ,
         name: "contragentIndex"
     },
     {
-        path: "/contragents/create",
+        path: "/personal/contragents/create",
         component: ContragentCreate,
         name: "createContragent"
     },
     {
-        path: "/contragents/edit/:id",
+        path: "/personal/contragents/edit/:id",
         component: ContragentEdit,
         name: "editContragent"
     },
     {
-        path: "/auctions",
+        path: "/personal/auctions",
         component: AuctionIndex ,
         name: "auctionIndex"
     },
     {
-        path: "/auctions/create",
+        path: "/personal/auctions/create",
         component: AuctionCreate,
         name: "createAuction"
     },
     {
-        path: "/auctions/edit/:id",
+        path: "/personal/auctions/edit/:id",
         component: AuctionEdit,
         name: "editAuction"
     }
