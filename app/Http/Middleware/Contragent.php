@@ -21,27 +21,32 @@ class Contragent
 
         if (empty(Auth::user()->contragents->toArray())){
 
-            $contragent = \App\Contragent::where('inn', Auth::user()->inn);
+            $contragent = \App\Contragent::where('inn', Auth::user()->inn)->first();
 
             if(!$contragent){
                 $contragent = \App\Contragent::create([
                     "inn" => Auth::user()->inn
                 ]);
             }
-            var_dump(Auth::user());
-            die;
 
             Auth::user()->contragents()->sync([$contragent->id]);
 
-            if(
-                !$contragent->title
-                || !$contragent->federal_district_id
-                || !$contragent->region
-                || !$contragent->fio
-                || !$contragent->phone
-            ) return redirect('/personal#/contragents/edit/' . $contragent->id);
+        } else {
+
+            $contragent = Auth::user()->contragents[0];
 
         }
+
+        var_dump($request->fullUrl());
+        die;
+
+        if(
+            !$contragent->title
+            || !$contragent->federal_district_id
+            || !$contragent->region
+            || !$contragent->fio
+            || !$contragent->phone
+        ) return redirect('/personal#/contragents/edit/' . $contragent->id);
 
         return $next($request);
     }
