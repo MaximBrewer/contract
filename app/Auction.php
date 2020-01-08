@@ -11,10 +11,31 @@ use App\Contragent;
 
 class Auction extends Model
 {
+    protected $fillable = [
+        'contragent_id',
+        'store_id',
+        'comment',
+        'start_at',
+        'finish_at',
+        'product_id',
+        'multiplicity_id'
+    ];
 
     protected $appends = [
         'filled',
     ];
+
+
+    public function getStartAtAttribute($value)
+    {
+        return date(DATE_ATOM, strtotime($value));
+    }
+
+
+    public function getFinishAtAttribute($value)
+    {
+        return date(DATE_ATOM, strtotime($value));
+    }
 
     public function getFilledAttribute()
     {

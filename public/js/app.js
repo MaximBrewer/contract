@@ -1838,14 +1838,18 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
-/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
-/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-datetime */ "./node_modules/vue-datetime/dist/vue-datetime.js");
+/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_datetime__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-datetime/dist/vue-datetime.css */ "./node_modules/vue-datetime/dist/vue-datetime.css");
+/* harmony import */ var vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
+/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_5__);
 //
 //
 //
@@ -1891,131 +1895,81 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    vSelect: vue_select__WEBPACK_IMPORTED_MODULE_0___default.a,
-    Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1___default.a
+    vSelect: vue_select__WEBPACK_IMPORTED_MODULE_4___default.a,
+    Datetime: vue_datetime__WEBPACK_IMPORTED_MODULE_2__["Datetime"],
+    Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default.a
   },
   mounted: function mounted() {
     var app = this;
-    app.isLoading = true;
-    app.getFederalDistricts();
-    app.getRegions();
-    app.getTypes();
-    app.contragent = {
-      title: "",
-      inn: "",
-      typeIds: [],
-      fio: "",
-      phone: "",
-      legal_address: "",
-      federal_district: 0,
-      region: 0,
-      types: [],
-      stores: []
-    };
+    app.getMultiplicities();
+    app.getProducts();
+    app.getStores();
+    app.getContragents();
     app.isLoading = false;
   },
   data: function data() {
     return {
       isLoading: true,
-      onCancel: false,
       fullPage: true,
-      federalDistricts: [],
-      types: [],
-      regions: [],
-      contragentId: null,
-      contragent: {
-        name: "",
-        address: "",
-        website: "",
-        email: ""
+      multiplicities: [],
+      contragents: [],
+      stores: [],
+      products: [],
+      auction: {
+        contragent: null,
+        store: null,
+        start_at: null,
+        finish_at: null,
+        comment: "",
+        product: null,
+        multiplicity: null
       }
     };
   },
   methods: {
-    addStore: function addStore() {
+    getMultiplicities: function getMultiplicities() {
       var app = this;
-      app.contragent.stores.push({
-        id: 0,
-        coords: "",
-        addres: ""
+      axios.get("/api/v1/multiplicities").then(function (resp) {
+        app.multiplicities = resp.data;
       });
     },
-    deleteStore: function deleteStore(index) {
+    getProducts: function getProducts() {
       var app = this;
-      app.contragent.stores.splice(index, 1);
-    },
-    getFederalDistricts: function getFederalDistricts() {
-      var app = this;
-      axios.get("/api/v1/federalDistricts").then(function (resp) {
-        app.federalDistricts = resp.data;
+      axios.get("/api/v1/products").then(function (resp) {
+        app.products = resp.data;
       });
     },
-    getRegions: function getRegions() {
+    getStores: function getStores() {
       var app = this;
-      axios.get("/api/v1/regions?", this.contragent.federal_district).then(function (resp) {
-        app.regions = resp.data;
+      axios.get("/api/v1/stores").then(function (resp) {
+        app.stores = resp.data;
       });
     },
-    getTypes: function getTypes() {
+    getContragents: function getContragents() {
       var app = this;
-      axios.get("/api/v1/types").then(function (resp) {
-        app.types = resp.data;
+      axios.get("/api/v1/contragents").then(function (resp) {
+        app.contragents = resp.data;
       });
     },
     saveForm: function saveForm() {
       event.preventDefault();
       var app = this;
       app.isLoading = true;
-      var newContragent = app.contragent;
-      newContragent.federal_district_id = newContragent.federal_district.id;
-      newContragent.region_id = newContragent.region.id;
-      newContragent.typeIds = [];
+      axios.post("/api/v1/auctions", app.auction).then(function (resp) {
+        app.auction = resp.data;
+        app.isLoading = false; //app.$router.replace("/");
 
-      for (var t in newContragent.types) {
-        newContragent.typeIds.push(newContragent.types[t].id);
-      }
-
-      axios.post("/api/v1/contragents", newContragent).then(function (resp) {
-        app.contragent = resp.data;
         app.$router.replace("/auctions/edit/" + app.contragent.id);
         app.isLoading = false;
+        return true;
       })["catch"](function (resp) {
         console.log(resp);
         alert("Не удалось создать аукцион");
@@ -2118,7 +2072,7 @@ __webpack_require__.r(__webpack_exports__);
       app.auction = resp.data;
       app.isLoading = false;
     })["catch"](function () {
-      alert("Не удалось загрузить компанию");
+      alert("Не удалось загрузить аукцион");
       app.isLoading = false;
     });
   },
@@ -2172,7 +2126,8 @@ __webpack_require__.r(__webpack_exports__);
       app.isLoading = true;
       axios.patch("/api/v1/auctions/" + app.auctionId, newAuction).then(function (resp) {
         app.auction = resp.data;
-        app.isLoading = false; //app.$router.replace("/");
+        app.isLoading = false;
+        return true; //app.$router.replace("/");
       })["catch"](function (resp) {
         console.log(resp);
         alert("Не удалось создать компанию");
@@ -2259,6 +2214,10 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    formatDate: function formatDate(indate) {
+      var date = new Date(indate);
+      return date.toLocaleString();
+    },
     deleteEntry: function deleteEntry(id, index) {
       if (confirm("Вы действительно хотите удалить аукцион?")) {
         var app = this;
@@ -2465,6 +2424,7 @@ __webpack_require__.r(__webpack_exports__);
         app.contragent = resp.data;
         app.$router.replace("/contragents/edit/" + app.contragent.id);
         app.isLoading = false;
+        return true;
       })["catch"](function (resp) {
         console.log(resp);
         alert("Не удалось создать компанию");
@@ -2662,6 +2622,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.patch("/api/v1/contragents/" + app.contragentId, newContragent).then(function (resp) {
         app.contragent = resp.data;
         app.isLoading = false; //app.$router.replace("/");
+
+        return true;
       })["catch"](function (resp) {
         console.log(resp);
         alert("Не удалось создать компанию");
@@ -48026,7 +47988,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "section",
-    { staticClass: "contragent-edit-wrapper" },
+    { staticClass: "auction-edit-wrapper" },
     [
       _c("loading", {
         attrs: {
@@ -48064,50 +48026,22 @@ var render = function() {
           }
         },
         [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent title")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.contragent.title,
-                  expression: "contragent.title"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.contragent.title },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.contragent, "title", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
           _c(
             "div",
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Contragent federal district")
+                _vm._v("Auction lot")
               ]),
               _vm._v(" "),
               _c("v-select", {
-                attrs: { label: "title", options: _vm.federalDistricts },
+                attrs: { label: "title", options: _vm.products },
                 model: {
-                  value: _vm.contragent.federal_district,
+                  value: _vm.auction.product,
                   callback: function($$v) {
-                    _vm.$set(_vm.contragent, "federal_district", $$v)
+                    _vm.$set(_vm.auction, "product", $$v)
                   },
-                  expression: "contragent.federal_district"
+                  expression: "auction.product"
                 }
               })
             ],
@@ -48119,17 +48053,17 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Contragent region")
+                _vm._v("Auction multiplicity")
               ]),
               _vm._v(" "),
               _c("v-select", {
-                attrs: { label: "title", options: _vm.regions },
+                attrs: { label: "title", options: _vm.multiplicities },
                 model: {
-                  value: _vm.contragent.region,
+                  value: _vm.auction.multiplicity,
                   callback: function($$v) {
-                    _vm.$set(_vm.contragent, "region", $$v)
+                    _vm.$set(_vm.auction, "multiplicity", $$v)
                   },
-                  expression: "contragent.region"
+                  expression: "auction.multiplicity"
                 }
               })
             ],
@@ -48141,17 +48075,85 @@ var render = function() {
             { staticClass: "form-group" },
             [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v("Contragent type")
+                _vm._v("Auction contragent")
               ]),
               _vm._v(" "),
               _c("v-select", {
-                attrs: { label: "title", options: _vm.types, multiple: true },
+                attrs: { label: "title", options: _vm.contragents },
                 model: {
-                  value: _vm.contragent.types,
+                  value: _vm.auction.contragent,
                   callback: function($$v) {
-                    _vm.$set(_vm.contragent, "types", $$v)
+                    _vm.$set(_vm.auction, "contragent", $$v)
                   },
-                  expression: "contragent.types"
+                  expression: "auction.contragent"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Auction store")
+              ]),
+              _vm._v(" "),
+              _c("v-select", {
+                attrs: { label: "address", options: _vm.stores },
+                model: {
+                  value: _vm.auction.store,
+                  callback: function($$v) {
+                    _vm.$set(_vm.auction, "store", $$v)
+                  },
+                  expression: "auction.store"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Auction start")
+              ]),
+              _vm._v(" "),
+              _c("datetime", {
+                staticClass: "theme-primary",
+                attrs: { type: "datetime", "input-class": "form-control" },
+                model: {
+                  value: _vm.auction.start_at,
+                  callback: function($$v) {
+                    _vm.$set(_vm.auction, "start_at", $$v)
+                  },
+                  expression: "auction.start_at"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v("Auction finish")
+              ]),
+              _vm._v(" "),
+              _c("datetime", {
+                staticClass: "theme-primary",
+                attrs: { type: "datetime", "input-class": "form-control" },
+                model: {
+                  value: _vm.auction.finish_at,
+                  callback: function($$v) {
+                    _vm.$set(_vm.auction, "finish_at", $$v)
+                  },
+                  expression: "auction.finish_at"
                 }
               })
             ],
@@ -48160,248 +48162,29 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
             _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent INN")
+              _vm._v("Auction comment")
             ]),
             _vm._v(" "),
-            _c("input", {
+            _c("textarea", {
               directives: [
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.contragent.inn,
-                  expression: "contragent.inn"
+                  value: _vm.auction.comment,
+                  expression: "auction.comment"
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.contragent.inn },
+              domProps: { value: _vm.auction.comment },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.$set(_vm.contragent, "inn", $event.target.value)
+                  _vm.$set(_vm.auction, "comment", $event.target.value)
                 }
               }
             })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent Legal address")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.contragent.legal_address,
-                  expression: "contragent.legal_address"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.contragent.legal_address },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.contragent, "legal_address", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent FIO")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.contragent.fio,
-                  expression: "contragent.fio"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.contragent.fio },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.contragent, "fio", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent phone")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.contragent.phone,
-                  expression: "contragent.phone"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.contragent.phone },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.contragent, "phone", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v("Contragent stores")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "stores" }, [
-              _c(
-                "ul",
-                _vm._l(_vm.contragent.stores, function(store, index) {
-                  return _c("li", { staticClass: "store" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.contragent.stores[index].id,
-                            expression: "contragent.stores[index].id"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "hidden" },
-                        domProps: { value: _vm.contragent.stores[index].id },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.contragent.stores[index],
-                              "id",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("label", { staticClass: "control-label" }, [
-                        _vm._v("Store " + _vm._s(index + 1) + " coords")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.contragent.stores[index].coords,
-                            expression: "contragent.stores[index].coords"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text" },
-                        domProps: {
-                          value: _vm.contragent.stores[index].coords
-                        },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.contragent.stores[index],
-                              "coords",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("label", { staticClass: "control-label" }, [
-                        _vm._v("Store " + _vm._s(index + 1) + " address")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.contragent.stores[index].address,
-                            expression: "contragent.stores[index].address"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text" },
-                        domProps: {
-                          value: _vm.contragent.stores[index].address
-                        },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.contragent.stores[index],
-                              "address",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-danger btn-sm",
-                          attrs: { href: "javascript:void(0)" },
-                          on: {
-                            click: function($event) {
-                              return _vm.deleteStore(index)
-                            }
-                          }
-                        },
-                        [_vm._v("Delete store")]
-                      )
-                    ])
-                  ])
-                }),
-                0
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-primary btn-sm",
-                  attrs: { href: "javascript:void(0)" },
-                  on: { click: _vm.addStore }
-                },
-                [_vm._v("Add store")]
-              )
-            ])
           ]),
           _vm._v(" "),
           _vm._m(0)
@@ -48719,9 +48502,9 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(auction.store.coords))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(auction.start_at))]),
+                _c("td", [_vm._v(_vm._s(_vm.formatDate(auction.start_at)))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(auction.finish_at))]),
+                _c("td", [_vm._v(_vm._s(_vm.formatDate(auction.finish_at)))]),
                 _vm._v(" "),
                 _c("td", [
                   _c(
@@ -65465,11 +65248,11 @@ var routes = [{
   component: _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
   name: "auctionIndex"
 }, {
-  path: "/auction/create",
+  path: "/auctions/create",
   component: _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
   name: "createAuction"
 }, {
-  path: "/auction/edit/:id",
+  path: "/auctions/edit/:id",
   component: _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
   name: "editAuction"
 }];

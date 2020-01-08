@@ -72,7 +72,7 @@ export default {
         app.isLoading = false;
       })
       .catch(function() {
-        alert("Не удалось загрузить компанию");
+        alert("Не удалось загрузить аукцион");
         app.isLoading = false;
       });
   },
@@ -131,6 +131,7 @@ export default {
         .then(function(resp) {
           app.auction = resp.data;
           app.isLoading = false;
+          return true;
           //app.$router.replace("/");
         })
         .catch(function(resp) {

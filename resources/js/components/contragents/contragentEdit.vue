@@ -173,6 +173,7 @@ export default {
           app.contragent = resp.data;
           app.isLoading = false;
           //app.$router.replace("/");
+          return true;
         })
         .catch(function(resp) {
           console.log(resp);

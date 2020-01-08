@@ -26,8 +26,8 @@
             <td>{{ auction.store.region.title }}</td>
             <td>{{ auction.store.address }}</td>
             <td>{{ auction.store.coords }}</td>
-            <td>{{ auction.start_at }}</td>
-            <td>{{ auction.finish_at }}</td>
+            <td>{{ formatDate(auction.start_at) }}</td>
+            <td>{{ formatDate(auction.finish_at) }}</td>
             <td>
               <div class="btn-group" role="group">
               <router-link
@@ -68,6 +68,10 @@ export default {
       });
   },
   methods: {
+    formatDate(indate){
+      let date = new Date(indate);
+      return date.toLocaleString();
+    },
     deleteEntry(id, index) {
       if (confirm("Вы действительно хотите удалить аукцион?")) {
         var app = this;

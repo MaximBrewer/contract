@@ -44,12 +44,12 @@ const routes = [
         name: "auctionIndex"
     },
     {
-        path: "/auction/create",
+        path: "/auctions/create",
         component: AuctionCreate,
         name: "createAuction"
     },
     {
-        path: "/auction/edit/:id",
+        path: "/auctions/edit/:id",
         component: AuctionEdit,
         name: "editAuction"
     }

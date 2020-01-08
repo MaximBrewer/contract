@@ -176,6 +176,7 @@ export default {
           app.contragent = resp.data;
           app.$router.replace("/contragents/edit/" + app.contragent.id);
           app.isLoading = false;
+          return true;
         })
         .catch(function(resp) {
           console.log(resp);

@@ -27,30 +27,16 @@ class AuctionsController extends Controller
      */
     public function store(Request $request)
     {
-        $auction = Auction::create($request->all());
-        $auction->types()->sync($request->all()['typeIds']);
-        $storesIds = [];
-        $auction->update($request->all());
-        if(count($request->all()['stores'])){
-            foreach($request->all()['stores'] as $store){
-                if($store['coords'] && $store['address']){
-                    if($store['id']){
-                        Store::find($store['id'])->update([
-                            'coords' => $store['coords'], 
-                            'address' => $store['address']
-                        ]);
-                        $storesIds[] = $store['id'];
-                    } else {
-                        $storesIds[] = Store::create([
-                            'contragent_id' => $auction->id,
-                            'coords' => $store['coords'],
-                            'address' => $store['address'],
-                        ])->id;
-                    }
-                }
-            }
-            Store::whereNotIn('id', $storesIds)->where("contragent_id", $auction->id)->delete();
-        }
+
+        $auction = Auction::create([
+            'contragent_id' => $request->post('contragent')['id'],
+            'product_id' => $request->post('product')['id'],
+            'multiplicity_id' => $request->post('multiplicity')['id'],
+            'store_id' => $request->post('store')['id'],
+            'start_at' => date('Y-m-d H:i:s', strtotime($request->post('start_at'))),
+            'finish_at' => date('Y-m-d H:i:s', strtotime($request->post('finish_at'))),
+            'comment' => $request->post('comment'),
+        ]);
         $auction = Auction::findOrFail($auction->id);
         return $auction;
     }
@@ -76,29 +62,15 @@ class AuctionsController extends Controller
     public function update(Request $request, $id)
     {
         $auction = Auction::findOrFail($id);
-        $auction->types()->sync($request->all()['typeIds']);
-        $storesIds = [];
-        $auction->update($request->all());
-        if(count($request->all()['stores'])){
-            foreach($request->all()['stores'] as $store){
-                if($store['coords'] && $store['address']){
-                    if($store['id']){
-                        Store::find($store['id'])->update([
-                            'coords' => $store['coords'], 
-                            'address' => $store['address']
-                        ]);
-                        $storesIds[] = $store['id'];
-                    } else {
-                        $storesIds[] = Store::create([
-                            'contragent_id' => $auction->id,
-                            'coords' => $store['coords'],
-                            'address' => $store['address'],
-                        ])->id;
-                    }
-                }
-            }
-            Store::whereNotIn('id', $storesIds)->where("contragent_id", $auction->id)->delete();
-        }
+        $auction->update([
+            'contragent_id' => $request->post('contragent')['id'],
+            'product_id' => $request->post('product')['id'],
+            'multiplicity_id' => $request->post('multiplicity')['id'],
+            'store_id' => $request->post('store')['id'],
+            'start_at' => date('Y-m-d H:i:s', strtotime($request->post('start_at'))),
+            'finish_at' => date('Y-m-d H:i:s', strtotime($request->post('finish_at'))),
+            'comment' => $request->post('comment'),
+        ]);
         $auction = Auction::findOrFail($id);
         return $auction;
     }

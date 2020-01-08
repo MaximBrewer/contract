@@ -1,5 +1,5 @@
 <template>
-  <section class="contragent-edit-wrapper">
+  <section class="auction-edit-wrapper">
     <loading
       :active.sync="isLoading"
       :can-cancel="true"
@@ -10,63 +10,32 @@
     <br />
     <form v-on:submit="saveForm()">
       <div class="form-group">
-        <label class="control-label">Contragent title</label>
-        <input type="text" v-model="contragent.title" class="form-control" />
+        <label class="control-label">Auction lot</label>
+        <v-select label="title" :options="products" v-model="auction.product"></v-select>
       </div>
       <div class="form-group">
-        <label class="control-label">Contragent federal district</label>
-        <v-select label="title" :options="federalDistricts" v-model="contragent.federal_district"></v-select>
+        <label class="control-label">Auction multiplicity</label>
+        <v-select label="title" :options="multiplicities" v-model="auction.multiplicity"></v-select>
       </div>
       <div class="form-group">
-        <label class="control-label">Contragent region</label>
-        <v-select label="title" :options="regions" v-model="contragent.region"></v-select>
+        <label class="control-label">Auction contragent</label>
+        <v-select label="title" :options="contragents" v-model="auction.contragent"></v-select>
       </div>
       <div class="form-group">
-        <label class="control-label">Contragent type</label>
-        <v-select label="title" :options="types" v-model="contragent.types" :multiple="true"></v-select>
+        <label class="control-label">Auction store</label>
+        <v-select label="address" :options="stores" v-model="auction.store"></v-select>
       </div>
       <div class="form-group">
-        <label class="control-label">Contragent INN</label>
-        <input type="text" v-model="contragent.inn" class="form-control" />
+        <label class="control-label">Auction start</label>
+        <datetime type="datetime" class="theme-primary" input-class="form-control" v-model="auction.start_at"></datetime>
       </div>
       <div class="form-group">
-        <label class="control-label">Contragent Legal address</label>
-        <input type="text" v-model="contragent.legal_address" class="form-control" />
+        <label class="control-label">Auction finish</label>
+        <datetime type="datetime" class="theme-primary" input-class="form-control" v-model="auction.finish_at"></datetime>
       </div>
       <div class="form-group">
-        <label class="control-label">Contragent FIO</label>
-        <input type="text" v-model="contragent.fio" class="form-control" />
-      </div>
-      <div class="form-group">
-        <label class="control-label">Contragent phone</label>
-        <input type="text" v-model="contragent.phone" class="form-control" />
-      </div>
-      <div class="form-group">
-        <label class="control-label">Contragent stores</label>
-        <div class="stores">
-          <ul>
-            <li class="store" v-for="store, index in contragent.stores">
-              <div class="form-group">
-                <input type="hidden" v-model="contragent.stores[index].id" class="form-control" />
-                <label class="control-label">Store {{ index + 1 }} coords</label>
-                <input type="text" v-model="contragent.stores[index].coords" class="form-control" />
-                <label class="control-label">Store {{ index + 1 }} address</label>
-                <input type="text" v-model="contragent.stores[index].address" class="form-control" />
-                <br />
-                <a
-                  href="javascript:void(0)"
-                  class="btn btn-danger btn-sm"
-                  v-on:click="deleteStore(index)"
-                >Delete store</a>
-              </div>
-            </li>
-          </ul>
-          <a
-            href="javascript:void(0)"
-            class="btn btn-primary btn-sm"
-            v-on:click="addStore"
-          >Add store</a>
-        </div>
+        <label class="control-label">Auction comment</label>
+        <textarea v-model="auction.comment" class="form-control"></textarea>
       </div>
       <div class="form-group">
         <button class="btn btn-primary btn-lg">Save</button>
@@ -75,103 +44,86 @@
   </section>
 </template>
 <script>
-import vSelect from "vue-select";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
-
+import { Datetime } from 'vue-datetime';
+import 'vue-datetime/dist/vue-datetime.css'
+import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 export default {
   components: {
     vSelect: vSelect,
+    Datetime: Datetime,
     Loading: Loading
   },
-
   mounted() {
     let app = this;
-    app.isLoading = true;
-    app.getFederalDistricts();
-    app.getRegions();
-    app.getTypes();
-    app.contragent = {
-      title: "",
-      inn: "",
-      typeIds: [],
-      fio: "",
-      phone: "",
-      legal_address: "",
-      federal_district: 0,
-      region: 0,
-      types: [],
-      stores: []
-    };
+    app.getMultiplicities();
+    app.getProducts();
+    app.getStores();
+    app.getContragents();
     app.isLoading = false;
   },
   data: function() {
     return {
       isLoading: true,
-      onCancel: false,
       fullPage: true,
-      federalDistricts: [],
-      types: [],
-      regions: [],
-      contragentId: null,
-      contragent: {
-        name: "",
-        address: "",
-        website: "",
-        email: ""
+      multiplicities: [],
+      contragents: [],
+      stores: [],
+      products: [],
+      auction: {
+        contragent: null,
+        store: null,
+        start_at: null,
+        finish_at: null,
+        comment: "",
+        product: null,
+        multiplicity: null,
       }
     };
   },
   methods: {
-    addStore() {
+    getMultiplicities() {
       let app = this;
-      app.contragent.stores.push({
-        id: 0,
-        coords: "",
-        addres: ""
+      axios.get("/api/v1/multiplicities").then(function(resp) {
+        app.multiplicities = resp.data;
       });
     },
-    deleteStore(index) {
-      let app = this;
-      app.contragent.stores.splice(index, 1);
-    },
-    getFederalDistricts() {
-      let app = this;
-      axios.get("/api/v1/federalDistricts").then(function(resp) {
-        app.federalDistricts = resp.data;
-      });
-    },
-    getRegions() {
+    getProducts() {
       let app = this;
       axios
-        .get("/api/v1/regions?", this.contragent.federal_district)
+        .get("/api/v1/products")
         .then(function(resp) {
-          app.regions = resp.data;
+          app.products = resp.data;
         });
     },
-    getTypes() {
+    getStores() {
       let app = this;
-      axios.get("/api/v1/types").then(function(resp) {
-        app.types = resp.data;
+      axios.get("/api/v1/stores").then(function(resp) {
+        app.stores = resp.data;
+      });
+    },
+    getContragents() {
+      let app = this;
+      axios.get("/api/v1/contragents").then(function(resp) {
+        app.contragents = resp.data;
       });
     },
     saveForm() {
       event.preventDefault();
       var app = this;
       app.isLoading = true;
-      var newContragent = app.contragent;
-      newContragent.federal_district_id = newContragent.federal_district.id;
-      newContragent.region_id = newContragent.region.id;
-      newContragent.typeIds = [];
-      for (let t in newContragent.types)
-        newContragent.typeIds.push(newContragent.types[t].id);
       axios
-        .post("/api/v1/contragents", newContragent)
+        .post("/api/v1/auctions", app.auction)
         .then(function(resp) {
-          app.contragent = resp.data;
+          app.auction = resp.data;
+          app.isLoading = false;
+          //app.$router.replace("/");
+
           app.$router.replace("/auctions/edit/" + app.contragent.id);
           app.isLoading = false;
+          return true;
         })
         .catch(function(resp) {
           console.log(resp);
