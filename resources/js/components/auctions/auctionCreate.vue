@@ -8,7 +8,7 @@
       </div>
       <div class="form-group">
         <label class="control-label">{{ __('Auction Start Price') }}</label>
-        <input type="text" v-model="auction.start_price" class="form-control" />
+        <input type="number" v-model="auction.start_price" class="form-control" />
       </div>
       <div class="form-group">
         <label class="control-label">{{ __('Auction Volume') }}</label>

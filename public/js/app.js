@@ -48045,7 +48045,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text" },
+              attrs: { type: "number" },
               domProps: { value: _vm.auction.start_price },
               on: {
                 input: function($event) {
