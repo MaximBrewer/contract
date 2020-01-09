@@ -16,14 +16,9 @@
             <td>
               <div class="btn-group" role="group">
               <router-link
-                :to="{name: 'editContragent', params: {id: contragent.id}}"
+                :to="{name: 'showContragent', params: {id: contragent.id}}"
                 class="btn btn-sm btn-primary"
               >{{ __('Edit') }}</router-link>
-              <a
-                href="#"
-                class="btn btn-sm btn-danger"
-                v-on:click="deleteEntry(contragent.id, index)"
-              >{{ __('Delete') }}</a>
               </div>
             </td>
           </tr>
@@ -51,21 +46,6 @@ export default {
         console.log(resp);
         alert( app.__('Failed to load contragents') );
       });
-  },
-  methods: {
-    deleteEntry(id, index) {
-      if (confirm( app.__('Are you sure you want to delete the contragent?') )) {
-        var app = this;
-        axios
-          .delete("/api/v1/contragents/" + id)
-          .then(function(resp) {
-            app.contragents.splice(index, 1);
-          })
-          .catch(function(resp) {
-            alert( app.__('Не удалось удалить контрагента') );
-          });
-      }
-    }
   }
 };
 </script>

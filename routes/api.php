@@ -28,4 +28,17 @@ Route::group(['prefix' => '/v1',
     Route::resource('products', 'ProductsController', ['except' => ['create', 'edit', 'update', 'delete']]);
     Route::resource('multiplicities', 'MultiplicitiesController', ['except' => ['create', 'edit', 'update', 'delete']]);
     Route::resource('types', 'TypesController', ['except' => ['create', 'edit', 'update', 'delete']]);
+
+
+
+    Route::get('comments/{contragentId}', 'CommentController@show');
+    Route::post('comments', 'CommentController@store');
+    Route::post('comments/{commentId}/{type}', 'CommentController@update');
+
+
+
+
+
+
+
 });

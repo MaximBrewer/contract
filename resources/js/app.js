@@ -20,6 +20,7 @@ window.Vue.use(VueRouter);
 import ContragentIndex from "./components/contragents/contragentIndex.vue";
 import ContragentCreate from "./components/contragents/contragentCreate.vue";
 import ContragentEdit from "./components/contragents/contragentEdit.vue";
+import contragentShow from "./components/contragents/contragentShow.vue";
 import AuctionIndex from "./components/auctions/auctionIndex.vue";
 import AuctionCreate from "./components/auctions/auctionCreate.vue";
 import AuctionEdit from "./components/auctions/auctionEdit.vue";
@@ -34,6 +35,11 @@ const routes = [
         path: "/personal/contragents/create",
         component: ContragentCreate,
         name: "createContragent"
+    },
+    {
+        path: "/personal/contragents/show/:id",
+        component: contragentShow,
+        name: "showContragent"
     },
     {
         path: "/personal/contragents/edit/:id",
@@ -56,6 +62,12 @@ const routes = [
         name: "editAuction"
     }
 ];
+
+Vue.prototype.$user = {
+    id: document.querySelector("meta[name='user-id']").getAttribute('content'),
+    username: document.querySelector("meta[name='user-username']").getAttribute('content'),
+    email: document.querySelector("meta[name='user-email']").getAttribute('content')
+}
 
 const router = new VueRouter({
     mode: 'history',
