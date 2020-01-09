@@ -49119,7 +49119,7 @@ var render = function() {
     "div",
     { staticClass: "comments-app" },
     [
-      _c("h1", [_vm._v("Comments")]),
+      _c("h1", [_vm._v(_vm._s(_vm.__("Comments")))]),
       _vm._v(" "),
       _vm.user
         ? _c("div", { staticClass: "comment-form" }, [
@@ -49137,7 +49137,10 @@ var render = function() {
                     }
                   ],
                   staticClass: "input",
-                  attrs: { placeholder: "Add comment...", required: "" },
+                  attrs: {
+                    placeholder: _vm.__("Add comment..."),
+                    required: ""
+                  },
                   domProps: { value: _vm.message },
                   on: {
                     input: function($event) {
@@ -49169,7 +49172,7 @@ var render = function() {
               _c("div", { staticClass: "form-row" }, [
                 _c("input", {
                   staticClass: "btn btn-success",
-                  attrs: { type: "button", value: "Add Comment" },
+                  attrs: { type: "button", value: _vm.__("Add Comment") },
                   on: { click: _vm.saveComment }
                 })
               ])
@@ -49204,7 +49207,9 @@ var render = function() {
                           _c("ul", { staticClass: "list" }, [
                             _c("li", [
                               _vm._v(
-                                "\n                Votes: " +
+                                "\n                " +
+                                  _vm._s(_vm.__("Votes")) +
+                                  ": " +
                                   _vm._s(comment.votes) +
                                   "\n                "
                               ),
@@ -49224,7 +49229,7 @@ var render = function() {
                                         }
                                       }
                                     },
-                                    [_vm._v("Up Votes")]
+                                    [_vm._v(_vm._s(_vm.__("Up Votes")))]
                                   )
                                 : _vm._e(),
                               _vm._v(" "),
@@ -49244,7 +49249,7 @@ var render = function() {
                                         }
                                       }
                                     },
-                                    [_vm._v("Down Votes")]
+                                    [_vm._v(_vm._s(_vm.__("Down Votes")))]
                                   )
                                 : _vm._e()
                             ]),
@@ -49264,7 +49269,7 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Spam")]
+                                [_vm._v(_vm._s(_vm.__("Spam")))]
                               )
                             ]),
                             _vm._v(" "),
@@ -49278,7 +49283,7 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Reply")]
+                                [_vm._v(_vm._s(_vm.__("Reply")))]
                               )
                             ])
                           ])
@@ -49306,7 +49311,7 @@ var render = function() {
                                   ],
                                   staticClass: "input",
                                   attrs: {
-                                    placeholder: "Add comment...",
+                                    placeholder: _vm.__("Add Comment..."),
                                     required: ""
                                   },
                                   domProps: { value: _vm.message },
@@ -49345,7 +49350,7 @@ var render = function() {
                                   staticClass: "btn btn-success",
                                   attrs: {
                                     type: "button",
-                                    value: "Add Comment"
+                                    value: _vm.__("Add Comment")
                                   },
                                   on: {
                                     click: function($event) {
@@ -49426,7 +49431,13 @@ var render = function() {
                                                   [
                                                     _c("li", [
                                                       _vm._v(
-                                                        "\n                      Total votes: " +
+                                                        "\n                      " +
+                                                          _vm._s(
+                                                            _vm.__(
+                                                              "Total votes"
+                                                            )
+                                                          ) +
+                                                          ": " +
                                                           _vm._s(
                                                             replies.votes
                                                           ) +
@@ -49450,7 +49461,15 @@ var render = function() {
                                                                 }
                                                               }
                                                             },
-                                                            [_vm._v("Up Votes")]
+                                                            [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  _vm.__(
+                                                                    "Up Votes"
+                                                                  )
+                                                                )
+                                                              )
+                                                            ]
                                                           )
                                                         : _vm._e(),
                                                       _vm._v(" "),
@@ -49474,7 +49493,11 @@ var render = function() {
                                                             },
                                                             [
                                                               _vm._v(
-                                                                "Down Votes"
+                                                                _vm._s(
+                                                                  _vm.__(
+                                                                    "Down Votes"
+                                                                  )
+                                                                )
                                                               )
                                                             ]
                                                           )
@@ -49498,7 +49521,13 @@ var render = function() {
                                                             }
                                                           }
                                                         },
-                                                        [_vm._v("Spam")]
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              _vm.__("Spam")
+                                                            )
+                                                          )
+                                                        ]
                                                       )
                                                     ]),
                                                     _vm._v(" "),
@@ -49516,7 +49545,13 @@ var render = function() {
                                                             }
                                                           }
                                                         },
-                                                        [_vm._v("Reply")]
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(
+                                                              _vm.__("Reply")
+                                                            )
+                                                          )
+                                                        ]
                                                       )
                                                     ])
                                                   ]
@@ -49557,8 +49592,9 @@ var render = function() {
                                                       ],
                                                       staticClass: "input",
                                                       attrs: {
-                                                        placeholder:
-                                                          "Add comment...",
+                                                        placeholder: _vm.__(
+                                                          "Add comment..."
+                                                        ),
                                                         required: ""
                                                       },
                                                       domProps: {
@@ -49628,7 +49664,9 @@ var render = function() {
                                                         "btn btn-success",
                                                       attrs: {
                                                         type: "button",
-                                                        value: "Add Comment"
+                                                        value: _vm.__(
+                                                          "Add Comment"
+                                                        )
                                                       },
                                                       on: {
                                                         click: function(

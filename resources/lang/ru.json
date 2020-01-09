@@ -90,9 +90,20 @@
     "Bidder": "Участник аукционов",
     "Bid": "Участвовать",
     "Start Price": "Начальная цена",
-    "Comment": "Коментарий",
     "Volume": "Объем",
     "Auction Start Price": "Начальная цена",
     "Auction Volume": "Объем",
-    "Show": "Подробнее"
+    "Show": "Подробнее",
+    "Comment": "Отзыв",
+    "Comments": "Отзывы",
+    "Add Comment": "Написать отзыв",
+    "Add Comment...": "Написать отзыв...",
+    "Add comment...": "Написать отзыв...",
+    "Votes": "Голосов (за)",
+    "Up Votes": "За",
+    "Down Votes": "Против",
+    "Spam": "Спам",
+    "Reply": "Ответить",
+    "Total votes": "Всего голосов"
+    
 }

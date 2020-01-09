@@ -1,6 +1,6 @@
 <template>
   <div class="comments-app">
-    <h1>Comments</h1>
+    <h1>{{ __('Comments') }}</h1>
     <!-- From -->
     <div class="comment-form" v-if="user">
       <!-- Comment Avatar -->
@@ -9,14 +9,14 @@
       </div>
       <form class="form" name="form">
         <div class="form-row">
-          <textarea class="input" placeholder="Add comment..." required v-model="message"></textarea>
+          <textarea class="input" :placeholder="__('Add comment...')" required v-model="message"></textarea>
           <span class="input" v-if="errorComment" style="color:red">{{errorComment}}</span>
         </div>
         <div class="form-row">
           <input class="input" placeholder="Email" type="text" disabled :value="user.email" />
         </div>
         <div class="form-row">
-          <input type="button" class="btn btn-success" @click="saveComment" value="Add Comment" />
+          <input type="button" class="btn btn-success" @click="saveComment" :value="__('Add Comment')" />
         </div>
       </form>
     </div>
@@ -41,21 +41,21 @@
             <div class="comment-actions">
               <ul class="list">
                 <li>
-                  Votes: {{comment.votes}}
+                  {{ __('Votes') }}: {{comment.votes}}
                   <a
                     v-if="!comment.votedByUser"
                     v-on:click="voteComment(comment.commentid,'directcomment',index,0,'up')"
-                  >Up Votes</a>
+                  >{{ __('Up Votes') }}</a>
                   <a
                     v-if="!comment.votedByUser"
                     v-on:click="voteComment(comment.commentid,'directcomment',index,0,'down')"
-                  >Down Votes</a>
+                  >{{ __('Down Votes') }}</a>
                 </li>
                 <li>
-                  <a v-on:click="spamComment(comment.commentId,'directcomment',index,0)">Spam</a>
+                  <a v-on:click="spamComment(comment.commentId,'directcomment',index,0)">{{ __('Spam') }}</a>
                 </li>
                 <li>
-                  <a v-on:click="openComment(index)">Reply</a>
+                  <a v-on:click="openComment(index)">{{ __('Reply') }}</a>
                 </li>
               </ul>
             </div>
@@ -69,7 +69,7 @@
           </div>
           <form class="form" name="form">
             <div class="form-row">
-              <textarea class="input" placeholder="Add comment..." required v-model="message"></textarea>
+              <textarea class="input" :placeholder="__('Add Comment...')" required v-model="message"></textarea>
               <span class="input" v-if="errorReply" style="color:red">{{errorReply}}</span>
             </div>
             <div class="form-row">
@@ -80,7 +80,7 @@
                 type="button"
                 class="btn btn-success"
                 v-on:click="replyComment(comment.commentid,index)"
-                value="Add Comment"
+                :value="__('Add Comment')"
               />
             </div>
           </form>
@@ -104,23 +104,23 @@
                   <div class="comment-actions">
                     <ul class="list">
                       <li>
-                        Total votes: {{replies.votes}}
+                        {{ __('Total votes') }}: {{replies.votes}}
                         <a
                           v-if="!replies.votedByUser"
                           v-on:click="voteComment(replies.commentid,'replycomment',index,index2,'up')"
-                        >Up Votes</a>
+                        >{{ __('Up Votes') }}</a>
                         <a
                           v-if="!replies.votedByUser"
                           v-on:click="voteComment(comment.commentid,'replycomment',index,index2,'down')"
-                        >Down Votes</a>
+                        >{{ __('Down Votes') }}</a>
                       </li>
                       <li>
                         <a
                           v-on:click="spamComment(replies.commentid,'replycomment',index,index2)"
-                        >Spam</a>
+                        >{{ __('Spam') }}</a>
                       </li>
                       <li>
-                        <a v-on:click="replyCommentBox(index2)">Reply</a>
+                        <a v-on:click="replyCommentBox(index2)">{{ __('Reply') }}</a>
                       </li>
                     </ul>
                   </div>
@@ -134,7 +134,7 @@
                 </div>
                 <form class="form" name="form">
                   <div class="form-row">
-                    <textarea class="input" placeholder="Add comment..." required v-model="message"></textarea>
+                    <textarea class="input" :placeholder="__('Add comment...')" required v-model="message"></textarea>
                     <span class="input" v-if="errorReply" style="color:red">{{errorReply}}</span>
                   </div>
                   <div class="form-row">
@@ -145,7 +145,7 @@
                       type="button"
                       class="btn btn-success"
                       v-on:click="replyComment(comment.commentid,index)"
-                      value="Add Comment"
+                      :value="__('Add Comment')"
                     />
                   </div>
                 </form>
