@@ -1,57 +1,59 @@
 <template>
   <section class="auction-edit-wrapper">
-    <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
-    <form v-on:submit="saveForm()">
-      <div class="form-group">
-        <label class="control-label">{{ __('Auction lot') }}</label>
-        <v-select label="title" :options="products" v-model="auction.product"></v-select>
-      </div>
-      <div class="form-group">
-        <label class="control-label">{{ __('Auction Start Price') }}</label>
-        <input type="number" v-model="auction.start_price" class="form-control" />
-      </div>
-      <div class="form-group">
-        <label class="control-label">{{ __('Auction Volume') }}</label>
-        <input type="text" v-model="auction.volume" class="form-control" />
-      </div>
-      <div class="form-group">
-        <label class="control-label">{{ __('Auction multiplicity') }}</label>
-        <v-select label="title" :options="multiplicities" v-model="auction.multiplicity"></v-select>
-      </div>
-      <div class="form-group">
-        <label class="control-label">{{ __('Auction contragent') }}</label>
-        <v-select label="title" :options="contragents" v-model="auction.contragent"></v-select>
-      </div>
-      <div class="form-group">
-        <label class="control-label">{{ __('Auction store') }}</label>
-        <v-select label="address" :options="stores" v-model="auction.store"></v-select>
-      </div>
-      <div class="form-group">
-        <label class="control-label">{{ __('Auction start') }}</label>
-        <datetime
-          type="datetime"
-          class="theme-primary"
-          input-class="form-control"
-          v-model="auction.start_at"
-        ></datetime>
-      </div>
-      <div class="form-group">
-        <label class="control-label">{{ __('Auction finish') }}</label>
-        <datetime
-          type="datetime"
-          class="theme-primary"
-          input-class="form-control"
-          v-model="auction.finish_at"
-        ></datetime>
-      </div>
-      <div class="form-group">
-        <label class="control-label">{{ __('Auction comment') }}</label>
-        <textarea v-model="auction.comment" class="form-control"></textarea>
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary btn-lg">{{ __('Create auction') }}</button>
-      </div>
-    </form>
+    <div class="container">
+      <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
+      <form v-on:submit="saveForm()">
+        <div class="form-group">
+          <label class="control-label">{{ __('Auction lot') }}</label>
+          <v-select label="title" :options="products" v-model="auction.product"></v-select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">{{ __('Auction Start Price') }}</label>
+          <input type="number" v-model="auction.start_price" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label class="control-label">{{ __('Auction Volume') }}</label>
+          <input type="text" v-model="auction.volume" class="form-control" />
+        </div>
+        <div class="form-group">
+          <label class="control-label">{{ __('Auction multiplicity') }}</label>
+          <v-select label="title" :options="multiplicities" v-model="auction.multiplicity"></v-select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">{{ __('Auction contragent') }}</label>
+          <v-select label="title" :options="contragents" v-model="auction.contragent"></v-select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">{{ __('Auction store') }}</label>
+          <v-select label="address" :options="stores" v-model="auction.store"></v-select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">{{ __('Auction start') }}</label>
+          <datetime
+            type="datetime"
+            class="theme-primary"
+            input-class="form-control"
+            v-model="auction.start_at"
+          ></datetime>
+        </div>
+        <div class="form-group">
+          <label class="control-label">{{ __('Auction finish') }}</label>
+          <datetime
+            type="datetime"
+            class="theme-primary"
+            input-class="form-control"
+            v-model="auction.finish_at"
+          ></datetime>
+        </div>
+        <div class="form-group">
+          <label class="control-label">{{ __('Auction comment') }}</label>
+          <textarea v-model="auction.comment" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary btn-lg">{{ __('Create auction') }}</button>
+        </div>
+      </form>
+    </div>
   </section>
 </template>
 <script>
@@ -134,7 +136,7 @@ export default {
         })
         .catch(function(resp) {
           console.log(resp);
-          alert( app.__('Failed to create auction') );
+          alert(app.__("Failed to create auction"));
           app.isLoading = false;
         });
     }

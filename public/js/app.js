@@ -1906,6 +1906,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -1982,7 +1984,7 @@ __webpack_require__.r(__webpack_exports__);
         return true;
       })["catch"](function (resp) {
         console.log(resp);
-        alert(app.__('Failed to create auction'));
+        alert(app.__("Failed to create auction"));
         app.isLoading = false;
       });
     }
@@ -2054,6 +2056,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2079,7 +2089,7 @@ __webpack_require__.r(__webpack_exports__);
       app.auction = resp.data;
       app.isLoading = false;
     })["catch"](function () {
-      alert(app.__('Failed to load auction'));
+      alert(app.__("Failed to load auction"));
       app.isLoading = false;
     });
   },
@@ -2137,7 +2147,7 @@ __webpack_require__.r(__webpack_exports__);
         return true; //app.$router.replace("/");
       })["catch"](function (resp) {
         console.log(resp);
-        alert(app.__('Failed to update auction'));
+        alert(app.__("Failed to update auction"));
         app.isLoading = false;
       });
     }
@@ -2155,6 +2165,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -2222,11 +2234,11 @@ __webpack_require__.r(__webpack_exports__);
     deleteEntry: function deleteEntry(id, index) {
       var app = this;
 
-      if (confirm(app.__('Are you sure you want to delete the auction?'))) {
+      if (confirm(app.__("Are you sure you want to delete the auction?"))) {
         axios["delete"]("/api/v1/auctions/" + id).then(function (resp) {
           app.auctions.splice(index, 1);
         })["catch"](function (resp) {
-          alert(app.__('Failed to delete auction'));
+          alert(app.__("Failed to delete auction"));
         });
       }
     }
@@ -2674,6 +2686,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2771,7 +2795,7 @@ __webpack_require__.r(__webpack_exports__);
         return true;
       })["catch"](function (resp) {
         console.log(resp);
-        alert(app.__('Failed to create contragent'));
+        alert(app.__("Failed to create contragent"));
         app.isLoading = false;
       });
     }
@@ -2797,6 +2821,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
 /* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_3__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2967,7 +3003,7 @@ __webpack_require__.r(__webpack_exports__);
         return true;
       })["catch"](function (resp) {
         console.log(resp);
-        alert(app.__('Failed to edit contragent'));
+        alert(app.__("Failed to edit contragent"));
         app.isLoading = false;
       });
     }
@@ -3015,6 +3051,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3027,7 +3065,7 @@ __webpack_require__.r(__webpack_exports__);
       app.contragents = resp.data;
     })["catch"](function (resp) {
       console.log(resp);
-      alert(app.__('Failed to load contragents'));
+      alert(app.__("Failed to load contragents"));
     });
   }
 });
@@ -3054,6 +3092,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Comments_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Comments.vue */ "./resources/js/components/contragents/Comments.vue");
 /* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-star-rating */ "./node_modules/vue-star-rating/dist/star-rating.min.js");
 /* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_star_rating__WEBPACK_IMPORTED_MODULE_5__);
+//
+//
+//
+//
 //
 //
 //
@@ -48454,260 +48496,262 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "section",
-    { staticClass: "auction-edit-wrapper" },
-    [
-      _c("loading", {
-        attrs: {
-          active: _vm.isLoading,
-          "can-cancel": true,
-          "is-full-page": _vm.fullPage
-        },
-        on: {
-          "update:active": function($event) {
-            _vm.isLoading = $event
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
+  return _c("section", { staticClass: "auction-edit-wrapper" }, [
+    _c(
+      "div",
+      { staticClass: "container" },
+      [
+        _c("loading", {
+          attrs: {
+            active: _vm.isLoading,
+            "can-cancel": true,
+            "is-full-page": _vm.fullPage
+          },
           on: {
-            submit: function($event) {
-              return _vm.saveForm()
+            "update:active": function($event) {
+              _vm.isLoading = $event
             }
           }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
+        }),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                return _vm.saveForm()
+              }
+            }
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Auction lot")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "title", options: _vm.products },
+                  model: {
+                    value: _vm.auction.product,
+                    callback: function($$v) {
+                      _vm.$set(_vm.auction, "product", $$v)
+                    },
+                    expression: "auction.product"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Auction lot")))
+                _vm._v(_vm._s(_vm.__("Auction Start Price")))
               ]),
               _vm._v(" "),
-              _c("v-select", {
-                attrs: { label: "title", options: _vm.products },
-                model: {
-                  value: _vm.auction.product,
-                  callback: function($$v) {
-                    _vm.$set(_vm.auction, "product", $$v)
-                  },
-                  expression: "auction.product"
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.auction.start_price,
+                    expression: "auction.start_price"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "number" },
+                domProps: { value: _vm.auction.start_price },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.auction, "start_price", $event.target.value)
+                  }
                 }
               })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Auction Start Price")))
             ]),
             _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.auction.start_price,
-                  expression: "auction.start_price"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "number" },
-              domProps: { value: _vm.auction.start_price },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Auction Volume")))
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.auction.volume,
+                    expression: "auction.volume"
                   }
-                  _vm.$set(_vm.auction, "start_price", $event.target.value)
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.auction.volume },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.auction, "volume", $event.target.value)
+                  }
                 }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Auction Volume")))
+              })
             ]),
             _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.auction.volume,
-                  expression: "auction.volume"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.auction.volume },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Auction multiplicity")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "title", options: _vm.multiplicities },
+                  model: {
+                    value: _vm.auction.multiplicity,
+                    callback: function($$v) {
+                      _vm.$set(_vm.auction, "multiplicity", $$v)
+                    },
+                    expression: "auction.multiplicity"
                   }
-                  _vm.$set(_vm.auction, "volume", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Auction contragent")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "title", options: _vm.contragents },
+                  model: {
+                    value: _vm.auction.contragent,
+                    callback: function($$v) {
+                      _vm.$set(_vm.auction, "contragent", $$v)
+                    },
+                    expression: "auction.contragent"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Auction store")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "address", options: _vm.stores },
+                  model: {
+                    value: _vm.auction.store,
+                    callback: function($$v) {
+                      _vm.$set(_vm.auction, "store", $$v)
+                    },
+                    expression: "auction.store"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Auction start")))
+                ]),
+                _vm._v(" "),
+                _c("datetime", {
+                  staticClass: "theme-primary",
+                  attrs: { type: "datetime", "input-class": "form-control" },
+                  model: {
+                    value: _vm.auction.start_at,
+                    callback: function($$v) {
+                      _vm.$set(_vm.auction, "start_at", $$v)
+                    },
+                    expression: "auction.start_at"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Auction finish")))
+                ]),
+                _vm._v(" "),
+                _c("datetime", {
+                  staticClass: "theme-primary",
+                  attrs: { type: "datetime", "input-class": "form-control" },
+                  model: {
+                    value: _vm.auction.finish_at,
+                    callback: function($$v) {
+                      _vm.$set(_vm.auction, "finish_at", $$v)
+                    },
+                    expression: "auction.finish_at"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Auction multiplicity")))
+                _vm._v(_vm._s(_vm.__("Auction comment")))
               ]),
               _vm._v(" "),
-              _c("v-select", {
-                attrs: { label: "title", options: _vm.multiplicities },
-                model: {
-                  value: _vm.auction.multiplicity,
-                  callback: function($$v) {
-                    _vm.$set(_vm.auction, "multiplicity", $$v)
-                  },
-                  expression: "auction.multiplicity"
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.auction.comment,
+                    expression: "auction.comment"
+                  }
+                ],
+                staticClass: "form-control",
+                domProps: { value: _vm.auction.comment },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.auction, "comment", $event.target.value)
+                  }
                 }
               })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Auction contragent")))
-              ]),
-              _vm._v(" "),
-              _c("v-select", {
-                attrs: { label: "title", options: _vm.contragents },
-                model: {
-                  value: _vm.auction.contragent,
-                  callback: function($$v) {
-                    _vm.$set(_vm.auction, "contragent", $$v)
-                  },
-                  expression: "auction.contragent"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Auction store")))
-              ]),
-              _vm._v(" "),
-              _c("v-select", {
-                attrs: { label: "address", options: _vm.stores },
-                model: {
-                  value: _vm.auction.store,
-                  callback: function($$v) {
-                    _vm.$set(_vm.auction, "store", $$v)
-                  },
-                  expression: "auction.store"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Auction start")))
-              ]),
-              _vm._v(" "),
-              _c("datetime", {
-                staticClass: "theme-primary",
-                attrs: { type: "datetime", "input-class": "form-control" },
-                model: {
-                  value: _vm.auction.start_at,
-                  callback: function($$v) {
-                    _vm.$set(_vm.auction, "start_at", $$v)
-                  },
-                  expression: "auction.start_at"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Auction finish")))
-              ]),
-              _vm._v(" "),
-              _c("datetime", {
-                staticClass: "theme-primary",
-                attrs: { type: "datetime", "input-class": "form-control" },
-                model: {
-                  value: _vm.auction.finish_at,
-                  callback: function($$v) {
-                    _vm.$set(_vm.auction, "finish_at", $$v)
-                  },
-                  expression: "auction.finish_at"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Auction comment")))
             ]),
             _vm._v(" "),
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.auction.comment,
-                  expression: "auction.comment"
-                }
-              ],
-              staticClass: "form-control",
-              domProps: { value: _vm.auction.comment },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.auction, "comment", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("button", { staticClass: "btn btn-primary btn-lg" }, [
-              _vm._v(_vm._s(_vm.__("Create auction")))
+            _c("div", { staticClass: "form-group" }, [
+              _c("button", { staticClass: "btn btn-primary btn-lg" }, [
+                _vm._v(_vm._s(_vm.__("Create auction")))
+              ])
             ])
-          ])
-        ]
-      )
-    ],
-    1
-  )
+          ]
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -48731,204 +48775,206 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "section",
-    { staticClass: "auction-edit-wrapper" },
-    [
-      _c("loading", {
-        attrs: {
-          active: _vm.isLoading,
-          "can-cancel": true,
-          "is-full-page": _vm.fullPage
-        },
-        on: {
-          "update:active": function($event) {
-            _vm.isLoading = $event
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
+  return _c("section", { staticClass: "auction-edit-wrapper" }, [
+    _c(
+      "div",
+      { staticClass: "container" },
+      [
+        _c("loading", {
+          attrs: {
+            active: _vm.isLoading,
+            "can-cancel": true,
+            "is-full-page": _vm.fullPage
+          },
           on: {
-            submit: function($event) {
-              return _vm.saveForm()
+            "update:active": function($event) {
+              _vm.isLoading = $event
             }
           }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
+        }),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                return _vm.saveForm()
+              }
+            }
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Auction lot")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "title", options: _vm.products },
+                  model: {
+                    value: _vm.auction.product,
+                    callback: function($$v) {
+                      _vm.$set(_vm.auction, "product", $$v)
+                    },
+                    expression: "auction.product"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Auction multiplicity")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "title", options: _vm.multiplicities },
+                  model: {
+                    value: _vm.auction.multiplicity,
+                    callback: function($$v) {
+                      _vm.$set(_vm.auction, "multiplicity", $$v)
+                    },
+                    expression: "auction.multiplicity"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Auction contragent")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "title", options: _vm.contragents },
+                  model: {
+                    value: _vm.auction.contragent,
+                    callback: function($$v) {
+                      _vm.$set(_vm.auction, "contragent", $$v)
+                    },
+                    expression: "auction.contragent"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Auction store")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "address", options: _vm.stores },
+                  model: {
+                    value: _vm.auction.store,
+                    callback: function($$v) {
+                      _vm.$set(_vm.auction, "store", $$v)
+                    },
+                    expression: "auction.store"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Auction start")))
+                ]),
+                _vm._v(" "),
+                _c("datetime", {
+                  staticClass: "theme-primary",
+                  attrs: { type: "datetime", "input-class": "form-control" },
+                  model: {
+                    value: _vm.auction.start_at,
+                    callback: function($$v) {
+                      _vm.$set(_vm.auction, "start_at", $$v)
+                    },
+                    expression: "auction.start_at"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Auction finish")))
+                ]),
+                _vm._v(" "),
+                _c("datetime", {
+                  staticClass: "theme-primary",
+                  attrs: { type: "datetime", "input-class": "form-control" },
+                  model: {
+                    value: _vm.auction.finish_at,
+                    callback: function($$v) {
+                      _vm.$set(_vm.auction, "finish_at", $$v)
+                    },
+                    expression: "auction.finish_at"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Auction lot")))
+                _vm._v(_vm._s(_vm.__("Auction comment")))
               ]),
               _vm._v(" "),
-              _c("v-select", {
-                attrs: { label: "title", options: _vm.products },
-                model: {
-                  value: _vm.auction.product,
-                  callback: function($$v) {
-                    _vm.$set(_vm.auction, "product", $$v)
-                  },
-                  expression: "auction.product"
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.auction.comment,
+                    expression: "auction.comment"
+                  }
+                ],
+                staticClass: "form-control",
+                domProps: { value: _vm.auction.comment },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.auction, "comment", $event.target.value)
+                  }
                 }
               })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Auction multiplicity")))
-              ]),
-              _vm._v(" "),
-              _c("v-select", {
-                attrs: { label: "title", options: _vm.multiplicities },
-                model: {
-                  value: _vm.auction.multiplicity,
-                  callback: function($$v) {
-                    _vm.$set(_vm.auction, "multiplicity", $$v)
-                  },
-                  expression: "auction.multiplicity"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Auction contragent")))
-              ]),
-              _vm._v(" "),
-              _c("v-select", {
-                attrs: { label: "title", options: _vm.contragents },
-                model: {
-                  value: _vm.auction.contragent,
-                  callback: function($$v) {
-                    _vm.$set(_vm.auction, "contragent", $$v)
-                  },
-                  expression: "auction.contragent"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Auction store")))
-              ]),
-              _vm._v(" "),
-              _c("v-select", {
-                attrs: { label: "address", options: _vm.stores },
-                model: {
-                  value: _vm.auction.store,
-                  callback: function($$v) {
-                    _vm.$set(_vm.auction, "store", $$v)
-                  },
-                  expression: "auction.store"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Auction start")))
-              ]),
-              _vm._v(" "),
-              _c("datetime", {
-                staticClass: "theme-primary",
-                attrs: { type: "datetime", "input-class": "form-control" },
-                model: {
-                  value: _vm.auction.start_at,
-                  callback: function($$v) {
-                    _vm.$set(_vm.auction, "start_at", $$v)
-                  },
-                  expression: "auction.start_at"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Auction finish")))
-              ]),
-              _vm._v(" "),
-              _c("datetime", {
-                staticClass: "theme-primary",
-                attrs: { type: "datetime", "input-class": "form-control" },
-                model: {
-                  value: _vm.auction.finish_at,
-                  callback: function($$v) {
-                    _vm.$set(_vm.auction, "finish_at", $$v)
-                  },
-                  expression: "auction.finish_at"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Auction comment")))
             ]),
             _vm._v(" "),
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.auction.comment,
-                  expression: "auction.comment"
-                }
-              ],
-              staticClass: "form-control",
-              domProps: { value: _vm.auction.comment },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.auction, "comment", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("button", { staticClass: "btn btn-primary btn-lg" }, [
-              _vm._v(_vm._s(_vm.__("Edit")))
+            _c("div", { staticClass: "form-group" }, [
+              _c("button", { staticClass: "btn btn-primary btn-lg" }, [
+                _vm._v(_vm._s(_vm.__("Edit")))
+              ])
             ])
-          ])
-        ]
-      )
-    ],
-    1
-  )
+          ]
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -48953,81 +48999,89 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("section", [
-    _c("div", { staticClass: "table-responsive", attrs: { id: "auctions" } }, [
-      _c("table", { staticClass: "table table-bordered table-striped" }, [
-        _c("thead", [
-          _c("tr", [
-            _c("th"),
+    _c("div", { staticClass: "container-fluid" }, [
+      _c(
+        "div",
+        { staticClass: "table-responsive", attrs: { id: "auctions" } },
+        [
+          _c("table", { staticClass: "table table-bordered table-striped" }, [
+            _c("thead", [
+              _c("tr", [
+                _c("th"),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.__("Contragent")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.__("Product")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.__("Start Price")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.__("Volume")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.__("Multiplicity")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.__("Federal district")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.__("Region")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.__("Address")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.__("Start")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.__("Finish")))]),
+                _vm._v(" "),
+                _c("th", [_vm._v(_vm._s(_vm.__("Comment")))])
+              ])
+            ]),
             _vm._v(" "),
-            _c("th", [_vm._v(_vm._s(_vm.__("Contragent")))]),
-            _vm._v(" "),
-            _c("th", [_vm._v(_vm._s(_vm.__("Product")))]),
-            _vm._v(" "),
-            _c("th", [_vm._v(_vm._s(_vm.__("Start Price")))]),
-            _vm._v(" "),
-            _c("th", [_vm._v(_vm._s(_vm.__("Volume")))]),
-            _vm._v(" "),
-            _c("th", [_vm._v(_vm._s(_vm.__("Multiplicity")))]),
-            _vm._v(" "),
-            _c("th", [_vm._v(_vm._s(_vm.__("Federal district")))]),
-            _vm._v(" "),
-            _c("th", [_vm._v(_vm._s(_vm.__("Region")))]),
-            _vm._v(" "),
-            _c("th", [_vm._v(_vm._s(_vm.__("Address")))]),
-            _vm._v(" "),
-            _c("th", [_vm._v(_vm._s(_vm.__("Start")))]),
-            _vm._v(" "),
-            _c("th", [_vm._v(_vm._s(_vm.__("Finish")))]),
-            _vm._v(" "),
-            _c("th", [_vm._v(_vm._s(_vm.__("Comment")))])
+            _c(
+              "tbody",
+              _vm._l(_vm.auctions, function(auction, index) {
+                return _c("tr", [
+                  _c("td", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        on: {
+                          click: function($event) {
+                            return _vm.bidAuction(auction.id)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.__("Bid")))]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(auction.contragent.title))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(auction.product.title))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(auction.start_price) + " ₽")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(auction.volume))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(auction.multiplicity.title))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(_vm._s(auction.store.federal_district.title))
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(auction.store.region.title))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(auction.store.address))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm.formatDate(auction.start_at)))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm.formatDate(auction.finish_at)))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(auction.comment))])
+                ])
+              }),
+              0
+            )
           ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.auctions, function(auction, index) {
-            return _c("tr", [
-              _c("td", [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger",
-                    on: {
-                      click: function($event) {
-                        return _vm.bidAuction(auction.id)
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(_vm.__("Bid")))]
-                )
-              ]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(auction.contragent.title))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(auction.product.title))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(auction.start_price) + " ₽")]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(auction.volume))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(auction.multiplicity.title))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(auction.store.federal_district.title))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(auction.store.region.title))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(auction.store.address))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(_vm.formatDate(auction.start_at)))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(_vm.formatDate(auction.finish_at)))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(auction.comment))])
-            ])
-          }),
-          0
-        )
-      ])
+        ]
+      )
     ])
   ])
 }
@@ -49665,449 +49719,457 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "section",
-    { staticClass: "contragent-edit-wrapper" },
-    [
-      _c("loading", {
-        attrs: {
-          active: _vm.isLoading,
-          "can-cancel": true,
-          "is-full-page": _vm.fullPage
-        },
-        on: {
-          "update:active": function($event) {
-            _vm.isLoading = $event
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
+  return _c("section", { staticClass: "contragent-edit-wrapper" }, [
+    _c(
+      "div",
+      { staticClass: "container" },
+      [
+        _c("loading", {
+          attrs: {
+            active: _vm.isLoading,
+            "can-cancel": true,
+            "is-full-page": _vm.fullPage
+          },
           on: {
-            submit: function($event) {
-              return _vm.saveForm()
+            "update:active": function($event) {
+              _vm.isLoading = $event
             }
           }
-        },
-        [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Contragent title")))
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.contragent.title,
-                  expression: "contragent.title"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.contragent.title },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.contragent, "title", $event.target.value)
-                }
+        }),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                return _vm.saveForm()
               }
-            })
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
+            }
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Contragent federal district")))
+                _vm._v(_vm._s(_vm.__("Contragent title")))
               ]),
               _vm._v(" "),
-              _c("v-select", {
-                attrs: { label: "title", options: _vm.federalDistricts },
-                model: {
-                  value: _vm.contragent.federal_district,
-                  callback: function($$v) {
-                    _vm.$set(_vm.contragent, "federal_district", $$v)
-                  },
-                  expression: "contragent.federal_district"
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.contragent.title,
+                    expression: "contragent.title"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.contragent.title },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.contragent, "title", $event.target.value)
+                  }
                 }
               })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent federal district")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "title", options: _vm.federalDistricts },
+                  model: {
+                    value: _vm.contragent.federal_district,
+                    callback: function($$v) {
+                      _vm.$set(_vm.contragent, "federal_district", $$v)
+                    },
+                    expression: "contragent.federal_district"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent region")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "title", options: _vm.regions },
+                  model: {
+                    value: _vm.contragent.region,
+                    callback: function($$v) {
+                      _vm.$set(_vm.contragent, "region", $$v)
+                    },
+                    expression: "contragent.region"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent type")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "title", options: _vm.types, multiple: true },
+                  model: {
+                    value: _vm.contragent.types,
+                    callback: function($$v) {
+                      _vm.$set(_vm.contragent, "types", $$v)
+                    },
+                    expression: "contragent.types"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Contragent region")))
+                _vm._v(_vm._s(_vm.__("Contragent TIN")))
               ]),
               _vm._v(" "),
-              _c("v-select", {
-                attrs: { label: "title", options: _vm.regions },
-                model: {
-                  value: _vm.contragent.region,
-                  callback: function($$v) {
-                    _vm.$set(_vm.contragent, "region", $$v)
-                  },
-                  expression: "contragent.region"
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.contragent.inn,
+                    expression: "contragent.inn"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.contragent.inn },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.contragent, "inn", $event.target.value)
+                  }
                 }
               })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Contragent type")))
+                _vm._v(_vm._s(_vm.__("Contragent Legal address")))
               ]),
               _vm._v(" "),
-              _c("v-select", {
-                attrs: { label: "title", options: _vm.types, multiple: true },
-                model: {
-                  value: _vm.contragent.types,
-                  callback: function($$v) {
-                    _vm.$set(_vm.contragent, "types", $$v)
-                  },
-                  expression: "contragent.types"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Contragent TIN")))
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.contragent.inn,
-                  expression: "contragent.inn"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.contragent.inn },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.contragent.legal_address,
+                    expression: "contragent.legal_address"
                   }
-                  _vm.$set(_vm.contragent, "inn", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Contragent Legal address")))
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.contragent.legal_address,
-                  expression: "contragent.legal_address"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.contragent.legal_address },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.contragent, "legal_address", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Contragent contact")))
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.contragent.fio,
-                  expression: "contragent.fio"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.contragent.fio },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.contragent, "fio", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Contragent phone")))
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.contragent.phone,
-                  expression: "contragent.phone"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.contragent.phone },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.contragent, "phone", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Contragent stores")))
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "stores" }, [
-              _c(
-                "ul",
-                _vm._l(_vm.contragent.stores, function(store, index) {
-                  return _c("li", { staticClass: "store" }, [
-                    _c(
-                      "div",
-                      { staticClass: "form-group" },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.contragent.stores[index].id,
-                              expression: "contragent.stores[index].id"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "hidden" },
-                          domProps: { value: _vm.contragent.stores[index].id },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.contragent.stores[index],
-                                "id",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "control-label" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.__("Store coords #", { store: index + 1 })
-                            )
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.contragent.stores[index].coords,
-                              expression: "contragent.stores[index].coords"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text" },
-                          domProps: {
-                            value: _vm.contragent.stores[index].coords
-                          },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.contragent.stores[index],
-                                "coords",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "control-label" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.__("Store address #", { store: index + 1 })
-                            )
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.contragent.stores[index].address,
-                              expression: "contragent.stores[index].address"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text" },
-                          domProps: {
-                            value: _vm.contragent.stores[index].address
-                          },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.contragent.stores[index],
-                                "address",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "control-label" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.__("Store federal district #", {
-                                store: index + 1
-                              })
-                            )
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("v-select", {
-                          attrs: {
-                            label: "title",
-                            options: _vm.federalDistricts
-                          },
-                          model: {
-                            value:
-                              _vm.contragent.stores[index].federal_district,
-                            callback: function($$v) {
-                              _vm.$set(
-                                _vm.contragent.stores[index],
-                                "federal_district",
-                                $$v
-                              )
-                            },
-                            expression:
-                              "contragent.stores[index].federal_district"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "control-label" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.__("Store region #", { store: index + 1 })
-                            )
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("v-select", {
-                          attrs: { label: "title", options: _vm.regions },
-                          model: {
-                            value: _vm.contragent.stores[index].region,
-                            callback: function($$v) {
-                              _vm.$set(
-                                _vm.contragent.stores[index],
-                                "region",
-                                $$v
-                              )
-                            },
-                            expression: "contragent.stores[index].region"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("br"),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-danger btn-sm",
-                            attrs: { href: "javascript:void(0)" },
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteStore(index)
-                              }
-                            }
-                          },
-                          [_vm._v(_vm._s(_vm.__("Delete store")))]
-                        )
-                      ],
-                      1
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.contragent.legal_address },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.contragent,
+                      "legal_address",
+                      $event.target.value
                     )
-                  ])
-                }),
-                0
-              ),
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Contragent contact")))
+              ]),
               _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-primary btn-sm",
-                  attrs: { href: "javascript:void(0)" },
-                  on: { click: _vm.addStore }
-                },
-                [_vm._v(_vm._s(_vm.__("Add store")))]
-              )
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.contragent.fio,
+                    expression: "contragent.fio"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.contragent.fio },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.contragent, "fio", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Contragent phone")))
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.contragent.phone,
+                    expression: "contragent.phone"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.contragent.phone },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.contragent, "phone", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Contragent stores")))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "stores" }, [
+                _c(
+                  "ul",
+                  _vm._l(_vm.contragent.stores, function(store, index) {
+                    return _c("li", { staticClass: "store" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.contragent.stores[index].id,
+                                expression: "contragent.stores[index].id"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "hidden" },
+                            domProps: {
+                              value: _vm.contragent.stores[index].id
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.contragent.stores[index],
+                                  "id",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", { staticClass: "control-label" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.__("Store coords #", { store: index + 1 })
+                              )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.contragent.stores[index].coords,
+                                expression: "contragent.stores[index].coords"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: {
+                              value: _vm.contragent.stores[index].coords
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.contragent.stores[index],
+                                  "coords",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", { staticClass: "control-label" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.__("Store address #", { store: index + 1 })
+                              )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.contragent.stores[index].address,
+                                expression: "contragent.stores[index].address"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: {
+                              value: _vm.contragent.stores[index].address
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.contragent.stores[index],
+                                  "address",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", { staticClass: "control-label" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.__("Store federal district #", {
+                                  store: index + 1
+                                })
+                              )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("v-select", {
+                            attrs: {
+                              label: "title",
+                              options: _vm.federalDistricts
+                            },
+                            model: {
+                              value:
+                                _vm.contragent.stores[index].federal_district,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.contragent.stores[index],
+                                  "federal_district",
+                                  $$v
+                                )
+                              },
+                              expression:
+                                "contragent.stores[index].federal_district"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", { staticClass: "control-label" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.__("Store region #", { store: index + 1 })
+                              )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("v-select", {
+                            attrs: { label: "title", options: _vm.regions },
+                            model: {
+                              value: _vm.contragent.stores[index].region,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.contragent.stores[index],
+                                  "region",
+                                  $$v
+                                )
+                              },
+                              expression: "contragent.stores[index].region"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-danger btn-sm",
+                              attrs: { href: "javascript:void(0)" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteStore(index)
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(_vm.__("Delete store")))]
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-primary btn-sm",
+                    attrs: { href: "javascript:void(0)" },
+                    on: { click: _vm.addStore }
+                  },
+                  [_vm._v(_vm._s(_vm.__("Add store")))]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("button", { staticClass: "btn btn-primary btn-lg" }, [
+                _vm._v(_vm._s(_vm.__("Save")))
+              ])
             ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("button", { staticClass: "btn btn-primary btn-lg" }, [
-              _vm._v(_vm._s(_vm.__("Save")))
-            ])
-          ])
-        ]
-      )
-    ],
-    1
-  )
+          ]
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -50131,449 +50193,457 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "section",
-    { staticClass: "contragent-edit-wrapper" },
-    [
-      _c("loading", {
-        attrs: {
-          active: _vm.isLoading,
-          "can-cancel": true,
-          "is-full-page": _vm.fullPage
-        },
-        on: {
-          "update:active": function($event) {
-            _vm.isLoading = $event
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
+  return _c("section", { staticClass: "contragent-edit-wrapper" }, [
+    _c(
+      "div",
+      { staticClass: "container" },
+      [
+        _c("loading", {
+          attrs: {
+            active: _vm.isLoading,
+            "can-cancel": true,
+            "is-full-page": _vm.fullPage
+          },
           on: {
-            submit: function($event) {
-              return _vm.saveForm()
+            "update:active": function($event) {
+              _vm.isLoading = $event
             }
           }
-        },
-        [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Contragent title")))
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.contragent.title,
-                  expression: "contragent.title"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.contragent.title },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.contragent, "title", $event.target.value)
-                }
+        }),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                return _vm.saveForm()
               }
-            })
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
+            }
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Contragent federal district")))
+                _vm._v(_vm._s(_vm.__("Contragent title")))
               ]),
               _vm._v(" "),
-              _c("v-select", {
-                attrs: { label: "title", options: _vm.federalDistricts },
-                model: {
-                  value: _vm.contragent.federal_district,
-                  callback: function($$v) {
-                    _vm.$set(_vm.contragent, "federal_district", $$v)
-                  },
-                  expression: "contragent.federal_district"
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.contragent.title,
+                    expression: "contragent.title"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.contragent.title },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.contragent, "title", $event.target.value)
+                  }
                 }
               })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent federal district")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "title", options: _vm.federalDistricts },
+                  model: {
+                    value: _vm.contragent.federal_district,
+                    callback: function($$v) {
+                      _vm.$set(_vm.contragent, "federal_district", $$v)
+                    },
+                    expression: "contragent.federal_district"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent region")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "title", options: _vm.regions },
+                  model: {
+                    value: _vm.contragent.region,
+                    callback: function($$v) {
+                      _vm.$set(_vm.contragent, "region", $$v)
+                    },
+                    expression: "contragent.region"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent type")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: { label: "title", options: _vm.types, multiple: true },
+                  model: {
+                    value: _vm.contragent.types,
+                    callback: function($$v) {
+                      _vm.$set(_vm.contragent, "types", $$v)
+                    },
+                    expression: "contragent.types"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Contragent region")))
+                _vm._v(_vm._s(_vm.__("Contragent TIN")))
               ]),
               _vm._v(" "),
-              _c("v-select", {
-                attrs: { label: "title", options: _vm.regions },
-                model: {
-                  value: _vm.contragent.region,
-                  callback: function($$v) {
-                    _vm.$set(_vm.contragent, "region", $$v)
-                  },
-                  expression: "contragent.region"
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.contragent.inn,
+                    expression: "contragent.inn"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.contragent.inn },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.contragent, "inn", $event.target.value)
+                  }
                 }
               })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
               _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Contragent type")))
+                _vm._v(_vm._s(_vm.__("Contragent Legal address")))
               ]),
               _vm._v(" "),
-              _c("v-select", {
-                attrs: { label: "title", options: _vm.types, multiple: true },
-                model: {
-                  value: _vm.contragent.types,
-                  callback: function($$v) {
-                    _vm.$set(_vm.contragent, "types", $$v)
-                  },
-                  expression: "contragent.types"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Contragent TIN")))
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.contragent.inn,
-                  expression: "contragent.inn"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.contragent.inn },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.contragent.legal_address,
+                    expression: "contragent.legal_address"
                   }
-                  _vm.$set(_vm.contragent, "inn", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Contragent Legal address")))
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.contragent.legal_address,
-                  expression: "contragent.legal_address"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.contragent.legal_address },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.contragent, "legal_address", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Contragent contact")))
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.contragent.fio,
-                  expression: "contragent.fio"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.contragent.fio },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.contragent, "fio", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Contragent phone")))
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.contragent.phone,
-                  expression: "contragent.phone"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.contragent.phone },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.contragent, "phone", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", { staticClass: "control-label" }, [
-              _vm._v(_vm._s(_vm.__("Contragent stores")))
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "stores" }, [
-              _c(
-                "ul",
-                _vm._l(_vm.contragent.stores, function(store, index) {
-                  return _c("li", { staticClass: "store" }, [
-                    _c(
-                      "div",
-                      { staticClass: "form-group" },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.contragent.stores[index].id,
-                              expression: "contragent.stores[index].id"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "hidden" },
-                          domProps: { value: _vm.contragent.stores[index].id },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.contragent.stores[index],
-                                "id",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "control-label" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.__("Store coords #", { store: index + 1 })
-                            )
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.contragent.stores[index].coords,
-                              expression: "contragent.stores[index].coords"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text" },
-                          domProps: {
-                            value: _vm.contragent.stores[index].coords
-                          },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.contragent.stores[index],
-                                "coords",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "control-label" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.__("Store address #", { store: index + 1 })
-                            )
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.contragent.stores[index].address,
-                              expression: "contragent.stores[index].address"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text" },
-                          domProps: {
-                            value: _vm.contragent.stores[index].address
-                          },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.contragent.stores[index],
-                                "address",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "control-label" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.__("Store federal district #", {
-                                store: index + 1
-                              })
-                            )
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("v-select", {
-                          attrs: {
-                            label: "title",
-                            options: _vm.federalDistricts
-                          },
-                          model: {
-                            value:
-                              _vm.contragent.stores[index].federal_district,
-                            callback: function($$v) {
-                              _vm.$set(
-                                _vm.contragent.stores[index],
-                                "federal_district",
-                                $$v
-                              )
-                            },
-                            expression:
-                              "contragent.stores[index].federal_district"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("label", { staticClass: "control-label" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.__("Store region #", { store: index + 1 })
-                            )
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("v-select", {
-                          attrs: { label: "title", options: _vm.regions },
-                          model: {
-                            value: _vm.contragent.stores[index].region,
-                            callback: function($$v) {
-                              _vm.$set(
-                                _vm.contragent.stores[index],
-                                "region",
-                                $$v
-                              )
-                            },
-                            expression: "contragent.stores[index].region"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("br"),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-danger btn-sm",
-                            attrs: { href: "javascript:void(0)" },
-                            on: {
-                              click: function($event) {
-                                return _vm.deleteStore(index)
-                              }
-                            }
-                          },
-                          [_vm._v(_vm._s(_vm.__("Delete store")))]
-                        )
-                      ],
-                      1
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.contragent.legal_address },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.contragent,
+                      "legal_address",
+                      $event.target.value
                     )
-                  ])
-                }),
-                0
-              ),
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Contragent contact")))
+              ]),
               _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-primary btn-sm",
-                  attrs: { href: "javascript:void(0)" },
-                  on: { click: _vm.addStore }
-                },
-                [_vm._v(_vm._s(_vm.__("Add store")))]
-              )
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.contragent.fio,
+                    expression: "contragent.fio"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.contragent.fio },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.contragent, "fio", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Contragent phone")))
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.contragent.phone,
+                    expression: "contragent.phone"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.contragent.phone },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.contragent, "phone", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Contragent stores")))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "stores" }, [
+                _c(
+                  "ul",
+                  _vm._l(_vm.contragent.stores, function(store, index) {
+                    return _c("li", { staticClass: "store" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.contragent.stores[index].id,
+                                expression: "contragent.stores[index].id"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "hidden" },
+                            domProps: {
+                              value: _vm.contragent.stores[index].id
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.contragent.stores[index],
+                                  "id",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", { staticClass: "control-label" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.__("Store coords #", { store: index + 1 })
+                              )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.contragent.stores[index].coords,
+                                expression: "contragent.stores[index].coords"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: {
+                              value: _vm.contragent.stores[index].coords
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.contragent.stores[index],
+                                  "coords",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", { staticClass: "control-label" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.__("Store address #", { store: index + 1 })
+                              )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.contragent.stores[index].address,
+                                expression: "contragent.stores[index].address"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: {
+                              value: _vm.contragent.stores[index].address
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.contragent.stores[index],
+                                  "address",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", { staticClass: "control-label" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.__("Store federal district #", {
+                                  store: index + 1
+                                })
+                              )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("v-select", {
+                            attrs: {
+                              label: "title",
+                              options: _vm.federalDistricts
+                            },
+                            model: {
+                              value:
+                                _vm.contragent.stores[index].federal_district,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.contragent.stores[index],
+                                  "federal_district",
+                                  $$v
+                                )
+                              },
+                              expression:
+                                "contragent.stores[index].federal_district"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", { staticClass: "control-label" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.__("Store region #", { store: index + 1 })
+                              )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("v-select", {
+                            attrs: { label: "title", options: _vm.regions },
+                            model: {
+                              value: _vm.contragent.stores[index].region,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.contragent.stores[index],
+                                  "region",
+                                  $$v
+                                )
+                              },
+                              expression: "contragent.stores[index].region"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-danger btn-sm",
+                              attrs: { href: "javascript:void(0)" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteStore(index)
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(_vm.__("Delete store")))]
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-primary btn-sm",
+                    attrs: { href: "javascript:void(0)" },
+                    on: { click: _vm.addStore }
+                  },
+                  [_vm._v(_vm._s(_vm.__("Add store")))]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("button", { staticClass: "btn btn-primary btn-lg" }, [
+                _vm._v(_vm._s(_vm.__("Save")))
+              ])
             ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("button", { staticClass: "btn btn-primary btn-lg" }, [
-              _vm._v(_vm._s(_vm.__("Save")))
-            ])
-          ])
-        ]
-      )
-    ],
-    1
-  )
+          ]
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -50598,58 +50668,60 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("section", [
-    _c(
-      "div",
-      { staticClass: "table-responsive", attrs: { id: "contragents" } },
-      [
-        _c("table", { staticClass: "table table-bordered table-striped" }, [
-          _c("thead", [
-            _c("tr", [
-              _c("th", [_vm._v(_vm._s(_vm.__("Title")))]),
-              _vm._v(" "),
-              _c("th", [_vm._v(_vm._s(_vm.__("TIN")))]),
-              _vm._v(" "),
-              _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.contragents, function(contragent, index) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(contragent.title))]),
+    _c("div", { staticClass: "container-fluid" }, [
+      _c(
+        "div",
+        { staticClass: "table-responsive", attrs: { id: "contragents" } },
+        [
+          _c("table", { staticClass: "table table-bordered table-striped" }, [
+            _c("thead", [
+              _c("tr", [
+                _c("th", [_vm._v(_vm._s(_vm.__("Title")))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(contragent.inn))]),
+                _c("th", [_vm._v(_vm._s(_vm.__("TIN")))]),
                 _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "div",
-                    { staticClass: "btn-group", attrs: { role: "group" } },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-sm btn-primary",
-                          attrs: {
-                            to: {
-                              name: "showContragent",
-                              params: { id: contragent.id }
-                            }
-                          }
-                        },
-                        [_vm._v(_vm._s(_vm.__("Edit")))]
-                      )
-                    ],
-                    1
-                  )
-                ])
+                _c("th", { attrs: { width: "100" } }, [_vm._v(" ")])
               ])
-            }),
-            0
-          )
-        ])
-      ]
-    )
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.contragents, function(contragent, index) {
+                return _c("tr", [
+                  _c("td", [_vm._v(_vm._s(contragent.title))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(contragent.inn))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "div",
+                      { staticClass: "btn-group", attrs: { role: "group" } },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "btn btn-sm btn-primary",
+                            attrs: {
+                              to: {
+                                name: "showContragent",
+                                params: { id: contragent.id }
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.__("Show")))]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                ])
+              }),
+              0
+            )
+          ])
+        ]
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -50674,188 +50746,192 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "section",
-    { staticClass: "contragent-edit-wrapper" },
-    [
-      _c("loading", {
-        attrs: {
-          active: _vm.isLoading,
-          "can-cancel": true,
-          "is-full-page": _vm.fullPage
-        },
-        on: {
-          "update:active": function($event) {
-            _vm.isLoading = $event
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "section",
+      { staticClass: "contragent-edit-wrapper" },
+      [
+        _c("loading", {
+          attrs: {
+            active: _vm.isLoading,
+            "can-cancel": true,
+            "is-full-page": _vm.fullPage
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.isLoading = $event
+            }
           }
-        }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { staticClass: "control-label" }, [
-          _vm._v(_vm._s(_vm.__("Contragent title")))
-        ]),
+        }),
         _vm._v(" "),
-        _c("div", { staticClass: "form-control" }, [
-          _vm._v(_vm._s(_vm.contragent.title))
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { staticClass: "control-label" }, [
-          _vm._v(_vm._s(_vm.__("Contragent federal district")))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-control" }, [
-          _vm._v(_vm._s(_vm.contragent.federal_district.title))
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { staticClass: "control-label" }, [
-          _vm._v(_vm._s(_vm.__("Contragent region")))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-control" }, [
-          _vm._v(_vm._s(_vm.contragent.region.title))
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form-group" },
-        [
+        _c("div", { staticClass: "form-group" }, [
           _c("label", { staticClass: "control-label" }, [
-            _vm._v(_vm._s(_vm.__("Contragent type")))
+            _vm._v(_vm._s(_vm.__("Contragent title")))
           ]),
           _vm._v(" "),
-          _vm._l(_vm.contragent.types, function(type, index) {
-            return _c("div", { staticClass: "form-control" }, [
-              _vm._v(_vm._s(type.title))
-            ])
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { staticClass: "control-label" }, [
-          _vm._v(_vm._s(_vm.__("Contragent TIN")))
+          _c("div", { staticClass: "form-control" }, [
+            _vm._v(_vm._s(_vm.contragent.title))
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-control" }, [
-          _vm._v(_vm._s(_vm.contragent.inn))
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { staticClass: "control-label" }, [
-          _vm._v(_vm._s(_vm.__("Contragent Legal address")))
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { staticClass: "control-label" }, [
+            _vm._v(_vm._s(_vm.__("Contragent federal district")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-control" }, [
+            _vm._v(_vm._s(_vm.contragent.federal_district.title))
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-control" }, [
-          _vm._v(_vm._s(_vm.contragent.legal_address))
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { staticClass: "control-label" }, [
-          _vm._v(_vm._s(_vm.__("Contragent contact")))
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { staticClass: "control-label" }, [
+            _vm._v(_vm._s(_vm.__("Contragent region")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-control" }, [
+            _vm._v(_vm._s(_vm.contragent.region.title))
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-control" }, [
-          _vm._v(_vm._s(_vm.contragent.fio))
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { staticClass: "control-label" }, [
-          _vm._v(_vm._s(_vm.__("Contragent phone")))
+        _c(
+          "div",
+          { staticClass: "form-group" },
+          [
+            _c("label", { staticClass: "control-label" }, [
+              _vm._v(_vm._s(_vm.__("Contragent type")))
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.contragent.types, function(type, index) {
+              return _c("div", { staticClass: "form-control" }, [
+                _vm._v(_vm._s(type.title))
+              ])
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { staticClass: "control-label" }, [
+            _vm._v(_vm._s(_vm.__("Contragent TIN")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-control" }, [
+            _vm._v(_vm._s(_vm.contragent.inn))
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-control" }, [
-          _vm._v(_vm._s(_vm.contragent.phone))
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { staticClass: "control-label" }, [
-          _vm._v(_vm._s(_vm.__("Contragent stores")))
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { staticClass: "control-label" }, [
+            _vm._v(_vm._s(_vm.__("Contragent Legal address")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-control" }, [
+            _vm._v(_vm._s(_vm.contragent.legal_address))
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "stores" }, [
-          _c(
-            "ul",
-            _vm._l(_vm.contragent.stores, function(store, index) {
-              return _c("li", { staticClass: "store" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(
-                      _vm._s(_vm.__("Store coords #", { store: index + 1 }))
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-control" }, [
-                    _vm._v(_vm._s(_vm.contragent.stores[index].coords))
-                  ]),
-                  _vm._v(" "),
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(
-                      _vm._s(_vm.__("Store address #", { store: index + 1 }))
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-control" }, [
-                    _vm._v(_vm._s(_vm.contragent.stores[index].address))
-                  ]),
-                  _vm._v(" "),
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(
-                      _vm._s(
-                        _vm.__("Store federal district #", { store: index + 1 })
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { staticClass: "control-label" }, [
+            _vm._v(_vm._s(_vm.__("Contragent contact")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-control" }, [
+            _vm._v(_vm._s(_vm.contragent.fio))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { staticClass: "control-label" }, [
+            _vm._v(_vm._s(_vm.__("Contragent phone")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-control" }, [
+            _vm._v(_vm._s(_vm.contragent.phone))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { staticClass: "control-label" }, [
+            _vm._v(_vm._s(_vm.__("Contragent stores")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "stores" }, [
+            _c(
+              "ul",
+              _vm._l(_vm.contragent.stores, function(store, index) {
+                return _c("li", { staticClass: "store" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { staticClass: "control-label" }, [
+                      _vm._v(
+                        _vm._s(_vm.__("Store coords #", { store: index + 1 }))
                       )
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-control" }, [
-                    _vm._v(
-                      _vm._s(
-                        _vm.contragent.stores[index].federal_district.title
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-control" }, [
+                      _vm._v(_vm._s(_vm.contragent.stores[index].coords))
+                    ]),
+                    _vm._v(" "),
+                    _c("label", { staticClass: "control-label" }, [
+                      _vm._v(
+                        _vm._s(_vm.__("Store address #", { store: index + 1 }))
                       )
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(
-                      _vm._s(_vm.__("Store region #", { store: index + 1 }))
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-control" }, [
-                    _vm._v(_vm._s(_vm.contragent.stores[index].region.title))
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-control" }, [
+                      _vm._v(_vm._s(_vm.contragent.stores[index].address))
+                    ]),
+                    _vm._v(" "),
+                    _c("label", { staticClass: "control-label" }, [
+                      _vm._v(
+                        _vm._s(
+                          _vm.__("Store federal district #", {
+                            store: index + 1
+                          })
+                        )
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-control" }, [
+                      _vm._v(
+                        _vm._s(
+                          _vm.contragent.stores[index].federal_district.title
+                        )
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("label", { staticClass: "control-label" }, [
+                      _vm._v(
+                        _vm._s(_vm.__("Store region #", { store: index + 1 }))
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-control" }, [
+                      _vm._v(_vm._s(_vm.contragent.stores[index].region.title))
+                    ])
                   ])
                 ])
-              ])
-            }),
-            0
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("star-rating", {
-        model: {
-          value: _vm.contragent.rating,
-          callback: function($$v) {
-            _vm.$set(_vm.contragent, "rating", $$v)
-          },
-          expression: "contragent.rating"
-        }
-      }),
-      _vm._v(" "),
-      _c("comment")
-    ],
-    1
-  )
+              }),
+              0
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("star-rating", {
+          model: {
+            value: _vm.contragent.rating,
+            callback: function($$v) {
+              _vm.$set(_vm.contragent, "rating", $$v)
+            },
+            expression: "contragent.rating"
+          }
+        }),
+        _vm._v(" "),
+        _c("comment")
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

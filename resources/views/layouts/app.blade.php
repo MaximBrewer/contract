@@ -101,7 +101,7 @@
             </div>
         </nav>
         <main class="py-4">
-            <div class="container">
+            <div class="wrapper">
                 @yield('content')
             </div>
         </main>

@@ -1,60 +1,64 @@
 <template>
-  <section class="contragent-edit-wrapper">
-    <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
-    <div class="form-group">
-      <label class="control-label">{{ __('Contragent title') }}</label>
-      <div class="form-control">{{ contragent.title }}</div>
-    </div>
-    <div class="form-group">
-      <label class="control-label">{{ __('Contragent federal district') }}</label>
-      <div class="form-control">{{ contragent.federal_district.title }}</div>
-    </div>
-    <div class="form-group">
-      <label class="control-label">{{ __('Contragent region') }}</label>
-      <div class="form-control">{{ contragent.region.title }}</div>
-    </div>
-    <div class="form-group">
-      <label class="control-label">{{ __('Contragent type') }}</label>
-      <div class="form-control" v-for="type, index in contragent.types">{{ type.title }}</div>
-    </div>
-    <div class="form-group">
-      <label class="control-label">{{ __('Contragent TIN') }}</label>
-      <div class="form-control">{{ contragent.inn }}</div>
-    </div>
-    <div class="form-group">
-      <label class="control-label">{{ __('Contragent Legal address') }}</label>
-      <div class="form-control">{{ contragent.legal_address }}</div>
-    </div>
-    <div class="form-group">
-      <label class="control-label">{{ __('Contragent contact') }}</label>
-      <div class="form-control">{{ contragent.fio }}</div>
-    </div>
-    <div class="form-group">
-      <label class="control-label">{{ __('Contragent phone') }}</label>
-      <div class="form-control">{{ contragent.phone }}</div>
-    </div>
-    <div class="form-group">
-      <label class="control-label">{{ __('Contragent stores') }}</label>
-      <div class="stores">
-        <ul>
-          <li class="store" v-for="store, index in contragent.stores">
-            <div class="form-group">
-              <label class="control-label">{{ __('Store coords #', {store: index + 1}) }}</label>
-              <div class="form-control">{{ contragent.stores[index].coords }}</div>
-              <label class="control-label">{{ __('Store address #', {store: index + 1}) }}</label>
-              <div class="form-control">{{ contragent.stores[index].address }}</div>
-              <label class="control-label">{{ __('Store federal district #', {store: index + 1}) }}</label>
-              <div class="form-control">{{ contragent.stores[index].federal_district.title }}</div>
-              <label class="control-label">{{ __('Store region #', {store: index + 1}) }}</label>
-              <div class="form-control">{{ contragent.stores[index].region.title }}</div>
-            </div>
-          </li>
-        </ul>
+  <div class="container">
+    <section class="contragent-edit-wrapper">
+      <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
+      <div class="form-group">
+        <label class="control-label">{{ __('Contragent title') }}</label>
+        <div class="form-control">{{ contragent.title }}</div>
       </div>
-    </div>
-    <star-rating v-model="contragent.rating"></star-rating>
-    <comment></comment>
-  </section>
+      <div class="form-group">
+        <label class="control-label">{{ __('Contragent federal district') }}</label>
+        <div class="form-control">{{ contragent.federal_district.title }}</div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">{{ __('Contragent region') }}</label>
+        <div class="form-control">{{ contragent.region.title }}</div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">{{ __('Contragent type') }}</label>
+        <div class="form-control" v-for="type, index in contragent.types">{{ type.title }}</div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">{{ __('Contragent TIN') }}</label>
+        <div class="form-control">{{ contragent.inn }}</div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">{{ __('Contragent Legal address') }}</label>
+        <div class="form-control">{{ contragent.legal_address }}</div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">{{ __('Contragent contact') }}</label>
+        <div class="form-control">{{ contragent.fio }}</div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">{{ __('Contragent phone') }}</label>
+        <div class="form-control">{{ contragent.phone }}</div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">{{ __('Contragent stores') }}</label>
+        <div class="stores">
+          <ul>
+            <li class="store" v-for="store, index in contragent.stores">
+              <div class="form-group">
+                <label class="control-label">{{ __('Store coords #', {store: index + 1}) }}</label>
+                <div class="form-control">{{ contragent.stores[index].coords }}</div>
+                <label class="control-label">{{ __('Store address #', {store: index + 1}) }}</label>
+                <div class="form-control">{{ contragent.stores[index].address }}</div>
+                <label
+                  class="control-label"
+                >{{ __('Store federal district #', {store: index + 1}) }}</label>
+                <div class="form-control">{{ contragent.stores[index].federal_district.title }}</div>
+                <label class="control-label">{{ __('Store region #', {store: index + 1}) }}</label>
+                <div class="form-control">{{ contragent.stores[index].region.title }}</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <star-rating v-model="contragent.rating"></star-rating>
+      <comment></comment>
+    </section>
+  </div>
 </template>
 <script>
 import "vue-select/dist/vue-select.css";
