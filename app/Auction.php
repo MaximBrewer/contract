@@ -18,7 +18,9 @@ class Auction extends Model
         'start_at',
         'finish_at',
         'product_id',
-        'multiplicity_id'
+        'multiplicity_id',
+        'start_price',
+        'volume'
     ];
 
     protected $appends = [
