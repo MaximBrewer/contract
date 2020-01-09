@@ -25,7 +25,7 @@
             </td>
             <td>{{ auction.contragent.title }}</td>
             <td>{{ auction.product.title }}</td>
-            <td>{{ auction.price }} ₽</td>
+            <td>{{ auction.start_price }} ₽</td>
             <td>{{ auction.volume }}</td>
             <td>{{ auction.multiplicity.title }}</td>
             <td>{{ auction.store.federal_district.title }}</td>

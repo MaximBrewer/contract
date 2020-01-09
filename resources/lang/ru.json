@@ -91,5 +91,7 @@
     "Bid": "Участвовать",
     "Start Price": "Начальная цена",
     "Comment": "Коментарий",
-    "Volume": "Объем"
+    "Volume": "Объем",
+    "Auction Start Price": "Начальная цена",
+    "Auction Volume": "Объем"
 }

@@ -7,6 +7,14 @@
         <v-select label="title" :options="products" v-model="auction.product"></v-select>
       </div>
       <div class="form-group">
+        <label class="control-label">{{ __('Auction Start Price') }}</label>
+        <input type="text" v-model="auction.start_price" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label class="control-label">{{ __('Auction Volume') }}</label>
+        <input type="text" v-model="auction.volume" class="form-control" />
+      </div>
+      <div class="form-group">
         <label class="control-label">{{ __('Auction multiplicity') }}</label>
         <v-select label="title" :options="multiplicities" v-model="auction.multiplicity"></v-select>
       </div>

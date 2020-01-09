@@ -1898,6 +1898,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -48022,6 +48030,62 @@ var render = function() {
             1
           ),
           _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { staticClass: "control-label" }, [
+              _vm._v(_vm._s(_vm.__("Auction Start Price")))
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.auction.start_price,
+                  expression: "auction.start_price"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.auction.start_price },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.auction, "start_price", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { staticClass: "control-label" }, [
+              _vm._v(_vm._s(_vm.__("Auction Volume")))
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.auction.volume,
+                  expression: "auction.volume"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: _vm.auction.volume },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.auction, "volume", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
           _c(
             "div",
             { staticClass: "form-group" },
@@ -48469,7 +48533,7 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(auction.product.title))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(auction.price) + " ₽")]),
+              _c("td", [_vm._v(_vm._s(auction.start_price) + " ₽")]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(auction.volume))]),
               _vm._v(" "),

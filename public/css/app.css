@@ -11407,3 +11407,13 @@ body {
   font-size: 0.8em;
 }
 
+@media (min-width: 1200px) {
+  .container-xl,
+  .container-lg,
+  .container-md,
+  .container-sm,
+  .container {
+    max-width: 1600px;
+  }
+}
+
