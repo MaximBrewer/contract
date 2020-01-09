@@ -2186,6 +2186,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -48422,6 +48426,10 @@ var render = function() {
             _vm._v(" "),
             _c("th", [_vm._v(_vm._s(_vm.__("Product")))]),
             _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm.__("Start Price")))]),
+            _vm._v(" "),
+            _c("th", [_vm._v(_vm._s(_vm.__("Volume")))]),
+            _vm._v(" "),
             _c("th", [_vm._v(_vm._s(_vm.__("Multiplicity")))]),
             _vm._v(" "),
             _c("th", [_vm._v(_vm._s(_vm.__("Federal district")))]),
@@ -48460,6 +48468,10 @@ var render = function() {
               _c("td", [_vm._v(_vm._s(auction.contragent.title))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(auction.product.title))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(auction.price) + " ₽")]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(auction.volume))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(auction.multiplicity.title))]),
               _vm._v(" "),

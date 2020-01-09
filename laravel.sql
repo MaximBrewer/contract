@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Янв 07 2020 г., 22:15
+-- Время создания: Янв 09 2020 г., 13:23
 -- Версия сервера: 5.7.28-0ubuntu0.16.04.2
 -- Версия PHP: 7.2.26-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -32,6 +32,8 @@ CREATE TABLE `auctions` (
   `multiplicity_id` int(11) NOT NULL,
   `start_at` timestamp NULL DEFAULT NULL,
   `finish_at` timestamp NULL DEFAULT NULL,
+  `start_price` float(8,2) NOT NULL,
+  `volume` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `comment` text COLLATE utf8mb4_unicode_ci,
@@ -43,8 +45,16 @@ CREATE TABLE `auctions` (
 -- Дамп данных таблицы `auctions`
 --
 
-INSERT INTO `auctions` (`id`, `product_id`, `multiplicity_id`, `start_at`, `finish_at`, `created_at`, `updated_at`, `comment`, `contragent_id`, `store_id`) VALUES
-(1, 1, 2, '2020-01-28 22:00:00', '2020-02-08 01:00:00', '2020-01-07 20:27:00', '2020-01-07 20:31:43', 'Свинина 1 скотовоз', 2, 2);
+INSERT INTO `auctions` (`id`, `product_id`, `multiplicity_id`, `start_at`, `finish_at`, `start_price`, `volume`, `created_at`, `updated_at`, `comment`, `contragent_id`, `store_id`) VALUES
+(1, 2, 4, '2020-01-10 04:00:00', '2020-01-10 08:59:00', 0.00, '1', '2020-01-07 20:27:00', '2020-01-09 13:20:21', 'Полутуши охлажденные. Начальная цена 120 руб. 2 категория. Самовывоз. Предоплата.', 2, 2),
+(2, 1, 2, '2020-01-08 11:59:00', '2020-01-09 11:59:00', 0.00, '1', '2020-01-08 06:59:00', '2020-01-09 13:20:15', 'порода ланширский окрас', 9, 2),
+(8, 1, 2, '2020-01-10 04:00:00', '2020-01-10 08:59:00', 0.00, '1', '2020-01-08 10:29:00', '2020-01-09 13:20:08', 'Свинина Живот микс 1,2,3 категории.\r\nТрехпородная: крупная белая, дырок и ландрас\r\nУсловие поставки - предоплата.', 13, 8),
+(11, 1, 2, '2020-01-10 04:00:00', '2020-01-10 08:59:00', 0.00, '1', '2020-01-08 11:30:00', '2020-01-09 13:20:03', 'предоплата 100%\r\nтрехпородный гибрид крупная белая, ландрас, дырок\r\nобъем 9000 голов\r\nначальная цена 78 руб', 12, 6),
+(12, 1, 2, '2020-01-10 04:00:00', '2020-01-10 08:59:00', 0.00, '1', '2020-01-08 11:31:00', '2020-01-09 13:19:56', 'предоплата 100%\r\nтрехпородный гибрид крупная белая, ландрас, дырок\r\nобъем 6000 голов\r\nначальная цена 78 руб', 12, 7),
+(13, 1, 2, '2020-01-10 04:00:00', '2020-01-10 08:59:00', 0.00, '1', '2020-01-08 11:53:00', '2020-01-09 13:19:50', '160 голов, один свиновод, начальная цена 80 руб, предоплата, трехпородный гибрид: крупная белая, ландрас, дюрок', 14, 9),
+(14, 2, 4, '2020-01-10 04:00:00', '2020-01-10 08:59:00', 0.00, '1', '2020-01-08 12:26:00', '2020-01-09 13:19:46', 'полутуши 1и2 категории, трехпородный живой, охлажденные, стартовая цена - 110 руб.', 14, 9),
+(17, 2, 4, '2020-01-10 04:00:00', '2020-01-10 08:59:00', 0.00, '1', '2020-01-08 12:38:00', '2020-01-09 13:19:41', 'Полутуши. 2 категория. Самовывоз. Предоплата. Заморозка!\r\nНачальная цена 120 руб.', 2, 2),
+(18, 3, 1, '2020-01-10 04:00:00', '2020-01-10 08:59:00', 0.00, '1', '2020-01-08 12:40:00', '2020-01-09 13:19:31', 'Передние ноги свиные, объем 5 тонн. Начальная цена 15 руб.', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -54,9 +64,9 @@ INSERT INTO `auctions` (`id`, `product_id`, `multiplicity_id`, `start_at`, `fini
 
 CREATE TABLE `contragents` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `federal_district_id` int(11) NOT NULL,
-  `region_id` int(11) NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `federal_district_id` int(11) DEFAULT NULL,
+  `region_id` int(11) DEFAULT NULL,
   `is_online` tinyint(1) NOT NULL DEFAULT '0',
   `active` tinyint(1) NOT NULL DEFAULT '0',
   `rating` float(3,2) NOT NULL DEFAULT '0.00',
@@ -76,7 +86,24 @@ CREATE TABLE `contragents` (
 INSERT INTO `contragents` (`id`, `title`, `federal_district_id`, `region_id`, `is_online`, `active`, `rating`, `holding`, `fio`, `created_at`, `updated_at`, `inn`, `legal_address`, `phone`) VALUES
 (2, 'Чернянский Мясокомбинат', 2, 1, 1, 1, 5.00, 'нет', 'василий Петрович Алехин', '2020-01-06 13:02:00', '2020-01-07 17:55:20', '3119000483', 'БЕЛГОРОДСКАЯ ОБЛ.,PП ЧЕРНЯНКА,ТУП МЯСОКОМБИНАТА, Д 6', '+79155238197'),
 (4, 'Красная Звезда АФ, СПК', 3, 34, 0, 0, 0.00, NULL, 'Екатерина', '2020-01-07 18:15:54', '2020-01-07 18:15:54', '3507011492', '160515, ВОЛОГОДСКАЯ ОБЛ, ВОЛОГОДСКИЙ Р-Н, СЕМЕНКОВО П', '+79211282314'),
-(9, 'Идаванг', 3, 76, 0, 0, 0.00, NULL, 'Кондратовская Наталья', '2020-01-07 21:24:11', '2020-01-07 21:24:11', '4716029840', 'Ленинградская обл., Тосненский район, д. Нурма', '79217900199');
+(9, 'Идаванг', 3, 76, 1, 1, 0.00, NULL, 'Кондратовская Наталья', '2020-01-07 21:24:00', '2020-01-07 22:19:35', '4716029840', 'Ленинградская обл., Тосненский район, д. Нурма', '79217900199'),
+(10, 'Price2day[ООО "РУС АВТО"]', 9, 55, 0, 0, 0.00, NULL, 'Андрей Б', '2020-01-08 06:55:34', '2020-01-08 07:00:49', '5612170664', 'оренбург, пр. победы, 116', '84991445334'),
+(12, 'АПК ДОН, ЗАО', 2, 1, 0, 0, 0.00, NULL, 'ГЕНЕРАЛЬНЫЙ ДИРЕКТОР ЖЕРНАКОВ АНДРЕЙ НИКОЛАЕВИЧ', '2020-01-08 10:06:03', '2020-01-08 10:06:03', '7704799368', '309820, БЕЛГОРОДСКАЯ ОБЛ, АЛЕКСЕЕВСКИЙ Р-Н, МАТРЕНО-ГЕЗОВО С, ЦЕНТРАЛЬНАЯ УЛ, ДОМ 65', '8 (920) 218-50-33'),
+(13, 'ШЕБЕКИНСКАЯ СВИНИНА, ООО', 2, 1, 0, 0, 0.00, NULL, 'Илья Александрович', '2020-01-08 10:26:03', '2020-01-08 10:26:03', '3120098547', '309273, БЕЛГОРОДСКАЯ ОБЛ, ШЕБЕКИНСКИЙ Р-Н, БЕЛЯНКА С, РЫСЕНКО УЛ, 19, 1', '89205787088'),
+(14, 'ПСКОВАГРОИНВЕСТ, ООО', 3, 59, 0, 0, 0.00, NULL, 'Ирина Сергеевна Иванова', '2020-01-08 11:50:35', '2020-01-08 11:50:35', '6037000248', 'ПСКОВСКАЯ ОБЛ.,ПСКОВСКИЙ Р-Н,П/О СОЛОВЬИ,Д СОЛОВЬИ', '79113540528'),
+(15, 'Юдановские просторы, ЗАО', 2, 35, 0, 0, 0.00, NULL, 'Лихачев Александр Мхайлович', '2020-01-08 14:11:47', '2020-01-08 15:37:53', '3602007440', 'Первомайская ул., 1, село Юдановка', '+7 (47350) 5-81-36'),
+(22, 'Кампоферма, ООО', 2, 49, 0, 0, 0.00, NULL, 'Виктория Юрьевна', '2020-01-08 15:43:46', '2020-01-08 15:43:46', '5014009612', '140618, Московская область, Зарайский район, деревня Трасна', '89251229520'),
+(23, 'Мокрое СХП, ООО', 2, 47, 0, 0, 0.00, NULL, 'Щербина Александр Сергеевич', '2020-01-08 15:49:47', '2020-01-08 15:50:16', '4811025420', '399635, ЛИПЕЦКАЯ ОБЛАСТЬ, РАЙОН ЛЕБЕДЯНСКИЙ, СЕЛО МОКРОЕ, УЛИЦА ЦЕНТРАЛЬНАЯ, ДОМ 114', '89205246188'),
+(24, 'Рязанский СК, ОАО', 2, 2, 0, 0, 0.00, NULL, 'Котова Ольга Юрьевна', '2020-01-08 15:54:16', '2020-01-08 15:54:16', '6215008716', '390517, Рязанская область, Рязанский район, поселок Искра, литера ж', '89106345083'),
+(25, 'Живая природа СХП, ООО', 2, 49, 0, 0, 0.00, NULL, 'Алекс Рафаилович', '2020-01-08 15:58:07', '2020-01-08 15:58:07', '5020073415', '141601, Московская область, город Клин, Слободская улица, 35', '89055859764'),
+(26, 'Бобровский мясокомбинат, ООО', 2, 35, 0, 0, 0.00, NULL, 'Константин Зеленский', '2020-01-08 16:04:39', '2020-01-08 16:04:39', '3602007714', '397700, Воронежская область, Бобровский район, город Бобров, Комсомольская улица, 1', '89651293113'),
+(27, 'АО "Шувалово"', 3, 34, 0, 0, 0.00, NULL, NULL, '2020-01-08 18:20:16', '2020-01-08 18:20:16', NULL, NULL, NULL),
+(28, 'Вологодский мясодел, ООО', 3, 34, 0, 0, 0.00, NULL, NULL, '2020-01-08 18:22:02', '2020-01-08 18:22:02', NULL, NULL, NULL),
+(29, 'МиМП, ООО Вологодский колбасный завод', 3, 34, 0, 0, 0.00, NULL, NULL, '2020-01-08 18:23:04', '2020-01-08 18:23:04', NULL, NULL, NULL),
+(30, 'Череповецкий мясокомбинат, АО', 3, 34, 0, 0, 0.00, NULL, NULL, '2020-01-08 18:23:50', '2020-01-08 18:23:50', NULL, NULL, NULL),
+(32, NULL, NULL, NULL, 0, 0, 0.00, NULL, NULL, '2020-01-08 22:43:32', '2020-01-08 22:43:32', '123123123123', NULL, NULL),
+(33, NULL, NULL, NULL, 0, 0, 0.00, NULL, NULL, '2020-01-08 23:35:21', '2020-01-08 23:35:21', '', NULL, NULL),
+(34, 'АПК Дубинино', 2, 49, 0, 0, 0.00, NULL, 'Зайков Владимир', '2020-01-09 12:48:43', '2020-01-09 12:51:00', '5044056708', 'Солнечногорский р-он, Дубинино д. 57', '89858972075');
 
 -- --------------------------------------------------------
 
@@ -103,7 +130,29 @@ INSERT INTO `contragent_type` (`id`, `contragent_id`, `type_id`) VALUES
 (6, 6, 3),
 (7, 7, 3),
 (8, 8, 3),
-(9, 9, 3);
+(9, 9, 3),
+(10, 11, 3),
+(11, 12, 3),
+(12, 13, 3),
+(13, 14, 3),
+(14, 14, 2),
+(15, 15, 3),
+(16, 16, 3),
+(17, 17, 3),
+(18, 18, 3),
+(19, 19, 3),
+(20, 20, 3),
+(21, 21, 3),
+(22, 22, 3),
+(23, 23, 3),
+(24, 24, 3),
+(25, 25, 3),
+(26, 26, 2),
+(27, 27, 3),
+(28, 28, 2),
+(29, 29, 2),
+(30, 30, 2),
+(31, 34, 2);
 
 -- --------------------------------------------------------
 
@@ -193,13 +242,13 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (95, 14, 'contragent_id', 'text', 'Contragent Id', 1, 0, 1, 1, 1, 1, '{}', 8),
 (96, 14, 'store_belongsto_contragent_relationship', 'relationship', 'contragents', 0, 1, 1, 1, 1, 1, '{"model":"\\\\App\\\\Contragent","table":"contragents","type":"belongsTo","column":"contragent_id","key":"id","label":"title","pivot_table":"contragent_type","pivot":"0","taggable":"0"}', 9),
 (105, 20, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
-(106, 20, 'product_id', 'text', 'Product Id', 1, 1, 1, 1, 1, 1, '{}', 6),
-(107, 20, 'multiplicity_id', 'text', 'Multiplicity Id', 1, 1, 1, 1, 1, 1, '{}', 7),
-(108, 20, 'start_at', 'timestamp', 'Start At', 0, 1, 1, 1, 1, 1, '{}', 8),
-(109, 20, 'finish_at', 'timestamp', 'Finish At', 0, 1, 1, 1, 1, 1, '{}', 9),
-(110, 20, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 10),
-(111, 20, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 12),
-(112, 20, 'comment', 'text_area', 'Comment', 0, 1, 1, 1, 1, 1, '{}', 14),
+(106, 20, 'product_id', 'text', 'Product Id', 1, 1, 1, 1, 1, 1, '{}', 8),
+(107, 20, 'multiplicity_id', 'text', 'Multiplicity Id', 1, 1, 1, 1, 1, 1, '{}', 9),
+(108, 20, 'start_at', 'timestamp', 'Start At', 0, 1, 1, 1, 1, 1, '{}', 10),
+(109, 20, 'finish_at', 'timestamp', 'Finish At', 0, 1, 1, 1, 1, 1, '{}', 11),
+(110, 20, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 12),
+(111, 20, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 14),
+(112, 20, 'comment', 'text_area', 'Comment', 0, 1, 1, 1, 1, 1, '{}', 16),
 (113, 21, 'id', 'text', 'Id', 1, 0, 0, 0, 0, 0, '{}', 1),
 (114, 21, 'title', 'text', 'Title', 1, 1, 1, 1, 1, 1, '{}', 2),
 (115, 21, 'created_at', 'timestamp', 'Created At', 0, 1, 1, 1, 0, 1, '{}', 3),
@@ -216,8 +265,10 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (126, 14, 'region_id', 'text', 'Region Id', 1, 1, 1, 1, 1, 1, '{}', 11),
 (127, 20, 'auction_belongsto_contragent_relationship', 'relationship', 'contragents', 0, 1, 1, 1, 1, 1, '{"model":"\\\\App\\\\Contragent","table":"contragents","type":"belongsTo","column":"contragent_id","key":"id","label":"title","pivot_table":"auctions","pivot":"0","taggable":"0"}', 4),
 (128, 20, 'auction_belongsto_store_relationship', 'relationship', 'stores', 0, 1, 1, 1, 1, 1, '{"model":"\\\\App\\\\Store","table":"stores","type":"belongsTo","column":"store_id","key":"id","label":"address","pivot_table":"auctions","pivot":"0","taggable":"0"}', 5),
-(129, 20, 'contragent_id', 'text', 'Contragent Id', 1, 1, 1, 1, 1, 1, '{}', 11),
-(130, 20, 'store_id', 'text', 'Store Id', 1, 1, 1, 1, 1, 1, '{}', 13);
+(129, 20, 'contragent_id', 'text', 'Contragent Id', 1, 1, 1, 1, 1, 1, '{}', 13),
+(130, 20, 'store_id', 'text', 'Store Id', 1, 1, 1, 1, 1, 1, '{}', 15),
+(131, 20, 'start_price', 'number', 'Начальная цена', 1, 1, 1, 1, 1, 1, '{}', 6),
+(132, 20, 'volume', 'text', 'Объем', 1, 1, 1, 1, 1, 1, '{}', 7);
 
 -- --------------------------------------------------------
 
@@ -256,7 +307,7 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (12, 'regions', 'regions', 'Область', 'Области', NULL, 'App\\Region', NULL, NULL, NULL, 1, 1, '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null,"scope":null}', '2020-01-06 07:11:06', '2020-01-06 10:16:21'),
 (13, 'types', 'types', 'Типы предприятий', 'Тип предприятия', 'voyager-list', 'App\\Type', NULL, NULL, NULL, 1, 1, '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null,"scope":null}', '2020-01-06 10:48:22', '2020-01-06 12:57:38'),
 (14, 'stores', 'stores', 'Store', 'Stores', NULL, 'App\\Store', NULL, NULL, NULL, 1, 1, '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null,"scope":null}', '2020-01-06 13:08:37', '2020-01-07 20:24:29'),
-(20, 'auctions', 'auctions', 'Аукцион', 'Аукционы', 'voyager-activity', 'App\\Auction', NULL, NULL, NULL, 1, 1, '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null,"scope":null}', '2020-01-07 20:17:54', '2020-01-07 20:30:31'),
+(20, 'auctions', 'auctions', 'Аукцион', 'Аукционы', 'voyager-activity', 'App\\Auction', NULL, NULL, NULL, 1, 1, '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null,"scope":null}', '2020-01-07 20:17:54', '2020-01-09 13:19:05'),
 (21, 'multiplicities', 'multiplicities', 'Кратность', 'Кратности', 'voyager-truck', 'App\\Multiplicity', NULL, NULL, NULL, 1, 1, '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null}', '2020-01-07 20:18:48', '2020-01-07 20:18:48'),
 (22, 'products', 'products', 'Лот', 'Лоты', 'voyager-pizza', 'App\\Product', NULL, NULL, NULL, 1, 1, '{"order_column":null,"order_display_column":null,"order_direction":"asc","default_search_key":null}', '2020-01-07 20:19:41', '2020-01-07 20:19:41');
 
@@ -433,8 +484,10 @@ CREATE TABLE `multiplicities` (
 --
 
 INSERT INTO `multiplicities` (`id`, `title`, `created_at`, `updated_at`) VALUES
-(1, '1 т', '2020-01-07 20:26:49', '2020-01-07 20:26:49'),
-(2, '1 скотовоз', '2020-01-07 20:26:56', '2020-01-07 20:26:56');
+(1, '1 тонна (не менее)', '2020-01-07 20:26:00', '2020-01-08 10:09:49'),
+(2, '1 свиновоз или 160 голов или 17 тонн', '2020-01-07 20:26:00', '2020-01-08 10:09:27'),
+(3, '100 кг (не менее)', '2020-01-08 10:10:00', '2020-01-08 11:54:29'),
+(4, '1 тушевоз или 20 тонн', '2020-01-08 12:25:07', '2020-01-08 12:25:07');
 
 -- --------------------------------------------------------
 
@@ -447,6 +500,14 @@ CREATE TABLE `password_resets` (
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `password_resets`
+--
+
+INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
+('osokina0104@gmail.com', '$2y$10$prmOM7DIR3ohgppMquWPz.TgT.0i1Dh5Eve0LlaJu82dkJo835VOu', '2020-01-09 06:59:27'),
+('lad88joy@gmail.com', '$2y$10$yvWplIkeKkGnw7/KQM91XeRneE4zBOjy/BDcuWFuA7inbXMvc8cUW', '2020-01-09 12:16:42');
 
 -- --------------------------------------------------------
 
@@ -635,7 +696,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `title`, `created_at`, `updated_at`) VALUES
-(1, 'Свинина', '2020-01-07 20:25:24', '2020-01-07 20:25:24');
+(1, 'Товарная Свинья - Живок', '2020-01-07 20:25:00', '2020-01-08 10:11:16'),
+(2, 'Полутуши Товарной Свиньи', '2020-01-08 10:10:58', '2020-01-08 10:10:58'),
+(3, 'Ноги свиные передние', '2020-01-08 12:39:40', '2020-01-08 12:39:40');
 
 -- --------------------------------------------------------
 
@@ -817,10 +880,14 @@ CREATE TABLE `stores` (
 
 INSERT INTO `stores` (`id`, `coords`, `address`, `created_at`, `updated_at`, `contragent_id`, `federal_district_id`, `region_id`) VALUES
 (1, '50.3,72.6', 'Москва', '2020-01-06 13:09:00', '2020-01-06 13:13:20', 1, 0, 0),
-(2, '[50.946669228653874,37.82574349999989]', 'БЕЛГОРОДСКАЯ ОБЛ.,PП ЧЕРНЯНКА,ТУП МЯСОКОМБИНАТА, Д 6', '2020-01-06 13:10:00', '2020-01-07 17:55:03', 2, 0, 0),
+(2, '50.946669228653874 37.82574349999989', 'БЕЛГОРОДСКАЯ ОБЛ.,PП ЧЕРНЯНКА,ТУП МЯСОКОМБИНАТА, Д 6', '2020-01-06 13:10:00', '2020-01-08 22:13:35', 2, 3, 1),
 (3, 'dgfnfg', 'dgbdfgb', '2020-01-07 17:27:56', '2020-01-07 17:27:56', 1, 0, 0),
 (4, '456435', '3456yt6', '2020-01-07 18:12:37', '2020-01-07 18:12:37', 3, 0, 0),
-(5, '[59.27910812490296,39.86060749999994]', '160515, ВОЛОГОДСКАЯ ОБЛ, ВОЛОГОДСКИЙ Р-Н, СЕМЕНКОВО П', '2020-01-07 18:15:00', '2020-01-07 20:24:57', 4, 2, 34);
+(5, '59.27910812490296 39.86060749999994', '160515, ВОЛОГОДСКАЯ ОБЛ, ВОЛОГОДСКИЙ Р-Н, СЕМЕНКОВО П', '2020-01-07 18:15:00', '2020-01-08 22:13:50', 4, 2, 34),
+(6, '50.80026057281392 38.77933649999999', 'Воронежская область, Острогожский район, с.  Хохол-Тростянка, пер. Мира, д.7«а»', '2020-01-08 10:06:00', '2020-01-08 22:13:06', 12, 2, 35),
+(7, '50.60474457292626 38.872069499999974', 'Белгородская область, Алексеевский район, с.  Матрено-Гезово, ул. Центральная, д.65', '2020-01-08 10:06:00', '2020-01-08 22:13:21', 12, 2, 1),
+(8, '50.461197038869884 37.19740799999995', '309273, БЕЛГОРОДСКАЯ ОБЛ, ШЕБЕКИНСКИЙ Р-Н, БЕЛЯНКА С, РЫСЕНКО УЛ, 19, 1', '2020-01-08 10:26:00', '2020-01-08 22:12:53', 13, 2, 1),
+(9, '57.68426142624712 28.333600999999984', 'ПСКОВСКАЯ ОБЛ.,ПСКОВСКИЙ Р-Н,П/О СОЛОВЬИ,Д СОЛОВЬИ', '2020-01-08 11:50:00', '2020-01-08 22:12:41', 14, 3, 59);
 
 -- --------------------------------------------------------
 
@@ -907,6 +974,7 @@ CREATE TABLE `users` (
   `role_id` bigint(20) UNSIGNED DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `inn` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'users/default.png',
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -920,10 +988,45 @@ CREATE TABLE `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
-(1, 1, 'admin', 'pimax1978@icloud.com', 'users/default.png', NULL, '$2y$10$k7YtrUIoAVjS3rDcpwykVudg.s8Jw6kh.dJnRJg7.XzdPe7oLAp.e', '5Jq6gD1abjpJGajsfyDQmzceJKyeZQClyBLTuAcuACFFHpb6iGjYRtvacTED', NULL, '2020-01-05 22:32:11', '2020-01-05 22:37:33'),
-(2, 2, 'Вася', 'maxil@mail.ru', 'users/default.png', NULL, '$2y$10$M58KnH7tM5NRTnBdbH4FvueqiclsZDorohFjQ7IO1kzDuPVOhO2hS', NULL, NULL, '2020-01-07 19:25:55', '2020-01-07 19:25:55'),
-(3, 2, 'Андрей', 'av.bayda@me.com', 'users/default.png', NULL, '$2y$10$KosKCXZHi3XI5NMTAnpgDeoAj3FxAZjBFgQ9QoH8iRjpsgWfpMqq.', NULL, NULL, '2020-01-07 20:35:37', '2020-01-07 20:35:37');
+INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `inn`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
+(1, 1, 'admin', 'pimax1978@icloud.com', '', 'users/default.png', '2020-01-08 21:56:05', '$2y$10$k7YtrUIoAVjS3rDcpwykVudg.s8Jw6kh.dJnRJg7.XzdPe7oLAp.e', 'XLyhobYW6oyvmtunZz7yeMSDHmJHT4Zys2C3iqwBshK70end4NxR9aVGaNX9', NULL, '2020-01-05 22:32:11', '2020-01-08 21:56:05'),
+(2, 2, 'Вася', 'maxil@mail.ru', '', 'users/default.png', NULL, '$2y$10$M58KnH7tM5NRTnBdbH4FvueqiclsZDorohFjQ7IO1kzDuPVOhO2hS', NULL, NULL, '2020-01-07 19:25:55', '2020-01-07 19:25:55'),
+(16, 1, 'Андрей', 'info@price2day.ru', '', 'users/default.png', '2020-01-08 20:28:43', '$2y$10$qMA5/ZCBXAlUId4KHTf8AeQYt/7HwG6IwTWNJbAofYjBG4Ab8UWz.', NULL, '{"locale":"ru"}', '2020-01-08 20:28:27', '2020-01-09 05:23:29'),
+(19, 2, 'max', 'pimax1978@mail.ru', '123123123123', 'users/default.png', '2020-01-08 22:35:25', '$2y$10$OnNdc47VzBtj/XvPEh6i1eXyxT.c2trqlI7zvQbDDvPETyMP4QzZa', NULL, NULL, '2020-01-08 22:35:00', '2020-01-08 22:35:25'),
+(23, 1, 'Оксана', 'o.guschina@price2day.ru', '5612170664', 'users/default.png', '2020-01-09 05:47:32', '$2y$10$6qDeVi0atlGdDn/z4je58.PMkRkw3NScnciNhzytp58PH4LelpRma', NULL, '{"locale":"ru"}', '2020-01-09 05:44:10', '2020-01-09 05:50:24'),
+(36, 2, 'edcedc', 'pimax1978@gmail.com', '567567567567', 'users/default.png', NULL, '$2y$10$iQPW6sV1C6XUV.LibW2nWOc6nY1uCVwh4XOKEvWP/6p8D1nEg3dFa', NULL, NULL, '2020-01-09 12:10:46', '2020-01-09 12:10:46'),
+(37, 2, 'Светлана', 'osokina0104@gmail.com', '5612170664', 'users/default.png', '2020-01-09 12:37:13', '$2y$10$gp/vQ6E7Grg98FeVehI4U.gqkNv4n3Pta.tyXG/4gmxgRYbV7BDP.', NULL, NULL, '2020-01-09 12:19:28', '2020-01-09 12:37:13'),
+(38, 2, 'Александр', 'sheb.svinina@mail.ru', '3120098547', 'users/default.png', '2020-01-09 12:31:03', '$2y$10$pKkvGG2x1oQNX3cWIQlsGeWz2GJv24JjlNpnH4b4hPP/FBPp2Utx6', NULL, NULL, '2020-01-09 12:30:21', '2020-01-09 12:31:03'),
+(39, 2, 'Екатерина', 'redstar35@mail.ru', '3507011492', 'users/default.png', '2020-01-09 12:38:00', '$2y$10$PNexb70jNY6EjPIUJjhjCuGyVizY2jOMpPMxEGJMAK6dXixAkKp.K', NULL, NULL, '2020-01-09 12:37:44', '2020-01-09 12:38:00'),
+(40, 2, 'Владимир', 'vz3@mail.ru', '5044056708', 'users/default.png', '2020-01-09 12:48:43', '$2y$10$F0T2gPuUlOb1qiBFpyWEGuKWMiG2XpFMGiquyQSsAyRER8OO3xPAu', NULL, NULL, '2020-01-09 12:48:28', '2020-01-09 12:48:43');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `user_contragent`
+--
+
+CREATE TABLE `user_contragent` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `contragent_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп данных таблицы `user_contragent`
+--
+
+INSERT INTO `user_contragent` (`id`, `user_id`, `contragent_id`) VALUES
+(1, 19, 32),
+(2, 16, 33),
+(3, 22, 10),
+(4, 21, 10),
+(5, 23, 10),
+(6, 28, 10),
+(7, 38, 13),
+(8, 37, 10),
+(9, 39, 4),
+(10, 40, 34);
 
 -- --------------------------------------------------------
 
@@ -1088,6 +1191,12 @@ ALTER TABLE `users`
   ADD KEY `users_role_id_foreign` (`role_id`);
 
 --
+-- Индексы таблицы `user_contragent`
+--
+ALTER TABLE `user_contragent`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `user_roles`
 --
 ALTER TABLE `user_roles`
@@ -1103,22 +1212,22 @@ ALTER TABLE `user_roles`
 -- AUTO_INCREMENT для таблицы `auctions`
 --
 ALTER TABLE `auctions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT для таблицы `contragents`
 --
 ALTER TABLE `contragents`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT для таблицы `contragent_type`
 --
 ALTER TABLE `contragent_type`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT для таблицы `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 --
 -- AUTO_INCREMENT для таблицы `data_types`
 --
@@ -1153,7 +1262,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT для таблицы `multiplicities`
 --
 ALTER TABLE `multiplicities`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT для таблицы `permissions`
 --
@@ -1163,7 +1272,7 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT для таблицы `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT для таблицы `regions`
 --
@@ -1183,7 +1292,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT для таблицы `stores`
 --
 ALTER TABLE `stores`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT для таблицы `translations`
 --
@@ -1198,7 +1307,12 @@ ALTER TABLE `types`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+--
+-- AUTO_INCREMENT для таблицы `user_contragent`
+--
+ALTER TABLE `user_contragent`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --

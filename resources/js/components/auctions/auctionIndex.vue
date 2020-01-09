@@ -7,6 +7,8 @@
             <th></th>
             <th>{{ __('Contragent') }}</th>
             <th>{{ __('Product') }}</th>
+            <th>{{ __('Start Price') }}</th>
+            <th>{{ __('Volume') }}</th>
             <th>{{ __('Multiplicity') }}</th>
             <th>{{ __('Federal district') }}</th>
             <th>{{ __('Region') }}</th>
@@ -23,6 +25,8 @@
             </td>
             <td>{{ auction.contragent.title }}</td>
             <td>{{ auction.product.title }}</td>
+            <td>{{ auction.price }} ₽</td>
+            <td>{{ auction.volume }}</td>
             <td>{{ auction.multiplicity.title }}</td>
             <td>{{ auction.store.federal_district.title }}</td>
             <td>{{ auction.store.region.title }}</td>
