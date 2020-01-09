@@ -3188,7 +3188,15 @@ __webpack_require__.r(__webpack_exports__);
       federalDistricts: [],
       types: [],
       regions: [],
-      contragent: {}
+      contragent: {
+        title: "",
+        federal_district: {
+          title: ""
+        },
+        region: {
+          title: ""
+        }
+      }
     };
   },
   methods: {

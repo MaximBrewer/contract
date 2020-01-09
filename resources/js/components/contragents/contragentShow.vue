@@ -100,7 +100,15 @@ export default {
       federalDistricts: [],
       types: [],
       regions: [],
-      contragent: {}
+      contragent: {
+        title: "",
+        federal_district: {
+          title:""
+        },
+        region: {
+          title: ""
+        }
+      }
     };
   },
   methods: {
