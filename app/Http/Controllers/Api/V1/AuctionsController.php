@@ -36,6 +36,8 @@ class AuctionsController extends Controller
             'start_at' => date('Y-m-d H:i:s', strtotime($request->post('start_at'))),
             'finish_at' => date('Y-m-d H:i:s', strtotime($request->post('finish_at'))),
             'comment' => $request->post('comment'),
+            'start_price' => $request->post('start_price'),
+            'volume' => $request->post('volume'),
         ]);
         $auction = Auction::findOrFail($auction->id);
         return $auction;
@@ -70,6 +72,8 @@ class AuctionsController extends Controller
             'start_at' => date('Y-m-d H:i:s', strtotime($request->post('start_at'))),
             'finish_at' => date('Y-m-d H:i:s', strtotime($request->post('finish_at'))),
             'comment' => $request->post('comment'),
+            'start_price' => $request->post('start_price'),
+            'volume' => $request->post('volume'),
         ]);
         $auction = Auction::findOrFail($id);
         return $auction;
