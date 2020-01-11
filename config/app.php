@@ -135,12 +135,12 @@ return [
     */
 
     'providers' => [
-
-        TCG\Voyager\VoyagerServiceProvider::class,
-        App\Providers\TranslationServiceProvider::class,
         /*
          * Laravel Framework Service Providers...
          */
+        Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
+        TCG\Voyager\VoyagerServiceProvider::class,
+        App\Providers\TranslationServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,

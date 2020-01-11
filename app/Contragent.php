@@ -30,6 +30,7 @@ class Contragent extends Model
         $this->types;
         $this->federalDistrict;
         $this->region;
+        $this->auctions;
         return true;
     }
     
@@ -46,6 +47,11 @@ class Contragent extends Model
     public function types()
     {
         return $this->belongsToMany('App\Type', 'contragent_type');
+    }
+    
+    public function auctions()
+    {
+        return $this->belongsToMany('App\Auction', 'contragent_auction');
     }
 
     public function stores()

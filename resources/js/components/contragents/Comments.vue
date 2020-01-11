@@ -16,7 +16,12 @@
           <input class="input" placeholder="Email" type="text" disabled :value="user.email" />
         </div>
         <div class="form-row">
-          <input type="button" class="btn btn-success" @click="saveComment" :value="__('Add Comment')" />
+          <input
+            type="button"
+            class="btn btn-success"
+            @click="saveComment"
+            :value="__('Add Comment')"
+          />
         </div>
       </form>
     </div>
@@ -52,7 +57,9 @@
                   >{{ __('Down Votes') }}</a>
                 </li>
                 <li>
-                  <a v-on:click="spamComment(comment.commentId,'directcomment',index,0)">{{ __('Spam') }}</a>
+                  <a
+                    v-on:click="spamComment(comment.commentId,'directcomment',index,0)"
+                  >{{ __('Spam') }}</a>
                 </li>
                 <li>
                   <a v-on:click="openComment(index)">{{ __('Reply') }}</a>
@@ -69,7 +76,12 @@
           </div>
           <form class="form" name="form">
             <div class="form-row">
-              <textarea class="input" :placeholder="__('Add Comment...')" required v-model="message"></textarea>
+              <textarea
+                class="input"
+                :placeholder="__('Add Comment...')"
+                required
+                v-model="message"
+              ></textarea>
               <span class="input" v-if="errorReply" style="color:red">{{errorReply}}</span>
             </div>
             <div class="form-row">
@@ -134,7 +146,12 @@
                 </div>
                 <form class="form" name="form">
                   <div class="form-row">
-                    <textarea class="input" :placeholder="__('Add comment...')" required v-model="message"></textarea>
+                    <textarea
+                      class="input"
+                      :placeholder="__('Add comment...')"
+                      required
+                      v-model="message"
+                    ></textarea>
                     <span class="input" v-if="errorReply" style="color:red">{{errorReply}}</span>
                   </div>
                   <div class="form-row">
@@ -175,7 +192,7 @@ export default {
       spamComments: [],
       errorComment: null,
       errorReply: null,
-      user: this.$user,
+      user: window.user,
       commentUrl: null
     };
   },
@@ -184,7 +201,14 @@ export default {
       let app = this;
       app.commentUrl = app.$route.params.id;
       axios
-        .get("/api/v1/comments/" + app.commentUrl)
+        .get(
+          "/api/v1/comments/" +
+            app.commentUrl +
+            "?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token
+        )
         .then(function(resp) {
           app.commentsData = resp.data;
           app.commentsData = _.orderBy(resp.data, ["votes"], ["desc"]);
@@ -232,11 +256,17 @@ export default {
       if (app.message != null && app.message != " ") {
         app.errorComment = null;
         axios
-          .post("/api/v1/comments", {
-            contragent_id: app.commentUrl,
-            comment: app.message,
-            user_id: app.user.id
-          })
+          .post(
+            "/api/v1/comments?csrf_token=" +
+              window.csrf_token +
+              "&api_token=" +
+              window.api_token,
+            {
+              contragent_id: app.commentUrl,
+              comment: app.message,
+              user_id: app.user.id
+            }
+          )
           .then(function(resp) {
             if (resp.data.status) {
               app.commentsData.push({
@@ -256,15 +286,22 @@ export default {
     },
     replyComment(commentId, index) {
       let app = this;
-      if(!!!app.commentsData[index].replies) app.commentsData[index].replies = []
+      if (!!!app.commentsData[index].replies)
+        app.commentsData[index].replies = [];
       if (app.message != null && app.message != " ") {
         app.errorReply = null;
         axios
-          .post("/api/v1/comments", {
-            comment: app.message,
-            user_id: app.user.id,
-            reply_id: commentId
-          })
+          .post(
+            "/api/v1/comments?csrf_token=" +
+              window.csrf_token +
+              "&api_token=" +
+              window.api_token,
+            {
+              comment: app.message,
+              user_id: app.user.id,
+              reply_id: commentId
+            }
+          )
           .then(function(res) {
             if (res.data.status) {
               if (!app.commentsData[index].reply) {
@@ -298,10 +335,18 @@ export default {
       let app = this;
       if (app.user) {
         axios
-          .post("/api/v1/comments/" + commentId + "/vote", {
-            user_id: app.user.id,
-            vote: voteType
-          })
+          .post(
+            "/api/v1/comments/" +
+              commentId +
+              "/vote?csrf_token=" +
+              window.csrf_token +
+              "&api_token=" +
+              window.api_token,
+            {
+              user_id: app.user.id,
+              vote: voteType
+            }
+          )
           .then(function(res) {
             if (res.data) {
               if (commentType == "directcomment") {
@@ -326,9 +371,17 @@ export default {
       console.log("spam here");
       if (app.user) {
         axios
-          .post("/api/v1/comments/" + commentId + "/spam", {
-            user_id: app.user.id
-          })
+          .post(
+            "/api/v1/comments/" +
+              commentId +
+              "/spam?csrf_token=" +
+              window.csrf_token +
+              "&api_token=" +
+              window.api_token,
+            {
+              user_id: app.user.id
+            }
+          )
           .then(function(res) {
             if (commentType == "directcomment") {
               Vue.set(app.spamComments, index, 1);

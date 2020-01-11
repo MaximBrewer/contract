@@ -37,6 +37,16 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = [
+        'filled',
+    ];
+
+    public function getFilledAttribute()
+    {
+        $this->contragents;
+        return true;
+    }
+
     public function contragents(){
         return $this->belongsToMany('App\Contragent', 'user_contragent');
     }

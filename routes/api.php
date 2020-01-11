@@ -17,11 +17,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => '/v1', 
-   'namespace' => 'Api\V1', 'as' => 'api.'
+Route::group([
+    'prefix' => '/v1',
+    'middleware' => ['auth:api'],
+    'namespace' => 'Api\V1', 'as' => 'api.'
 ], function () {
     Route::resource('contragents', 'ContragentsController', ['except' => ['edit', 'create']]);
-    Route::resource('auctions', 'AuctionsController', ['except' => ['edit', 'create']]);
     Route::resource('federalDistricts', 'FederalDistrictsController', ['except' => ['create', 'edit', 'update', 'delete']]);
     Route::resource('regions', 'RegionsController', ['except' => ['create', 'edit', 'update', 'delete']]);
     Route::resource('stores', 'StoresController', ['except' => ['create', 'edit', 'update', 'delete']]);
@@ -29,16 +30,15 @@ Route::group(['prefix' => '/v1',
     Route::resource('multiplicities', 'MultiplicitiesController', ['except' => ['create', 'edit', 'update', 'delete']]);
     Route::resource('types', 'TypesController', ['except' => ['create', 'edit', 'update', 'delete']]);
 
+    Route::get('company', 'ContragentsController@my');
+    Route::patch('company', 'ContragentsController@updateCompany');
 
+
+    Route::get('auctions/{action}', 'AuctionsController@index');
+    Route::get('auction/{id}', 'AuctionsController@show');
+    Route::post('auctions', 'CommentController@store');
 
     Route::get('comments/{contragentId}', 'CommentController@show');
     Route::post('comments', 'CommentController@store');
     Route::post('comments/{commentId}/{type}', 'CommentController@update');
-
-
-
-
-
-
-
 });

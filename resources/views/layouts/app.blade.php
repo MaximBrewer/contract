@@ -21,12 +21,13 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script>
-        window._translations = {!! cache('translations') !!};
+        window._translations = {!!cache('translations') !!};
     </script>
 </head>
 
 <body class="d-flex flex-column">
     <div id="app">
+        <flash-message class="flashpool flash__wrapper"></flash-message>
         <nav class="navbar  navbar-expand-lg navbar-dark flex-column flex-md-row  bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="//cross-contract.ru">
@@ -72,8 +73,8 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <router-link :to="{name: 'auctionIndex'}" class="dropdown-item">{{ __('All auctions') }}</router-link>
-                                <router-link :to="{name: 'auctionIndex'}" class="dropdown-item">{{ __('My auctions') }}</router-link>
-                                <router-link :to="{name: 'auctionIndex'}" class="dropdown-item">{{ __('Bidder') }}</router-link>
+                                <router-link :to="{name: 'auctionMy'}" class="dropdown-item">{{ __('My auctions') }}</router-link>
+                                <router-link :to="{name: 'auctionBid'}" class="dropdown-item">{{ __('Bidder') }}</router-link>
                                 <router-link :to="{name: 'createAuction'}" class="dropdown-item">{{ __('Create new auction') }}</router-link>
                             </div>
                         </li>
@@ -85,8 +86,11 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
+
+                                <router-link :to="{name: 'company'}" class="dropdown-item">{{ __('Settings') }}</router-link>
+
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                     document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
 
@@ -113,6 +117,7 @@
         </div>
     </footer>
     <!-- Footer -->
+    @include ('footer')
 </body>
 
 </html>

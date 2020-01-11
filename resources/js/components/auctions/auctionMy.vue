@@ -53,7 +53,7 @@ export default {
   mounted() {
     var app = this;
     let contragent_id = app.user.contragents[0].id;
-    let action = "all";
+    let action = "my";
     axios
       .get("/api/v1/auctions/" + action + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token)
       .then(function(resp) {

@@ -71,7 +71,14 @@ export default {
     app.getContragents();
     app.auctionId = id;
     axios
-      .get("/api/v1/auctions/" + id)
+      .get(
+        "/api/v1/auctions/" +
+          id +
+          "?csrf_token=" +
+          window.csrf_token +
+          "&api_token=" +
+          window.api_token
+      )
       .then(function(resp) {
         app.auction = resp.data;
         app.isLoading = false;
@@ -102,27 +109,55 @@ export default {
   methods: {
     getMultiplicities() {
       let app = this;
-      axios.get("/api/v1/multiplicities").then(function(resp) {
-        app.multiplicities = resp.data;
-      });
+      axios
+        .get(
+          "/api/v1/multiplicities?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token
+        )
+        .then(function(resp) {
+          app.multiplicities = resp.data;
+        });
     },
     getProducts() {
       let app = this;
-      axios.get("/api/v1/products").then(function(resp) {
-        app.products = resp.data;
-      });
+      axios
+        .get(
+          "/api/v1/products?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token
+        )
+        .then(function(resp) {
+          app.products = resp.data;
+        });
     },
     getStores() {
       let app = this;
-      axios.get("/api/v1/stores").then(function(resp) {
-        app.stores = resp.data;
-      });
+      axios
+        .get(
+          "/api/v1/stores?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token
+        )
+        .then(function(resp) {
+          app.stores = resp.data;
+        });
     },
     getContragents() {
       let app = this;
-      axios.get("/api/v1/contragents").then(function(resp) {
-        app.contragents = resp.data;
-      });
+      axios
+        .get(
+          "/api/v1/contragents?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token
+        )
+        .then(function(resp) {
+          app.contragents = resp.data;
+        });
     },
     saveForm() {
       event.preventDefault();
@@ -130,7 +165,15 @@ export default {
       var newAuction = app.auction;
       app.isLoading = true;
       axios
-        .patch("/api/v1/auctions/" + app.auctionId, newAuction)
+        .patch(
+          "/api/v1/auctions/" +
+            app.auctionId +
+            "?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token,
+          newAuction
+        )
         .then(function(resp) {
           app.auction = resp.data;
           app.isLoading = false;

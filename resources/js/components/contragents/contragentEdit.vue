@@ -100,13 +100,22 @@ export default {
   mounted() {
     let app = this;
     app.isLoading = true;
-    let id = app.$route.params.id;
+    let id = app.user.contragents[0].id;
+
+    if (!!app.$route.params.id) id = app.$route.params.id;
     app.getFederalDistricts();
     app.getRegions();
     app.getTypes();
     app.contragentId = id;
     axios
-      .get("/api/v1/contragents/" + id)
+      .get(
+        "/api/v1/contragents/" +
+          id +
+          "?csrf_token=" +
+          window.csrf_token +
+          "&api_token=" +
+          window.api_token
+      )
       .then(function(resp) {
         app.contragent = resp.data;
         app.isLoading = false;
@@ -148,23 +157,43 @@ export default {
     },
     getFederalDistricts() {
       let app = this;
-      axios.get("/api/v1/federalDistricts").then(function(resp) {
-        app.federalDistricts = resp.data;
-      });
+      axios
+        .get(
+          "/api/v1/federalDistricts?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token
+        )
+        .then(function(resp) {
+          app.federalDistricts = resp.data;
+        });
     },
     getRegions() {
       let app = this;
       axios
-        .get("/api/v1/regions?", this.contragent.federal_district)
+        .get(
+          "/api/v1/regions?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token,
+          this.contragent.federal_district
+        )
         .then(function(resp) {
           app.regions = resp.data;
         });
     },
     getTypes() {
       let app = this;
-      axios.get("/api/v1/types").then(function(resp) {
-        app.types = resp.data;
-      });
+      axios
+        .get(
+          "/api/v1/types?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token
+        )
+        .then(function(resp) {
+          app.types = resp.data;
+        });
     },
     saveForm() {
       event.preventDefault();
@@ -179,7 +208,15 @@ export default {
       for (let t in newContragent.types)
         newContragent.typeIds.push(newContragent.types[t].id);
       axios
-        .patch("/api/v1/contragents/" + app.contragentId, newContragent)
+        .patch(
+          "/api/v1/contragents/" +
+            app.contragentId +
+            "?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token,
+          newContragent
+        )
         .then(function(resp) {
           app.contragent = resp.data;
           app.isLoading = false;

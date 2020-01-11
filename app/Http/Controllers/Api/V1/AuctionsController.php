@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \App\Auction;
+use Illuminate\Support\Facades\Auth;
 use \App\Store;
 
 class AuctionsController extends Controller
@@ -14,9 +15,23 @@ class AuctionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function index(Request $request, $action = null)
     {
-        return Auction::all();
+        
+        switch($action){
+            case "all":
+                return Auction::all();
+            break;
+            case "my":
+                return Auction::where('contragent_id', Auth::user()->contragents[0]->id)->get();
+            break;
+            case "bid":
+                return Auth::user()->contragents[0]->auctions;
+            break;
+
+        }
+
     }
 
     /**

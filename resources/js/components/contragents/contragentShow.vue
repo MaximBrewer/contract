@@ -82,7 +82,14 @@ export default {
     let id = app.$route.params.id;
     app.contragentId = id;
     axios
-      .get("/api/v1/contragents/" + id)
+      .get(
+        "/api/v1/contragents/" +
+          id +
+          "?csrf_token=" +
+          window.csrf_token +
+          "&api_token=" +
+          window.api_token
+      )
       .then(function(resp) {
         app.contragent = resp.data;
         app.isLoading = false;
@@ -103,7 +110,7 @@ export default {
       contragent: {
         title: "",
         federal_district: {
-          title:""
+          title: ""
         },
         region: {
           title: ""
@@ -125,7 +132,15 @@ export default {
       for (let t in newContragent.types)
         newContragent.typeIds.push(newContragent.types[t].id);
       axios
-        .patch("/api/v1/contragents/" + app.contragentId, newContragent)
+        .patch(
+          "/api/v1/contragents/" +
+            app.contragentId +
+            "?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_tokens,
+          newContragent
+        )
         .then(function(resp) {
           app.contragent = resp.data;
           app.isLoading = false;

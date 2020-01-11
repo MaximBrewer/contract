@@ -40,7 +40,12 @@ export default {
   mounted() {
     var app = this;
     axios
-      .get("/api/v1/contragents")
+      .get(
+        "/api/v1/contragents?csrf_token=" +
+          window.csrf_token +
+          "&api_token=" +
+          window.api_token
+      )
       .then(function(resp) {
         app.contragents = resp.data;
       })
