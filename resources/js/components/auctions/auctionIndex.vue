@@ -27,6 +27,11 @@
                   v-on:click="bidAuction(auction.id)"
                   class="btn btn-danger"
                 >{{ __('Bid') }}</button>
+                <button
+                  v-if="auction.bidder"
+                  v-on:click="unbidAuction(auction.id)"
+                  class="btn btn-danger"
+                >{{ __('Unbid') }}</button>
               </td>
               <td><router-link :to="{name: 'showAuction', 'params': {'id': auction.id}}" class="dropdown-item">{{ auction.contragent.title }}</router-link></td>
               <td>{{ auction.product.title }}</td>
@@ -82,6 +87,24 @@ export default {
       axios
         .get(
           "/api/v1/auctions/all/bid/" +
+            id +
+            "?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token
+        )
+        .then(function(resp) {
+          app.auctions = resp.data;
+        })
+        .catch(function(resp) {
+          alert(app.__("Failed to bid auction"));
+        });
+    },
+    unbidAuction(id) {
+      var app = this;
+      axios
+        .get(
+          "/api/v1/auctions/all/unbid/" +
             id +
             "?csrf_token=" +
             window.csrf_token +

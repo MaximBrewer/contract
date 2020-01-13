@@ -91,6 +91,21 @@ class AuctionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function unbid(Request $request, $action, $id)
+    {
+
+        if(count(Auth::user()->contragents)) Auth::user()->contragents[0]->auctions()->dettach($id);
+        return $this->index($request, $action);
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
         $auction = Auction::findOrFail($id);
