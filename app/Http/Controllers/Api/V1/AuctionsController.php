@@ -94,7 +94,7 @@ class AuctionsController extends Controller
     public function unbid(Request $request, $action, $id)
     {
 
-        if(count(Auth::user()->contragents)) Auth::user()->contragents[0]->auctions()->dettach($id);
+        if(count(Auth::user()->contragents)) Auth::user()->contragents[0]->auctions()->detach($id);
         return $this->index($request, $action);
 
     }
