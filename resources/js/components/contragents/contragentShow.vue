@@ -66,7 +66,7 @@ import "vue-loading-overlay/dist/vue-loading.css";
 
 import Loading from "vue-loading-overlay";
 import vSelect from "vue-select";
-import comment from "./Comments.vue";
+import comment from "./comments.vue";
 import StarRating from "vue-star-rating";
 
 export default {

@@ -20,7 +20,7 @@ window.Vue.use(VueFlashMessage);
 import ContragentIndex from "./components/contragents/contragentIndex.vue";
 import ContragentCreate from "./components/contragents/contragentCreate.vue";
 import ContragentEdit from "./components/contragents/contragentEdit.vue";
-import Company from "./components/contragents/Company.vue";
+import Company from "./components/contragents/company.vue";
 import contragentShow from "./components/contragents/contragentShow.vue";
 import AuctionIndex from "./components/auctions/auctionIndex.vue";
 import AuctionMy from "./components/auctions/auctionMy.vue";
