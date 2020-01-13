@@ -5,24 +5,42 @@
       <form v-on:submit="saveForm()">
         <div class="form-group">
           <label class="control-label">{{ __('Contragent title') }}</label>
-          <input v-bind:class="{ 'is-invalid': errors.title }" type="text" v-model="contragent.title" class="form-control" ref="title" />
-          <div role="alert" class="invalid-feedback">
-            <span v-for="error in errors.title">{{ error }}</span>
+          <input
+            v-bind:class="{ 'is-invalid':  contragent.errors && contragent.errors.title }"
+            type="text"
+            v-model="contragent.title"
+            class="form-control"
+            ref="title"
+          />
+          <div role="alert" class="invalid-feedback" v-if="contragent.errors">
+            <span v-for="error in contragent.errors.title">{{ error }}</span>
           </div>
         </div>
         <div class="form-group">
           <label class="control-label">{{ __('Contragent federal district') }}</label>
-          <v-select v-bind:class="{ 'is-invalid': errors.title }" label="title" :options="federalDistricts" v-model="contragent.federal_district"></v-select>
+          <v-select
+            v-bind:class="{ 'is-invalid': contragent.errors && contragent.errors.title }"
+            label="title"
+            :options="federalDistricts"
+            v-model="contragent.federal_district"
+          ></v-select>
           <span role="alert" class="invalid-feedback"></span>
         </div>
         <div class="form-group">
           <label class="control-label">{{ __('Contragent region') }}</label>
-          <v-select v-bind:class="{ 'is-invalid': errors.title }" label="title" :options="regions" v-model="contragent.region" ref="region"></v-select>
+          <v-select
+            v-bind:class="{ 'is-invalid': contragent.errors && contragent.errors.title }"
+            label="title"
+            :options="regions"
+            v-model="contragent.region"
+            ref="region"
+          ></v-select>
           <span role="alert" class="invalid-feedback"></span>
         </div>
         <div class="form-group">
           <label class="control-label">{{ __('Contragent type') }}</label>
-          <v-select v-bind:class="{ 'is-invalid': errors.title }"
+          <v-select
+            v-bind:class="{ 'is-invalid': contragent.errors && contragent.errors.title }"
             label="title"
             :options="types"
             v-model="contragent.types"
@@ -33,12 +51,19 @@
         </div>
         <div class="form-group">
           <label class="control-label">{{ __('Contragent TIN') }}</label>
-          <input v-bind:class="{ 'is-invalid': errors.title }" type="text" v-model="contragent.inn" class="form-control" ref="inn" />
+          <input
+            v-bind:class="{ 'is-invalid': contragent.errors && contragent.errors.title }"
+            type="text"
+            v-model="contragent.inn"
+            class="form-control"
+            ref="inn"
+          />
           <span role="alert" class="invalid-feedback"></span>
         </div>
         <div class="form-group">
           <label class="control-label">{{ __('Contragent Legal address') }}</label>
-          <input v-bind:class="{ 'is-invalid': errors.title }"
+          <input
+            v-bind:class="{ 'is-invalid': contragent.errors && contragent.errors.title }"
             type="text"
             v-model="contragent.legal_address"
             class="form-control"
@@ -48,11 +73,23 @@
         </div>
         <div class="form-group">
           <label class="control-label">{{ __('Contragent contact') }}</label>
-          <input v-bind:class="{ 'is-invalid': errors.title }" type="text" v-model="contragent.fio" class="form-control" ref="fio" />
+          <input
+            v-bind:class="{ 'is-invalid': contragent.errors && contragent.errors.title }"
+            type="text"
+            v-model="contragent.fio"
+            class="form-control"
+            ref="fio"
+          />
         </div>
         <div class="form-group">
           <label class="control-label">{{ __('Contragent phone') }}</label>
-          <input v-bind:class="{ 'is-invalid': errors.title }" type="text" v-model="contragent.phone" class="form-control" ref="phone" />
+          <input
+            v-bind:class="{ 'is-invalid': contragent.errors && contragent.errors.title }"
+            type="text"
+            v-model="contragent.phone"
+            class="form-control"
+            ref="phone"
+          />
           <span role="alert" class="invalid-feedback"></span>
         </div>
         <div class="form-group">
@@ -165,10 +202,9 @@ export default {
       regions: [],
       contragentId: null,
       contragent: {
-        name: "",
-        address: "",
-        website: "",
-        email: ""
+        errors: {
+          title: []
+        }
       }
     };
   },

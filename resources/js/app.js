@@ -4,18 +4,15 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-
 require("./bootstrap");
 
 window.Vue = require("vue");
-window.Vue.mixin(require('./trans'))
-
+window.Vue.mixin(require("./trans"));
 
 import VueRouter from "vue-router";
-import VueFlashMessage from 'vue-flash-message';
+import VueFlashMessage from "vue-flash-message";
 
-require('vue-flash-message/dist/vue-flash-message.min.css');
-
+require("vue-flash-message/dist/vue-flash-message.min.css");
 
 window.Vue.use(VueRouter);
 window.Vue.use(VueFlashMessage);
@@ -30,12 +27,13 @@ import AuctionMy from "./components/auctions/auctionMy.vue";
 import AuctionBid from "./components/auctions/auctionBid.vue";
 import AuctionCreate from "./components/auctions/auctionCreate.vue";
 import AuctionEdit from "./components/auctions/auctionEdit.vue";
+import AuctionShow from "./components/auctions/auctionShow.vue";
 
 const routes = [
-    { path: '/personal', redirect: '/personal/auctions' },
+    { path: "/personal", redirect: "/personal/auctions" },
     {
         path: "/personal/contragents",
-        component: ContragentIndex ,
+        component: ContragentIndex,
         name: "contragentIndex"
     },
     {
@@ -54,13 +52,8 @@ const routes = [
         name: "editContragent"
     },
     {
-        path: "/personal/company",
-        component: Company,
-        name: "company"
-    },
-    {
         path: "/personal/auctions",
-        component: AuctionIndex ,
+        component: AuctionIndex,
         name: "auctionIndex"
     },
     {
@@ -85,27 +78,34 @@ const routes = [
         name: "createAuction"
     },
     {
+        path: "/personal/auctions/show/:id",
+        component: AuctionShow,
+        name: "showAuction"
+    },
+    {
         path: "/personal/auctions/edit/:id",
         component: AuctionEdit,
         name: "editAuction"
     }
 ];
 
-if(!!window.user && !!window.user.contragents && !!window.user.contragents[0]){
+if (
+    !!window.user &&
+    !!window.user.contragents &&
+    !!window.user.contragents[0]
+) {
     routes.push({
-        path: "/personal/contragents/edit/" + window.user.contragents[0].id,
-        component: ContragentEdit,
+        path: "/personal/company",
+        component: Company,
         name: "company"
-    })
+    });
 }
 
 Vue.prototype.user = window.user;
 
 const router = new VueRouter({
-    mode: 'history',
+    mode: "history",
     routes: routes
 });
-
-
 
 const app = new Vue({ router }).$mount("#app");

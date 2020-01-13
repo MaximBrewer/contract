@@ -33,7 +33,6 @@ class ContragentsController extends Controller
     public function store(Request $request)
     {
 
-
         $contragent = Contragent::create($request->all());
         $contragent->types()->sync($request->all()['typeIds']);
         $storesIds = [];
@@ -80,7 +79,8 @@ class ContragentsController extends Controller
 
     public function my()
     {
-        return Contragent::findOrFail(Auth::user()->contragents[0]->id);
+        $contragent = Contragent::findOrFail(Auth::user()->contragents[0]->id);
+        return $contragent;
     }
 
     private function checkUser($id){
@@ -95,55 +95,61 @@ class ContragentsController extends Controller
     public function update(Request $request, $id)
     {
 
-        $validator = Validator::make($request->all(), [
-            'inn' => [
-                'required',
-                Rule::unique('contragents')->ignore($id),
-            ],
-            'title' => [
-                'required'
-            ],
-            'legal_address' => [
-                'required'
-            ],
+        $this->validate($request, [
+            'inn' => 'required|unique',
         ]);
 
-        if(!$validator->fails() && $this->checkUser($id)){
+        // $validator = Validator::make($request->all(), [
+        //     'inn' => [
+        //         'required',
+        //         Rule::unique('contragents')->ignore($id),
+        //     ],
+        //     'title' => [
+        //         'required'
+        //     ],
+        //     'legal_address' => [
+        //         'required'
+        //     ],
+        // ]);
 
-            $contragent = Contragent::findOrFail($id);
-            $contragent->types()->sync($request->all()['typeIds']);
-            $storesIds = [];
-            $contragent->update($request->all());
-            if(count($request->all()['stores'])){
-                foreach($request->all()['stores'] as $store){
-                    if($store['coords'] && $store['address']){
-                        if($store['id']){
-                            Store::find($store['id'])->update([
-                                'contragent_id' => $contragent->id,
-                                'coords' => $store['coords'], 
-                                'address' => $store['address'], 
-                                'federal_district_id' => $store['federal_district']['id'],
-                                'region_id' => $store['region']['id']
-                            ]);
-                            $storesIds[] = $store['id'];
-                        } else {
-                            $storesIds[] = Store::create([
-                                'contragent_id' => $contragent->id,
-                                'coords' => $store['coords'],
-                                'address' => $store['address'],
-                                'federal_district_id' => $store['federal_district']['id'],
-                                'region_id' => $store['region']['id']
-                            ])->id;
-                        }
-                    }
-                }
-                Store::whereNotIn('id', $storesIds)->where("contragent_id", $contragent->id)->delete();
-            }
-        }
+        // if(true || !$this->checkUser($id)) return $request->withErrors($validator, 'login');
 
-        $contragent = Contragent::findOrFail($id);
-        $contragent->errors = $validator->errors();
-        return $contragent;
+        // if(!$validator->fails()){
+
+        //     $contragent = Contragent::findOrFail($id);
+        //     $contragent->types()->sync($request->all()['typeIds']);
+        //     $storesIds = [];
+        //     $contragent->update($request->all());
+        //     if(count($request->all()['stores'])){
+        //         foreach($request->all()['stores'] as $store){
+        //             if($store['coords'] && $store['address']){
+        //                 if($store['id']){
+        //                     Store::find($store['id'])->update([
+        //                         'contragent_id' => $contragent->id,
+        //                         'coords' => $store['coords'], 
+        //                         'address' => $store['address'], 
+        //                         'federal_district_id' => $store['federal_district']['id'],
+        //                         'region_id' => $store['region']['id']
+        //                     ]);
+        //                     $storesIds[] = $store['id'];
+        //                 } else {
+        //                     $storesIds[] = Store::create([
+        //                         'contragent_id' => $contragent->id,
+        //                         'coords' => $store['coords'],
+        //                         'address' => $store['address'],
+        //                         'federal_district_id' => $store['federal_district']['id'],
+        //                         'region_id' => $store['region']['id']
+        //                     ])->id;
+        //                 }
+        //             }
+        //         }
+        //         Store::whereNotIn('id', $storesIds)->where("contragent_id", $contragent->id)->delete();
+        //     }
+        // }
+
+        // $contragent = Contragent::findOrFail($id);
+        // return $contragent;
+
     }
 
 
@@ -171,41 +177,60 @@ class ContragentsController extends Controller
             ],
         ]);
 
-        if(!$validator->fails()){
+        $validator->validate();
 
-            $contragent = Contragent::findOrFail($id);
-            $contragent->types()->sync($request->all()['typeIds']);
-            $storesIds = [];
-            $contragent->update($request->all());
-            if(count($request->all()['stores'])){
-                foreach($request->all()['stores'] as $store){
-                    if($store['coords'] && $store['address']){
-                        if($store['id']){
-                            Store::find($store['id'])->update([
-                                'contragent_id' => $contragent->id,
-                                'coords' => $store['coords'], 
-                                'address' => $store['address'], 
-                                'federal_district_id' => $store['federal_district']['id'],
-                                'region_id' => $store['region']['id']
-                            ]);
-                            $storesIds[] = $store['id'];
-                        } else {
-                            $storesIds[] = Store::create([
-                                'contragent_id' => $contragent->id,
-                                'coords' => $store['coords'],
-                                'address' => $store['address'],
-                                'federal_district_id' => $store['federal_district']['id'],
-                                'region_id' => $store['region']['id']
-                            ])->id;
-                        }
-                    }
-                }
-                Store::whereNotIn('id', $storesIds)->where("contragent_id", $contragent->id)->delete();
-            }
+        foreach($request->all()['stores'] as $store){
+
+            $validator = Validator::make($store, [
+                'coords' => [
+                    'required',
+                ],
+                'address' => [
+                    'required'
+                ],
+                'federal_district.id' => [
+                    'required'
+                ],
+                'region.id' => [
+                    'required'
+                ],
+            ]);
+
+            $validator->validate();
+
         }
 
         $contragent = Contragent::findOrFail($id);
-        $contragent->errors = $validator->errors();
+        $contragent->types()->sync($request->all()['typeIds']);
+        $storesIds = [];
+        $contragent->update($request->all());
+        if(count($request->all()['stores'])){
+            foreach($request->all()['stores'] as $store){
+                if($store['coords'] && $store['address']){
+                    if($store['id']){
+                        Store::find($store['id'])->update([
+                            'contragent_id' => $contragent->id,
+                            'coords' => $store['coords'], 
+                            'address' => $store['address'], 
+                            'federal_district_id' => $store['federal_district']['id'],
+                            'region_id' => $store['region']['id']
+                        ]);
+                        $storesIds[] = $store['id'];
+                    } else {
+                        $storesIds[] = Store::create([
+                            'contragent_id' => $contragent->id,
+                            'coords' => $store['coords'],
+                            'address' => $store['address'],
+                            'federal_district_id' => $store['federal_district']['id'],
+                            'region_id' => $store['region']['id']
+                        ])->id;
+                    }
+                }
+            }
+            Store::whereNotIn('id', $storesIds)->where("contragent_id", $contragent->id)->delete();
+        }
+
+        $contragent = Contragent::findOrFail($id);
         return $contragent;
     }
 

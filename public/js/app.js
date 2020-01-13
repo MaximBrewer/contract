@@ -1883,6 +1883,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1901,7 +1905,14 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    bidAuction: function bidAuction(id) {},
+    bidAuction: function bidAuction(id) {
+      var app = this;
+      axios.get("/api/v1/auctions/bid/bid/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+        app.auctions = resp.data;
+      })["catch"](function (resp) {
+        alert(app.__("Failed to bid auction"));
+      });
+    },
     formatDate: function formatDate(indate) {
       var date = new Date(indate);
       return date.toLocaleString();
@@ -2305,6 +2316,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2323,7 +2338,14 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    bidAuction: function bidAuction(id) {},
+    bidAuction: function bidAuction(id) {
+      var app = this;
+      axios.get("/api/v1/auctions/all/bid/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+        app.auctions = resp.data;
+      })["catch"](function (resp) {
+        alert(app.__("Failed to bid auction"));
+      });
+    },
     formatDate: function formatDate(indate) {
       var date = new Date(indate);
       return date.toLocaleString();
@@ -2400,6 +2422,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2418,7 +2444,14 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    bidAuction: function bidAuction(id) {},
+    bidAuction: function bidAuction(id) {
+      var app = this;
+      axios.get("/api/v1/auctions/my/bid/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+        app.auctions = resp.data;
+      })["catch"](function (resp) {
+        alert(app.__("Failed to bid auction"));
+      });
+    },
     formatDate: function formatDate(indate) {
       var date = new Date(indate);
       return date.toLocaleString();
@@ -2437,6 +2470,125 @@ __webpack_require__.r(__webpack_exports__);
     // }
 
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/auctions/auctionShow.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/auctions/auctionShow.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-datetime */ "./node_modules/vue-datetime/dist/vue-datetime.js");
+/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_datetime__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-datetime/dist/vue-datetime.css */ "./node_modules/vue-datetime/dist/vue-datetime.css");
+/* harmony import */ var vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
+/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_5__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    vSelect: vue_select__WEBPACK_IMPORTED_MODULE_4___default.a,
+    Datetime: vue_datetime__WEBPACK_IMPORTED_MODULE_2__["Datetime"],
+    Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
+  mounted: function mounted() {
+    var app = this;
+    app.isLoading = true;
+    var id = app.$route.params.id;
+    app.auctionId = id;
+    axios.get("/api/v1/auction/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+      app.auction = resp.data;
+      app.isLoading = false;
+    })["catch"](function () {
+      alert(app.__("Failed to load auction"));
+      app.isLoading = false;
+    });
+  },
+  data: function data() {
+    return {
+      isLoading: true,
+      onCancel: false,
+      fullPage: true,
+      multiplicities: [],
+      contragents: [],
+      stores: [],
+      products: [],
+      auctionId: null,
+      auction: {}
+    };
+  },
+  methods: {}
 });
 
 /***/ }),
@@ -2941,6 +3093,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2977,10 +3166,9 @@ __webpack_require__.r(__webpack_exports__);
       regions: [],
       contragentId: null,
       contragent: {
-        name: "",
-        address: "",
-        website: "",
-        email: ""
+        errors: {
+          title: []
+        }
       }
     };
   },
@@ -49061,21 +49249,42 @@ var render = function() {
               _vm._l(_vm.auctions, function(auction, index) {
                 return _c("tr", [
                   _c("td", [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        on: {
-                          click: function($event) {
-                            return _vm.bidAuction(auction.id)
-                          }
-                        }
-                      },
-                      [_vm._v(_vm._s(_vm.__("Bid")))]
-                    )
+                    !auction.bidder &&
+                    _vm.user.contragents[0].id != auction.contragent.id
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger",
+                            on: {
+                              click: function($event) {
+                                return _vm.bidAuction(auction.id)
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.__("Bid")))]
+                        )
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(auction.contragent.title))]),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "dropdown-item",
+                          attrs: {
+                            to: {
+                              name: "showAuction",
+                              params: { id: auction.id }
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(auction.contragent.title))]
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(auction.product.title))]),
                   _vm._v(" "),
@@ -49672,21 +49881,42 @@ var render = function() {
               _vm._l(_vm.auctions, function(auction, index) {
                 return _c("tr", [
                   _c("td", [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        on: {
-                          click: function($event) {
-                            return _vm.bidAuction(auction.id)
-                          }
-                        }
-                      },
-                      [_vm._v(_vm._s(_vm.__("Bid")))]
-                    )
+                    !auction.bidder &&
+                    _vm.user.contragents[0].id != auction.contragent.id
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger",
+                            on: {
+                              click: function($event) {
+                                return _vm.bidAuction(auction.id)
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.__("Bid")))]
+                        )
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(auction.contragent.title))]),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "dropdown-item",
+                          attrs: {
+                            to: {
+                              name: "showAuction",
+                              params: { id: auction.id }
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(auction.contragent.title))]
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(auction.product.title))]),
                   _vm._v(" "),
@@ -49781,21 +50011,42 @@ var render = function() {
               _vm._l(_vm.auctions, function(auction, index) {
                 return _c("tr", [
                   _c("td", [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        on: {
-                          click: function($event) {
-                            return _vm.bidAuction(auction.id)
-                          }
-                        }
-                      },
-                      [_vm._v(_vm._s(_vm.__("Bid")))]
-                    )
+                    !auction.bidder &&
+                    _vm.user.contragents[0].id != auction.contragent.id
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger",
+                            on: {
+                              click: function($event) {
+                                return _vm.bidAuction(auction.id)
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.__("Bid")))]
+                        )
+                      : _vm._e()
                   ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(auction.contragent.title))]),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "dropdown-item",
+                          attrs: {
+                            to: {
+                              name: "showAuction",
+                              params: { id: auction.id }
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(auction.contragent.title))]
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(auction.product.title))]),
                   _vm._v(" "),
@@ -49826,6 +50077,179 @@ var render = function() {
         ]
       )
     ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/auctions/auctionShow.vue?vue&type=template&id=068c372c&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/auctions/auctionShow.vue?vue&type=template&id=068c372c& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", { staticClass: "auction-edit-wrapper" }, [
+    _c(
+      "div",
+      { staticClass: "container" },
+      [
+        _c("loading", {
+          attrs: {
+            active: _vm.isLoading,
+            "can-cancel": true,
+            "is-full-page": _vm.fullPage
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.isLoading = $event
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                return _vm.saveForm()
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Auction lot")))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-control" }, [
+                _vm._v(_vm._s(_vm.auction.product.title))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Auction multiplicity")))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-control" }, [
+                _vm._v(_vm._s(_vm.auction.multiplicity.title))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Auction contragent")))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-control" }, [
+                _vm._v(_vm._s(_vm.auction.contragent.title))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Auction store address")))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-control" }, [
+                _vm._v(_vm._s(_vm.auction.store.address))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Auction store coords")))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-control" }, [
+                _vm._v(_vm._s(_vm.auction.store.coords))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Auction store federal district")))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-control" }, [
+                _vm._v(_vm._s(_vm.auction.store.federal_district.title))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Auction store region")))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-control" }, [
+                _vm._v(_vm._s(_vm.auction.store.region.title))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Auction start")))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-control" }, [
+                _vm._v(_vm._s(_vm.auction.start_at))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Auction finish")))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-control" }, [
+                _vm._v(_vm._s(_vm.auction.finish_at))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Auction comment")))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-control" }, [
+                _vm._v(_vm._s(_vm.auction.comment))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Auction bidders")))
+              ]),
+              _vm._v(" "),
+              _c(
+                "ul",
+                { attrs: { id: "auction-bidders" } },
+                _vm._l(_vm.auction.bidders, function(bidder, index) {
+                  return _c("li", { staticClass: "form-control" }, [
+                    _vm._v(_vm._s(bidder.title))
+                  ])
+                }),
+                0
+              )
+            ])
+          ]
+        )
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -50544,7 +50968,10 @@ var render = function() {
                 ],
                 ref: "title",
                 staticClass: "form-control",
-                class: { "is-invalid": _vm.errors.title },
+                class: {
+                  "is-invalid":
+                    _vm.contragent.errors && _vm.contragent.errors.title
+                },
                 attrs: { type: "text" },
                 domProps: { value: _vm.contragent.title },
                 on: {
@@ -50557,14 +50984,19 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "invalid-feedback", attrs: { role: "alert" } },
-                _vm._l(_vm.errors.title, function(error) {
-                  return _c("span", [_vm._v(_vm._s(error))])
-                }),
-                0
-              )
+              _vm.contragent.errors
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "invalid-feedback",
+                      attrs: { role: "alert" }
+                    },
+                    _vm._l(_vm.contragent.errors.title, function(error) {
+                      return _c("span", [_vm._v(_vm._s(error))])
+                    }),
+                    0
+                  )
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c(
@@ -50576,7 +51008,10 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("v-select", {
-                  class: { "is-invalid": _vm.errors.title },
+                  class: {
+                    "is-invalid":
+                      _vm.contragent.errors && _vm.contragent.errors.title
+                  },
                   attrs: { label: "title", options: _vm.federalDistricts },
                   model: {
                     value: _vm.contragent.federal_district,
@@ -50605,7 +51040,10 @@ var render = function() {
                 _vm._v(" "),
                 _c("v-select", {
                   ref: "region",
-                  class: { "is-invalid": _vm.errors.title },
+                  class: {
+                    "is-invalid":
+                      _vm.contragent.errors && _vm.contragent.errors.title
+                  },
                   attrs: { label: "title", options: _vm.regions },
                   model: {
                     value: _vm.contragent.region,
@@ -50634,7 +51072,10 @@ var render = function() {
                 _vm._v(" "),
                 _c("v-select", {
                   ref: "types",
-                  class: { "is-invalid": _vm.errors.title },
+                  class: {
+                    "is-invalid":
+                      _vm.contragent.errors && _vm.contragent.errors.title
+                  },
                   attrs: { label: "title", options: _vm.types, multiple: true },
                   model: {
                     value: _vm.contragent.types,
@@ -50669,7 +51110,10 @@ var render = function() {
                 ],
                 ref: "inn",
                 staticClass: "form-control",
-                class: { "is-invalid": _vm.errors.title },
+                class: {
+                  "is-invalid":
+                    _vm.contragent.errors && _vm.contragent.errors.title
+                },
                 attrs: { type: "text" },
                 domProps: { value: _vm.contragent.inn },
                 on: {
@@ -50704,7 +51148,10 @@ var render = function() {
                 ],
                 ref: "legal_address",
                 staticClass: "form-control",
-                class: { "is-invalid": _vm.errors.title },
+                class: {
+                  "is-invalid":
+                    _vm.contragent.errors && _vm.contragent.errors.title
+                },
                 attrs: { type: "text" },
                 domProps: { value: _vm.contragent.legal_address },
                 on: {
@@ -50743,7 +51190,10 @@ var render = function() {
                 ],
                 ref: "fio",
                 staticClass: "form-control",
-                class: { "is-invalid": _vm.errors.title },
+                class: {
+                  "is-invalid":
+                    _vm.contragent.errors && _vm.contragent.errors.title
+                },
                 attrs: { type: "text" },
                 domProps: { value: _vm.contragent.fio },
                 on: {
@@ -50773,7 +51223,10 @@ var render = function() {
                 ],
                 ref: "phone",
                 staticClass: "form-control",
-                class: { "is-invalid": _vm.errors.title },
+                class: {
+                  "is-invalid":
+                    _vm.contragent.errors && _vm.contragent.errors.title
+                },
                 attrs: { type: "text" },
                 domProps: { value: _vm.contragent.phone },
                 on: {
@@ -67877,6 +68330,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/auctions/auctionBid.vue */ "./resources/js/components/auctions/auctionBid.vue");
 /* harmony import */ var _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/auctions/auctionCreate.vue */ "./resources/js/components/auctions/auctionCreate.vue");
 /* harmony import */ var _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/auctions/auctionEdit.vue */ "./resources/js/components/auctions/auctionEdit.vue");
+/* harmony import */ var _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/auctions/auctionShow.vue */ "./resources/js/components/auctions/auctionShow.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -67903,9 +68357,10 @@ window.Vue.use(vue_flash_message__WEBPACK_IMPORTED_MODULE_1___default.a);
 
 
 
+
 var routes = [{
-  path: '/personal',
-  redirect: '/personal/auctions'
+  path: "/personal",
+  redirect: "/personal/auctions"
 }, {
   path: "/personal/contragents",
   component: _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -67922,10 +68377,6 @@ var routes = [{
   path: "/personal/contragents/edit/:id",
   component: _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
   name: "editContragent"
-}, {
-  path: "/personal/company",
-  component: _components_contragents_Company_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-  name: "company"
 }, {
   path: "/personal/auctions",
   component: _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
@@ -67949,6 +68400,10 @@ var routes = [{
   component: _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
   name: "createAuction"
 }, {
+  path: "/personal/auctions/show/:id",
+  component: _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+  name: "showAuction"
+}, {
   path: "/personal/auctions/edit/:id",
   component: _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
   name: "editAuction"
@@ -67956,15 +68411,15 @@ var routes = [{
 
 if (!!window.user && !!window.user.contragents && !!window.user.contragents[0]) {
   routes.push({
-    path: "/personal/contragents/edit/" + window.user.contragents[0].id,
-    component: _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    path: "/personal/company",
+    component: _components_contragents_Company_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     name: "company"
   });
 }
 
 Vue.prototype.user = window.user;
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
-  mode: 'history',
+  mode: "history",
   routes: routes
 });
 var app = new Vue({
@@ -68358,6 +68813,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_auctionMy_vue_vue_type_template_id_f7ead7ca___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_auctionMy_vue_vue_type_template_id_f7ead7ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/auctions/auctionShow.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/auctions/auctionShow.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _auctionShow_vue_vue_type_template_id_068c372c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auctionShow.vue?vue&type=template&id=068c372c& */ "./resources/js/components/auctions/auctionShow.vue?vue&type=template&id=068c372c&");
+/* harmony import */ var _auctionShow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./auctionShow.vue?vue&type=script&lang=js& */ "./resources/js/components/auctions/auctionShow.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _auctionShow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _auctionShow_vue_vue_type_template_id_068c372c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _auctionShow_vue_vue_type_template_id_068c372c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/auctions/auctionShow.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/auctions/auctionShow.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/auctions/auctionShow.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_auctionShow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./auctionShow.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/auctions/auctionShow.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_auctionShow_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/auctions/auctionShow.vue?vue&type=template&id=068c372c&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/auctions/auctionShow.vue?vue&type=template&id=068c372c& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_auctionShow_vue_vue_type_template_id_068c372c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./auctionShow.vue?vue&type=template&id=068c372c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/auctions/auctionShow.vue?vue&type=template&id=068c372c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_auctionShow_vue_vue_type_template_id_068c372c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_auctionShow_vue_vue_type_template_id_068c372c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

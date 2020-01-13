@@ -36,7 +36,8 @@ Route::group([
 
     Route::get('auctions/{action}', 'AuctionsController@index');
     Route::get('auction/{id}', 'AuctionsController@show');
-    Route::post('auctions', 'CommentController@store');
+    Route::get('auctions/{action}/bid/{id}', 'AuctionsController@bid');
+    Route::post('auctions', 'AuctionsController@store');
 
     Route::get('comments/{contragentId}', 'CommentController@show');
     Route::post('comments', 'CommentController@store');

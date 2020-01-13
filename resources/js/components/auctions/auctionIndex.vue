@@ -22,9 +22,13 @@
           <tbody>
             <tr v-for="auction, index in auctions">
               <td>
-                <button v-on:click="bidAuction(auction.id)" class="btn btn-danger">{{ __('Bid') }}</button>
+                <button
+                  v-if="!auction.bidder && user.contragents[0].id != auction.contragent.id"
+                  v-on:click="bidAuction(auction.id)"
+                  class="btn btn-danger"
+                >{{ __('Bid') }}</button>
               </td>
-              <td>{{ auction.contragent.title }}</td>
+              <td><router-link :to="{name: 'showAuction', 'params': {'id': auction.id}}" class="dropdown-item">{{ auction.contragent.title }}</router-link></td>
               <td>{{ auction.product.title }}</td>
               <td>{{ auction.start_price }} ₽</td>
               <td>{{ auction.volume }}</td>
@@ -55,7 +59,14 @@ export default {
     let contragent_id = app.user.contragents[0].id;
     let action = "all";
     axios
-      .get("/api/v1/auctions/" + action + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token)
+      .get(
+        "/api/v1/auctions/" +
+          action +
+          "?csrf_token=" +
+          window.csrf_token +
+          "&api_token=" +
+          window.api_token
+      )
       .then(function(resp) {
         app.auctions = resp.data;
       })
@@ -66,11 +77,28 @@ export default {
   },
 
   methods: {
-    bidAuction(id) {},
+    bidAuction(id) {
+      var app = this;
+      axios
+        .get(
+          "/api/v1/auctions/all/bid/" +
+            id +
+            "?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token
+        )
+        .then(function(resp) {
+          app.auctions = resp.data;
+        })
+        .catch(function(resp) {
+          alert(app.__("Failed to bid auction"));
+        });
+    },
     formatDate(indate) {
       let date = new Date(indate);
       return date.toLocaleString();
-    },
+    }
     // deleteEntry(id, index) {
     //   var app = this;
     //   if (confirm(app.__("Are you sure you want to delete the auction?"))) {

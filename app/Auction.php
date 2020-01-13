@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use App\Product;
 use App\Store;
 use App\Multiplicity;
+use Illuminate\Support\Facades\DB;
 use App\Contragent;
+use Illuminate\Support\Facades\Auth;
 
 
 class Auction extends Model
@@ -25,6 +27,8 @@ class Auction extends Model
 
     protected $appends = [
         'filled',
+        'bidder',
+        'bidders'
     ];
 
 
@@ -42,6 +46,7 @@ class Auction extends Model
     public function getFilledAttribute()
     {
         $this->store;
+        $this->bidder;
         $this->product;
         $this->multiplicity;
         $this->contragent;
@@ -66,6 +71,29 @@ class Auction extends Model
     public function contragent()
     {
         return $this->belongsTo('App\Contragent');
+    }
+    
+    public function getbiddersAttribute()
+    {
+
+        $bidderIds = DB::select('select contragent_id from contragent_auction where auction_id = ?', [$this->id]);
+        $bidderIdsArray = [];
+        foreach($bidderIds as $bidderId) $bidderIdsArray[] = $bidderId->contragent_id;
+        $contragents = Contragent::whereIn('id', $bidderIdsArray)->select('id', 'title')->get();
+        $cAgents = [];
+        foreach($contragents as $contragent) $cAgents[$contragent->id] = ['title' => $contragent->title];
+        return $cAgents;
+
+    }
+    
+    public function getBidderAttribute()
+    {
+        if(Auth::user() && count(Auth::user()->contragents)){
+            foreach(Auth::user()->contragents[0]->auctions as $auction){
+                if($auction->id == $this->id) return 1;
+            }
+        }
+        return 0;
     }
     
 }
