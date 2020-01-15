@@ -23,6 +23,7 @@ class Target extends Model
     {
         $this->store;
         $this->product;
+        $this->contragent;
         $this->multiplicity;
         return true;
     }
