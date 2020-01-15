@@ -26,11 +26,11 @@ class Contragent extends Model
 
     public function getFilledAttribute()
     {
-        $this->stores;
-        $this->types;
-        $this->federalDistrict;
-        $this->region;
-        $this->auctions;
+        // $this->stores;
+        // $this->types;
+        // $this->federalDistrict;
+        // $this->region;
+        // $this->auctions;
         return true;
     }
     
