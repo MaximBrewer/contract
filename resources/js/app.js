@@ -30,6 +30,7 @@ import AuctionEdit from "./components/auctions/auctionEdit.vue";
 import AuctionShow from "./components/auctions/auctionShow.vue";
 import TargetCreate from "./components/targets/targetCreate.vue";
 import TargetEdit from "./components/targets/targetEdit.vue";
+import TargetIndex from "./components/targets/targetIndex.vue";
 
 const routes = [
     { path: "/personal", redirect: "/personal/auctions" },
@@ -83,6 +84,16 @@ const routes = [
         path: "/personal/auctions/show/:id",
         component: AuctionShow,
         name: "showAuction"
+    },
+    {
+        path: "/personal/auctions/edit/:id",
+        component: AuctionEdit,
+        name: "editAuction"
+    },
+    {
+        path: "/personal/targets",
+        component: TargetIndex,
+        name: "indexTarget"
     },
     {
         path: "/personal/auctions/edit/:id",

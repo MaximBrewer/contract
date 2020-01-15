@@ -16,6 +16,14 @@ class TargetsController extends Controller
 
 
 
+    public function all(Request $request, $action = null)
+    {
+        
+        return Target::all();
+
+    }
+
+
     public function index(Request $request, $action = null)
     {
         

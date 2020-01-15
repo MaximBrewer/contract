@@ -41,6 +41,7 @@ Route::group([
     Route::post('auctions', 'AuctionsController@store');
 
 
+    Route::get('targets/all', 'TargetsController@all');
     Route::get('targets', 'TargetsController@index');
     Route::get('targets/{id}', 'TargetsController@show');
     Route::post('targets', 'TargetsController@store');

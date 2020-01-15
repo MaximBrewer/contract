@@ -75,6 +75,7 @@
                                 <router-link :to="{name: 'auctionBid'}" class="dropdown-item">{{ __('Bidder') }}</router-link>
                                 <router-link :to="{name: 'createAuction'}" class="dropdown-item">{{ __('Create new auction') }}</router-link>
                                 <router-link :to="{name: 'createTarget'}" class="dropdown-item">{{ __('Create new target') }}</router-link>
+                                <router-link :to="{name: 'indexTarget'}" class="dropdown-item">{{ __('All targets (tenders)') }}</router-link>
                             </div>
                         </li>
 
