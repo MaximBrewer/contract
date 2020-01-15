@@ -4099,7 +4099,7 @@ __webpack_require__.r(__webpack_exports__);
       app.isLoading = true;
       axios.post("/api/v1/targets?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, app.target).then(function (resp) {
         app.target = resp.data;
-        app.$router.replace("/personal/auctions/my" + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token);
+        app.$router.replace("/personal/auctions/bid" + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token);
         app.isLoading = false;
         return true;
       })["catch"](function (errors) {
@@ -4223,7 +4223,7 @@ __webpack_require__.r(__webpack_exports__);
       app.isLoading = true;
       var newTarget = app.target;
       axios.post("/api/v1/targets?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, newTarget).then(function (resp) {
-        app.$router.replace("/personal/auctions/my" + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token);
+        app.$router.replace("/personal/auctions/bid" + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token);
         app.isLoading = false;
         return true;
       })["catch"](function (resp) {

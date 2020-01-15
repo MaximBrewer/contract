@@ -142,7 +142,7 @@ export default {
         .then(function(resp) {
           app.target = resp.data;
           app.$router.replace(
-            "/personal/auctions/my" +
+            "/personal/auctions/bid" +
               "?csrf_token=" +
               window.csrf_token +
               "&api_token=" +
