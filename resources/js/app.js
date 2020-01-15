@@ -28,6 +28,8 @@ import AuctionBid from "./components/auctions/auctionBid.vue";
 import AuctionCreate from "./components/auctions/auctionCreate.vue";
 import AuctionEdit from "./components/auctions/auctionEdit.vue";
 import AuctionShow from "./components/auctions/auctionShow.vue";
+import TargetCreate from "./components/targets/targetCreate.vue";
+import TargetEdit from "./components/targets/targetEdit.vue";
 
 const routes = [
     { path: "/personal", redirect: "/personal/auctions" },
@@ -98,6 +100,16 @@ if (
         path: "/personal/company",
         component: Company,
         name: "company"
+    },
+    {
+        path: "/personal/targets/create",
+        component: TargetCreate,
+        name: "createTarget"
+    },
+    {
+        path: "/personal/targets/edit/:id",
+        component: TargetEdit,
+        name: "editTarget"
     });
 }
 

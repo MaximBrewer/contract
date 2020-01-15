@@ -1,7 +1,45 @@
 <template>
   <section>
     <div class="container-fluid">
+      <div class="table-responsive" id="tergets">
+        <div class="h2">{{ __('My Targets') }}</div>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>{{ __('Product') }}</th>
+              <th>{{ __('Volume') }}</th>
+              <th>{{ __('Remain') }}</th>
+              <th>{{ __('Multiplicity') }}</th>
+              <th>{{ __('Federal district') }}</th>
+              <th>{{ __('Region') }}</th>
+              <th>{{ __('Address') }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="target, index in targets">
+              <td>{{ target.product.title }}</td>
+              <td>{{ target.volume }}</td>
+              <td>{{ target.renain }}</td>
+              <td
+                v-if="target.multiplicity && target.multiplicity.title"
+              >{{ target.multiplicity.title }}</td>
+              <td v-else></td>
+              <td
+                v-if="target.store && target.store.federal_district && target.store.federal_district.title"
+              >{{ target.store.federal_district.title }}</td>
+              <td v-else></td>
+              <td
+                v-if="target.store && target.store.region && target.store.region.title"
+              >{{ target.store.region.title }}</td>
+              <td v-else></td>
+              <td v-if="target.store && target.store.address">{{ target.store.address }}</td>
+              <td v-else></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <div class="table-responsive" id="auctions">
+        <div class="h2">{{ __('Auctions Bidder') }}</div>
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
@@ -33,7 +71,12 @@
                   class="btn btn-danger"
                 >{{ __('Unbid') }}</button>
               </td>
-              <td><router-link :to="{name: 'showAuction', 'params': {'id': auction.id}}" class="dropdown-item">{{ auction.contragent.title }}</router-link></td>
+              <td>
+                <router-link
+                  :to="{name: 'showAuction', 'params': {'id': auction.id}}"
+                  class="dropdown-item"
+                >{{ auction.contragent.title }}</router-link>
+              </td>
               <td>{{ auction.product.title }}</td>
               <td>{{ auction.start_price }} ₽</td>
               <td>{{ auction.volume }}</td>
@@ -56,7 +99,8 @@
 export default {
   data: function() {
     return {
-      auctions: []
+      auctions: [],
+      targets: []
     };
   },
   mounted() {
@@ -64,13 +108,34 @@ export default {
     let contragent_id = app.user.contragents[0].id;
     let action = "bid";
     axios
-      .get("/api/v1/auctions/" + action + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token)
+      .get(
+        "/api/v1/auctions/" +
+          action +
+          "?csrf_token=" +
+          window.csrf_token +
+          "&api_token=" +
+          window.api_token
+      )
       .then(function(resp) {
         app.auctions = resp.data;
       })
       .catch(function(resp) {
         console.log(resp);
         alert(app.__("Failed to load auctions"));
+      });
+    axios
+      .get(
+        "/api/v1/targets/?csrf_token=" +
+          window.csrf_token +
+          "&api_token=" +
+          window.api_token
+      )
+      .then(function(resp) {
+        app.targets = resp.data;
+      })
+      .catch(function(resp) {
+        console.log(resp);
+        alert(app.__("Failed to load targets"));
       });
   },
 
@@ -114,7 +179,7 @@ export default {
     formatDate(indate) {
       let date = new Date(indate);
       return date.toLocaleString();
-    },
+    }
     // deleteEntry(id, index) {
     //   var app = this;
     //   if (confirm(app.__("Are you sure you want to delete the auction?"))) {

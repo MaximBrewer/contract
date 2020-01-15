@@ -40,6 +40,11 @@ Route::group([
     Route::get('auctions/{action}/unbid/{id}', 'AuctionsController@unbid');
     Route::post('auctions', 'AuctionsController@store');
 
+
+    Route::get('targets', 'TargetsController@index');
+    Route::get('targets/{id}', 'TargetsController@show');
+    Route::post('targets', 'TargetsController@store');
+
     Route::get('comments/{contragentId}', 'CommentController@show');
     Route::post('comments', 'CommentController@store');
     Route::post('comments/{commentId}/{type}', 'CommentController@update');

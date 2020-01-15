@@ -143,9 +143,12 @@ return [
             'unique' => 'Пользователь с таким E-mail уже зарегистрирован.',
         ],
     ],
-    
+
     'attributes' => [
-        'name'                  => 'Имя',
+        'product.id'                  => 'Лот',
+        'multiplicity.id'                  => 'Кратность',
+        'store.id'                  => 'Склад',
+        'volume'                  => 'Объем',
         'username'              => 'Никнейм',
         'email'                 => 'E-Mail адрес',
         'first_name'            => 'Имя',

@@ -2,6 +2,7 @@
   <section>
     <div class="container-fluid">
       <div class="table-responsive" id="auctions">
+        <div class="h2">{{ __('My Auctions') }}</div>
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
@@ -33,7 +34,12 @@
                   class="btn btn-danger"
                 >{{ __('Unbid') }}</button>
               </td>
-              <td><router-link :to="{name: 'showAuction', 'params': {'id': auction.id}}" class="dropdown-item">{{ auction.contragent.title }}</router-link></td>
+              <td>
+                <router-link
+                  :to="{name: 'showAuction', 'params': {'id': auction.id}}"
+                  class="dropdown-item"
+                >{{ auction.contragent.title }}</router-link>
+              </td>
               <td>{{ auction.product.title }}</td>
               <td>{{ auction.start_price }} ₽</td>
               <td>{{ auction.volume }}</td>
@@ -64,7 +70,14 @@ export default {
     let contragent_id = app.user.contragents[0].id;
     let action = "my";
     axios
-      .get("/api/v1/auctions/" + action + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token)
+      .get(
+        "/api/v1/auctions/" +
+          action +
+          "?csrf_token=" +
+          window.csrf_token +
+          "&api_token=" +
+          window.api_token
+      )
       .then(function(resp) {
         app.auctions = resp.data;
       })
@@ -114,7 +127,7 @@ export default {
     formatDate(indate) {
       let date = new Date(indate);
       return date.toLocaleString();
-    },
+    }
     // deleteEntry(id, index) {
     //   var app = this;
     //   if (confirm(app.__("Are you sure you want to delete the auction?"))) {

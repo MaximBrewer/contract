@@ -11611,6 +11611,7 @@ body {
 
 .flashpool {
   position: fixed;
+  z-index: 10;
   top: 20px;
   right: 20px;
   max-height: 400px;
@@ -11811,5 +11812,9 @@ body {
 .flash__close-button:active,
 .flash__close-button:focus {
   outline: none;
+}
+
+.v-select.is-invalid .vs__dropdown-toggle {
+  border-color: #e3342f;
 }
 

@@ -73,7 +73,7 @@ class Auction extends Model
         return $this->belongsTo('App\Contragent');
     }
     
-    public function getbiddersAttribute()
+    public function getBiddersAttribute()
     {
 
         $bidderIds = DB::select('select contragent_id from contragent_auction where auction_id = ?', [$this->id]);
