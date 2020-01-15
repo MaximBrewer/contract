@@ -2,54 +2,111 @@
   <section class="auction-edit-wrapper">
     <div class="container">
       <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
-      <form v-on:submit="saveForm()">
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction lot') }}</label>
-          <div class="form-control">{{ auction.product.title }}</div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div
+              class="card-header"
+              v-if="auction.contragent && auction.contragent.title"
+            >{{ auction.contragent.title }}</div>
+            <ul class="list-group list-group-flush">
+              <li
+                class="list-group-item"
+                v-if="auction.store && auction.store.federal_district"
+              >{{ auction.store.federal_district.title }}</li>
+              <li
+                class="list-group-item"
+                v-if="auction.region && auction.store.region"
+              >{{ auction.store.region.title }}</li>
+              <li
+                class="list-group-item"
+                v-if="auction.store && auction.store.address"
+              >{{ auction.store.address }}</li>
+              <li
+                class="list-group-item"
+                v-if="auction.store && auction.store.coords"
+              >{{ auction.store.coords }}</li>
+            </ul>
+          </div>
+          <br />
         </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction multiplicity') }}</label>
-          <div class="form-control">{{ auction.multiplicity.title }}</div>
+        <div class="col-md-6">
+          <div class="card">
+            <div
+              class="card-header"
+              v-if="auction.product && auction.product.title"
+            >{{ auction.product.title }}</div>
+            <ul class="list-group list-group-flush">
+              <li
+                class="list-group-item"
+                v-if="auction.multiplicity"
+              >{{ auction.multiplicity.title }}</li>
+              <li
+                class="list-group-item"
+              >{{ __('Auction volume') }}: {{ auction.volume }} {{ __('un') }}.</li>
+              <li
+                class="list-group-item"
+              >{{ __('Auction start price') }}: {{ auction.start_price }}₽</li>
+              <li class="list-group-item">{{ __('Auction step') }}: {{ auction.step }}₽</li>
+            </ul>
+          </div>
+          <br />
         </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction contragent') }}</label>
-          <div class="form-control">{{ auction.contragent.title }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card text-center">
+            <div class="card-header">{{ __('Auction start') }}</div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">{{ auction.start_at | formatDateTime }}</li>
+            </ul>
+          </div>
+          <br />
         </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction store address') }}</label>
-          <div class="form-control">{{ auction.store.address }}</div>
+        <div class="col-md-4">
+          <div class="card text-center">
+            <div class="card-header">{{ __('During time') }}</div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">{{ time | formatDateTime}}</li>
+            </ul>
+          </div>
+          <br />
         </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction store coords') }}</label>
-          <div class="form-control">{{ auction.store.coords }}</div>
+        <div class="col-md-4">
+          <div class="card text-center">
+            <div class="card-header">{{ __('Auction finish') }}</div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">{{ auction.finish_at | formatDateTime }}</li>
+            </ul>
+          </div>
+          <br />
         </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction store federal district') }}</label>
-          <div class="form-control">{{ auction.store.federal_district.title }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">{{ __('Auction comment') }}</div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" v-if="auction.comment">{{ auction.comment }}</li>
+            </ul>
+          </div>
+          <br />
         </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction store region') }}</label>
-          <div class="form-control">{{ auction.store.region.title }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">{{ __('Auction bidders') }}</div>
+            <ul class="list-group list-group-flush">
+              <li
+                class="list-group-item"
+                v-for="bidder, index in auction.bidders"
+              >{{ bidder.title }}</li>
+            </ul>
+          </div>
+          <br />
         </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction start') }}</label>
-          <div class="form-control">{{ auction.start_at }}</div>
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction finish') }}</label>
-          <div class="form-control">{{ auction.finish_at }}</div>
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction comment') }}</label>
-          <div class="form-control">{{ auction.comment }}</div>
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction bidders') }}</label>
-          <ul id="auction-bidders">
-            <li class="form-control" v-for="bidder, index in auction.bidders">{{ bidder.title }}</li>
-          </ul>
-        </div>
-      </form>
+      </div>
     </div>
   </section>
 </template>
@@ -90,7 +147,9 @@ export default {
       });
   },
   data: function() {
+    console.log(window.document.querySelector('meta[name="server-time"]'));
     return {
+      time: window.document.querySelector('meta[name="server-time"]').content,
       isLoading: true,
       onCancel: false,
       fullPage: true,
@@ -102,7 +161,19 @@ export default {
       auction: {}
     };
   },
+  created() {
+    this.listenForBroadcast();
+  },
   methods: {
+    listenForBroadcast() {
+      var that = this;
+      Echo.channel("cross_contractru_database_every-minute").listen(
+        "PerMinute",
+        function(e) {
+          that.time = e.time;
+        }
+      );
+    }
   }
 };
 </script>

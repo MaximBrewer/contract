@@ -10,6 +10,7 @@ window.Vue = require("vue");
 window.Vue.mixin(require("./trans"));
 
 import VueRouter from "vue-router";
+import moment from "moment";
 import VueFlashMessage from "vue-flash-message";
 
 require("vue-flash-message/dist/vue-flash-message.min.css");
@@ -107,21 +108,23 @@ if (
     !!window.user.contragents &&
     !!window.user.contragents[0]
 ) {
-    routes.push({
-        path: "/personal/company",
-        component: Company,
-        name: "company"
-    },
-    {
-        path: "/personal/targets/create",
-        component: TargetCreate,
-        name: "createTarget"
-    },
-    {
-        path: "/personal/targets/edit/:id",
-        component: TargetEdit,
-        name: "editTarget"
-    });
+    routes.push(
+        {
+            path: "/personal/company",
+            component: Company,
+            name: "company"
+        },
+        {
+            path: "/personal/targets/create",
+            component: TargetCreate,
+            name: "createTarget"
+        },
+        {
+            path: "/personal/targets/edit/:id",
+            component: TargetEdit,
+            name: "editTarget"
+        }
+    );
 }
 
 Vue.prototype.user = window.user;
@@ -131,4 +134,56 @@ const router = new VueRouter({
     routes: routes
 });
 
-const app = new Vue({ router }).$mount("#app");
+const app = new Vue({
+    router: router,
+    created() {
+        let survey_id = "chan";
+        this.listenForBroadcast(survey_id);
+    },
+    methods: {
+        listenForBroadcast(survey_id) {
+            var that = this;
+            // Echo.join("survey." + survey_id)
+            //     .here(users => {
+            //         console.log(users);
+            //         this.users_viewing = users;
+            //         this.$forceUpdate();
+            //     })
+            //     .joining(user => {
+            //         //   if (this.checkIfUserAlreadyViewingSurvey(user)) {
+            //         //     this.users_viewing.push(user);
+            //         //     this.$forceUpdate();
+            //         //   }
+            //     })
+            //     .leaving(user => {
+            //         //this.removeViewingUser(user);
+            //         this.$forceUpdate();
+            //     });
+            Echo.channel(
+                "cross_contractru_database_presence-survey." + survey_id
+            ).listen("MessagePushed", function(e) {
+                console.log(e);
+            });
+            Echo.channel("cross_contractru_database_every-minute").listen(
+                "PerMinute",
+                function(e) {
+                    
+
+
+                }
+            );
+        }
+    }
+}).$mount("#app");
+
+window.Vue.filter("formatDate", function(value) {
+    if (value) {
+        return moment(String(value)).zone("+03:00").format("DD.MM.YYYY");
+    }
+});
+
+window.Vue.filter("formatDateTime", function(value) {
+    if (value) {
+        return moment(String(value)).zone("+03:00").format("DD.MM.YYYY HH:mm");
+    }
+});

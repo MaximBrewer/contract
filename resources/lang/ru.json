@@ -120,10 +120,18 @@
     "Failed to edit target": "Не удалось обновить цель",
     "Failed to edit auction": "Не удалось обновить аукциона",
     "All targets (tenders)": "Все цели (закупки)",
+    "Auction bidders": "Участиники аукциона",
+    "Auction volume": "Объем",
+    "Auction start price": "Стартовая цена",
+    "un": "ед",
+    "Auction step": "Шаг",
+    "Reply": "Ответить",
+    "During time": "Текущее время (МСК)",
     "Reply": "Ответить",
     "Reply": "Ответить",
     "Reply": "Ответить",
     "Reply": "Ответить",
     "Reply": "Ответить"
+
     
 }

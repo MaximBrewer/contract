@@ -21,6 +21,7 @@ class Auction extends Model
         'finish_at',
         'product_id',
         'multiplicity_id',
+        'step',
         'start_price',
         'volume'
     ];
