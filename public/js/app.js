@@ -2769,12 +2769,15 @@ __webpack_require__.r(__webpack_exports__);
     deg2rad: function deg2rad(deg) {
       return deg * (Math.PI / 180);
     },
-    sorByDistance: function sorByDistance() {
+    sorByDistanceAuctions: function sorByDistanceAuctions() {
+      sorByDistance(this.auctions);
+    },
+    sorByDistance: function sorByDistance(auctions) {
       var app = this;
       if (!app.store || !app.store.coords) return false;
       var coords = app.store.coords.split(" ");
       if (coords.length < 2) return true;
-      this.auctions.sort(function (a, b) {
+      auctions.sort(function (a, b) {
         var as = a.store.coords.split(" ");
         var bs = b.store.coords.split(" ");
         if (as.length < 2) return false;
@@ -2837,6 +2840,7 @@ __webpack_require__.r(__webpack_exports__);
     bidAuction: function bidAuction(id) {
       var app = this;
       axios.get("/api/v1/auctions/all/bid/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+        sorByDistance(resp.data);
         app.auctions = resp.data;
       })["catch"](function (resp) {
         alert(app.__("Failed to bid auction"));
@@ -2845,6 +2849,7 @@ __webpack_require__.r(__webpack_exports__);
     unbidAuction: function unbidAuction(id) {
       var app = this;
       axios.get("/api/v1/auctions/all/unbid/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+        sorByDistance(resp.data);
         app.auctions = resp.data;
       })["catch"](function (resp) {
         alert(app.__("Failed to bid auction"));
@@ -87881,7 +87886,7 @@ var render = function() {
                   searchable: false,
                   options: _vm.stores
                 },
-                on: { input: _vm.sorByDistance },
+                on: { input: _vm.sorByDistanceAuctions },
                 model: {
                   value: _vm.store,
                   callback: function($$v) {

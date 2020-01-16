@@ -60,7 +60,7 @@
             <v-select
               label="address"
               :searchable="false"
-              @input="sorByDistance"
+              @input="sorByDistanceAuctions"
               :options="stores"
               v-model="store"
             ></v-select>
@@ -253,12 +253,15 @@ export default {
     deg2rad(deg) {
       return deg * (Math.PI / 180);
     },
-    sorByDistance() {
+    sorByDistanceAuctions(){
+      sorByDistance(this.auctions)
+    },
+    sorByDistance(auctions) {
       let app = this;
       if (!app.store || !app.store.coords) return false;
       let coords = app.store.coords.split(" ");
       if (coords.length < 2) return true;
-      this.auctions.sort(function(a, b) {
+      auctions.sort(function(a, b) {
         let as = a.store.coords.split(" ");
         let bs = b.store.coords.split(" ");
         if (as.length < 2) return false;
@@ -382,6 +385,7 @@ export default {
             window.api_token
         )
         .then(function(resp) {
+          sorByDistance(resp.data);
           app.auctions = resp.data;
         })
         .catch(function(resp) {
@@ -400,6 +404,7 @@ export default {
             window.api_token
         )
         .then(function(resp) {
+          sorByDistance(resp.data);
           app.auctions = resp.data;
         })
         .catch(function(resp) {
