@@ -2796,10 +2796,13 @@ __webpack_require__.r(__webpack_exports__);
       this.getRegions();
       this.filterAuctions();
     },
-    filterAuctions: function filterAuctions() {
+    filterAuctionsAuctions: function filterAuctionsAuctions() {
+      this.filterAuctions(this.auctions);
+    },
+    filterAuctions: function filterAuctions(auctions) {
       var app = this;
 
-      for (var v in app.auctions) {
+      for (var v in auctions) {
         var a = app.auctions[v];
         var f = app.filter;
         var s = a.store;
@@ -2842,6 +2845,7 @@ __webpack_require__.r(__webpack_exports__);
       app.isLoading = true;
       axios.get("/api/v1/auctions/all/bid/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
         app.sorByDistance(resp.data);
+        app.filterAuctionsAuctions(resp.data);
         app.auctions = resp.data;
         app.isLoading = false;
       })["catch"](function (resp) {
@@ -2854,6 +2858,7 @@ __webpack_require__.r(__webpack_exports__);
       app.isLoading = true;
       axios.get("/api/v1/auctions/all/unbid/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
         app.sorByDistance(resp.data);
+        app.filterAuctionsAuctions(resp.data);
         app.auctions = resp.data;
         app.isLoading = false;
       })["catch"](function (resp) {

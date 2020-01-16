@@ -290,9 +290,12 @@ export default {
       this.getRegions();
       this.filterAuctions();
     },
-    filterAuctions() {
+    filterAuctionsAuctions() {
+      this.filterAuctions(this.auctions);
+    },
+    filterAuctions(auctions) {
       var app = this;
-      for (let v in app.auctions) {
+      for (let v in auctions) {
         let a = app.auctions[v];
         let f = app.filter;
         let s = a.store;
@@ -387,6 +390,7 @@ export default {
         )
         .then(function(resp) {
           app.sorByDistance(resp.data);
+          app.filterAuctionsAuctions(resp.data);
           app.auctions = resp.data;
           app.isLoading = false;
         })
@@ -409,6 +413,7 @@ export default {
         )
         .then(function(resp) {
           app.sorByDistance(resp.data);
+          app.filterAuctionsAuctions(resp.data);
           app.auctions = resp.data;
           app.isLoading = false;
         })
