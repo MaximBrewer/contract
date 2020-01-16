@@ -87753,494 +87753,537 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("section", [
-    _c("div", { staticClass: "container-fluid" }, [
-      _c("div", { staticClass: "h2 text-center" }, [
-        _vm._v(_vm._s(_vm.__("Upcoming auctions")))
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Federal district")))
-              ]),
-              _vm._v(" "),
-              _c("v-select", {
-                attrs: {
-                  label: "title",
-                  searchable: false,
-                  options: _vm.federalDistricts
-                },
-                on: { input: _vm.filterGetRegions },
-                model: {
-                  value: _vm.filter.federal_district,
-                  callback: function($$v) {
-                    _vm.$set(_vm.filter, "federal_district", $$v)
-                  },
-                  expression: "filter.federal_district"
-                }
-              })
-            ],
-            1
-          )
+    _c(
+      "div",
+      { staticClass: "container-fluid" },
+      [
+        _c("loading", {
+          attrs: {
+            active: _vm.isLoading,
+            "can-cancel": true,
+            "is-full-page": _vm.fullPage
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.isLoading = $event
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "h2 text-center" }, [
+          _vm._v(_vm._s(_vm.__("Upcoming auctions")))
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Region")))
-              ]),
-              _vm._v(" "),
-              _c("v-select", {
-                attrs: {
-                  label: "title",
-                  searchable: false,
-                  options: _vm.regions
-                },
-                on: { input: _vm.filterAuctions },
-                model: {
-                  value: _vm.filter.region,
-                  callback: function($$v) {
-                    _vm.$set(_vm.filter, "region", $$v)
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Federal district")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    label: "title",
+                    searchable: false,
+                    options: _vm.federalDistricts
                   },
-                  expression: "filter.region"
-                }
-              })
-            ],
-            1
-          )
+                  on: { input: _vm.filterGetRegions },
+                  model: {
+                    value: _vm.filter.federal_district,
+                    callback: function($$v) {
+                      _vm.$set(_vm.filter, "federal_district", $$v)
+                    },
+                    expression: "filter.federal_district"
+                  }
+                })
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Region")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    label: "title",
+                    searchable: false,
+                    options: _vm.regions
+                  },
+                  on: { input: _vm.filterAuctions },
+                  model: {
+                    value: _vm.filter.region,
+                    callback: function($$v) {
+                      _vm.$set(_vm.filter, "region", $$v)
+                    },
+                    expression: "filter.region"
+                  }
+                })
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Product")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    label: "title",
+                    searchable: false,
+                    options: _vm.products
+                  },
+                  on: { input: _vm.filterAuctions },
+                  model: {
+                    value: _vm.filter.product,
+                    callback: function($$v) {
+                      _vm.$set(_vm.filter, "product", $$v)
+                    },
+                    expression: "filter.product"
+                  }
+                })
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Multiplicity")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    label: "title",
+                    searchable: false,
+                    options: _vm.multiplicities
+                  },
+                  on: { input: _vm.filterAuctions },
+                  model: {
+                    value: _vm.filter.multiplicity,
+                    callback: function($$v) {
+                      _vm.$set(_vm.filter, "multiplicity", $$v)
+                    },
+                    expression: "filter.multiplicity"
+                  }
+                })
+              ],
+              1
+            )
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Product")))
-              ]),
-              _vm._v(" "),
-              _c("v-select", {
-                attrs: {
-                  label: "title",
-                  searchable: false,
-                  options: _vm.products
-                },
-                on: { input: _vm.filterAuctions },
-                model: {
-                  value: _vm.filter.product,
-                  callback: function($$v) {
-                    _vm.$set(_vm.filter, "product", $$v)
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6 offset-md-6" }, [
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Sort by distance from store")))
+                ]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    label: "address",
+                    searchable: false,
+                    options: _vm.stores
                   },
-                  expression: "filter.product"
-                }
-              })
-            ],
-            1
-          )
+                  on: { input: _vm.sorByDistanceAuctions },
+                  model: {
+                    value: _vm.store,
+                    callback: function($$v) {
+                      _vm.store = $$v
+                    },
+                    expression: "store"
+                  }
+                })
+              ],
+              1
+            )
+          ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Multiplicity")))
-              ]),
-              _vm._v(" "),
-              _c("v-select", {
-                attrs: {
-                  label: "title",
-                  searchable: false,
-                  options: _vm.multiplicities
-                },
-                on: { input: _vm.filterAuctions },
-                model: {
-                  value: _vm.filter.multiplicity,
-                  callback: function($$v) {
-                    _vm.$set(_vm.filter, "multiplicity", $$v)
-                  },
-                  expression: "filter.multiplicity"
-                }
-              })
-            ],
-            1
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-6 offset-md-6" }, [
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c("label", { staticClass: "control-label" }, [
-                _vm._v(_vm._s(_vm.__("Sort by distance from store")))
-              ]),
-              _vm._v(" "),
-              _c("v-select", {
-                attrs: {
-                  label: "address",
-                  searchable: false,
-                  options: _vm.stores
-                },
-                on: { input: _vm.sorByDistanceAuctions },
-                model: {
-                  value: _vm.store,
-                  callback: function($$v) {
-                    _vm.store = $$v
-                  },
-                  expression: "store"
-                }
-              })
-            ],
-            1
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _vm.auctions.length
-        ? _c(
-            "div",
-            { staticClass: "table-responsive", attrs: { id: "auctions" } },
-            [
-              _c(
-                "table",
-                { staticClass: "table table-bordered table-striped" },
-                [
-                  _c("thead", [
-                    _c("tr", [
-                      _c("th", [_vm._v("#")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v(_vm._s(_vm.__("Auction")))]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v(_vm._s(_vm.__("Time")))]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v(_vm._s(_vm.__("Store")))]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v(_vm._s(_vm.__("Description")))]),
-                      _vm._v(" "),
-                      _c("th")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.auctions, function(auction, index) {
-                      return !auction.hidden
-                        ? _c("tr", [
-                            _c("th", [_vm._v(_vm._s(index + 1))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              auction.contragent
-                                ? _c("div", { staticClass: "text-nowrap" }, [
-                                    false
-                                      ? undefined
-                                      : _vm._e(),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "h6" }, [
-                                      _vm._v(_vm._s(auction.contragent.title))
-                                    ])
-                                  ])
-                                : _vm._e(),
+        _c("br"),
+        _vm._v(" "),
+        _vm.auctions.length
+          ? _c(
+              "div",
+              { staticClass: "table-responsive", attrs: { id: "auctions" } },
+              [
+                _c(
+                  "table",
+                  { staticClass: "table table-bordered table-striped" },
+                  [
+                    _c("thead", [
+                      _c("tr", [
+                        _c("th", [_vm._v("#")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v(_vm._s(_vm.__("Auction")))]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v(_vm._s(_vm.__("Time")))]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v(_vm._s(_vm.__("Store")))]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v(_vm._s(_vm.__("Description")))]),
+                        _vm._v(" "),
+                        _c("th")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.auctions, function(auction, index) {
+                        return !auction.hidden
+                          ? _c("tr", [
+                              _c("th", [_vm._v(_vm._s(index + 1))]),
                               _vm._v(" "),
-                              auction.product
-                                ? _c("div", { staticClass: "text-nowrap" }, [
-                                    _c("strong", [
-                                      _vm._v(_vm._s(_vm.__("Product")) + ":")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("span", [
-                                      _vm._v(_vm._s(auction.product.title))
+                              _c("td", [
+                                auction.contragent
+                                  ? _c("div", { staticClass: "text-nowrap" }, [
+                                      false
+                                        ? undefined
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "h6" }, [
+                                        _vm._v(_vm._s(auction.contragent.title))
+                                      ])
                                     ])
-                                  ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              auction.multiplicity
-                                ? _c("div", { staticClass: "text-nowrap" }, [
-                                    _c("strong", [
-                                      _vm._v(
-                                        _vm._s(_vm.__("Multiplicity")) + ":"
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("span", [
-                                      _vm._v(_vm._s(auction.multiplicity.title))
-                                    ])
-                                  ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "text-nowrap" }, [
-                                _c("strong", [
-                                  _vm._v(_vm._s(_vm.__("Volume")) + ":")
-                                ]),
+                                  : _vm._e(),
                                 _vm._v(" "),
-                                _c("span", [_vm._v(_vm._s(auction.volume))])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c("div", { staticClass: "text-nowrap" }, [
-                                _c("strong", [
-                                  _vm._v(
-                                    _vm._s(_vm.__("Auction start price")) + ":"
-                                  )
-                                ]),
+                                auction.product
+                                  ? _c("div", { staticClass: "text-nowrap" }, [
+                                      _c("strong", [
+                                        _vm._v(_vm._s(_vm.__("Product")) + ":")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("span", [
+                                        _vm._v(_vm._s(auction.product.title))
+                                      ])
+                                    ])
+                                  : _vm._e(),
                                 _vm._v(" "),
-                                _c("span", [
-                                  _vm._v(_vm._s(auction.start_price) + "₽")
+                                auction.multiplicity
+                                  ? _c("div", { staticClass: "text-nowrap" }, [
+                                      _c("strong", [
+                                        _vm._v(
+                                          _vm._s(_vm.__("Multiplicity")) + ":"
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("span", [
+                                        _vm._v(
+                                          _vm._s(auction.multiplicity.title)
+                                        )
+                                      ])
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "text-nowrap" }, [
+                                  _c("strong", [
+                                    _vm._v(_vm._s(_vm.__("Volume")) + ":")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", [_vm._v(_vm._s(auction.volume))])
                                 ])
                               ]),
                               _vm._v(" "),
-                              _c("div", { staticClass: "text-nowrap" }, [
-                                _c("strong", [
-                                  _vm._v(_vm._s(_vm.__("Auction step")) + ":")
-                                ]),
-                                _vm._v(" "),
-                                _c("span", [_vm._v(_vm._s(auction.step) + "₽")])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "text-nowrap" }, [
-                                _c("strong", [
-                                  _vm._v(_vm._s(_vm.__("Auction start")) + ":")
-                                ]),
-                                _vm._v(" "),
-                                _c("span", [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm._f("formatDateTime")(auction.start_at)
+                              _c("td", [
+                                _c("div", { staticClass: "text-nowrap" }, [
+                                  _c("strong", [
+                                    _vm._v(
+                                      _vm._s(_vm.__("Auction start price")) +
+                                        ":"
                                     )
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "text-nowrap" }, [
-                                _c("strong", [
-                                  _vm._v(_vm._s(_vm.__("Auction finish")) + ":")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _vm._v(_vm._s(auction.start_price) + "₽")
+                                  ])
                                 ]),
                                 _vm._v(" "),
-                                _c("span", [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm._f("formatDateTime")(
-                                        auction.finish_at
-                                      )
+                                _c("div", { staticClass: "text-nowrap" }, [
+                                  _c("strong", [
+                                    _vm._v(_vm._s(_vm.__("Auction step")) + ":")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _vm._v(_vm._s(auction.step) + "₽")
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "text-nowrap" }, [
+                                  _c("strong", [
+                                    _vm._v(
+                                      _vm._s(_vm.__("Auction start")) + ":"
                                     )
-                                  )
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              auction.store && auction.store.federal_district
-                                ? _c("div", { staticClass: "text-nowrap" }, [
-                                    _c("strong", [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.__(
-                                            "Auction store federal district"
-                                          )
-                                        ) + ":"
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("span", [
-                                      _vm._v(
-                                        _vm._s(
-                                          auction.store.federal_district.title
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("formatDateTime")(
+                                          auction.start_at
                                         )
                                       )
-                                    ])
+                                    )
                                   ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              auction.store && auction.store.region
-                                ? _c("div", { staticClass: "text-nowrap" }, [
-                                    _c("strong", [
-                                      _vm._v(
-                                        _vm._s(_vm.__("Auction store region")) +
-                                          ":"
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "text-nowrap" }, [
+                                  _c("strong", [
+                                    _vm._v(
+                                      _vm._s(_vm.__("Auction finish")) + ":"
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("formatDateTime")(
+                                          auction.finish_at
+                                        )
                                       )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("span", [
-                                      _vm._v(_vm._s(auction.store.region.title))
-                                    ])
+                                    )
                                   ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              auction.store
-                                ? _c("div", [
-                                    _c("strong", [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.__("Auction store address")
-                                        ) + ":"
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("span", [
-                                      _vm._v(_vm._s(auction.store.address))
-                                    ])
-                                  ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              auction.store && false
-                                ? _c("div", { staticClass: "text-nowrap" }, [
-                                    _c("strong", [
-                                      _vm._v(
-                                        _vm._s(_vm.__("Auction store coords")) +
-                                          ":"
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("br"),
-                                    _vm._v(" "),
-                                    _c("span", [
-                                      _vm._v(_vm._s(auction.store.coords))
-                                    ])
-                                  ])
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c("strong", [
-                                _vm._v(_vm._s(_vm.__("Auction comment")) + ":")
+                                ])
                               ]),
                               _vm._v(" "),
-                              _c("br"),
+                              _c("td", [
+                                auction.store && auction.store.federal_district
+                                  ? _c("div", { staticClass: "text-nowrap" }, [
+                                      _c("strong", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.__(
+                                              "Auction store federal district"
+                                            )
+                                          ) + ":"
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("span", [
+                                        _vm._v(
+                                          _vm._s(
+                                            auction.store.federal_district.title
+                                          )
+                                        )
+                                      ])
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                auction.store && auction.store.region
+                                  ? _c("div", { staticClass: "text-nowrap" }, [
+                                      _c("strong", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.__("Auction store region")
+                                          ) + ":"
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("span", [
+                                        _vm._v(
+                                          _vm._s(auction.store.region.title)
+                                        )
+                                      ])
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                auction.store
+                                  ? _c("div", [
+                                      _c("strong", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.__("Auction store address")
+                                          ) + ":"
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("span", [
+                                        _vm._v(_vm._s(auction.store.address))
+                                      ])
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                auction.store && false
+                                  ? _c("div", { staticClass: "text-nowrap" }, [
+                                      _c("strong", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.__("Auction store coords")
+                                          ) + ":"
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("br"),
+                                      _vm._v(" "),
+                                      _c("span", [
+                                        _vm._v(_vm._s(auction.store.coords))
+                                      ])
+                                    ])
+                                  : _vm._e()
+                              ]),
                               _vm._v(" "),
-                              _c("span", [_vm._v(_vm._s(auction.comment))])
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "btn-group btn-group-sm",
-                                  attrs: { role: "group" }
-                                },
-                                [
-                                  !auction.bidder &&
-                                  _vm.user.contragents[0].id !=
-                                    auction.contragent.id
-                                    ? _c(
-                                        "a",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "tooltip",
-                                              rawName: "v-tooltip",
-                                              value: _vm.__(
-                                                "Take part in the auction"
-                                              ),
-                                              expression:
-                                                "__('Take part in the auction')"
-                                            }
-                                          ],
-                                          staticClass: "btn btn-success",
-                                          attrs: { href: "javascript:void(0)" },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.bidAuction(auction.id)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "mdi mdi-account-plus",
-                                            attrs: { "aria-hidden": "true" }
-                                          })
-                                        ]
-                                      )
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  auction.bidder
-                                    ? _c(
-                                        "a",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "tooltip",
-                                              rawName: "v-tooltip",
-                                              value: _vm.__(
-                                                "Unsubscribe from the auction"
-                                              ),
-                                              expression:
-                                                "__('Unsubscribe from the auction')"
-                                            }
-                                          ],
-                                          staticClass: "btn btn-danger",
-                                          attrs: { href: "javascript:void(0)" },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.unbidAuction(
-                                                auction.id
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass:
-                                              "mdi mdi-account-remove",
-                                            attrs: { "aria-hidden": "true" }
-                                          })
-                                        ]
-                                      )
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  _c(
-                                    "router-link",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "tooltip",
-                                          rawName: "v-tooltip",
-                                          value: _vm.__("Go to auction page"),
-                                          expression: "__('Go to auction page')"
-                                        }
-                                      ],
-                                      staticClass: "btn btn-secondary",
-                                      attrs: {
-                                        to: {
-                                          name: "showAuction",
-                                          params: { id: auction.id }
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass: "mdi mdi-eye",
-                                        attrs: { "aria-hidden": "true" }
-                                      })
-                                    ]
+                              _c("td", [
+                                _c("strong", [
+                                  _vm._v(
+                                    _vm._s(_vm.__("Auction comment")) + ":"
                                   )
-                                ],
-                                1
-                              )
+                                ]),
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("span", [_vm._v(_vm._s(auction.comment))])
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "btn-group btn-group-sm",
+                                    attrs: { role: "group" }
+                                  },
+                                  [
+                                    !auction.bidder &&
+                                    _vm.user.contragents[0].id !=
+                                      auction.contragent.id
+                                      ? _c(
+                                          "a",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "tooltip",
+                                                rawName: "v-tooltip",
+                                                value: _vm.__(
+                                                  "Take part in the auction"
+                                                ),
+                                                expression:
+                                                  "__('Take part in the auction')"
+                                              }
+                                            ],
+                                            staticClass: "btn btn-success",
+                                            attrs: {
+                                              href: "javascript:void(0)"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.bidAuction(
+                                                  auction.id
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "mdi mdi-account-plus",
+                                              attrs: { "aria-hidden": "true" }
+                                            })
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    auction.bidder
+                                      ? _c(
+                                          "a",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "tooltip",
+                                                rawName: "v-tooltip",
+                                                value: _vm.__(
+                                                  "Unsubscribe from the auction"
+                                                ),
+                                                expression:
+                                                  "__('Unsubscribe from the auction')"
+                                              }
+                                            ],
+                                            staticClass: "btn btn-danger",
+                                            attrs: {
+                                              href: "javascript:void(0)"
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.unbidAuction(
+                                                  auction.id
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "mdi mdi-account-remove",
+                                              attrs: { "aria-hidden": "true" }
+                                            })
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _c(
+                                      "router-link",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "tooltip",
+                                            rawName: "v-tooltip",
+                                            value: _vm.__("Go to auction page"),
+                                            expression:
+                                              "__('Go to auction page')"
+                                          }
+                                        ],
+                                        staticClass: "btn btn-secondary",
+                                        attrs: {
+                                          to: {
+                                            name: "showAuction",
+                                            params: { id: auction.id }
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "mdi mdi-eye",
+                                          attrs: { "aria-hidden": "true" }
+                                        })
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ])
                             ])
-                          ])
-                        : _vm._e()
-                    }),
-                    0
-                  )
-                ]
-              )
-            ]
-          )
-        : _vm._e()
-    ])
+                          : _vm._e()
+                      }),
+                      0
+                    )
+                  ]
+                )
+              ]
+            )
+          : _vm._e()
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []

@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="container-fluid">
-      <!--<loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>-->
+      <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
       <div class="h2 text-center">{{ __('Upcoming auctions') }}</div>
       <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-6">
@@ -253,8 +253,8 @@ export default {
     deg2rad(deg) {
       return deg * (Math.PI / 180);
     },
-    sorByDistanceAuctions(){
-      this.sorByDistance(this.auctions)
+    sorByDistanceAuctions() {
+      this.sorByDistance(this.auctions);
     },
     sorByDistance(auctions) {
       let app = this;
