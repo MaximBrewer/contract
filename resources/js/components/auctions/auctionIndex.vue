@@ -254,7 +254,7 @@ export default {
       return deg * (Math.PI / 180);
     },
     sorByDistanceAuctions(){
-      sorByDistance(this.auctions)
+      this.sorByDistance(this.auctions)
     },
     sorByDistance(auctions) {
       let app = this;

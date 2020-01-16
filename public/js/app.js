@@ -2770,7 +2770,7 @@ __webpack_require__.r(__webpack_exports__);
       return deg * (Math.PI / 180);
     },
     sorByDistanceAuctions: function sorByDistanceAuctions() {
-      sorByDistance(this.auctions);
+      this.sorByDistance(this.auctions);
     },
     sorByDistance: function sorByDistance(auctions) {
       var app = this;
