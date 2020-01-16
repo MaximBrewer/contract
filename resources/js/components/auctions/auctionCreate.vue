@@ -57,12 +57,9 @@
   </section>
 </template>
 <script>
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
 import { Datetime } from "vue-datetime";
-import "vue-datetime/dist/vue-datetime.css";
 import vSelect from "vue-select";
-import "vue-select/dist/vue-select.css";
+import Loading from "vue-loading-overlay";
 export default {
   components: {
     vSelect: vSelect,

@@ -13,8 +13,9 @@ class RegionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $r)
     {
+        if((int)$r->get('federal_district_id')) return Region::where('federal_district_id', (int)$r->federal_district_id)->get();
         return Region::all();
     }
 }

@@ -12,6 +12,15 @@ window.Vue.mixin(require("./trans"));
 import VueRouter from "vue-router";
 import moment from "moment";
 import VueFlashMessage from "vue-flash-message";
+import "vue-loading-overlay/dist/vue-loading.css";
+import "vue-datetime/dist/vue-datetime.css";
+import "vue-select/dist/vue-select.css";
+
+import { VTooltip, VPopover, VClosePopover } from 'v-tooltip'
+
+Vue.directive('tooltip', VTooltip)
+Vue.directive('close-popover', VClosePopover)
+Vue.component('v-popover', VPopover)
 
 require("vue-flash-message/dist/vue-flash-message.min.css");
 
@@ -102,11 +111,6 @@ const routes = [
         path: "/personal/targets",
         component: TargetIndex,
         name: "indexTarget"
-    },
-    {
-        path: "/personal/auctions/edit/:id",
-        component: AuctionEdit,
-        name: "editAuction"
     }
 ];
 
@@ -185,12 +189,13 @@ const app = new Vue({
 
 window.Vue.filter("formatDate", function(value) {
     if (value) {
-        return moment(String(value)).zone("+03:00").format("DD.MM.YYYY");
+        return moment(String(value)).utcOffset("+03:00").format("DD.MM.YYYY");
     }
 });
 
 window.Vue.filter("formatDateTime", function(value) {
     if (value) {
-        return moment(String(value)).zone("+03:00").format("DD.MM.YYYY HH:mm");
+        return moment(String(value)).utcOffset("+03:00").format("DD.MM.YYYY HH:mm");
     }
 });
+
