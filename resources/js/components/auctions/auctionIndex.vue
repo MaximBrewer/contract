@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="container-fluid">
+    <div class="container-fluid" v-if="auctions.length">
       <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
       <div class="h2 text-center">{{ __('Upcoming auctions') }}</div>
       <div class="row">
@@ -68,7 +68,7 @@
         </div>
       </div>
       <br />
-      <div class="table-responsive" id="auctions" v-if="auctions.length">
+      <div class="table-responsive" id="auctions">
         <table class="table table-bordered table-striped">
           <thead>
             <tr>

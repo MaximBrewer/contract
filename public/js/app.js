@@ -87758,180 +87758,180 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("section", [
-    _c(
-      "div",
-      { staticClass: "container-fluid" },
-      [
-        _c("loading", {
-          attrs: {
-            active: _vm.isLoading,
-            "can-cancel": true,
-            "is-full-page": _vm.fullPage
-          },
-          on: {
-            "update:active": function($event) {
-              _vm.isLoading = $event
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "h2 text-center" }, [
-          _vm._v(_vm._s(_vm.__("Upcoming auctions")))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
+    _vm.auctions.length
+      ? _c(
+          "div",
+          { staticClass: "container-fluid" },
+          [
+            _c("loading", {
+              attrs: {
+                active: _vm.isLoading,
+                "can-cancel": true,
+                "is-full-page": _vm.fullPage
+              },
+              on: {
+                "update:active": function($event) {
+                  _vm.isLoading = $event
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "h2 text-center" }, [
+              _vm._v(_vm._s(_vm.__("Upcoming auctions")))
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", { staticClass: "control-label" }, [
+                      _vm._v(_vm._s(_vm.__("Federal district")))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        label: "title",
+                        searchable: false,
+                        options: _vm.federalDistricts
+                      },
+                      on: { input: _vm.filterGetRegions },
+                      model: {
+                        value: _vm.filter.federal_district,
+                        callback: function($$v) {
+                          _vm.$set(_vm.filter, "federal_district", $$v)
+                        },
+                        expression: "filter.federal_district"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", { staticClass: "control-label" }, [
+                      _vm._v(_vm._s(_vm.__("Region")))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        label: "title",
+                        searchable: false,
+                        options: _vm.regions
+                      },
+                      on: { input: _vm.filterAuctionsAuctions },
+                      model: {
+                        value: _vm.filter.region,
+                        callback: function($$v) {
+                          _vm.$set(_vm.filter, "region", $$v)
+                        },
+                        expression: "filter.region"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", { staticClass: "control-label" }, [
+                      _vm._v(_vm._s(_vm.__("Product")))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        label: "title",
+                        searchable: false,
+                        options: _vm.products
+                      },
+                      on: { input: _vm.filterAuctionsAuctions },
+                      model: {
+                        value: _vm.filter.product,
+                        callback: function($$v) {
+                          _vm.$set(_vm.filter, "product", $$v)
+                        },
+                        expression: "filter.product"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", { staticClass: "control-label" }, [
+                      _vm._v(_vm._s(_vm.__("Multiplicity")))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        label: "title",
+                        searchable: false,
+                        options: _vm.multiplicities
+                      },
+                      on: { input: _vm.filterAuctionsAuctions },
+                      model: {
+                        value: _vm.filter.multiplicity,
+                        callback: function($$v) {
+                          _vm.$set(_vm.filter, "multiplicity", $$v)
+                        },
+                        expression: "filter.multiplicity"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-6 offset-md-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", { staticClass: "control-label" }, [
+                      _vm._v(_vm._s(_vm.__("Sort by distance from store")))
+                    ]),
+                    _vm._v(" "),
+                    _c("v-select", {
+                      attrs: {
+                        label: "address",
+                        searchable: false,
+                        options: _vm.stores
+                      },
+                      on: { input: _vm.sorByDistanceAuctions },
+                      model: {
+                        value: _vm.store,
+                        callback: function($$v) {
+                          _vm.store = $$v
+                        },
+                        expression: "store"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
             _c(
-              "div",
-              { staticClass: "form-group" },
-              [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v(_vm._s(_vm.__("Federal district")))
-                ]),
-                _vm._v(" "),
-                _c("v-select", {
-                  attrs: {
-                    label: "title",
-                    searchable: false,
-                    options: _vm.federalDistricts
-                  },
-                  on: { input: _vm.filterGetRegions },
-                  model: {
-                    value: _vm.filter.federal_district,
-                    callback: function($$v) {
-                      _vm.$set(_vm.filter, "federal_district", $$v)
-                    },
-                    expression: "filter.federal_district"
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
-            _c(
-              "div",
-              { staticClass: "form-group" },
-              [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v(_vm._s(_vm.__("Region")))
-                ]),
-                _vm._v(" "),
-                _c("v-select", {
-                  attrs: {
-                    label: "title",
-                    searchable: false,
-                    options: _vm.regions
-                  },
-                  on: { input: _vm.filterAuctionsAuctions },
-                  model: {
-                    value: _vm.filter.region,
-                    callback: function($$v) {
-                      _vm.$set(_vm.filter, "region", $$v)
-                    },
-                    expression: "filter.region"
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
-            _c(
-              "div",
-              { staticClass: "form-group" },
-              [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v(_vm._s(_vm.__("Product")))
-                ]),
-                _vm._v(" "),
-                _c("v-select", {
-                  attrs: {
-                    label: "title",
-                    searchable: false,
-                    options: _vm.products
-                  },
-                  on: { input: _vm.filterAuctionsAuctions },
-                  model: {
-                    value: _vm.filter.product,
-                    callback: function($$v) {
-                      _vm.$set(_vm.filter, "product", $$v)
-                    },
-                    expression: "filter.product"
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
-            _c(
-              "div",
-              { staticClass: "form-group" },
-              [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v(_vm._s(_vm.__("Multiplicity")))
-                ]),
-                _vm._v(" "),
-                _c("v-select", {
-                  attrs: {
-                    label: "title",
-                    searchable: false,
-                    options: _vm.multiplicities
-                  },
-                  on: { input: _vm.filterAuctionsAuctions },
-                  model: {
-                    value: _vm.filter.multiplicity,
-                    callback: function($$v) {
-                      _vm.$set(_vm.filter, "multiplicity", $$v)
-                    },
-                    expression: "filter.multiplicity"
-                  }
-                })
-              ],
-              1
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-6 offset-md-6" }, [
-            _c(
-              "div",
-              { staticClass: "form-group" },
-              [
-                _c("label", { staticClass: "control-label" }, [
-                  _vm._v(_vm._s(_vm.__("Sort by distance from store")))
-                ]),
-                _vm._v(" "),
-                _c("v-select", {
-                  attrs: {
-                    label: "address",
-                    searchable: false,
-                    options: _vm.stores
-                  },
-                  on: { input: _vm.sorByDistanceAuctions },
-                  model: {
-                    value: _vm.store,
-                    callback: function($$v) {
-                      _vm.store = $$v
-                    },
-                    expression: "store"
-                  }
-                })
-              ],
-              1
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _vm.auctions.length
-          ? _c(
               "div",
               { staticClass: "table-responsive", attrs: { id: "auctions" } },
               [
@@ -88285,10 +88285,10 @@ var render = function() {
                 )
               ]
             )
-          : _vm._e()
-      ],
-      1
-    )
+          ],
+          1
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
