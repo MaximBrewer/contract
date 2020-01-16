@@ -2794,7 +2794,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     filterGetRegions: function filterGetRegions() {
       this.getRegions();
-      this.filterAuctions();
+      this.filterAuctionsAuctions();
     },
     filterAuctionsAuctions: function filterAuctionsAuctions() {
       this.filterAuctions(this.auctions);
@@ -87824,7 +87824,7 @@ var render = function() {
                     searchable: false,
                     options: _vm.regions
                   },
-                  on: { input: _vm.filterAuctions },
+                  on: { input: _vm.filterAuctionsAuctions },
                   model: {
                     value: _vm.filter.region,
                     callback: function($$v) {
@@ -87853,7 +87853,7 @@ var render = function() {
                     searchable: false,
                     options: _vm.products
                   },
-                  on: { input: _vm.filterAuctions },
+                  on: { input: _vm.filterAuctionsAuctions },
                   model: {
                     value: _vm.filter.product,
                     callback: function($$v) {
@@ -87882,7 +87882,7 @@ var render = function() {
                     searchable: false,
                     options: _vm.multiplicities
                   },
-                  on: { input: _vm.filterAuctions },
+                  on: { input: _vm.filterAuctionsAuctions },
                   model: {
                     value: _vm.filter.multiplicity,
                     callback: function($$v) {

@@ -22,7 +22,7 @@
             <v-select
               label="title"
               :searchable="false"
-              @input="filterAuctions"
+              @input="filterAuctionsAuctions"
               :options="regions"
               v-model="filter.region"
             ></v-select>
@@ -34,7 +34,7 @@
             <v-select
               label="title"
               :searchable="false"
-              @input="filterAuctions"
+              @input="filterAuctionsAuctions"
               :options="products"
               v-model="filter.product"
             ></v-select>
@@ -46,7 +46,7 @@
             <v-select
               label="title"
               :searchable="false"
-              @input="filterAuctions"
+              @input="filterAuctionsAuctions"
               :options="multiplicities"
               v-model="filter.multiplicity"
             ></v-select>
@@ -288,7 +288,7 @@ export default {
     },
     filterGetRegions() {
       this.getRegions();
-      this.filterAuctions();
+      this.filterAuctionsAuctions();
     },
     filterAuctionsAuctions() {
       this.filterAuctions(this.auctions);
