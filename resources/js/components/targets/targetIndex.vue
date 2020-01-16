@@ -1,30 +1,31 @@
 <template>
   <section>
     <div class="container-fluid">
-      <div class="table-responsive" id="tergets">
-        <div class="h2">{{ __('My Targets') }}</div>
-        <table class="table table-bordered table-striped">
+      <div class="table-responsive table-hover" id="tergets">
+        <div class="h2 text-center">{{ __('All Targets (Tenders)') }}</div>
+        <br />
+        <table class="table table-bordered table-striped" v-if="targets.length">
           <thead>
             <tr>
+              <th>#</th>
               <th>{{ __('Contragent') }}</th>
               <th>{{ __('Product') }}</th>
               <th>{{ __('Volume') }}</th>
-              <th>{{ __('Remain') }}</th>
+              <!-- <th>{{ __('Remain') }}</th>
               <th>{{ __('Multiplicity') }}</th>
               <th>{{ __('Federal district') }}</th>
               <th>{{ __('Region') }}</th>
-              <th>{{ __('Address') }}</th>
+              <th>{{ __('Address') }}</th>-->
             </tr>
           </thead>
           <tbody>
             <tr v-for="target, index in targets">
-              <td
-                v-if="target.contragent && target.contragent.title"
-              >{{ target.contragent.title }}</td>
+              <td>{{ index + 1 }}</td>
+              <td v-if="target.contragent && target.contragent.title">{{ target.contragent.title }}</td>
               <td v-else></td>
               <td>{{ target.product.title }}</td>
               <td>{{ target.volume }}</td>
-              <td>{{ target.renain }}</td>
+              <!-- <td>{{ target.renain }}</td>
               <td
                 v-if="target.multiplicity && target.multiplicity.title"
               >{{ target.multiplicity.title }}</td>
@@ -38,7 +39,7 @@
               >{{ target.store.region.title }}</td>
               <td v-else></td>
               <td v-if="target.store && target.store.address">{{ target.store.address }}</td>
-              <td v-else></td>
+              <td v-else></td>-->
             </tr>
           </tbody>
         </table>
@@ -72,7 +73,6 @@ export default {
         alert(app.__("Failed to load targets"));
       });
   },
-  methods: {
-  }
+  methods: {}
 };
 </script>

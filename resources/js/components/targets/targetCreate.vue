@@ -2,52 +2,67 @@
   <section class="target-edit-wrapper">
     <div class="container">
       <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
+        <div class="h2 text-center">{{ __('Creating target') }}</div><br>
       <form v-on:submit="saveForm()" v-if="target">
-        <div class="form-group">
-          <label class="control-label">{{ __('Target lot') }}</label>
-          <v-select
-            label="title"
-            :options="products"
-            v-model="target.product"
-            v-bind:class="{ 'is-invalid': errors['product.id'] }"
-          ></v-select>
-          <span role="alert" class="invalid-feedback" v-if="errors['product.id']">
-            <strong v-for="error in errors['product.id']">{{ error }}</strong>
-          </span>
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Target multiplicity') }}</label>
-          <v-select
-            label="title"
-            :options="multiplicities"
-            v-model="target.multiplicity"
-            v-bind:class="{ 'is-invalid': errors['multiplicity.id'] }"
-          ></v-select>
-          <span role="alert" class="invalid-feedback" v-if="errors['multiplicity.id']">
-            <strong v-for="error in errors['multiplicity.id']">{{ error }}</strong>
-          </span>
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Target store') }}</label>
-          <v-select
-            label="address"
-            :options="stores"
-            v-model="target.store"
-            v-bind:class="{ 'is-invalid': errors['store.id'] }"
-          ></v-select>
-          <span role="alert" class="invalid-feedback" v-if="errors['store.id']">
-            <strong v-for="error in errors['store.id']">{{ error }}</strong>
-          </span>
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Target volume') }}</label>
-          <input type="number" v-model="target.volume" class="form-control" v-bind:class="{ 'is-invalid': errors.volume }"/>
-          <span role="alert" class="invalid-feedback" v-if="errors.volume">
-            <strong v-for="error in errors.volume">{{ error }}</strong>
-          </span>
-        </div>
-        <div class="form-group">
-          <button class="btn btn-primary btn-lg">{{ __('Create target') }}</button>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="jumbotron">
+            <div class="h3">{{ __('You can add some description here!') }}</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <v-select
+                :placeholder="__('Target lot')"
+                label="title"
+                :options="products"
+                v-model="target.product"
+                v-bind:class="{ 'is-invalid': errors['product.id'] }"
+              ></v-select>
+              <span role="alert" class="invalid-feedback" v-if="errors['product.id']">
+                <strong v-for="error in errors['product.id']">{{ error }}</strong>
+              </span>
+            </div>
+            <div class="form-group">
+              <v-select
+                :placeholder="__('Target multiplicity')"
+                label="title"
+                :options="multiplicities"
+                v-model="target.multiplicity"
+                v-bind:class="{ 'is-invalid': errors['multiplicity.id'] }"
+              ></v-select>
+              <span role="alert" class="invalid-feedback" v-if="errors['multiplicity.id']">
+                <strong v-for="error in errors['multiplicity.id']">{{ error }}</strong>
+              </span>
+            </div>
+            <div class="form-group">
+              <v-select
+                :placeholder="__('Target store')"
+                label="address"
+                :options="stores"
+                v-model="target.store"
+                v-bind:class="{ 'is-invalid': errors['store.id'] }"
+              ></v-select>
+              <span role="alert" class="invalid-feedback" v-if="errors['store.id']">
+                <strong v-for="error in errors['store.id']">{{ error }}</strong>
+              </span>
+            </div>
+            <div class="form-group">
+              <input
+                :placeholder="__('Target volume')"
+                type="number"
+                v-model="target.volume"
+                class="form-control"
+                v-bind:class="{ 'is-invalid': errors.volume }"
+              />
+              <span role="alert" class="invalid-feedback" v-if="errors.volume">
+                <strong v-for="error in errors.volume">{{ error }}</strong>
+              </span>
+            </div>
+            <div class="form-group text-right">
+              <button class="btn btn-primary">{{ __('Create target') }}</button>
+            </div>
+          </div>
         </div>
       </form>
     </div>
@@ -153,9 +168,6 @@ export default {
         })
         .catch(function(errors) {
           app.errors = errors.response.data.errors;
-          app.flash(app.__("Failed to create target"), "error", {
-            timeout: 3000
-          });
           app.isLoading = false;
         });
     }

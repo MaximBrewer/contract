@@ -17,6 +17,13 @@ require("vue-flash-message/dist/vue-flash-message.min.css");
 
 window.Vue.use(VueRouter);
 window.Vue.use(VueFlashMessage);
+import VueSimpleAlert from "vue-simple-alert";
+
+Vue.use(VueSimpleAlert);
+
+import VModal from 'vue-js-modal'
+ 
+Vue.use(VModal)
 
 import ContragentIndex from "./components/contragents/contragentIndex.vue";
 import ContragentCreate from "./components/contragents/contragentCreate.vue";

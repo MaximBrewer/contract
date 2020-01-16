@@ -18,17 +18,15 @@ class TargetsController extends Controller
 
     public function all(Request $request, $action = null)
     {
-        
-        return Target::all();
 
+        return Target::all();
     }
 
 
     public function index(Request $request, $action = null)
     {
-        
-        return Target::where('contragent_id', Auth::user()->contragents[0]->id)->get();
 
+        return Target::where('contragent_id', Auth::user()->contragents[0]->id)->get();
     }
 
 
@@ -40,12 +38,12 @@ class TargetsController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $request->validate([
-            "multiplicity.id"=> "required|exists:multiplicities,id",
-            "product.id"=> "required|exists:products,id",
-            "store.id"=> "required|exists:stores,id",
-            "volume"=> "required|numeric|min:1",
+            "multiplicity.id" => "required|exists:multiplicities,id",
+            "product.id" => "required|exists:products,id",
+            "store.id" => "required|exists:stores,id",
+            "volume" => "required|numeric|min:1",
         ]);
 
         $target = Target::create([
@@ -69,7 +67,7 @@ class TargetsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $target = Target::findOrFail($id);
 
         Validator::make((array) $target, [
@@ -117,8 +115,12 @@ class TargetsController extends Controller
      */
     public function destroy($id)
     {
-        $target = Target::where('id', $id)->where('contragent_id', Auth::user()->contragents[0]->id->first());
-        if (!empty($target)) $target->delete();
-        return '';
+        $target = Target::findOrFail($id);
+
+        if ($target->contragent_id != Auth::user()->contragents[0]->id) return '0';
+
+        $target->delete();
+
+        return '1';
     }
 }

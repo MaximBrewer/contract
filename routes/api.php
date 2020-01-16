@@ -44,6 +44,7 @@ Route::group([
     Route::get('targets/all', 'TargetsController@all');
     Route::get('targets', 'TargetsController@index');
     Route::get('targets/{id}', 'TargetsController@show');
+    Route::delete('targets/{id}', 'TargetsController@destroy');
     Route::post('targets', 'TargetsController@store');
 
     Route::get('comments/{contragentId}', 'CommentController@show');

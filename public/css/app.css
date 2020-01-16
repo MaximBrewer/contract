@@ -11818,3 +11818,7 @@ body {
   border-color: #e3342f;
 }
 
+body.swal2-height-auto {
+  min-height: 100%;
+}
+
