@@ -2840,7 +2840,7 @@ __webpack_require__.r(__webpack_exports__);
     bidAuction: function bidAuction(id) {
       var app = this;
       axios.get("/api/v1/auctions/all/bid/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        sorByDistance(resp.data);
+        app.sorByDistance(resp.data);
         app.auctions = resp.data;
       })["catch"](function (resp) {
         alert(app.__("Failed to bid auction"));
@@ -2849,7 +2849,7 @@ __webpack_require__.r(__webpack_exports__);
     unbidAuction: function unbidAuction(id) {
       var app = this;
       axios.get("/api/v1/auctions/all/unbid/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        sorByDistance(resp.data);
+        app.sorByDistance(resp.data);
         app.auctions = resp.data;
       })["catch"](function (resp) {
         alert(app.__("Failed to bid auction"));

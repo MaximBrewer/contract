@@ -385,7 +385,7 @@ export default {
             window.api_token
         )
         .then(function(resp) {
-          sorByDistance(resp.data);
+          app.sorByDistance(resp.data);
           app.auctions = resp.data;
         })
         .catch(function(resp) {
@@ -404,7 +404,7 @@ export default {
             window.api_token
         )
         .then(function(resp) {
-          sorByDistance(resp.data);
+          app.sorByDistance(resp.data);
           app.auctions = resp.data;
         })
         .catch(function(resp) {
