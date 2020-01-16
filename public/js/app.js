@@ -2839,20 +2839,26 @@ __webpack_require__.r(__webpack_exports__);
     },
     bidAuction: function bidAuction(id) {
       var app = this;
+      app.isLoading = true;
       axios.get("/api/v1/auctions/all/bid/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
         app.sorByDistance(resp.data);
         app.auctions = resp.data;
+        app.isLoading = false;
       })["catch"](function (resp) {
         alert(app.__("Failed to bid auction"));
+        app.isLoading = false;
       });
     },
     unbidAuction: function unbidAuction(id) {
       var app = this;
+      app.isLoading = true;
       axios.get("/api/v1/auctions/all/unbid/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
         app.sorByDistance(resp.data);
         app.auctions = resp.data;
+        app.isLoading = false;
       })["catch"](function (resp) {
         alert(app.__("Failed to bid auction"));
+        app.isLoading = false;
       });
     },
     formatDate: function formatDate(indate) {

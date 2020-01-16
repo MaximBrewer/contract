@@ -375,6 +375,7 @@ export default {
     },
     bidAuction(id) {
       var app = this;
+      app.isLoading = true;
       axios
         .get(
           "/api/v1/auctions/all/bid/" +
@@ -387,13 +388,16 @@ export default {
         .then(function(resp) {
           app.sorByDistance(resp.data);
           app.auctions = resp.data;
+          app.isLoading = false;
         })
         .catch(function(resp) {
           alert(app.__("Failed to bid auction"));
+          app.isLoading = false;
         });
     },
     unbidAuction(id) {
       var app = this;
+      app.isLoading = true;
       axios
         .get(
           "/api/v1/auctions/all/unbid/" +
@@ -406,9 +410,11 @@ export default {
         .then(function(resp) {
           app.sorByDistance(resp.data);
           app.auctions = resp.data;
+          app.isLoading = false;
         })
         .catch(function(resp) {
           alert(app.__("Failed to bid auction"));
+          app.isLoading = false;
         });
     },
     formatDate(indate) {
