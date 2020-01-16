@@ -1,7 +1,7 @@
 <template>
   <section>
+    <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
     <div class="container-fluid" v-if="auctions.length">
-      <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
       <div class="h2 text-center">{{ __('Upcoming auctions') }}</div>
       <div class="row">
         <div class="col-lg-3 col-md-3 col-sm-6">
@@ -214,7 +214,7 @@ export default {
     app.getProducts();
     app.getStores();
     app.getFederalDistricts();
-    app.isLoading = false;
+    app.isLoading = true;
     let contragent_id = app.user.contragents[0].id;
     let action = "all";
     axios
@@ -228,9 +228,11 @@ export default {
       )
       .then(function(resp) {
         app.auctions = resp.data;
+        app.isLoading = false;
       })
       .catch(function(resp) {
         console.log(resp);
+        app.isLoading = false;
         alert(app.__("Failed to load auctions"));
       });
   },

@@ -2742,13 +2742,15 @@ __webpack_require__.r(__webpack_exports__);
     app.getProducts();
     app.getStores();
     app.getFederalDistricts();
-    app.isLoading = false;
+    app.isLoading = true;
     var contragent_id = app.user.contragents[0].id;
     var action = "all";
     axios.get("/api/v1/auctions/" + action + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
       app.auctions = resp.data;
+      app.isLoading = false;
     })["catch"](function (resp) {
       console.log(resp);
+      app.isLoading = false;
       alert(app.__("Failed to load auctions"));
     });
   },
@@ -87757,25 +87759,24 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("section", [
-    _vm.auctions.length
-      ? _c(
-          "div",
-          { staticClass: "container-fluid" },
-          [
-            _c("loading", {
-              attrs: {
-                active: _vm.isLoading,
-                "can-cancel": true,
-                "is-full-page": _vm.fullPage
-              },
-              on: {
-                "update:active": function($event) {
-                  _vm.isLoading = $event
-                }
-              }
-            }),
-            _vm._v(" "),
+  return _c(
+    "section",
+    [
+      _c("loading", {
+        attrs: {
+          active: _vm.isLoading,
+          "can-cancel": true,
+          "is-full-page": _vm.fullPage
+        },
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      }),
+      _vm._v(" "),
+      _vm.auctions.length
+        ? _c("div", { staticClass: "container-fluid" }, [
             _c("div", { staticClass: "h2 text-center" }, [
               _vm._v(_vm._s(_vm.__("Upcoming auctions")))
             ]),
@@ -88285,11 +88286,11 @@ var render = function() {
                 )
               ]
             )
-          ],
-          1
-        )
-      : _vm._e()
-  ])
+          ])
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
