@@ -390,7 +390,7 @@ export default {
         )
         .then(function(resp) {
           app.sorByDistance(resp.data);
-          app.filterAuctionsAuctions(resp.data);
+          app.filterAuctions(resp.data);
           app.auctions = resp.data;
           app.isLoading = false;
         })
@@ -413,7 +413,7 @@ export default {
         )
         .then(function(resp) {
           app.sorByDistance(resp.data);
-          app.filterAuctionsAuctions(resp.data);
+          app.filterAuctions(resp.data);
           app.auctions = resp.data;
           app.isLoading = false;
         })
