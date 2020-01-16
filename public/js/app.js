@@ -2803,7 +2803,7 @@ __webpack_require__.r(__webpack_exports__);
       var app = this;
 
       for (var v in auctions) {
-        var a = app.auctions[v];
+        var a = auctions[v];
         var f = app.filter;
         var s = a.store;
         a.hidden = f.federal_district && f.federal_district.id != s.federal_district.id || f.region && f.region.id != s.region.id || f.product && f.product.id != a.product.id || f.multiplicity && f.multiplicity.id != a.multiplicity.id;

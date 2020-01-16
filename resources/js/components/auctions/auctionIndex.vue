@@ -296,7 +296,7 @@ export default {
     filterAuctions(auctions) {
       var app = this;
       for (let v in auctions) {
-        let a = app.auctions[v];
+        let a = auctions[v];
         let f = app.filter;
         let s = a.store;
 
