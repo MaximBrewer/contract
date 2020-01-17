@@ -107847,7 +107847,7 @@ var app = new Vue({
         console.log(e);
         console.log(window.user);
         e.auctions.forEach(function (auction) {
-          that.flash(__('Auction #').auction.id.__(' started'), 'success');
+          that.flash(that.__('Auction #').auction.id.__(' started'), 'success');
         });
       });
     }
