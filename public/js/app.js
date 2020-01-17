@@ -3841,7 +3841,7 @@ __webpack_require__.r(__webpack_exports__);
 
         app.isLoading = false; //app.$router.replace("/");
 
-        app.flash(app.__("Company edited successfully"), "error");
+        app.flash(app.__("Company edited successfully"), "success");
         return true;
       });
     }
