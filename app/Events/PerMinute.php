@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\Auction;
+use Carbon\Carbon;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -15,8 +17,7 @@ class PerMinute implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $time;
-    // public $user;
-    // public $survey;
+    public $auctions;
 
     /**
      * Create a new event instance.
@@ -25,6 +26,15 @@ class PerMinute implements ShouldBroadcast
      */
     public function __construct()
     {
+        $carbon = new Carbon();
+        $auctions = Auction::select('id')->whereBetween(
+            \DB::raw('DATE(start_at)'),
+            [
+                $carbon->subMinute()->toDateTimeString(),
+                $carbon->addMinute()->toDateTimeString()
+            ]
+        )->get();
+        $this->auctions = $auctions;
         $this->time = date(DATE_ATOM);
     }
 
