@@ -32,6 +32,9 @@ class PersonalController extends Controller
 
         $carbon = new Carbon();
         echo $carbon->subHour(3)->toDateTimeString(), $carbon->addHour(3)->toDateTimeString();
+
+        echo date(DATE_ATOM);
+
         //$queries = \DB::getQueryLog();
         //info($queries);
 
