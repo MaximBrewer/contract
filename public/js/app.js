@@ -2267,6 +2267,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -87306,6 +87310,34 @@ var render = function() {
               ],
               1
             ),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { staticClass: "control-label" }, [
+                _vm._v(_vm._s(_vm.__("Auction Step")))
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.auction.step,
+                    expression: "auction.step"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "number" },
+                domProps: { value: _vm.auction.step },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.auction, "step", $event.target.value)
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("label", { staticClass: "control-label" }, [

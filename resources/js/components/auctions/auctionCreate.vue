@@ -8,6 +8,10 @@
           <v-select label="title" :options="products" v-model="auction.product"></v-select>
         </div>
         <div class="form-group">
+          <label class="control-label">{{ __('Auction Step') }}</label>
+          <input type="number" v-model="auction.step" class="form-control" />
+        </div>
+        <div class="form-group">
           <label class="control-label">{{ __('Auction Start Price') }}</label>
           <input type="number" v-model="auction.start_price" class="form-control" />
         </div>
