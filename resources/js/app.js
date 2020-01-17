@@ -180,9 +180,7 @@ const app = new Vue({
                 function(e) {
                     console.log(e)
                     console.log(window.user)
-                    e.auctions.forEach(function(auction){
-                        that.flash(that.__('Auction #') . auction.id . __(' started'), 'success');
-                    })
+                    e.auctions.forEach(auction => that.flash(that.__('Auction #') . auction.id . __(' started'), 'success'));
                 }
             );
         }
