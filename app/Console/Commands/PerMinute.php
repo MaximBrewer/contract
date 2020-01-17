@@ -37,6 +37,6 @@ class PerMinute extends Command
      */
     public function handle()
     {
-        event(new \App\Events\Perminute());
+        event(new \App\Events\PerMinute());
     }
 }
