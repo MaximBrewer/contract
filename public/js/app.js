@@ -107813,6 +107813,7 @@ var app = new Vue({
 
       Echo.channel("cross_contractru_database_every-minute").listen("PerMinute", function (e) {
         console.log(e);
+        console.log(window.user);
       });
     }
   }

@@ -179,6 +179,7 @@ const app = new Vue({
                 "PerMinute",
                 function(e) {
                     console.log(e)
+                    console.log(window.user)
                 }
             );
         }
