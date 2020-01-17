@@ -107805,10 +107805,12 @@ var app = new Vue({
       //         //this.removeViewingUser(user);
       //         this.$forceUpdate();
       //     });
+      // Echo.channel(
+      //     "cross_contractru_database_presence-survey." + survey_id
+      // ).listen("MessagePushed", function(e) {
+      //     console.log(e);
+      // });
 
-      Echo.channel("cross_contractru_database_presence-survey." + survey_id).listen("MessagePushed", function (e) {
-        console.log(e);
-      });
       Echo.channel("cross_contractru_database_every-minute").listen("PerMinute", function (e) {
         console.log(e);
       });
@@ -107885,7 +107887,6 @@ if (typeof io !== "undefined") {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
   });
-  console.log($('meta[name="csrf-token"]').attr('content'), 'im');
 }
 
 /***/ }),
