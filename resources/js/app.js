@@ -16,11 +16,11 @@ import "vue-loading-overlay/dist/vue-loading.css";
 import "vue-datetime/dist/vue-datetime.css";
 import "vue-select/dist/vue-select.css";
 
-import { VTooltip, VPopover, VClosePopover } from 'v-tooltip'
+import { VTooltip, VPopover, VClosePopover } from "v-tooltip";
 
-Vue.directive('tooltip', VTooltip)
-Vue.directive('close-popover', VClosePopover)
-Vue.component('v-popover', VPopover)
+Vue.directive("tooltip", VTooltip);
+Vue.directive("close-popover", VClosePopover);
+Vue.component("v-popover", VPopover);
 
 require("vue-flash-message/dist/vue-flash-message.min.css");
 
@@ -30,9 +30,9 @@ import VueSimpleAlert from "vue-simple-alert";
 
 Vue.use(VueSimpleAlert);
 
-import VModal from 'vue-js-modal'
- 
-Vue.use(VModal)
+import VModal from "vue-js-modal";
+
+Vue.use(VModal);
 
 import ContragentIndex from "./components/contragents/contragentIndex.vue";
 import ContragentCreate from "./components/contragents/contragentCreate.vue";
@@ -178,9 +178,14 @@ const app = new Vue({
             Echo.channel("cross_contractru_database_every-minute").listen(
                 "PerMinute",
                 function(e) {
-                    console.log(e)
-                    console.log(window.user)
-                    e.auctions.forEach(auction => that.flash(that.__('Auction #') . auction.id . __(' started'), 'success'));
+                    console.log(e);
+                    console.log(window.user);
+                    e.auctions.forEach(auction =>
+                        that.flash(
+                            that.__("Auction #") + auction.id + that.__(" started"),
+                            "success"
+                        )
+                    );
                 }
             );
         }
@@ -189,13 +194,16 @@ const app = new Vue({
 
 window.Vue.filter("formatDate", function(value) {
     if (value) {
-        return moment(String(value)).utcOffset("+03:00").format("DD.MM.YYYY");
+        return moment(String(value))
+            .utcOffset("+03:00")
+            .format("DD.MM.YYYY");
     }
 });
 
 window.Vue.filter("formatDateTime", function(value) {
     if (value) {
-        return moment(String(value)).utcOffset("+03:00").format("DD.MM.YYYY HH:mm");
+        return moment(String(value))
+            .utcOffset("+03:00")
+            .format("DD.MM.YYYY HH:mm");
     }
 });
-

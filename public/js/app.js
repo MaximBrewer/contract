@@ -107711,9 +107711,9 @@ window.Vue.mixin(__webpack_require__(/*! ./trans */ "./resources/js/trans.js"));
 
 
 
-Vue.directive('tooltip', v_tooltip__WEBPACK_IMPORTED_MODULE_6__["VTooltip"]);
-Vue.directive('close-popover', v_tooltip__WEBPACK_IMPORTED_MODULE_6__["VClosePopover"]);
-Vue.component('v-popover', v_tooltip__WEBPACK_IMPORTED_MODULE_6__["VPopover"]);
+Vue.directive("tooltip", v_tooltip__WEBPACK_IMPORTED_MODULE_6__["VTooltip"]);
+Vue.directive("close-popover", v_tooltip__WEBPACK_IMPORTED_MODULE_6__["VClosePopover"]);
+Vue.component("v-popover", v_tooltip__WEBPACK_IMPORTED_MODULE_6__["VPopover"]);
 
 __webpack_require__(/*! vue-flash-message/dist/vue-flash-message.min.css */ "./node_modules/vue-flash-message/dist/vue-flash-message.min.css");
 
@@ -107847,7 +107847,7 @@ var app = new Vue({
         console.log(e);
         console.log(window.user);
         e.auctions.forEach(function (auction) {
-          return that.flash(that.__('Auction #').auction.id.__(' started'), 'success');
+          return that.flash(that.__("Auction #") + auction.id + that.__(" started"), "success");
         });
       });
     }
