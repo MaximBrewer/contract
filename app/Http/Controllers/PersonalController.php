@@ -31,16 +31,6 @@ class PersonalController extends Controller
         //$queries = \DB::getQueryLog();
         //info($queries);
 
-        \DB::connection()->enableQueryLog();
-        \DB::select('select id from auctions where time(start_at) between time(?) and time(?)',
-            [
-                $carbon->subMinute()->toDateTimeString(),
-                $carbon->addMinute()->toDateTimeString()
-            ]
-        );
-        $queries = \DB::getQueryLog();
-        info($queries);
-
         $token = Str::random(80);
 
         User::find(Auth::user()->id)->forceFill([
