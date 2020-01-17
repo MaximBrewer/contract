@@ -32,7 +32,7 @@ class PerMinute implements ShouldBroadcast
             \DB::raw('DATE(start_at)'),
             [
                 $carbon->subMinute()->toDateTimeString(),
-                $carbon->addMinute(3)->toDateTimeString()
+                $carbon->addMinute()->toDateTimeString()
             ]
         )->get();
         $queries = \DB::getQueryLog();
