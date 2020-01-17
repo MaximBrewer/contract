@@ -56,7 +56,7 @@ class AuctionsController extends Controller
         ]);
 
         $auction = Auction::create([
-            'contragent_id' => Auth::user()->contragent[0]->id,
+            'contragent_id' => Auth::user()->contragents[0]->id,
             'multiplicity_id' => $request->post('multiplicity')['id'],
             'product_id' => $request->post('product')['id'],
             'store_id' => $request->post('store')['id'],
