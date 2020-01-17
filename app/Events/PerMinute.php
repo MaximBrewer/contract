@@ -28,8 +28,8 @@ class PerMinute implements ShouldBroadcast
     {
         $carbon = new Carbon();
         \DB::connection()->enableQueryLog();
-        $auctions = Auction::select('id')->whereBetween(
-            \DB::raw('DATE(start_at)'),
+        $auctions = Auction::select('id')->where(
+            \DB::raw('time(start_at) between time(?) and time(?)'),
             [
                 $carbon->subMinute()->toDateTimeString(),
                 $carbon->addMinute()->toDateTimeString()
