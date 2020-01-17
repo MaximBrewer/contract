@@ -28,6 +28,10 @@ class PersonalController extends Controller
     {
         //\DB::connection()->enableQueryLog();
         $carbon = new Carbon();
+
+
+        $carbon = new Carbon();
+        echo $carbon->subHour(3)->toDateTimeString(), $carbon->addHour(3)->toDateTimeString();
         //$queries = \DB::getQueryLog();
         //info($queries);
 
