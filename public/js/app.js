@@ -107809,7 +107809,9 @@ var app = new Vue({
       Echo.channel("cross_contractru_database_presence-survey." + survey_id).listen("MessagePushed", function (e) {
         console.log(e);
       });
-      Echo.channel("cross_contractru_database_every-minute").listen("PerMinute", function (e) {});
+      Echo.channel("cross_contractru_database_every-minute").listen("PerMinute", function (e) {
+        console.log(e);
+      });
     }
   }
 }).$mount("#app");

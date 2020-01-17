@@ -42,18 +42,32 @@ class AuctionsController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $request->validate([
+            "multiplicity.id"=> "required|exists:multiplicities,id",
+            "product.id"=> "required|exists:products,id",
+            "store.id"=> "required|exists:stores,id",
+            "start_at"=> "",
+            "finish_at"=> "",
+            "comment"=> "",
+            "start_price"=> "",
+            "volume"=> "",
+            "step"=> "",
+        ]);
 
         $auction = Auction::create([
-            'contragent_id' => $request->post('contragent')['id'],
-            'product_id' => $request->post('product')['id'],
+            'contragent_id' => Auth::user()->contragent[0]->id,
             'multiplicity_id' => $request->post('multiplicity')['id'],
+            'product_id' => $request->post('product')['id'],
             'store_id' => $request->post('store')['id'],
             'start_at' => date('Y-m-d H:i:s', strtotime($request->post('start_at'))),
             'finish_at' => date('Y-m-d H:i:s', strtotime($request->post('finish_at'))),
             'comment' => $request->post('comment'),
             'start_price' => $request->post('start_price'),
             'volume' => $request->post('volume'),
+            'step' => $request->post('step'),
         ]);
+
         $auction = Auction::findOrFail($auction->id);
         return $auction;
     }
