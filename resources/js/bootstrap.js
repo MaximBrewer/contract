@@ -52,4 +52,5 @@ if (typeof (io) !== "undefined") {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    console.log($('meta[name="csrf-token"]').attr('content'), 'im')
 }
