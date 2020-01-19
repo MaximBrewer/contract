@@ -137,8 +137,8 @@
       <!--Started-->
       <!--Bidding-->
       <div v-if="auction.started">
-        <div class="row" v-if="auction.results && bidding">
-          <div class="col-md-12" v-if="auction.results.length">
+        <div class="row" v-if="bidding">
+          <div class="col-md-12">
             <div class="row">
               <div class="col-md-4">
                 <div class="card text-center">
@@ -168,7 +168,7 @@
                 <br />
               </div>
             </div>
-            <div class="card">
+            <div class="card" v-if="auction.results && auction.results.length">
               <div class="card-header">{{ __("You are an auction participant") }}</div>
               <div class="table-responsive" id="auction_activity">
                 <table class="table table-bordered">
@@ -453,17 +453,14 @@ export default {
       )
       .then(function(resp) {
         app.auction = resp.data;
-        console.log(app.auction);
         app.isLoading = false;
         if (app.user && app.user.contragents && app.user.contragents[0]) {
           let contr = app.user.contragents[0].id;
           for (let r in app.auction.bidders) {
-        console.log(app.auction.bidders[r], contr);
             if (app.auction.bidders[r].id == contr) app.bidding = 1;
           }
           if (app.auction.contragent.id == contr) app.mine = 1;
         }
-        console.log(app.mine, app.bidding);
 
       })
       .catch(function() {
@@ -472,7 +469,6 @@ export default {
       });
   },
   data: function() {
-    console.log(window.document.querySelector('meta[name="server-time"]'));
     return {
       time: window.document.querySelector('meta[name="server-time"]').content,
       isLoading: true,

@@ -4006,28 +4006,23 @@ __webpack_require__.r(__webpack_exports__);
     });
     axios.get("/api/v1/auction/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
       app.auction = resp.data;
-      console.log(app.auction);
       app.isLoading = false;
 
       if (app.user && app.user.contragents && app.user.contragents[0]) {
         var contr = app.user.contragents[0].id;
 
         for (var r in app.auction.bidders) {
-          console.log(app.auction.bidders[r], contr);
           if (app.auction.bidders[r].id == contr) app.bidding = 1;
         }
 
         if (app.auction.contragent.id == contr) app.mine = 1;
       }
-
-      console.log(app.mine, app.bidding);
     })["catch"](function () {
       alert(app.__("Failed to load auction"));
       app.isLoading = false;
     });
   },
   data: function data() {
-    console.log(window.document.querySelector('meta[name="server-time"]'));
     return {
       time: window.document.querySelector('meta[name="server-time"]').content,
       isLoading: true,
@@ -91065,107 +91060,87 @@ var render = function() {
           _vm._v(" "),
           _vm.auction.started
             ? _c("div", [
-                _vm.auction.results && _vm.bidding
+                _vm.bidding
                   ? _c("div", { staticClass: "row" }, [
-                      _vm.auction.results.length
-                        ? _c("div", { staticClass: "col-md-12" }, [
-                            _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-md-4" }, [
-                                _c("div", { staticClass: "card text-center" }, [
-                                  _c("div", { staticClass: "card-header" }, [
-                                    _vm._v(_vm._s(_vm.__("Auction start")))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "ul",
-                                    {
-                                      staticClass: "list-group list-group-flush"
-                                    },
-                                    [
-                                      _c(
-                                        "li",
-                                        { staticClass: "list-group-item" },
-                                        [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm._f("formatDateTime")(
-                                                _vm.auction.start_at
-                                              )
-                                            )
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("br")
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-4" }, [
+                            _c("div", { staticClass: "card text-center" }, [
+                              _c("div", { staticClass: "card-header" }, [
+                                _vm._v(_vm._s(_vm.__("Auction start")))
                               ]),
                               _vm._v(" "),
-                              _c("div", { staticClass: "col-md-4" }, [
-                                _c("div", { staticClass: "card text-center" }, [
-                                  _c("div", { staticClass: "card-header" }, [
-                                    _vm._v(_vm._s(_vm.__("During time")))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "ul",
-                                    {
-                                      staticClass: "list-group list-group-flush"
-                                    },
-                                    [
-                                      _c(
-                                        "li",
-                                        { staticClass: "list-group-item" },
-                                        [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm._f("formatDateTime")(_vm.time)
-                                            )
-                                          )
-                                        ]
+                              _c(
+                                "ul",
+                                { staticClass: "list-group list-group-flush" },
+                                [
+                                  _c("li", { staticClass: "list-group-item" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("formatDateTime")(
+                                          _vm.auction.start_at
+                                        )
                                       )
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("br")
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-md-4" }, [
-                                _c("div", { staticClass: "card text-center" }, [
-                                  _c("div", { staticClass: "card-header" }, [
-                                    _vm._v(_vm._s(_vm.__("Auction finish")))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "ul",
-                                    {
-                                      staticClass: "list-group list-group-flush"
-                                    },
-                                    [
-                                      _c(
-                                        "li",
-                                        { staticClass: "list-group-item" },
-                                        [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm._f("formatDateTime")(
-                                                _vm.auction.finish_at
-                                              )
-                                            )
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("br")
-                              ])
+                                    )
+                                  ])
+                                ]
+                              )
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "card" }, [
+                            _c("br")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-4" }, [
+                            _c("div", { staticClass: "card text-center" }, [
+                              _c("div", { staticClass: "card-header" }, [
+                                _vm._v(_vm._s(_vm.__("During time")))
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "ul",
+                                { staticClass: "list-group list-group-flush" },
+                                [
+                                  _c("li", { staticClass: "list-group-item" }, [
+                                    _vm._v(
+                                      _vm._s(_vm._f("formatDateTime")(_vm.time))
+                                    )
+                                  ])
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("br")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-4" }, [
+                            _c("div", { staticClass: "card text-center" }, [
+                              _c("div", { staticClass: "card-header" }, [
+                                _vm._v(_vm._s(_vm.__("Auction finish")))
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "ul",
+                                { staticClass: "list-group list-group-flush" },
+                                [
+                                  _c("li", { staticClass: "list-group-item" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("formatDateTime")(
+                                          _vm.auction.finish_at
+                                        )
+                                      )
+                                    )
+                                  ])
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("br")
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _vm.auction.results && _vm.auction.results.length
+                          ? _c("div", { staticClass: "card" }, [
                               _c("div", { staticClass: "card-header" }, [
                                 _vm._v(
                                   _vm._s(
@@ -91237,8 +91212,8 @@ var render = function() {
                                 ]
                               )
                             ])
-                          ])
-                        : _vm._e()
+                          : _vm._e()
+                      ])
                     ])
                   : _vm._e(),
                 _vm._v(" "),
