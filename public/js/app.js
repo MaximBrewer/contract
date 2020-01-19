@@ -5481,6 +5481,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -94155,11 +94162,11 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "col-md-12" }, [
             _c("div", { staticClass: "card" }, [
               _vm.contragent.title
                 ? _c("div", { staticClass: "card-header" }, [
-                    _vm._v(_vm._s(_vm.contragent.title))
+                    _c("strong", [_vm._v(_vm._s(_vm.contragent.title))])
                   ])
                 : _vm._e(),
               _vm._v(" "),
@@ -94167,20 +94174,28 @@ var render = function() {
                 _vm.contragent.federal_district &&
                 _vm.contragent.federal_district.title
                   ? _c("li", { staticClass: "list-group-item" }, [
+                      _c("strong", [
+                        _vm._v(_vm._s(_vm.__("Contragent region")) + ":")
+                      ]),
                       _vm._v(
-                        _vm._s(_vm.__("Contragent region")) +
-                          ": " +
-                          _vm._s(_vm.contragent.federal_district.title)
+                        "\n              " +
+                          _vm._s(_vm.contragent.federal_district.title) +
+                          "\n            "
                       )
                     ])
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.contragent.region && _vm.contragent.region.title
                   ? _c("li", { staticClass: "list-group-item" }, [
+                      _c("strong", [
+                        _vm._v(
+                          _vm._s(_vm.__("Contragent federal district")) + ":"
+                        )
+                      ]),
                       _vm._v(
-                        _vm._s(_vm.__("Contragent federal district")) +
-                          ": " +
-                          _vm._s(_vm.contragent.region.title)
+                        "\n              " +
+                          _vm._s(_vm.contragent.region.title) +
+                          "\n            "
                       )
                     ])
                   : _vm._e(),
@@ -94190,50 +94205,118 @@ var render = function() {
                       "li",
                       { staticClass: "list-group-item" },
                       [
-                        _vm._v(
-                          _vm._s(_vm.__("Contragent type")) +
-                            ": \n              "
-                        ),
+                        _c("strong", [
+                          _vm._v(_vm._s(_vm.__("Contragent type")) + ":")
+                        ]),
+                        _vm._v(" "),
                         _vm._l(_vm.contragent.types, function(type, index) {
                           return _c("span", [_vm._v(_vm._s(type.title))])
                         })
                       ],
                       2
                     )
-                  : _vm._e()
-              ])
-            ]),
-            _vm._v(" "),
-            _c("br")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("ul", { staticClass: "list-group list-group-flush" }, [
+                  : _vm._e(),
+                _vm._v(" "),
                 _vm.contragent.legal_address
                   ? _c("li", { staticClass: "list-group-item" }, [
-                      _vm._v(_vm._s(_vm.contragent.legal_address))
+                      _c("strong", [
+                        _vm._v(_vm._s(_vm.__("Contragent Legal address")) + ":")
+                      ]),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.contragent.legal_address) +
+                          "\n            "
+                      )
                     ])
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.contragent.fio
                   ? _c("li", { staticClass: "list-group-item" }, [
-                      _vm._v(_vm._s(_vm.contragent.fio))
+                      _c("strong", [
+                        _vm._v(_vm._s(_vm.__("Contragent contact")) + ":")
+                      ]),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.contragent.fio) +
+                          "\n            "
+                      )
                     ])
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.contragent.phone
                   ? _c("li", { staticClass: "list-group-item" }, [
-                      _vm._v(_vm._s(_vm.contragent.phone))
+                      _c("strong", [
+                        _vm._v(_vm._s(_vm.__("Contragent phone")) + ":")
+                      ]),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.contragent.phone) +
+                          "\n            "
+                      )
                     ])
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.contragent.inn
                   ? _c("li", { staticClass: "list-group-item" }, [
+                      _c("strong", [
+                        _vm._v(_vm._s(_vm.__("Contragent TIN")) + ":")
+                      ]),
                       _vm._v(
-                        _vm._s(_vm.__("Contragent TIN")) +
-                          ": " +
-                          _vm._s(_vm.contragent.inn)
+                        "\n              " +
+                          _vm._s(_vm.contragent.inn) +
+                          "\n            "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.contragent.legal_address
+                  ? _c("li", { staticClass: "list-group-item" }, [
+                      _c("strong", [
+                        _vm._v(_vm._s(_vm.__("Contragent Legal address")) + ":")
+                      ]),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.contragent.legal_address) +
+                          "\n            "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.contragent.fio
+                  ? _c("li", { staticClass: "list-group-item" }, [
+                      _c("strong", [
+                        _vm._v(_vm._s(_vm.__("Contragent contact")) + ":")
+                      ]),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.contragent.fio) +
+                          "\n            "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.contragent.phone
+                  ? _c("li", { staticClass: "list-group-item" }, [
+                      _c("strong", [
+                        _vm._v(_vm._s(_vm.__("Contragent phone")) + ":")
+                      ]),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.contragent.phone) +
+                          "\n            "
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.contragent.inn
+                  ? _c("li", { staticClass: "list-group-item" }, [
+                      _c("strong", [
+                        _vm._v(_vm._s(_vm.__("Contragent TIN")) + ":")
+                      ]),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.contragent.inn) +
+                          "\n            "
                       )
                     ])
                   : _vm._e()
@@ -94244,81 +94327,54 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { staticClass: "control-label" }, [
-            _vm._v(_vm._s(_vm.__("Contragent TIN")))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-control" }, [
-            _vm._v(_vm._s(_vm.contragent.inn))
-          ])
+        _c("div", { staticClass: "h4" }, [
+          _vm._v(_vm._s(_vm.__("Contragent stores")))
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _c("label", { staticClass: "control-label" }, [
-            _vm._v(_vm._s(_vm.__("Contragent stores")))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "stores" }, [
-            _c(
-              "ul",
-              _vm._l(_vm.contragent.stores, function(store, index) {
-                return _c("li", { staticClass: "store" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { staticClass: "control-label" }, [
-                      _vm._v(
-                        _vm._s(_vm.__("Store coords #", { store: index + 1 }))
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-control" }, [
-                      _vm._v(_vm._s(_vm.contragent.stores[index].coords))
-                    ]),
-                    _vm._v(" "),
-                    _c("label", { staticClass: "control-label" }, [
-                      _vm._v(
-                        _vm._s(_vm.__("Store address #", { store: index + 1 }))
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-control" }, [
-                      _vm._v(_vm._s(_vm.contragent.stores[index].address))
-                    ]),
-                    _vm._v(" "),
-                    _c("label", { staticClass: "control-label" }, [
-                      _vm._v(
-                        _vm._s(
-                          _vm.__("Store federal district #", {
-                            store: index + 1
-                          })
-                        )
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-control" }, [
-                      _vm._v(
+        _c(
+          "div",
+          { staticClass: "row" },
+          _vm._l(_vm.contragent.stores, function(store, index) {
+            return _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-header" }, [
+                  _vm._v(_vm._s(_vm.contragent.stores[index].address))
+                ]),
+                _vm._v(" "),
+                _c("ul", { staticClass: "list-group list-group-flush" }, [
+                  _c("li", { staticClass: "list-group-item" }, [
+                    _vm._v(
+                      _vm._s(
+                        _vm.__("Store federal district #", { store: index + 1 })
+                      ) +
+                        ": " +
                         _vm._s(
                           _vm.contragent.stores[index].federal_district.title
                         )
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("label", { staticClass: "control-label" }, [
-                      _vm._v(
-                        _vm._s(_vm.__("Store region #", { store: index + 1 }))
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-control" }, [
-                      _vm._v(_vm._s(_vm.contragent.stores[index].region.title))
-                    ])
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "list-group-item" }, [
+                    _vm._v(
+                      _vm._s(_vm.__("Store region #", { store: index + 1 })) +
+                        ": " +
+                        _vm._s(_vm.contragent.stores[index].region.title)
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "list-group-item" }, [
+                    _vm._v(
+                      _vm._s(_vm.__("Store coords #", { store: index + 1 })) +
+                        ": " +
+                        _vm._s(_vm.contragent.stores[index].coords)
+                    )
                   ])
                 ])
-              }),
-              0
-            )
-          ])
-        ]),
+              ])
+            ])
+          }),
+          0
+        ),
         _vm._v(" "),
         _c("star-rating", {
           model: {

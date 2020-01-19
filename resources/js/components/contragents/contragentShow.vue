@@ -2,75 +2,82 @@
   <section class="contragent-edit-wrapper">
     <div class="container">
       <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
-
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="card">
-            <div class="card-header" v-if="contragent.title">{{ contragent.title }}</div>
+            <div class="card-header" v-if="contragent.title">
+              <strong>{{ contragent.title }}</strong>
+            </div>
             <ul class="list-group list-group-flush">
               <li
                 class="list-group-item"
                 v-if="contragent.federal_district && contragent.federal_district.title"
-              >{{ __('Contragent region') }}: {{ contragent.federal_district.title }}</li>
-              <li
-                class="list-group-item"
-                v-if="contragent.region && contragent.region.title"
-              >{{ __('Contragent federal district') }}: {{ contragent.region.title }}</li>
-              <li class="list-group-item" v-if="contragent.types">{{ __('Contragent type') }}: 
+              >
+                <strong>{{ __('Contragent region') }}:</strong>
+                {{ contragent.federal_district.title }}
+              </li>
+              <li class="list-group-item" v-if="contragent.region && contragent.region.title">
+                <strong>{{ __('Contragent federal district') }}:</strong>
+                {{ contragent.region.title }}
+              </li>
+              <li class="list-group-item" v-if="contragent.types">
+                <strong>{{ __('Contragent type') }}:</strong>
                 <span v-for="type, index in contragent.types">{{ type.title }}</span>
+              </li>
+              <li class="list-group-item" v-if="contragent.legal_address">
+                <strong>{{ __('Contragent Legal address') }}:</strong>
+                {{ contragent.legal_address }}
+              </li>
+              <li class="list-group-item" v-if="contragent.fio">
+                <strong>{{ __('Contragent contact') }}:</strong>
+                {{ contragent.fio }}
+              </li>
+              <li class="list-group-item" v-if="contragent.phone">
+                <strong>{{ __('Contragent phone') }}:</strong>
+                {{ contragent.phone }}
+              </li>
+              <li class="list-group-item" v-if="contragent.inn">
+                <strong>{{ __('Contragent TIN') }}:</strong>
+                {{ contragent.inn }}
+              </li>
+              <li class="list-group-item" v-if="contragent.legal_address">
+                <strong>{{ __('Contragent Legal address') }}:</strong>
+                {{ contragent.legal_address }}
+              </li>
+              <li class="list-group-item" v-if="contragent.fio">
+                <strong>{{ __('Contragent contact') }}:</strong>
+                {{ contragent.fio }}
+              </li>
+              <li class="list-group-item" v-if="contragent.phone">
+                <strong>{{ __('Contragent phone') }}:</strong>
+                {{ contragent.phone }}
+              </li>
+              <li class="list-group-item" v-if="contragent.inn">
+                <strong>{{ __('Contragent TIN') }}:</strong>
+                {{ contragent.inn }}
               </li>
             </ul>
           </div>
           <br />
         </div>
-        <div class="col-md-6">
+      </div>
+      <div class="h4">{{ __('Contragent stores') }}</div>
+      <div class="row">
+        <div class="col-md-6" v-for="store, index in contragent.stores">
           <div class="card">
+            <div class="card-header">{{ contragent.stores[index].address }}</div>
             <ul class="list-group list-group-flush">
               <li
                 class="list-group-item"
-                v-if="contragent.legal_address"
-              >{{ contragent.legal_address }}</li>
+              >{{ __('Store federal district #', {store: index + 1}) }}: {{ contragent.stores[index].federal_district.title }}</li>
               <li
                 class="list-group-item"
-                v-if="contragent.fio"
-              >{{ contragent.fio }}</li>
+              >{{ __('Store region #', {store: index + 1}) }}: {{ contragent.stores[index].region.title }}</li>
               <li
                 class="list-group-item"
-                v-if="contragent.phone"
-              >{{ contragent.phone }}</li>
-              <li
-                class="list-group-item"
-                v-if="contragent.inn"
-              >{{ __('Contragent TIN') }}: {{ contragent.inn }}</li>
+              >{{ __('Store coords #', {store: index + 1}) }}: {{ contragent.stores[index].coords }}</li>
             </ul>
           </div>
-          <br />
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="control-label">{{ __('Contragent TIN') }}</label>
-        <div class="form-control">{{ contragent.inn }}</div>
-      </div>
-      <div class="form-group">
-        <label class="control-label">{{ __('Contragent stores') }}</label>
-        <div class="stores">
-          <ul>
-            <li class="store" v-for="store, index in contragent.stores">
-              <div class="form-group">
-                <label class="control-label">{{ __('Store coords #', {store: index + 1}) }}</label>
-                <div class="form-control">{{ contragent.stores[index].coords }}</div>
-                <label class="control-label">{{ __('Store address #', {store: index + 1}) }}</label>
-                <div class="form-control">{{ contragent.stores[index].address }}</div>
-                <label
-                  class="control-label"
-                >{{ __('Store federal district #', {store: index + 1}) }}</label>
-                <div class="form-control">{{ contragent.stores[index].federal_district.title }}</div>
-                <label class="control-label">{{ __('Store region #', {store: index + 1}) }}</label>
-                <div class="form-control">{{ contragent.stores[index].region.title }}</div>
-              </div>
-            </li>
-          </ul>
         </div>
       </div>
       <star-rating v-model="contragent.rating"></star-rating>
