@@ -300,7 +300,6 @@ class AuctionsController extends Controller
         ]);
 
         $freeVolume = $auction->volume;
-<<<<<<< HEAD
 
 
         if ($auction->volume < $r->post('volume')) {
@@ -309,8 +308,6 @@ class AuctionsController extends Controller
                 'errors' => []
             ], 422);
         }
-=======
->>>>>>> b29f3a4f30710b16942183fd9ed7c66712f623cf
 
         $auctionBets = Bet::where('auction_id', $r->post('auction'))->orderBy('price', 'desc')->orderBy('created_at', 'asc')->get();
 
@@ -319,11 +316,7 @@ class AuctionsController extends Controller
         $rft = false;
 
         foreach ($auctionBets as $auctionBet) {
-<<<<<<< HEAD
             if ($newBet->price - $auction->step > $auctionBet->price && !$rft) {
-=======
-            if ($newBet->price > $auctionBet->price && !$rft) {
->>>>>>> b29f3a4f30710b16942183fd9ed7c66712f623cf
                 $bets[] = $newBet;
                 $rft = true;
             }
@@ -349,7 +342,6 @@ class AuctionsController extends Controller
             }
         }
 
-<<<<<<< HEAD
         if ($nev) {
             return response()->json([
                 'message' => __('Too low price or too much volume!'),
@@ -359,9 +351,6 @@ class AuctionsController extends Controller
 
         if ($auction = Auction::find($r->post('auction')))
             event(new \App\Events\MessagePushed($auction));
-=======
-        
->>>>>>> b29f3a4f30710b16942183fd9ed7c66712f623cf
 
         return Auction::findOrFail($r->post('auction'));
     }
