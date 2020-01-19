@@ -139,6 +139,7 @@
       <div v-if="auction.started">
         <div class="row" v-if="bidding">
           <div class="col-md-12">
+            <div class="h4">{{ __("You are an auction participant") }}</div>
             <div class="row">
               <div class="col-md-4">
                 <div class="card text-center">
@@ -168,25 +169,26 @@
                 <br />
               </div>
             </div>
-            <div class="card" v-if="auction.results && auction.results.length">
-              <div class="card-header">{{ __("You are an auction participant") }}</div>
-              <div class="table-responsive" id="auction_activity">
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th>{{ __('Contragent') }}</th>
-                      <th>{{ __('Is online') }}</th>
-                      <th>{{ __('Can bet') }}</th>
-                      <th>{{ __('Active volume') }}</th>
-                      <th>{{ __('Active price') }}</th>
-                      <th>{{ __('Approve volume') }}</th>
-                      <th>{{ __('Correcting price') }}</th>
-                      <th>{{ __('Approve contract') }}</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
-              </div>
+            <div
+              class="table-responsive"
+              id="auction_activity"
+              v-if="auction.results && auction.results.length"
+            >
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>{{ __('Contragent') }}</th>
+                    <th>{{ __('Is online') }}</th>
+                    <th>{{ __('Can bet') }}</th>
+                    <th>{{ __('Active volume') }}</th>
+                    <th>{{ __('Active price') }}</th>
+                    <th>{{ __('Approve volume') }}</th>
+                    <th>{{ __('Correcting price') }}</th>
+                    <th>{{ __('Approve contract') }}</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -461,7 +463,6 @@ export default {
           }
           if (app.auction.contragent.id == contr) app.mine = 1;
         }
-
       })
       .catch(function() {
         alert(app.__("Failed to load auction"));

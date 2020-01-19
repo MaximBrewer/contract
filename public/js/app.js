@@ -3985,6 +3985,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -91063,6 +91065,12 @@ var render = function() {
                 _vm.bidding
                   ? _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-md-12" }, [
+                        _c("div", { staticClass: "h4" }, [
+                          _vm._v(
+                            _vm._s(_vm.__("You are an auction participant"))
+                          )
+                        ]),
+                        _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-md-4" }, [
                             _c("div", { staticClass: "card text-center" }, [
@@ -91140,78 +91148,66 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _vm.auction.results && _vm.auction.results.length
-                          ? _c("div", { staticClass: "card" }, [
-                              _c("div", { staticClass: "card-header" }, [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.__("You are an auction participant")
-                                  )
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "table-responsive",
-                                  attrs: { id: "auction_activity" }
-                                },
-                                [
-                                  _c(
-                                    "table",
-                                    { staticClass: "table table-bordered" },
-                                    [
-                                      _c("thead", [
-                                        _c("tr", [
-                                          _c("th", [
-                                            _vm._v(_vm._s(_vm.__("Contragent")))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("th", [
-                                            _vm._v(_vm._s(_vm.__("Is online")))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("th", [
-                                            _vm._v(_vm._s(_vm.__("Can bet")))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("th", [
-                                            _vm._v(
-                                              _vm._s(_vm.__("Active volume"))
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("th", [
-                                            _vm._v(
-                                              _vm._s(_vm.__("Active price"))
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("th", [
-                                            _vm._v(
-                                              _vm._s(_vm.__("Approve volume"))
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("th", [
-                                            _vm._v(
-                                              _vm._s(_vm.__("Correcting price"))
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("th", [
-                                            _vm._v(
-                                              _vm._s(_vm.__("Approve contract"))
-                                            )
-                                          ])
+                          ? _c(
+                              "div",
+                              {
+                                staticClass: "table-responsive",
+                                attrs: { id: "auction_activity" }
+                              },
+                              [
+                                _c(
+                                  "table",
+                                  { staticClass: "table table-bordered" },
+                                  [
+                                    _c("thead", [
+                                      _c("tr", [
+                                        _c("th", [
+                                          _vm._v(_vm._s(_vm.__("Contragent")))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(_vm._s(_vm.__("Is online")))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(_vm._s(_vm.__("Can bet")))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(
+                                            _vm._s(_vm.__("Active volume"))
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(_vm._s(_vm.__("Active price")))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(
+                                            _vm._s(_vm.__("Approve volume"))
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(
+                                            _vm._s(_vm.__("Correcting price"))
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(
+                                            _vm._s(_vm.__("Approve contract"))
+                                          )
                                         ])
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("tbody")
-                                    ]
-                                  )
-                                ]
-                              )
-                            ])
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tbody")
+                                  ]
+                                )
+                              ]
+                            )
                           : _vm._e()
                       ])
                     ])
