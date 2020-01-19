@@ -4018,6 +4018,8 @@ __webpack_require__.r(__webpack_exports__);
 
         if (app.auction.contragent.id == contr) app.mine = 1;
       }
+
+      console.log(app.mine, app.bidding);
     })["catch"](function () {
       alert(app.__("Failed to load auction"));
       app.isLoading = false;
