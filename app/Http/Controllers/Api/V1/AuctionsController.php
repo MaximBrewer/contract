@@ -289,32 +289,39 @@ class AuctionsController extends Controller
         }
         $auction = Auction::findOrFail($r->post('auction'));
 
-        $newBet = [
+        $newBet = new Bet([
             'auction_id' => $r->post('auction'),
             'contragent_id' => $r->post('bidder'),
             'price' => (float) $r->post('price'),
             'volume' => $r->post('volume'),
             'took_part' => 1,
             'can_bet' => 1
-        ];
+        ]);
 
         $freeVolume = $auction->volume;
 
-        $auctionBets = (array)Bet::where('auction_id', $r->post('auction'))->orderBy('price', 'desc')->orderBy('created_at', 'asc')->get();
+        $auctionBets = Bet::where('auction_id', $r->post('auction'))->orderBy('price', 'desc')->orderBy('created_at', 'asc')->get();
 
+        $bets = [];
+        $nev = false;
 
-        foreach ($auctionBets as $ke => $auctionBet) {
+        foreach ($auctionBets as $ke => $auctionBet) $bets[] = $newBet->price > $auctionBet->price ? $newBet : $auctionBet;
 
-        return $auctionBet;
+        foreach ($bets as $bet) {
 
-            if ($newBet['price'] > $auctionBet['price']) {
-                array_splice($auctionBets, $ke, 0, [$newBet]);
-                break;
+            if (!$freeVolume) {
+                Bet::find($bet->id)->destroy();
             }
-
+            if ($freeVolume > $bet->volume) {
+                $freeVolume -= $bet->volume;
+                if (!$bet->id)
+                    $newBet->save();
+            } elseif (isset($bet->id)) {
+                Bet::find()->update(['volume' => $freeVolume]);
+            } else {
+                $nev = true;
+            }
         }
-
-        return $auctionBets;
 
         return Auction::findOrFail($r->post('auction'));
     }
