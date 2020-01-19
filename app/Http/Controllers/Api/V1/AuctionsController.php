@@ -288,7 +288,7 @@ class AuctionsController extends Controller
             ], 422);
         }
 
-        if ($result = Result::where('contragent_id', $r->post('bidder'))->where('auction_id', $r->post('auction'))->where('price', $r->post('price'))) {
+        if ($result = Result::where('contragent_id', $r->post('bidder'))->where('auction_id', $r->post('auction'))->where('price', $r->post('price'))->first()) {
             $result->update([
                 'volume' => (int) $result->volume + (int) $r->post('volume')
             ]);
