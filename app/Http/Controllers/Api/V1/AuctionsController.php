@@ -293,7 +293,7 @@ class AuctionsController extends Controller
                 'volume' => (int) $result->volume + (int) $r->post('volume')
             ]);
         } else {
-            Result::add([
+            Result::create([
                 'auction_id' => $r->post('auction'),
                 'contragent_id' => $r->post('bidder'),
                 'price' => (float) $r->post('price'),
