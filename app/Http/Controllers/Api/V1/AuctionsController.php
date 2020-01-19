@@ -299,6 +299,7 @@ class AuctionsController extends Controller
         ]);
 
         $freeVolume = $auction->volume;
+        return $freeVolume;
 
         $auctionBets = Bet::where('auction_id', $r->post('auction'))->orderBy('price', 'desc')->orderBy('created_at', 'asc')->get();
 
