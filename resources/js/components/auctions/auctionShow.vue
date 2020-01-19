@@ -492,14 +492,15 @@ export default {
       mine: 0,
       maxModalWidth: 600,
       auction: {},
-      bid: {}
+      bid: {},
+      errors: {}
     };
   },
   created() {
     this.listenForBroadcast();
   },
   methods: {
-    betIt(){
+    betIt() {
       var app = this;
       if (app.auction)
         axios

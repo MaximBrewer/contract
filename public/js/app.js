@@ -4047,7 +4047,8 @@ __webpack_require__.r(__webpack_exports__);
       mine: 0,
       maxModalWidth: 600,
       auction: {},
-      bid: {}
+      bid: {},
+      errors: {}
     };
   },
   created: function created() {
