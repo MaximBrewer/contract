@@ -9,7 +9,7 @@ class Result extends Model
 
     protected $fillable = [
         'volume',
-        'conragent_id',
+        'contragent_id',
         'auction_id',
         'price',
     ];
