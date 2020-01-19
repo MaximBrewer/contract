@@ -89,7 +89,7 @@
               <a
                 v-tooltip="__('Confirm auction')"
                 href="javascript:void(0)"
-                v-if="user.contragents[0] && auction.contragent && !auction.confirmed && user.contragents[0].id == auction.contragent.id"
+                v-if="mine"
                 class="btn btn-primary"
                 @click="confirm(auction.id)"
               >
@@ -106,7 +106,7 @@
               <router-link
                 v-tooltip="__('Edit auction')"
                 :to="{name: 'editAuction', 'params': {'id': auction.id}}"
-                v-if="user.contragents[0] && auction.contragent && user.contragents[0].id == auction.contragent.id"
+                v-if="mine"
                 class="btn btn-dark"
               >
                 <i class="mdi mdi-pencil" aria-hidden="true"></i>
@@ -115,7 +115,7 @@
                 v-tooltip="__('Delete auction')"
                 href="javascript:void(0)"
                 class="btn btn-danger"
-                v-if="user.contragents[0] && auction.contragent && user.contragents[0].id == auction.contragent.id"
+                v-if="mine"
                 @click="delAuction(auction.id)"
               >
                 <i class="mdi mdi-delete" aria-hidden="true"></i>
@@ -134,7 +134,169 @@
           <br />
         </div>
       </div>
-      <div class="row" v-if="auction.results && auction.results.length">
+      <!--Started-->
+      <!--Bidding-->
+      <div v-if="auction.started">
+        <div class="row" v-if="auction.results && bidding">
+          <div class="col-md-12" v-if="auction.results.length">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="card text-center">
+                  <div class="card-header">{{ __('Auction start') }}</div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ auction.start_at | formatDateTime }}</li>
+                  </ul>
+                </div>
+                <br />
+              </div>
+              <div class="col-md-4">
+                <div class="card text-center">
+                  <div class="card-header">{{ __('During time') }}</div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ time | formatDateTime}}</li>
+                  </ul>
+                </div>
+                <br />
+              </div>
+              <div class="col-md-4">
+                <div class="card text-center">
+                  <div class="card-header">{{ __('Auction finish') }}</div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ auction.finish_at | formatDateTime }}</li>
+                  </ul>
+                </div>
+                <br />
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">{{ __("You are an auction participant") }}</div>
+              <div class="table-responsive" id="auction_activity">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>{{ __('Contragent') }}</th>
+                      <th>{{ __('Is online') }}</th>
+                      <th>{{ __('Can bet') }}</th>
+                      <th>{{ __('Active volume') }}</th>
+                      <th>{{ __('Active price') }}</th>
+                      <th>{{ __('Approve volume') }}</th>
+                      <th>{{ __('Correcting price') }}</th>
+                      <th>{{ __('Approve contract') }}</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--Mine-->
+        <div class="row" v-if="auction.results && mine">
+          <div class="col-md-12" v-if="auction.results.length">
+            <div class="card">
+              <div class="card-header">{{ __("Auction activity") }}</div>
+              <div class="table-responsive" id="auction_activity">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>{{ __('Contragent') }}</th>
+                      <th>{{ __('Is online') }}</th>
+                      <th>{{ __('Can bet') }}</th>
+                      <th>{{ __('Active volume') }}</th>
+                      <th>{{ __('Active price') }}</th>
+                      <th>{{ __('Approve volume') }}</th>
+                      <th>{{ __('Correcting price') }}</th>
+                      <th>{{ __('Approve contract') }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="result, index in auction.results">
+                      <td>
+                        <div v-if="result.contragent" class="text-nowrap">
+                          <div class="h6">{{ result.contragent.title }}</div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-nowrap">
+                          <span
+                            v-tooltip="__('Is online')"
+                            href="javascript:void(0)"
+                            class="btn"
+                            v-bind:class="{ 'btn-success': result.took_part, 'btn-danger': !result.took_part }"
+                            @click="canBet(auction.id, result.id)"
+                          >&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-nowrap">
+                          <a
+                            v-tooltip="__('Can bet')"
+                            href="javascript:void(0)"
+                            class="btn"
+                            v-bind:class="{ 'btn-success': result.can_bet, 'btn-danger': !result.can_bet }"
+                            @click="canBet(auction.id, result.id)"
+                          >
+                            <i class="mdi mdi-check-circle" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-nowrap">
+                          <span>{{ auction.active_volume }}/{{ auction.volume }}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-nowrap">
+                          <span>{{ auction.active_price }}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-nowrap">
+                          <a
+                            v-tooltip="__('Approve volume')"
+                            href="javascript:void(0)"
+                            class="btn"
+                            v-bind:class="{ 'btn-warning': !result.approved, 'btn-secondary': result.approved }"
+                            @click="approveVolume(result)"
+                          >
+                            <i class="mdi mdi-check-circle" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-nowrap">
+                          <input
+                            class="form-control"
+                            size="10"
+                            type="text"
+                            v-model="result.correct"
+                          />
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-nowrap">
+                          <a
+                            v-tooltip="__('Approve contract')"
+                            href="javascript:void(0)"
+                            class="btn"
+                            v-bind:class="{ 'btn-warning': !(result.correct*1), 'btn-secondary': (result.correct*1) }"
+                            @click="approveContract(result)"
+                          >
+                            <i class="mdi mdi-check-circle" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Finished-->
+      <div class="row" v-if="auction.finished">
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">{{ __("Auction Results") }}</div>
@@ -196,6 +358,7 @@
           <br />
         </div>
       </div>
+      <!--Bidders-->
       <div class="row">
         <div class="col-md-12">
           <div class="card">
@@ -211,6 +374,7 @@
         </div>
       </div>
     </div>
+
     <modal name="add_bidder" height="auto" :adaptive="true" width="90%" :maxWidth="maxModalWidth">
       <div class="modal-header">
         <h5 class="modal-title">
@@ -291,6 +455,13 @@ export default {
         app.auction = resp.data;
         console.log(app.auction);
         app.isLoading = false;
+        if (app.user && app.user.contragents && app.user.contragents[0]) {
+          let contr = app.user.contragents[0].id;
+          for (let r in app.auction.bidders) {
+            if (app.auction.bidders[r].id == contr) app.bidding = 1;
+          }
+          if (app.auction.contragent.id == contr) app.mine = 1;
+        }
       })
       .catch(function() {
         alert(app.__("Failed to load auction"));
@@ -309,8 +480,10 @@ export default {
       stores: [],
       products: [],
       auctionId: null,
+      bidding: 0,
       bidders: [],
       bidder: null,
+      mine: 0,
       maxModalWidth: 600,
       auction: {}
     };
@@ -396,17 +569,27 @@ export default {
       app.$modal.show("add_bidder");
     },
     listenForBroadcast() {
-      var that = this;
+      var app = this;
       Echo.channel("cross_contractru_database_every-minute").listen(
         "PerMinute",
         function(e) {
-          that.time = e.time;
+          app.time = e.time;
+          e.started.forEach(auction => {
+            if (auction.id == app.auction.id) {
+              app.auction.started = true;
+            }
+          });
+          e.started.forEach(auction => {
+            if (auction.id == app.auction.id) {
+              app.auction.finished = true;
+            }
+          });
         }
       );
       Echo.channel("cross_contractru_database_message-pushed").listen(
         "MessagePushed",
         function(e) {
-          console.log(e)
+          console.log(e);
         }
       );
     }
