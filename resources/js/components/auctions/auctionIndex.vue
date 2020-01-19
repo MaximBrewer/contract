@@ -207,10 +207,6 @@ export default {
   },
   mounted() {
     let app = this;
-    app.getMultiplicities();
-    app.getProducts();
-    app.getStores();
-    app.getFederalDistricts();
     app.isLoading = true;
     let contragent_id = app.user.contragents[0].id;
     let action = "all";
@@ -226,6 +222,10 @@ export default {
       .then(function(resp) {
         app.auctions = resp.data;
         app.isLoading = false;
+        app.getMultiplicities();
+        app.getProducts();
+        app.getStores();
+        app.getFederalDistricts();
       })
       .catch(function(resp) {
         console.log(resp);
