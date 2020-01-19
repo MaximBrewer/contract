@@ -458,7 +458,7 @@ export default {
         if (app.user && app.user.contragents && app.user.contragents[0]) {
           let contr = app.user.contragents[0].id;
           for (let r in app.auction.bidders) {
-        console.log(app.auction.bidders[r].id, contr);
+        console.log(app.auction.bidders[r], contr);
             if (app.auction.bidders[r].id == contr) app.bidding = 1;
           }
           if (app.auction.contragent.id == contr) app.mine = 1;

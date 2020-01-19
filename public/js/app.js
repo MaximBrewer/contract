@@ -4013,7 +4013,7 @@ __webpack_require__.r(__webpack_exports__);
         var contr = app.user.contragents[0].id;
 
         for (var r in app.auction.bidders) {
-          console.log(app.auction.bidders[r].id, contr);
+          console.log(app.auction.bidders[r], contr);
           if (app.auction.bidders[r].id == contr) app.bidding = 1;
         }
 
