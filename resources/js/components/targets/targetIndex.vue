@@ -4,7 +4,7 @@
       <div class="table-responsive table-hover" id="tergets">
         <div class="h2 text-center">{{ __('All Targets (Tenders)') }}</div>
         <br />
-        <table class="table table-bordered table-striped" v-if="targets.length">
+        <table class="table table-bordered" v-if="targets.length">
           <thead>
             <tr>
               <th>#</th>

@@ -11814,16 +11814,125 @@ body {
   outline: none;
 }
 
-.v-select.is-invalid .vs__dropdown-toggle {
-  border-color: #e3342f;
-}
-
 body.swal2-height-auto {
   min-height: 100%;
 }
 
 .vs__selected-options {
   flex-wrap: nowrap !important;
+}
+
+.col-xs-5th,
+.col-sm-5th,
+.col-md-5th,
+.col-lg-5th {
+  position: relative;
+  min-height: 1px;
+  padding-right: 10px;
+  padding-left: 10px;
+  width: 20%;
+  float: left;
+}
+
+.col-5-th {
+  -webkit-box-flex: 0;
+  flex: 0 0 20%;
+  max-width: 20%;
+}
+
+@media (min-width: 768px) {
+  .col-sm-5th {
+    -webkit-box-flex: 0;
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+
+@media (min-width: 992px) {
+  .col-md-5th {
+    -webkit-box-flex: 0;
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .col-lg-5th {
+    -webkit-box-flex: 0;
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .col-md-5th {
+    width: 33%;
+    float: none;
+    display: block;
+    -webkit-box-flex: 0;
+    flex: 0 0 33%;
+    max-width: 33%;
+  }
+
+  .col-md-5th.col-sm-5th {
+    width: 20%;
+    float: left;
+    -webkit-box-flex: 0;
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+
+@media only screen and (max-width: 769px) {
+  .col-md-5th {
+    width: 100%;
+    float: none;
+    display: block;
+    -webkit-box-flex: 0;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .col-md-5th.col-sm-5th {
+    width: 50%;
+    float: none;
+    display: block;
+    -webkit-box-flex: 0;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .col-md-5th {
+    width: 100%;
+    float: none;
+    display: block;
+    -webkit-box-flex: 0;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .col-md-5th.col-sm-5th {
+    width: 100%;
+    float: none;
+    display: block;
+    -webkit-box-flex: 0;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+.col-md-5th .control-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.vdatetime.is-invalid .vdatetime-input,
+.v-select.is-invalid .vs__dropdown-toggle {
+  border-color: #e3342f;
 }
 
 .tooltip {
@@ -12017,6 +12126,7 @@ body.swal2-height-auto {
   border: 1px solid rgba(60, 60, 60, 0.26);
   border-radius: 4px;
   white-space: normal;
+  min-height: calc(1.6em + 0.75rem + 2px);
 }
 
 .vs__selected-options {

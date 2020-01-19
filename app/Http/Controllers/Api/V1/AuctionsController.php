@@ -38,7 +38,7 @@ class AuctionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeManager(Request $request)
     {
 
         $request->validate([
@@ -51,6 +51,45 @@ class AuctionsController extends Controller
             "start_price" => "",
             "volume" => "",
             "step" => "",
+        ]);
+
+        $auction = Auction::create([
+            'contragent_id' => $request->post('contragent')['id'],
+            'multiplicity_id' => $request->post('multiplicity')['id'],
+            'product_id' => $request->post('product')['id'],
+            'store_id' => $request->post('store')['id'],
+            'start_at' => date('Y-m-d H:i:s', strtotime($request->post('start_at'))),
+            'finish_at' => date('Y-m-d H:i:s', strtotime($request->post('finish_at'))),
+            'comment' => $request->post('comment'),
+            'start_price' => $request->post('start_price'),
+            'volume' => $request->post('volume'),
+            'step' => $request->post('step'),
+        ]);
+
+        $auction = Auction::findOrFail($auction->id);
+        return $auction;
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+
+        $request->validate([
+            "multiplicity.id" => "required|exists:multiplicities,id",
+            "product.id" => "required|exists:products,id",
+            "store.id" => "required|exists:stores,id",
+            "start_at" => "required",
+            "finish_at" => "required|after:start_at",
+            "comment" => "",
+            "start_price" => "required",
+            "volume" => "required",
+            "step" => "required",
         ]);
 
         $auction = Auction::create([
@@ -116,6 +155,30 @@ class AuctionsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
+    {
+        $auction = Auction::findOrFail($id);
+        $auction->update([
+            'product_id' => $request->post('product')['id'],
+            'multiplicity_id' => $request->post('multiplicity')['id'],
+            'store_id' => $request->post('store')['id'],
+            'start_at' => date('Y-m-d H:i:s', strtotime($request->post('start_at'))),
+            'finish_at' => date('Y-m-d H:i:s', strtotime($request->post('finish_at'))),
+            'comment' => $request->post('comment'),
+            'start_price' => $request->post('start_price'),
+            'volume' => $request->post('volume'),
+        ]);
+        $auction = Auction::findOrFail($id);
+        return $auction;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateManager(Request $request, $id)
     {
         $auction = Auction::findOrFail($id);
         $auction->update([

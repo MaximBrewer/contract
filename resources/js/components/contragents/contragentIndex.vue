@@ -2,7 +2,7 @@
   <section>
     <div class="container-fluid">
       <div class="table-responsive" id="contragents">
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered">
           <thead>
             <tr>
               <th>{{ __('Title') }}</th>

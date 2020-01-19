@@ -3,8 +3,9 @@
     <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
     <div class="container-fluid" v-if="auctions.length">
       <div class="h2 text-center">{{ __('Upcoming auctions') }}</div>
+
       <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="col-sm-6 col-md-5th">
           <div class="form-group">
             <label class="control-label">{{ __('Federal district') }}</label>
             <v-select
@@ -16,7 +17,7 @@
             ></v-select>
           </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="col-md-5th col-sm-6">
           <div class="form-group">
             <label class="control-label">{{ __('Region') }}</label>
             <v-select
@@ -28,7 +29,7 @@
             ></v-select>
           </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="col-md-5th col-sm-6">
           <div class="form-group">
             <label class="control-label">{{ __('Product') }}</label>
             <v-select
@@ -40,7 +41,7 @@
             ></v-select>
           </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-6">
+        <div class="col-md-5th col-sm-6">
           <div class="form-group">
             <label class="control-label">{{ __('Multiplicity') }}</label>
             <v-select
@@ -52,9 +53,7 @@
             ></v-select>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 offset-md-6">
+        <div class="col-md-5th col-sm-6">
           <div class="form-group">
             <label class="control-label">{{ __('Sort by distance from store') }}</label>
             <v-select
@@ -69,7 +68,7 @@
       </div>
       <br />
       <div class="table-responsive" id="auctions">
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered">
           <thead>
             <tr>
               <th>#</th>
@@ -82,7 +81,7 @@
           </thead>
           <tbody>
             <tr v-for="auction, index in auctions" v-if="!auction.hidden">
-              <th>{{ index + 1 }}</th>
+              <th>{{ auction.id }}</th>
               <td>
                 <div v-if="auction.contragent" class="text-nowrap">
                   <strong v-if="false">{{ __('Contragent') }}:</strong>
@@ -139,8 +138,6 @@
                 </div>
               </td>
               <td>
-                <strong>{{ __('Auction comment') }}:</strong>
-                <br />
                 <span>{{ auction.comment }}</span>
               </td>
               <td>
