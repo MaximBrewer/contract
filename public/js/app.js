@@ -3803,6 +3803,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3824,6 +3842,7 @@ __webpack_require__.r(__webpack_exports__);
     });
     axios.get("/api/v1/auction/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
       app.auction = resp.data;
+      console.log(app.auction);
       app.isLoading = false;
     })["catch"](function () {
       alert(app.__("Failed to load auction"));
@@ -3860,6 +3879,14 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (resp) {
         app.auction = resp.data;
         app.$modal.hide("add_bidder");
+      });
+    },
+    delAuction: function delAuction() {
+      var app = this;
+      if (app.auction) app.$confirm(app.__("Are you sure?")).then(function () {
+        axios.get("/api/v1/auction/delete/" + app.auction.id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+          app.$router.replace("/personal/auctions");
+        });
       });
     },
     fetchBidders: function fetchBidders(search, loading) {
@@ -90689,11 +90716,56 @@ var render = function() {
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-4" }, [
               _c("div", { staticClass: "card text-center" }, [
-                _c("ul", { staticClass: "list-group list-group-flush" }, [
-                  _c("li", { staticClass: "list-group-item" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "btn-group",
+                    attrs: { role: "group", "aria-label": "Basic example" }
+                  },
+                  [
+                    _vm.user.contragents[0] &&
+                    _vm.auction.contragent &&
+                    !_vm.auction.confirmed &&
+                    _vm.user.contragents[0].id == _vm.auction.contragent.id
+                      ? _c(
+                          "a",
+                          {
+                            directives: [
+                              {
+                                name: "tooltip",
+                                rawName: "v-tooltip",
+                                value: _vm.__("Confirm auction"),
+                                expression: "__('Confirm auction')"
+                              }
+                            ],
+                            staticClass: "btn btn-primary",
+                            attrs: { href: "javascript:void(0)" },
+                            on: {
+                              click: function($event) {
+                                return _vm.confirm(_vm.auction.id)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "mdi mdi-check-circle",
+                              attrs: { "aria-hidden": "true" }
+                            })
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
                     _c(
                       "a",
                       {
+                        directives: [
+                          {
+                            name: "tooltip",
+                            rawName: "v-tooltip",
+                            value: _vm.__("Add bidder"),
+                            expression: "__('Add bidder')"
+                          }
+                        ],
                         staticClass: "btn btn-success",
                         attrs: { href: "javascript:void(0)" },
                         on: {
@@ -90702,43 +90774,78 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v(_vm._s(_vm.__("Add bidder")))]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _vm.user.contragents[0] &&
-                  _vm.auction.contragent &&
-                  _vm.user.contragents[0].id == _vm.auction.contragent.id
-                    ? _c(
-                        "li",
-                        { staticClass: "list-group-item" },
-                        [
-                          _c(
-                            "router-link",
-                            {
-                              directives: [
-                                {
-                                  name: "tooltip",
-                                  rawName: "v-tooltip",
-                                  value: _vm.__("Edit auction"),
-                                  expression: "__('Edit auction')"
-                                }
-                              ],
-                              staticClass: "btn btn-primary",
-                              attrs: {
-                                to: {
-                                  name: "editAuction",
-                                  params: { id: _vm.auction.id }
-                                }
+                      [
+                        _c("i", {
+                          staticClass: "mdi mdi-account-plus",
+                          attrs: { "aria-hidden": "true" }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm.user.contragents[0] &&
+                    _vm.auction.contragent &&
+                    _vm.user.contragents[0].id == _vm.auction.contragent.id
+                      ? _c(
+                          "router-link",
+                          {
+                            directives: [
+                              {
+                                name: "tooltip",
+                                rawName: "v-tooltip",
+                                value: _vm.__("Edit auction"),
+                                expression: "__('Edit auction')"
                               }
-                            },
-                            [_vm._v(_vm._s(_vm.__("Edit auction")))]
-                          )
-                        ],
-                        1
-                      )
-                    : _vm._e()
-                ])
+                            ],
+                            staticClass: "btn btn-dark",
+                            attrs: {
+                              to: {
+                                name: "editAuction",
+                                params: { id: _vm.auction.id }
+                              }
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "mdi mdi-pencil",
+                              attrs: { "aria-hidden": "true" }
+                            })
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.user.contragents[0] &&
+                    _vm.auction.contragent &&
+                    _vm.user.contragents[0].id == _vm.auction.contragent.id
+                      ? _c(
+                          "a",
+                          {
+                            directives: [
+                              {
+                                name: "tooltip",
+                                rawName: "v-tooltip",
+                                value: _vm.__("Delete auction"),
+                                expression: "__('Delete auction')"
+                              }
+                            ],
+                            staticClass: "btn btn-danger",
+                            attrs: { href: "javascript:void(0)" },
+                            on: {
+                              click: function($event) {
+                                return _vm.delAuction(_vm.auction.id)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "mdi mdi-delete",
+                              attrs: { "aria-hidden": "true" }
+                            })
+                          ]
+                        )
+                      : _vm._e()
+                  ],
+                  1
+                )
               ]),
               _vm._v(" "),
               _c("br")
@@ -90887,6 +90994,7 @@ var render = function() {
                       ]
                     )
                   ]),
+                  _vm._v(" "),
                   _c("br")
                 ])
               ])

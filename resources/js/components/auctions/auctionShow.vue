@@ -85,25 +85,42 @@
       <div class="row">
         <div class="col-md-4">
           <div class="card text-center">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                <a
-                  href="javascript:void(0)"
-                  class="btn btn-success"
-                  @click="showPopupAddBidder(auction.id)"
-                >{{ __('Add bidder') }}</a>
-              </li>
-              <li
-                class="list-group-item"
-                v-if="user.contragents[0] && auction.contragent && user.contragents[0].id == auction.contragent.id"
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <a
+                v-tooltip="__('Confirm auction')"
+                href="javascript:void(0)"
+                v-if="user.contragents[0] && auction.contragent && !auction.confirmed && user.contragents[0].id == auction.contragent.id"
+                class="btn btn-primary"
+                @click="confirm(auction.id)"
               >
-                <router-link
-                  v-tooltip="__('Edit auction')"
-                  :to="{name: 'editAuction', 'params': {'id': auction.id}}"
-                  class="btn btn-primary"
-                >{{ __('Edit auction') }}</router-link>
-              </li>
-            </ul>
+                <i class="mdi mdi-check-circle" aria-hidden="true"></i>
+              </a>
+              <a
+                v-tooltip="__('Add bidder')"
+                href="javascript:void(0)"
+                class="btn btn-success"
+                @click="showPopupAddBidder(auction.id)"
+              >
+                <i class="mdi mdi-account-plus" aria-hidden="true"></i>
+              </a>
+              <router-link
+                v-tooltip="__('Edit auction')"
+                :to="{name: 'editAuction', 'params': {'id': auction.id}}"
+                v-if="user.contragents[0] && auction.contragent && user.contragents[0].id == auction.contragent.id"
+                class="btn btn-dark"
+              >
+                <i class="mdi mdi-pencil" aria-hidden="true"></i>
+              </router-link>
+              <a
+                v-tooltip="__('Delete auction')"
+                href="javascript:void(0)"
+                class="btn btn-danger"
+                v-if="user.contragents[0] && auction.contragent && user.contragents[0].id == auction.contragent.id"
+                @click="delAuction(auction.id)"
+              >
+                <i class="mdi mdi-delete" aria-hidden="true"></i>
+              </a>
+            </div>
           </div>
           <br />
         </div>
@@ -175,7 +192,8 @@
                 </tbody>
               </table>
             </div>
-          </div><br>
+          </div>
+          <br />
         </div>
       </div>
       <div class="row">
@@ -271,6 +289,7 @@ export default {
       )
       .then(function(resp) {
         app.auction = resp.data;
+        console.log(app.auction);
         app.isLoading = false;
       })
       .catch(function() {
@@ -318,6 +337,24 @@ export default {
             app.auction = resp.data;
             app.$modal.hide("add_bidder");
           });
+    },
+    delAuction() {
+      var app = this;
+      if (app.auction)
+        app.$confirm(app.__("Are you sure?")).then(() => {
+          axios
+            .get(
+              "/api/v1/auction/delete/" +
+                app.auction.id +
+                "?csrf_token=" +
+                window.csrf_token +
+                "&api_token=" +
+                window.api_token
+            )
+            .then(function(resp) {
+              app.$router.replace("/personal/auctions");
+            });
+        });
     },
     fetchBidders(search, loading) {
       var app = this;
