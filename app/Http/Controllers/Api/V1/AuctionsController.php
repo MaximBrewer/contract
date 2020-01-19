@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \App\Auction;
 use Illuminate\Support\Facades\Auth;
-use \App\Store;
+use \App\Contragent;
 
 class AuctionsController extends Controller
 {
@@ -18,20 +18,18 @@ class AuctionsController extends Controller
 
     public function index(Request $request, $action = null)
     {
-        
-        switch($action){
+
+        switch ($action) {
             case "all":
                 return Auction::all();
-            break;
+                break;
             case "my":
                 return Auction::where('contragent_id', Auth::user()->contragents[0]->id)->get();
-            break;
+                break;
             case "bid":
                 return Auth::user()->contragents[0]->auctions;
-            break;
-
+                break;
         }
-
     }
 
     /**
@@ -42,17 +40,17 @@ class AuctionsController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $request->validate([
-            "multiplicity.id"=> "required|exists:multiplicities,id",
-            "product.id"=> "required|exists:products,id",
-            "store.id"=> "required|exists:stores,id",
-            "start_at"=> "",
-            "finish_at"=> "",
-            "comment"=> "",
-            "start_price"=> "",
-            "volume"=> "",
-            "step"=> "",
+            "multiplicity.id" => "required|exists:multiplicities,id",
+            "product.id" => "required|exists:products,id",
+            "store.id" => "required|exists:stores,id",
+            "start_at" => "",
+            "finish_at" => "",
+            "comment" => "",
+            "start_price" => "",
+            "volume" => "",
+            "step" => "",
         ]);
 
         $auction = Auction::create([
@@ -93,9 +91,8 @@ class AuctionsController extends Controller
     public function bid(Request $request, $action, $id)
     {
 
-        if(count(Auth::user()->contragents)) Auth::user()->contragents[0]->auctions()->attach($id);
+        if (count(Auth::user()->contragents)) Auth::user()->contragents[0]->auctions()->attach($id);
         return $this->index($request, $action);
-
     }
 
     /**
@@ -107,10 +104,8 @@ class AuctionsController extends Controller
      */
     public function unbid(Request $request, $action, $id)
     {
-
-        if(count(Auth::user()->contragents)) Auth::user()->contragents[0]->auctions()->detach($id);
+        if (count(Auth::user()->contragents)) Auth::user()->contragents[0]->auctions()->detach($id);
         return $this->index($request, $action);
-
     }
 
     /**
@@ -135,6 +130,22 @@ class AuctionsController extends Controller
             'volume' => $request->post('volume'),
         ]);
         $auction = Auction::findOrFail($id);
+        return $auction;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addBidder(Request $request)
+    {
+        $auction = Auction::findOrFail($request->post('auction'));
+        $contragent = Contragent::findOrFail($request->post('bidder'));
+        $contragent->auctions()->attach($auction->id);
+        $auction = Auction::findOrFail($request->post('auction'));
         return $auction;
     }
 

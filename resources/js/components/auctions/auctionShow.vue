@@ -83,7 +83,17 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-4">
+          <div class="card text-center">
+            <a
+              href="javascript:void(0)"
+              class="btn btn-success"
+              @click="showPopupAddBidder(auction.id)"
+            >{{ __('Add bidder') }}</a>
+          </div>
+          <br />
+        </div>
+        <div class="col-md-8">
           <div class="card">
             <div class="card-header">{{ __('Auction comment') }}</div>
             <ul class="list-group list-group-flush">
@@ -108,6 +118,44 @@
         </div>
       </div>
     </div>
+    <modal name="add_bidder" height="auto" :adaptive="true" width="90%" :maxWidth="maxModalWidth">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <strong>{{ __('Auction bidder add') }}</strong>
+        </h5>
+        <button
+          type="button"
+          class="close"
+          @click="$modal.hide('add_bidder')"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <v-select
+            max-height="50px"
+            :options="bidders"
+            label="title"
+            @search="fetchBidders"
+            v-model="bidder"
+          ></v-select>
+          <br />
+          <br />
+          <br />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-success"
+          data-dismiss="modal"
+          @click="$modal.hide('target');addBidder()"
+        >{{ __('Add bidder') }}</button>
+      </div>
+    </modal>
   </section>
 </template>
 <script>
@@ -116,7 +164,6 @@ import "vue-loading-overlay/dist/vue-loading.css";
 import { Datetime } from "vue-datetime";
 import "vue-datetime/dist/vue-datetime.css";
 import vSelect from "vue-select";
-import "vue-select/dist/vue-select.css";
 export default {
   components: {
     vSelect: vSelect,
@@ -128,6 +175,16 @@ export default {
     app.isLoading = true;
     let id = app.$route.params.id;
     app.auctionId = id;
+    axios
+      .get(
+        "/api/v1/contragents?search=csrf_token=" +
+          window.csrf_token +
+          "&api_token=" +
+          window.api_token
+      )
+      .then(function(resp) {
+        app.bidders = resp.data;
+      });
     axios
       .get(
         "/api/v1/auction/" +
@@ -158,6 +215,9 @@ export default {
       stores: [],
       products: [],
       auctionId: null,
+      bidders: [],
+      bidder: null,
+      maxModalWidth: 600,
       auction: {}
     };
   },
@@ -165,6 +225,46 @@ export default {
     this.listenForBroadcast();
   },
   methods: {
+    addBidder() {
+      var app = this;
+      if (app.auction && app.bidder)
+        axios
+          .post(
+            "/api/v1/auctions/add_bidder?csrf_token=" +
+              window.csrf_token +
+              "&api_token=" +
+              window.api_token,
+            {
+              auction: app.auction.id,
+              bidder: app.bidder.id
+            }
+          )
+          .then(function(resp) {
+            app.auction = resp.data;
+            app.$modal.hide('add_bidder')
+          });
+    },
+    fetchBidders(search, loading) {
+      var app = this;
+      loading(true);
+      axios
+        .get(
+          "/api/v1/contragents?search=" +
+            search +
+            "csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token
+        )
+        .then(function(resp) {
+          app.bidders = resp.data;
+          loading(false);
+        });
+    },
+    showPopupAddBidder() {
+      var app = this;
+      app.$modal.show("add_bidder");
+    },
     listenForBroadcast() {
       var that = this;
       Echo.channel("cross_contractru_database_every-minute").listen(

@@ -61,7 +61,6 @@
   </div>
 </template>
 <script>
-import "vue-select/dist/vue-select.css";
 import "vue-loading-overlay/dist/vue-loading.css";
 
 import Loading from "vue-loading-overlay";

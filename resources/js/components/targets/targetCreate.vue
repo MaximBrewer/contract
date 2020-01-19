@@ -72,7 +72,6 @@
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 import vSelect from "vue-select";
-import "vue-select/dist/vue-select.css";
 export default {
   components: {
     vSelect: vSelect,

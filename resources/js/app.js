@@ -14,7 +14,6 @@ import moment from "moment";
 import VueFlashMessage from "vue-flash-message";
 import "vue-loading-overlay/dist/vue-loading.css";
 import "vue-datetime/dist/vue-datetime.css";
-import "vue-select/dist/vue-select.css";
 
 import { VTooltip, VPopover, VClosePopover } from "v-tooltip";
 
