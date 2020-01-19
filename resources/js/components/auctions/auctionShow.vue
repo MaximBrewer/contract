@@ -89,7 +89,7 @@
               <a
                 v-tooltip="__('Confirm auction')"
                 href="javascript:void(0)"
-                v-if="mine"
+                v-if="mine && !auction.confirmed"
                 class="btn btn-primary"
                 @click="confirm(auction.id)"
               >

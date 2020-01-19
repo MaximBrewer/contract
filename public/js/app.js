@@ -90960,7 +90960,7 @@ var render = function() {
                     attrs: { role: "group", "aria-label": "Basic example" }
                   },
                   [
-                    _vm.mine
+                    _vm.mine && !_vm.auction.confirmed
                       ? _c(
                           "a",
                           {
