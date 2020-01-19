@@ -32,6 +32,18 @@ class ContragentsController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $validator = Validator::make($request->all(), [
+            "title" => "required|min:3",
+            "fio" => "required|min:3",
+            "phone" => "required|min:6",
+            "legal_address" => "required|min:3",
+            "inn" => "required|numeric|min:10|max:12",
+            "federal_district.id" => "required|exists:federal_districts,id",
+            "region.id" => "required|exists:regions,id",
+        ]);
+
+        $validator->validate();
 
         $contragent = Contragent::create($request->all());
         $contragent->types()->sync($request->all()['typeIds']);

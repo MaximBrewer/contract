@@ -3,85 +3,240 @@
     <div class="container">
       <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
       <form v-on:submit="saveForm()">
-        <div class="form-group">
-          <label class="control-label">{{ __('Contragent title') }}</label>
-          <input type="text" v-model="contragent.title" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Contragent federal district') }}</label>
-          <v-select label="title" :options="federalDistricts" v-model="contragent.federal_district"></v-select>
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Contragent region') }}</label>
-          <v-select label="title" :options="regions" v-model="contragent.region"></v-select>
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Contragent type') }}</label>
-          <v-select label="title" :options="types" v-model="contragent.types" :multiple="true"></v-select>
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Contragent TIN') }}</label>
-          <input type="text" v-model="contragent.inn" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Contragent Legal address') }}</label>
-          <input type="text" v-model="contragent.legal_address" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Contragent contact') }}</label>
-          <input type="text" v-model="contragent.fio" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Contragent phone') }}</label>
-          <input type="text" v-model="contragent.phone" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Contragent stores') }}</label>
-          <div class="stores">
-            <ul>
-              <li class="store" v-for="store, index in contragent.stores">
-                <div class="form-group">
-                  <input type="hidden" v-model="contragent.stores[index].id" class="form-control" />
-                  <label class="control-label">{{ __('Store coords #', {store: index + 1}) }}</label>
-                  <input type="text" v-model="contragent.stores[index].coords" class="form-control" />
-                  <label class="control-label">{{ __('Store address #', {store: index + 1}) }}</label>
-                  <input
-                    type="text"
-                    v-model="contragent.stores[index].address"
-                    class="form-control"
-                  />
-                  <label
-                    class="control-label"
-                  >{{ __('Store federal district #', {store: index + 1}) }}</label>
-                  <v-select
-                    label="title"
-                    :options="federalDistricts"
-                    v-model="contragent.stores[index].federal_district"
-                  ></v-select>
-                  <label class="control-label">{{ __('Store region #', {store: index + 1}) }}</label>
-                  <v-select
-                    label="title"
-                    :options="regions"
-                    v-model="contragent.stores[index].region"
-                  ></v-select>
-                  <br />
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">{{ __('Contragent title') }}</label>
+              <input
+                v-bind:class="{ 'is-invalid':  errors.title }"
+                type="text"
+                v-model="contragent.title"
+                class="form-control"
+                ref="title"
+              />
+              <div role="alert" class="invalid-feedback" v-if="errors.title">
+                <span v-for="error in errors.title">{{ error }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">{{ __('Contragent federal district') }}</label>
+              <v-select
+                v-bind:class="{ 'is-invalid': errors['federal_district.id'] }"
+                label="title"
+                :options="federalDistricts"
+                v-model="contragent.federal_district"
+              ></v-select>
+              <div role="alert" class="invalid-feedback" v-if="errors['federal_district.id']">
+                <span v-for="error in errors['federal_district.id']">{{ error }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">{{ __('Contragent region') }}</label>
+              <v-select
+                v-bind:class="{ 'is-invalid': errors['region.id'] }"
+                label="title"
+                :options="regions"
+                v-model="contragent.region"
+                ref="region"
+              ></v-select>
+              <div role="alert" class="invalid-feedback" v-if="errors['region.id']">
+                <span v-for="error in errors['region.id']">{{ error }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">{{ __('Contragent type') }}</label>
+              <v-select
+                v-bind:class="{ 'is-invalid': errors['types.id'] }"
+                label="title"
+                :options="types"
+                v-model="contragent.types"
+                :multiple="true"
+                ref="types"
+              ></v-select>
+              <div role="alert" class="invalid-feedback" v-if="errors['types.id']">
+                <span v-for="error in errors['types.id']">{{ error }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">{{ __('Contragent TIN') }}</label>
+              <input
+                v-bind:class="{ 'is-invalid': errors.inn }"
+                type="text"
+                v-model="contragent.inn"
+                class="form-control"
+                ref="inn"
+              />
+              <div role="alert" class="invalid-feedback" v-if="errors.inn">
+                <span v-for="error in errors.inn">{{ error }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">{{ __('Contragent Legal address') }}</label>
+              <input
+                v-bind:class="{ 'is-invalid': errors.legal_address }"
+                type="text"
+                v-model="contragent.legal_address"
+                class="form-control"
+                ref="legal_address"
+              />
+              <div role="alert" class="invalid-feedback" v-if="errors.legal_address">
+                <span v-for="error in errors.legal_address">{{ error }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">{{ __('Contragent contact') }}</label>
+              <input
+                v-bind:class="{ 'is-invalid': errors.fio }"
+                type="text"
+                v-model="contragent.fio"
+                class="form-control"
+                ref="fio"
+              />
+              <div role="alert" class="invalid-feedback" v-if="errors.fio">
+                <span v-for="error in errors.fio">{{ error }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">{{ __('Contragent phone') }}</label>
+              <input
+                v-bind:class="{ 'is-invalid': errors.phone }"
+                type="text"
+                v-model="contragent.phone"
+                class="form-control"
+                ref="phone"
+              />
+              <div role="alert" class="invalid-feedback" v-if="errors.phone">
+                <span v-for="error in errors.phone">{{ error }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label">{{ __('Contragent stores') }}</label>
+              <div class="stores">
+                <ul>
+                  <li class="store" v-for="store, index in contragent.stores">
+                    <input type="hidden" v-model="contragent.stores[index].id" class="form-control" />
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            class="control-label"
+                          >{{ __('Store coords #', {store: index + 1}) }}</label>
+                          <input
+                            type="text"
+                            v-bind:class="{ 'is-invalid': errors.stores && errors.stores[index] && errors.stores[index].coords }"
+                            v-model="contragent.stores[index].coords"
+                            class="form-control"
+                            :ref="'stores_'+index+'_coords'"
+                          />
+                          <div
+                            role="alert"
+                            class="invalid-feedback"
+                            v-if="errors.stores && errors.stores[index] && errors.stores[index].coords"
+                          >
+                            <span v-for="error in errors.stores[index].coords">{{ error }}</span>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label
+                            class="control-label"
+                          >{{ __('Store address #', {store: index + 1}) }}</label>
+                          <input
+                            v-bind:class="{ 'is-invalid': errors.stores && errors.stores[index] && errors.stores[index].address }"
+                            type="text"
+                            v-model="contragent.stores[index].address"
+                            class="form-control"
+                            :ref="'stores_'+index+'_address'"
+                          />
+                          <div
+                            role="alert"
+                            class="invalid-feedback"
+                            v-if="errors.stores && errors.stores[index] && errors.stores[index].address"
+                          >
+                            <span v-for="error in errors.stores[index].address">{{ error }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            class="control-label"
+                          >{{ __('Store federal district #', {store: index + 1}) }}</label>
+                          <v-select
+                            v-bind:class="{ 'is-invalid': errors.stores && errors.stores[index] && errors.stores[index]['federal_district.id'] }"
+                            label="title"
+                            :options="federalDistricts"
+                            v-model="contragent.stores[index].federal_district"
+                            :ref="'stores_'+index+'_federal_district'"
+                          ></v-select>
+                          <div
+                            role="alert"
+                            class="invalid-feedback"
+                            v-if="errors.stores && errors.stores[index] && errors.stores[index]['federal_district.id']"
+                          >
+                            <span
+                              v-for="error in errors.stores[index]['federal_district.id']"
+                            >{{ error }}</span>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label
+                            class="control-label"
+                          >{{ __('Store region #', {store: index + 1}) }}</label>
+                          <v-select
+                            v-bind:class="{ 'is-invalid': errors.stores && errors.stores[index] && errors.stores[index]['region.id'] }"
+                            label="title"
+                            :options="federalDistricts"
+                            v-model="contragent.stores[index].region"
+                            :ref="'stores_'+index+'_region'"
+                          ></v-select>
+                          <div
+                            role="alert"
+                            class="invalid-feedback"
+                            v-if="errors.stores && errors.stores[index] && errors.stores[index]['region.id']"
+                          >
+                            <span v-for="error in errors.stores[index]['region.id']">{{ error }}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 text-right">
+                        <a
+                          href="javascript:void(0)"
+                          class="btn btn-danger btn-sm"
+                          v-on:click="deleteStore(index)"
+                        >{{ __('Delete store') }}</a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="text-right">
                   <a
                     href="javascript:void(0)"
-                    class="btn btn-danger btn-sm"
-                    v-on:click="deleteStore(index)"
-                  >{{ __('Delete store') }}</a>
+                    class="btn btn-primary btn-sm"
+                    v-on:click="addStore"
+                  >{{ __('Add store') }}</a>
                 </div>
-              </li>
-            </ul>
-            <a
-              href="javascript:void(0)"
-              class="btn btn-primary btn-sm"
-              v-on:click="addStore"
-            >{{ __('Add store') }}</a>
+              </div>
+            </div>
+            <div class="form-group text-right">
+              <button class="btn btn-primary">{{ __('Save') }}</button>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <button class="btn btn-primary btn-lg">{{ __('Save') }}</button>
         </div>
       </form>
     </div>
@@ -126,12 +281,8 @@ export default {
       types: [],
       regions: [],
       contragentId: null,
-      contragent: {
-        name: "",
-        address: "",
-        website: "",
-        email: ""
-      }
+      contragent: {},
+      errors:{}
     };
   },
   methods: {
@@ -208,7 +359,7 @@ export default {
         .then(function(resp) {
           app.contragent = resp.data;
           app.$router.replace(
-            "/contragents/edit/" +
+            "/personal/contragents/show/" +
               app.contragent.id +
               "?csrf_token=" +
               window.csrf_token +
@@ -218,9 +369,8 @@ export default {
           app.isLoading = false;
           return true;
         })
-        .catch(function(resp) {
-          console.log(resp);
-          alert(app.__("Failed to create contragent"));
+        .catch(function(errors) {
+          app.errors = errors.response.data.errors;
           app.isLoading = false;
         });
     }

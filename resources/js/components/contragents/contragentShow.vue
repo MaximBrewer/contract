@@ -1,38 +1,56 @@
 <template>
-  <div class="container">
-    <section class="contragent-edit-wrapper">
+  <section class="contragent-edit-wrapper">
+    <div class="container">
       <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
-      <div class="form-group">
-        <label class="control-label">{{ __('Contragent title') }}</label>
-        <div class="form-control">{{ contragent.title }}</div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header" v-if="contragent.title">{{ contragent.title }}</div>
+            <ul class="list-group list-group-flush">
+              <li
+                class="list-group-item"
+                v-if="contragent.federal_district && contragent.federal_district.title"
+              >{{ __('Contragent region') }}: {{ contragent.federal_district.title }}</li>
+              <li
+                class="list-group-item"
+                v-if="contragent.region && contragent.region.title"
+              >{{ __('Contragent federal district') }}: {{ contragent.region.title }}</li>
+              <li class="list-group-item" v-if="contragent.types">{{ __('Contragent type') }}: 
+                <span v-for="type, index in contragent.types">{{ type.title }}</span>
+              </li>
+            </ul>
+          </div>
+          <br />
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <ul class="list-group list-group-flush">
+              <li
+                class="list-group-item"
+                v-if="contragent.legal_address"
+              >{{ contragent.legal_address }}</li>
+              <li
+                class="list-group-item"
+                v-if="contragent.fio"
+              >{{ contragent.fio }}</li>
+              <li
+                class="list-group-item"
+                v-if="contragent.phone"
+              >{{ contragent.phone }}</li>
+              <li
+                class="list-group-item"
+                v-if="contragent.inn"
+              >{{ __('Contragent TIN') }}: {{ contragent.inn }}</li>
+            </ul>
+          </div>
+          <br />
+        </div>
       </div>
-      <div class="form-group">
-        <label class="control-label">{{ __('Contragent federal district') }}</label>
-        <div class="form-control">{{ contragent.federal_district.title }}</div>
-      </div>
-      <div class="form-group">
-        <label class="control-label">{{ __('Contragent region') }}</label>
-        <div class="form-control">{{ contragent.region.title }}</div>
-      </div>
-      <div class="form-group">
-        <label class="control-label">{{ __('Contragent type') }}</label>
-        <div class="form-control" v-for="type, index in contragent.types">{{ type.title }}</div>
-      </div>
+
       <div class="form-group">
         <label class="control-label">{{ __('Contragent TIN') }}</label>
         <div class="form-control">{{ contragent.inn }}</div>
-      </div>
-      <div class="form-group">
-        <label class="control-label">{{ __('Contragent Legal address') }}</label>
-        <div class="form-control">{{ contragent.legal_address }}</div>
-      </div>
-      <div class="form-group">
-        <label class="control-label">{{ __('Contragent contact') }}</label>
-        <div class="form-control">{{ contragent.fio }}</div>
-      </div>
-      <div class="form-group">
-        <label class="control-label">{{ __('Contragent phone') }}</label>
-        <div class="form-control">{{ contragent.phone }}</div>
       </div>
       <div class="form-group">
         <label class="control-label">{{ __('Contragent stores') }}</label>
@@ -57,8 +75,8 @@
       </div>
       <star-rating v-model="contragent.rating"></star-rating>
       <comment></comment>
-    </section>
-  </div>
+    </div>
+  </section>
 </template>
 <script>
 import "vue-loading-overlay/dist/vue-loading.css";

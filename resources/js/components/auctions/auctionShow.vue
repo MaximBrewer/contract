@@ -117,6 +117,67 @@
           <br />
         </div>
       </div>
+      <div class="row" v-if="auction.results && auction.results.length">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">{{ __("Auction Results") }}</div>
+            <div class="table-responsive" id="auction_results">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>{{ __('Contragent') }}</th>
+                    <th>{{ __('Took part') }}</th>
+                    <th>{{ __('Made bets') }}</th>
+                    <th>{{ __('Volume') }}</th>
+                    <th>{{ __('Price') }}</th>
+                    <th>{{ __('Correct') }}</th>
+                    <th>{{ __('Time') }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="result, index in auction.results">
+                    <td>
+                      <div v-if="result.contragent" class="text-nowrap">
+                        <div class="h6">{{ result.contragent.title }}</div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="text-nowrap">
+                        <span>{{ result.took_part ? __("Yes") : __("No") }}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="text-nowrap">
+                        <span>{{ result.can_bet ? __("Yes") : __("No") }}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="text-nowrap">
+                        <span>{{ result.volume }}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="text-nowrap">
+                        <span>{{ result.price }}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="text-nowrap">
+                        <span>{{ result.correct }}</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="text-nowrap">
+                        <span>{{ result.created_at | formatDateTime }}</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div><br>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-12">
           <div class="card">

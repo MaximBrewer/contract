@@ -162,5 +162,10 @@
     "Go to auction page": "Перейти на страницу аукциона",
 	"Sort by distance from store": "Сортировать по удаленности от склада",
 	"Edit auction": "Обновить аукцион",
-	"legal address": "Юридический адрес"
+	"Auction Results": "Результаты аукциона",
+	"Took part": "Участвовал",
+	"Made bets": "Мог делать ставки",
+	"Price": "Цена",
+	"Correct": "Корректировка"
+
 }

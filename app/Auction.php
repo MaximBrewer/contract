@@ -51,6 +51,7 @@ class Auction extends Model
         $this->product;
         $this->multiplicity;
         $this->contragent;
+        $this->results;
         return true;
     }
     
@@ -62,6 +63,11 @@ class Auction extends Model
     public function store()
     {
         return $this->belongsTo('App\Store');
+    }
+    
+    public function results()
+    {
+        return $this->hasMany('App\Result');
     }
     
     public function multiplicity()
@@ -85,7 +91,6 @@ class Auction extends Model
         foreach($contragents as $contragent) $cAgents[$contragent->id] = ['title' => $contragent->title];
         return $cAgents;
         
-
     }
     
     public function getBidderAttribute()

@@ -11,6 +11,7 @@ use \App\Target;
 use Illuminate\Validation\Rule;
 use \App\Store;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\AuctionResource;
 
 
 class AuctionsController extends Controller

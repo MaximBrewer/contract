@@ -15,6 +15,13 @@ class CreateResultsTable extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('contragent_id');
+            $table->integer('auction_id');
+            $table->boolean('took_part');
+            $table->boolean('can_bet');
+            $table->decimal('price');
+            $table->integer('volume');
+            $table->decimal('correct');
             $table->timestamps();
         });
     }
