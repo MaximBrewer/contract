@@ -300,7 +300,7 @@ class AuctionsController extends Controller
 
         $freeVolume = $auction->volume;
 
-        $auctionBets = Bet::where('auction_id', $r->post('auction'))->orderBy('price', 'desc')->orderBy('created_at', 'asc')->get();
+        $auctionBets = (array)Bet::where('auction_id', $r->post('auction'))->orderBy('price', 'desc')->orderBy('created_at', 'asc')->get();
 
 
         foreach ($auctionBets as $ke => $auctionBet) {
