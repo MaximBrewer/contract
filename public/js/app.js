@@ -4013,13 +4013,14 @@ __webpack_require__.r(__webpack_exports__);
         var contr = app.user.contragents[0].id;
 
         for (var r in app.auction.bidders) {
+          console.log(app.auction.bidders[r].id, contr);
           if (app.auction.bidders[r].id == contr) app.bidding = 1;
         }
 
         if (app.auction.contragent.id == contr) app.mine = 1;
       }
 
-      console.log(app.auction.bidders, app.bidding);
+      console.log(app.mine, app.bidding);
     })["catch"](function () {
       alert(app.__("Failed to load auction"));
       app.isLoading = false;
