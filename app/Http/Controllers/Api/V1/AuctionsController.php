@@ -305,6 +305,8 @@ class AuctionsController extends Controller
 
         foreach ($auctionBets as $ke => $auctionBet) {
 
+        return $auctionBet;
+
             if ($newBet['price'] > $auctionBet['price']) {
                 array_splice($auctionBets, $ke, 0, [$newBet]);
                 break;
