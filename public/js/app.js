@@ -3554,558 +3554,9 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/auctions/auctionShow.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
-/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-datetime */ "./node_modules/vue-datetime/dist/vue-datetime.js");
-/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_datetime__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-datetime/dist/vue-datetime.css */ "./node_modules/vue-datetime/dist/vue-datetime.css");
-/* harmony import */ var vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_4__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    vSelect: vue_select__WEBPACK_IMPORTED_MODULE_4___default.a,
-    Datetime: vue_datetime__WEBPACK_IMPORTED_MODULE_2__["Datetime"],
-    Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default.a
-  },
-  mounted: function mounted() {
-    var app = this;
-    app.isLoading = true;
-    var id = app.$route.params.id;
-    app.auctionId = id;
-    axios.get("/api/v1/contragents?search=csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-      app.bidders = resp.data;
-    });
-    axios.get("/api/v1/auction/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-      app.auction = resp.data;
-      app.isLoading = false;
-
-      if (app.user && app.user.contragents && app.user.contragents[0]) {
-        var contr = app.user.contragents[0].id;
-
-        for (var r in app.auction.bidders) {
-          if (app.auction.bidders[r].id == contr) app.bidding = 1;
-        }
-
-        if (app.auction.contragent.id == contr) app.mine = 1;
-      }
-    })["catch"](function () {
-      alert(app.__("Failed to load auction"));
-      app.isLoading = false;
-    });
-  },
-  data: function data() {
-    return {
-      time: window.document.querySelector('meta[name="server-time"]').content,
-      isLoading: true,
-      onCancel: false,
-      fullPage: true,
-      multiplicities: [],
-      contragents: [],
-      stores: [],
-      products: [],
-      auctionId: null,
-      bidding: 0,
-      bidders: [],
-      bidder: null,
-      mine: 0,
-      maxModalWidth: 600,
-      auction: {}
-    };
-  },
-  created: function created() {
-    this.listenForBroadcast();
-  },
-  methods: {
-    addBidder: function addBidder() {
-      var app = this;
-      if (app.auction && app.bidder) axios.post("/api/v1/auctions/add_bidder?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
-        auction: app.auction.id,
-        bidder: app.bidder.id
-      }).then(function (resp) {
-        app.auction = resp.data;
-        app.$modal.hide("add_bidder");
-      });
-    },
-    delAuction: function delAuction() {
-      var app = this;
-      if (app.auction) app.$confirm(app.__("Are you sure?")).then(function () {
-        axios.get("/api/v1/auction/delete/" + app.auction.id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-          app.$router.replace("/personal/auctions");
-        });
-      });
-    },
-    confirm: function confirm() {
-      var app = this;
-      if (app.auction) app.$confirm(app.__("Are you sure?")).then(function () {
-        axios.get("/api/v1/auction/confirm/" + app.auction.id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-          app.auction = resp.data;
-        });
-      });
-    },
-    fetchBidders: function fetchBidders(search, loading) {
-      var app = this;
-      loading(true);
-      axios.get("/api/v1/contragents?search=" + search + "csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.bidders = resp.data;
-        loading(false);
-      });
-    },
-    showPopupAddBidder: function showPopupAddBidder() {
-      var app = this;
-      app.$modal.show("add_bidder");
-    },
-    listenForBroadcast: function listenForBroadcast() {
-      var app = this;
-      Echo.channel("cross_contractru_database_every-minute").listen("PerMinute", function (e) {
-        app.time = e.time;
-        e.started.forEach(function (auction) {
-          if (auction.id == app.auction.id) {
-            app.auction.started = true;
-          }
-        });
-        e.started.forEach(function (auction) {
-          if (auction.id == app.auction.id) {
-            app.auction.finished = true;
-          }
-        });
-      });
-      Echo.channel("cross_contractru_database_message-pushed").listen("MessagePushed", function (e) {
-        console.log(e);
-      });
-    }
-  }
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/maksimpivovarov/Projects/contract/resources/js/components/auctions/auctionShow.vue: Unexpected token (625:0)\n\n\u001b[0m \u001b[90m 623 | \u001b[39m    }\u001b[0m\n\u001b[0m \u001b[90m 624 | \u001b[39m  }\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 625 | \u001b[39m}\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 626 | \u001b[39m\u001b[0m\n    at Parser.raise (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:7012:17)\n    at Parser.unexpected (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:8405:16)\n    at Parser.parseExprAtom (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:9661:20)\n    at Parser.parseExprSubscripts (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:9237:23)\n    at Parser.parseMaybeUnary (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:9217:21)\n    at Parser.parseExprOps (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:9083:23)\n    at Parser.parseMaybeConditional (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:9056:23)\n    at Parser.parseMaybeAssign (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:9015:21)\n    at Parser.parseExpression (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:8965:23)\n    at Parser.parseStatementContent (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:10819:23)\n    at Parser.parseStatement (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:10690:17)\n    at Parser.parseBlockOrModuleBlockBody (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:11266:25)\n    at Parser.parseBlockBody (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:11253:10)\n    at Parser.parseTopLevel (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:10621:10)\n    at Parser.parse (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:12131:10)\n    at parse (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:12182:38)\n    at parser (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/core/lib/transformation/normalize-file.js:187:34)\n    at normalizeFile (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/core/lib/transformation/normalize-file.js:113:11)\n    at runSync (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/core/lib/transformation/index.js:44:43)\n    at runAsync (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/core/lib/transformation/index.js:35:14)\n    at /Users/maksimpivovarov/Projects/contract/node_modules/@babel/core/lib/transform.js:34:34\n    at processTicksAndRejections (internal/process/task_queues.js:75:11)");
 
 /***/ }),
 
@@ -91073,77 +90524,128 @@ var render = function() {
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-md-4" }, [
-                            _c("div", { staticClass: "card text-center" }, [
-                              _c("div", { staticClass: "card-header" }, [
-                                _vm._v(_vm._s(_vm.__("Auction start")))
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", { staticClass: "control-label" }, [
+                                _vm._v(_vm._s(_vm.__("Auction Volume")))
                               ]),
                               _vm._v(" "),
-                              _c(
-                                "ul",
-                                { staticClass: "list-group list-group-flush" },
-                                [
-                                  _c("li", { staticClass: "list-group-item" }, [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm._f("formatDateTime")(
-                                          _vm.auction.start_at
-                                        )
-                                      )
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.bid.volume,
+                                    expression: "bid.volume"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: { "is-invalid": _vm.errors.volume },
+                                attrs: { type: "number" },
+                                domProps: { value: _vm.bid.volume },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.bid,
+                                      "volume",
+                                      $event.target.value
                                     )
-                                  ])
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("br")
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.volume
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass: "invalid-feedback",
+                                      attrs: { role: "alert" }
+                                    },
+                                    _vm._l(_vm.errors.volume, function(
+                                      error,
+                                      index
+                                    ) {
+                                      return _c("strong", { key: index }, [
+                                        _vm._v(_vm._s(error))
+                                      ])
+                                    }),
+                                    0
+                                  )
+                                : _vm._e()
+                            ])
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-md-4" }, [
-                            _c("div", { staticClass: "card text-center" }, [
-                              _c("div", { staticClass: "card-header" }, [
-                                _vm._v(_vm._s(_vm.__("During time")))
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", { staticClass: "control-label" }, [
+                                _vm._v(_vm._s(_vm.__("Price")))
                               ]),
                               _vm._v(" "),
-                              _c(
-                                "ul",
-                                { staticClass: "list-group list-group-flush" },
-                                [
-                                  _c("li", { staticClass: "list-group-item" }, [
-                                    _vm._v(
-                                      _vm._s(_vm._f("formatDateTime")(_vm.time))
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.bid.price,
+                                    expression: "bid.price"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                class: { "is-invalid": _vm.errors.price },
+                                attrs: { type: "number" },
+                                domProps: { value: _vm.bid.price },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.bid,
+                                      "price",
+                                      $event.target.value
                                     )
-                                  ])
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("br")
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.price
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass: "invalid-feedback",
+                                      attrs: { role: "alert" }
+                                    },
+                                    _vm._l(_vm.errors.price, function(
+                                      error,
+                                      index
+                                    ) {
+                                      return _c("strong", { key: index }, [
+                                        _vm._v(_vm._s(error))
+                                      ])
+                                    }),
+                                    0
+                                  )
+                                : _vm._e()
+                            ])
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-md-4" }, [
-                            _c("div", { staticClass: "card text-center" }, [
-                              _c("div", { staticClass: "card-header" }, [
-                                _vm._v(_vm._s(_vm.__("Auction finish")))
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "ul",
-                                { staticClass: "list-group list-group-flush" },
-                                [
-                                  _c("li", { staticClass: "list-group-item" }, [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm._f("formatDateTime")(
-                                          _vm.auction.finish_at
-                                        )
-                                      )
-                                    )
-                                  ])
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("br")
+                            _c(
+                              "div",
+                              { staticClass: "form-group text-right" },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-primary",
+                                    on: { click: _vm.betIt }
+                                  },
+                                  [_vm._v(_vm._s(_vm.__("Edit auction")))]
+                                )
+                              ]
+                            )
                           ])
                         ]),
                         _vm._v(" "),

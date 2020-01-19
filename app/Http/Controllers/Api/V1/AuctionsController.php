@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \App\Auction;
+use \App\Result;
 use Illuminate\Support\Facades\Auth;
 use \App\Contragent;
 use \App\Target;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use \App\Store;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\AuctionResource;
@@ -196,7 +198,7 @@ class AuctionsController extends Controller
             'start_price' => $request->post('start_price'),
             'volume' => $request->post('volume'),
         ]);
-        
+
         $auction = Auction::findOrFail($id);
         return $auction;
     }
@@ -252,7 +254,7 @@ class AuctionsController extends Controller
     {
 
         $auction = Auction::findOrFail($id);
-        
+
 
         if ($auction->contragent_id != Auth::user()->contragents[0]->id) {
             return response()->json([
@@ -267,7 +269,39 @@ class AuctionsController extends Controller
 
         $auction = Auction::findOrFail($id);
         return $auction;
-        
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function bet(Request $r)
+    {
+        $auction = DB::select('select contragent_id from contragent_auction where auction_id = ? && contragent_id = ?', [$r->post('auction'), $r->post('bidder')]);
+
+        if ($auction->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+
+        if ($result = Result::where('contragent_id', $r->post('bidder'))->where('auction_id', $r->post('auction'))->where('price', $r->post('price'))) {
+            $result->update([
+                'volume' => (int) $result->volume + (int) $r->post('volume')
+            ]);
+        } else {
+            $result->add([
+                'auction_id' => $r->post('auction'),
+                'contragent_id' => $r->post('bidder'),
+                'price' => (float) $r->post('price'),
+                'volume' => $r->post('volume')
+            ]);
+        }
+
+        return Auction::findOrFail($r->post('auction'));
     }
 
     /**
@@ -291,6 +325,5 @@ class AuctionsController extends Controller
         $auction = Auction::findOrFail($id);
         $auction->delete();
         return '';
-        
     }
 }

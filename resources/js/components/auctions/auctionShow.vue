@@ -142,31 +142,37 @@
             <div class="h4">{{ __("You are an auction participant") }}</div>
             <div class="row">
               <div class="col-md-4">
-                <div class="card text-center">
-                  <div class="card-header">{{ __('Auction start') }}</div>
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{{ auction.start_at | formatDateTime }}</li>
-                  </ul>
+                <div class="form-group">
+                  <label class="control-label">{{ __('Auction Volume') }}</label>
+                  <input
+                    type="number"
+                    v-model="bid.volume"
+                    class="form-control"
+                    v-bind:class="{ 'is-invalid': errors.volume }"
+                  />
+                  <span role="alert" class="invalid-feedback" v-if="errors.volume">
+                    <strong v-for="(error, index) in errors.volume" v-bind:key="index">{{ error }}</strong>
+                  </span>
                 </div>
-                <br />
               </div>
               <div class="col-md-4">
-                <div class="card text-center">
-                  <div class="card-header">{{ __('During time') }}</div>
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{{ time | formatDateTime}}</li>
-                  </ul>
+                <div class="form-group">
+                  <label class="control-label">{{ __('Price') }}</label>
+                  <input
+                    type="number"
+                    v-model="bid.price"
+                    class="form-control"
+                    v-bind:class="{ 'is-invalid': errors.price }"
+                  />
+                  <span role="alert" class="invalid-feedback" v-if="errors.price">
+                    <strong v-for="(error, index) in errors.price" v-bind:key="index">{{ error }}</strong>
+                  </span>
                 </div>
-                <br />
               </div>
               <div class="col-md-4">
-                <div class="card text-center">
-                  <div class="card-header">{{ __('Auction finish') }}</div>
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">{{ auction.finish_at | formatDateTime }}</li>
-                  </ul>
+                <div class="form-group text-right">
+                  <button class="btn btn-primary" @click="betIt">{{ __('Edit auction') }}</button>
                 </div>
-                <br />
               </div>
             </div>
             <div
@@ -485,13 +491,35 @@ export default {
       bidder: null,
       mine: 0,
       maxModalWidth: 600,
-      auction: {}
+      auction: {},
+      bid: {}
     };
   },
   created() {
     this.listenForBroadcast();
   },
   methods: {
+    betIt(){
+      var app = this;
+      if (app.auction)
+        axios
+          .post(
+            "/api/v1/auctions/bet?csrf_token=" +
+              window.csrf_token +
+              "&api_token=" +
+              window.api_token,
+            {
+              auction: app.auction.id,
+              volume: app.bid.volume,
+              price: app.bid.price
+            }
+          )
+          .then(function(resp) {
+            app.auction = resp.data;
+            app.$modal.hide("add_bidder");
+          });
+    },
+    },
     addBidder() {
       var app = this;
       if (app.auction && app.bidder)

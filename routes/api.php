@@ -34,6 +34,7 @@ Route::group([
     Route::patch('company', 'ContragentsController@updateCompany');
 
 
+    Route::post('auctions/bet', 'AuctionsController@bet');
     Route::get('auctions/{action}', 'AuctionsController@index');
     Route::get('auction/{id}', 'AuctionsController@show');
     Route::get('auction/delete/{id}', 'AuctionsController@destroy');
