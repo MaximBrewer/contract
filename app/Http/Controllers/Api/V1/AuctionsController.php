@@ -317,7 +317,7 @@ class AuctionsController extends Controller
                 if (!$bet->id)
                     $newBet->save();
             } elseif (isset($bet->id)) {
-                Bet::find()->update(['volume' => $freeVolume]);
+                Bet::find($bet->id)->update(['volume' => $freeVolume]);
             } else {
                 $nev = true;
             }
