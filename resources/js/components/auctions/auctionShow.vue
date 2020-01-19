@@ -356,6 +356,24 @@ export default {
             });
         });
     },
+    confirm() {
+      var app = this;
+      if (app.auction)
+        app.$confirm(app.__("Are you sure?")).then(() => {
+          axios
+            .get(
+              "/api/v1/auction/confirm/" +
+                app.auction.id +
+                "?csrf_token=" +
+                window.csrf_token +
+                "&api_token=" +
+                window.api_token
+            )
+            .then(function(resp) {
+              app.auction = resp.data;
+            });
+        });
+    },
     fetchBidders(search, loading) {
       var app = this;
       loading(true);
@@ -383,6 +401,12 @@ export default {
         "PerMinute",
         function(e) {
           that.time = e.time;
+        }
+      );
+      Echo.channel("cross_contractru_database_message-pushed").listen(
+        "MessagePushed",
+        function(e) {
+          console.log(e)
         }
       );
     }

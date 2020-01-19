@@ -11,13 +11,15 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 
 class PerMinute implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $time;
-    public $auctions;
+    public $started;
+    public $finished;
 
     /**
      * Create a new event instance.
@@ -27,15 +29,34 @@ class PerMinute implements ShouldBroadcast
     public function __construct()
     {
         $carbon = new Carbon();
-        $auctions = \DB::select(
-            'select id from auctions where time(start_at) between time(?) and time(?)',
+        $finished = DB::select(
+            'select id from auctions where time(finish_at) between time(?) and time(?)',
             [
                 $carbon->subMinute()->toDateTimeString(),
                 $carbon->addMinute()->toDateTimeString()
             ]
         );
-        $this->auctions = $auctions;
+
+        DB::table('auctions')->whereIn('id', $finished)->update(array(
+            'finished' => true,
+        ));
+
+        $started = DB::select(
+            'select id from auctions where time(start_at) between time(?) and time(?) and confirmed = 1',
+            [
+                $carbon->subMinute()->toDateTimeString(),
+                $carbon->addMinute()->toDateTimeString()
+            ]
+        );
+
+        DB::table('auctions')->whereIn('id', $started)->update(array(
+            'started' => true,
+        ));
+
+        $this->aucstartedtions = $started;
+        $this->finished = $finished;
         $this->time = $carbon->toDateTimeString();
+
     }
 
     /**

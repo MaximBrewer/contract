@@ -37,6 +37,7 @@ Route::group([
     Route::get('auctions/{action}', 'AuctionsController@index');
     Route::get('auction/{id}', 'AuctionsController@show');
     Route::get('auction/delete/{id}', 'AuctionsController@destroy');
+    Route::get('auction/confirm/{id}', 'AuctionsController@confirm');
     Route::get('auctions/{action}/bid/{id}', 'AuctionsController@bid');
     Route::get('auctions/{action}/unbid/{id}', 'AuctionsController@unbid');
     Route::post('auctions', 'AuctionsController@store');

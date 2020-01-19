@@ -3889,6 +3889,14 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     },
+    confirm: function confirm() {
+      var app = this;
+      if (app.auction) app.$confirm(app.__("Are you sure?")).then(function () {
+        axios.get("/api/v1/auction/confirm/" + app.auction.id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+          app.auction = resp.data;
+        });
+      });
+    },
     fetchBidders: function fetchBidders(search, loading) {
       var app = this;
       loading(true);
@@ -3905,6 +3913,9 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       Echo.channel("cross_contractru_database_every-minute").listen("PerMinute", function (e) {
         that.time = e.time;
+      });
+      Echo.channel("cross_contractru_database_message-pushed").listen("MessagePushed", function (e) {
+        console.log(e);
       });
     }
   }
@@ -111137,8 +111148,11 @@ var app = new Vue({
       Echo.channel("cross_contractru_database_every-minute").listen("PerMinute", function (e) {
         console.log(e);
         console.log(window.user);
-        e.auctions.forEach(function (auction) {
+        e.started.forEach(function (auction) {
           return that.flash(that.__("Auction #") + auction.id + that.__(" started"), "success");
+        });
+        e.finished.forEach(function (auction) {
+          return that.flash(that.__("Auction #") + auction.id + that.__(" finished"), "primary");
         });
       });
     }

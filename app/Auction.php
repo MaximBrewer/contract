@@ -23,7 +23,8 @@ class Auction extends Model
         'multiplicity_id',
         'step',
         'start_price',
-        'volume'
+        'volume',
+        'confirmed'
     ];
 
     protected $appends = [

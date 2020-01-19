@@ -179,10 +179,16 @@ const app = new Vue({
                 function(e) {
                     console.log(e);
                     console.log(window.user);
-                    e.auctions.forEach(auction =>
+                    e.started.forEach(auction =>
                         that.flash(
                             that.__("Auction #") + auction.id + that.__(" started"),
                             "success"
+                        )
+                    );
+                    e.finished.forEach(auction =>
+                        that.flash(
+                            that.__("Auction #") + auction.id + that.__(" finished"),
+                            "primary"
                         )
                     );
                 }

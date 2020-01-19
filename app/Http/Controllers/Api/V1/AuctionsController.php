@@ -248,10 +248,49 @@ class AuctionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function confirm($id)
+    {
+
+        $auction = Auction::findOrFail($id);
+        
+
+        if ($auction->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+
+        $auction->update([
+            'confirmed' => 1,
+        ]);
+
+        $auction = Auction::findOrFail($id);
+        return $auction;
+        
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
+
+        $auction = Auction::findOrFail($id);
+
+        if ($auction->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+
         $auction = Auction::findOrFail($id);
         $auction->delete();
         return '';
+        
     }
 }
