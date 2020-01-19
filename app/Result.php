@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Result extends Model
 {
 
+    protected $fillable = [
+        'volume',
+        'conragent_id',
+        'auction_id',
+        'price',
+    ];
+
     protected $appends = [
         'contragent',
     ];
