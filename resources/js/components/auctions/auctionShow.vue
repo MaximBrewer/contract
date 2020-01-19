@@ -510,6 +510,7 @@ export default {
               window.api_token,
             {
               auction: app.auction.id,
+              bidder: app.user.contragents[0].id,
               volume: app.bid.volume,
               price: app.bid.price
             }
@@ -518,7 +519,6 @@ export default {
             app.auction = resp.data;
             app.$modal.hide("add_bidder");
           });
-    },
     },
     addBidder() {
       var app = this;

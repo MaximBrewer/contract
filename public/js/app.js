@@ -3554,9 +3554,577 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/auctions/auctionShow.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /Users/maksimpivovarov/Projects/contract/resources/js/components/auctions/auctionShow.vue: Unexpected token (625:0)\n\n\u001b[0m \u001b[90m 623 | \u001b[39m    }\u001b[0m\n\u001b[0m \u001b[90m 624 | \u001b[39m  }\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 625 | \u001b[39m}\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 626 | \u001b[39m\u001b[0m\n    at Parser.raise (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:7012:17)\n    at Parser.unexpected (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:8405:16)\n    at Parser.parseExprAtom (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:9661:20)\n    at Parser.parseExprSubscripts (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:9237:23)\n    at Parser.parseMaybeUnary (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:9217:21)\n    at Parser.parseExprOps (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:9083:23)\n    at Parser.parseMaybeConditional (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:9056:23)\n    at Parser.parseMaybeAssign (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:9015:21)\n    at Parser.parseExpression (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:8965:23)\n    at Parser.parseStatementContent (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:10819:23)\n    at Parser.parseStatement (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:10690:17)\n    at Parser.parseBlockOrModuleBlockBody (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:11266:25)\n    at Parser.parseBlockBody (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:11253:10)\n    at Parser.parseTopLevel (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:10621:10)\n    at Parser.parse (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:12131:10)\n    at parse (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/parser/lib/index.js:12182:38)\n    at parser (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/core/lib/transformation/normalize-file.js:187:34)\n    at normalizeFile (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/core/lib/transformation/normalize-file.js:113:11)\n    at runSync (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/core/lib/transformation/index.js:44:43)\n    at runAsync (/Users/maksimpivovarov/Projects/contract/node_modules/@babel/core/lib/transformation/index.js:35:14)\n    at /Users/maksimpivovarov/Projects/contract/node_modules/@babel/core/lib/transform.js:34:34\n    at processTicksAndRejections (internal/process/task_queues.js:75:11)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-datetime */ "./node_modules/vue-datetime/dist/vue-datetime.js");
+/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_datetime__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-datetime/dist/vue-datetime.css */ "./node_modules/vue-datetime/dist/vue-datetime.css");
+/* harmony import */ var vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_4__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    vSelect: vue_select__WEBPACK_IMPORTED_MODULE_4___default.a,
+    Datetime: vue_datetime__WEBPACK_IMPORTED_MODULE_2__["Datetime"],
+    Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
+  mounted: function mounted() {
+    var app = this;
+    app.isLoading = true;
+    var id = app.$route.params.id;
+    app.auctionId = id;
+    axios.get("/api/v1/contragents?search=csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+      app.bidders = resp.data;
+    });
+    axios.get("/api/v1/auction/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+      app.auction = resp.data;
+      app.isLoading = false;
+
+      if (app.user && app.user.contragents && app.user.contragents[0]) {
+        var contr = app.user.contragents[0].id;
+
+        for (var r in app.auction.bidders) {
+          if (app.auction.bidders[r].id == contr) app.bidding = 1;
+        }
+
+        if (app.auction.contragent.id == contr) app.mine = 1;
+      }
+    })["catch"](function () {
+      alert(app.__("Failed to load auction"));
+      app.isLoading = false;
+    });
+  },
+  data: function data() {
+    return {
+      time: window.document.querySelector('meta[name="server-time"]').content,
+      isLoading: true,
+      onCancel: false,
+      fullPage: true,
+      multiplicities: [],
+      contragents: [],
+      stores: [],
+      products: [],
+      auctionId: null,
+      bidding: 0,
+      bidders: [],
+      bidder: null,
+      mine: 0,
+      maxModalWidth: 600,
+      auction: {},
+      bid: {}
+    };
+  },
+  created: function created() {
+    this.listenForBroadcast();
+  },
+  methods: {
+    betIt: function betIt() {
+      var app = this;
+      if (app.auction) axios.post("/api/v1/auctions/bet?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
+        auction: app.auction.id,
+        bidder: app.user.contragents[0].id,
+        volume: app.bid.volume,
+        price: app.bid.price
+      }).then(function (resp) {
+        app.auction = resp.data;
+        app.$modal.hide("add_bidder");
+      });
+    },
+    addBidder: function addBidder() {
+      var app = this;
+      if (app.auction && app.bidder) axios.post("/api/v1/auctions/add_bidder?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
+        auction: app.auction.id,
+        bidder: app.bidder.id
+      }).then(function (resp) {
+        app.auction = resp.data;
+        app.$modal.hide("add_bidder");
+      });
+    },
+    delAuction: function delAuction() {
+      var app = this;
+      if (app.auction) app.$confirm(app.__("Are you sure?")).then(function () {
+        axios.get("/api/v1/auction/delete/" + app.auction.id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+          app.$router.replace("/personal/auctions");
+        });
+      });
+    },
+    confirm: function confirm() {
+      var app = this;
+      if (app.auction) app.$confirm(app.__("Are you sure?")).then(function () {
+        axios.get("/api/v1/auction/confirm/" + app.auction.id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+          app.auction = resp.data;
+        });
+      });
+    },
+    fetchBidders: function fetchBidders(search, loading) {
+      var app = this;
+      loading(true);
+      axios.get("/api/v1/contragents?search=" + search + "csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+        app.bidders = resp.data;
+        loading(false);
+      });
+    },
+    showPopupAddBidder: function showPopupAddBidder() {
+      var app = this;
+      app.$modal.show("add_bidder");
+    },
+    listenForBroadcast: function listenForBroadcast() {
+      var app = this;
+      Echo.channel("cross_contractru_database_every-minute").listen("PerMinute", function (e) {
+        app.time = e.time;
+        e.started.forEach(function (auction) {
+          if (auction.id == app.auction.id) {
+            app.auction.started = true;
+          }
+        });
+        e.started.forEach(function (auction) {
+          if (auction.id == app.auction.id) {
+            app.auction.finished = true;
+          }
+        });
+      });
+      Echo.channel("cross_contractru_database_message-pushed").listen("MessagePushed", function (e) {
+        console.log(e);
+      });
+    }
+  }
+});
 
 /***/ }),
 
