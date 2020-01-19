@@ -290,14 +290,18 @@ class AuctionsController extends Controller
 
         if ($result = Result::where('contragent_id', $r->post('bidder'))->where('auction_id', $r->post('auction'))->where('price', $r->post('price'))->first()) {
             $result->update([
-                'volume' => (int) $result->volume + (int) $r->post('volume')
+                'volume' => (int) $result->volume + (int) $r->post('volume'),
+                'took_part' => 1,
+                'can_bet' => 1,
             ]);
         } else {
             Result::create([
                 'auction_id' => $r->post('auction'),
                 'contragent_id' => $r->post('bidder'),
                 'price' => (float) $r->post('price'),
-                'volume' => $r->post('volume')
+                'volume' => $r->post('volume'),
+                'took_part' => 1,
+                'can_bet' => 1,
             ]);
         }
 
