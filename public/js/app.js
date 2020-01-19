@@ -3993,6 +3993,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -91205,13 +91206,17 @@ var render = function() {
                               "div",
                               { staticClass: "form-group text-right" },
                               [
+                                _c("label", { staticClass: "control-label" }, [
+                                  _vm._v(" ")
+                                ]),
+                                _vm._v(" "),
                                 _c(
                                   "button",
                                   {
                                     staticClass: "btn btn-primary",
                                     on: { click: _vm.betIt }
                                   },
-                                  [_vm._v(_vm._s(_vm.__("Edit auction")))]
+                                  [_vm._v(_vm._s(_vm.__("Bet")))]
                                 )
                               ]
                             )

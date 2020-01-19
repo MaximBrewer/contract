@@ -171,7 +171,8 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group text-right">
-                  <button class="btn btn-primary" @click="betIt">{{ __('Edit auction') }}</button>
+                  <label class="control-label">&nbsp;</label>
+                  <button class="btn btn-primary" @click="betIt">{{ __('Bet') }}</button>
                 </div>
               </div>
             </div>
