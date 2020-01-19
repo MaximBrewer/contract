@@ -170,8 +170,8 @@
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="form-group text-right">
-                  <label class="control-label">&nbsp;</label>
+                <div class="form-group">
+                  <div><label class="control-label">&nbsp;</label></div>
                   <button class="btn btn-primary" @click="betIt">{{ __('Bet') }}</button>
                 </div>
               </div>

@@ -91202,24 +91202,18 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-md-4" }, [
-                            _c(
-                              "div",
-                              { staticClass: "form-group text-right" },
-                              [
-                                _c("label", { staticClass: "control-label" }, [
-                                  _vm._v(" ")
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-primary",
-                                    on: { click: _vm.betIt }
-                                  },
-                                  [_vm._v(_vm._s(_vm.__("Bet")))]
-                                )
-                              ]
-                            )
+                            _c("div", { staticClass: "form-group" }, [
+                              _vm._m(0),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary",
+                                  on: { click: _vm.betIt }
+                                },
+                                [_vm._v(_vm._s(_vm.__("Bet")))]
+                              )
+                            ])
                           ])
                         ]),
                         _vm._v(" "),
@@ -91935,7 +91929,16 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("label", { staticClass: "control-label" }, [_vm._v(" ")])
+    ])
+  }
+]
 render._withStripped = true
 
 
