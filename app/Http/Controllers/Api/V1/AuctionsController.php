@@ -281,6 +281,10 @@ class AuctionsController extends Controller
     {
         $auction = DB::select('select contragent_id from contragent_auction where auction_id = ? && contragent_id = ?', [$r->post('auction'), $r->post('bidder')]);
 
+
+        return response()->json([$auction], 422);
+
+
         if (!$auction || $auction->contragent_id != Auth::user()->contragents[0]->id) {
             return response()->json([
                 'message' => __('It`s not yours!'),
