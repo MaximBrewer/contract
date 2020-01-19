@@ -289,14 +289,14 @@ class AuctionsController extends Controller
         }
         $auction = Auction::findOrFail($r->post('auction'));
 
-        $newBet = new Bet([
+        $newBet = [
             'auction_id' => $r->post('auction'),
             'contragent_id' => $r->post('bidder'),
             'price' => (float) $r->post('price'),
             'volume' => $r->post('volume'),
             'took_part' => 1,
             'can_bet' => 1
-        ]);
+        ];
 
         $freeVolume = $auction->volume;
 
@@ -305,7 +305,7 @@ class AuctionsController extends Controller
 
         foreach ($auctionBets as $ke => $auctionBet) {
 
-            if ($newBet->price > $auctionBet->price) {
+            if ($newBet['price'] > $auctionBet['price']) {
                 array_splice($auctionBets, $ke, 0, [$newBet]);
                 break;
             }
