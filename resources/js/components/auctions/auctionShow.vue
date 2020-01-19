@@ -184,17 +184,24 @@
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <th>{{ __('Contragent') }}</th>
-                    <th>{{ __('Is online') }}</th>
-                    <th>{{ __('Can bet') }}</th>
                     <th>{{ __('Active volume') }}</th>
                     <th>{{ __('Active price') }}</th>
-                    <th>{{ __('Approve volume') }}</th>
-                    <th>{{ __('Correcting price') }}</th>
-                    <th>{{ __('Approve contract') }}</th>
                   </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    <tr v-for="(result, index) in auction.results" v-bind:key="index">
+                      <td>
+                        <div v-if="result.contragent" class="text-nowrap">
+                          <div class="h6">{{ result.volume }}</div>
+                        </div>
+                      </td>
+                      <td>
+                        <div v-if="result.contragent" class="text-nowrap">
+                          <div class="h6">{{ result.price }}₽</div>
+                        </div>
+                      </td>
+                    </tr>
+                </tbody>
               </table>
             </div>
           </div>

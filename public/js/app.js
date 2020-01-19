@@ -3994,6 +3994,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -91232,18 +91239,6 @@ var render = function() {
                                     _c("thead", [
                                       _c("tr", [
                                         _c("th", [
-                                          _vm._v(_vm._s(_vm.__("Contragent")))
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("th", [
-                                          _vm._v(_vm._s(_vm.__("Is online")))
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("th", [
-                                          _vm._v(_vm._s(_vm.__("Can bet")))
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("th", [
                                           _vm._v(
                                             _vm._s(_vm.__("Active volume"))
                                           )
@@ -91251,29 +91246,65 @@ var render = function() {
                                         _vm._v(" "),
                                         _c("th", [
                                           _vm._v(_vm._s(_vm.__("Active price")))
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("th", [
-                                          _vm._v(
-                                            _vm._s(_vm.__("Approve volume"))
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("th", [
-                                          _vm._v(
-                                            _vm._s(_vm.__("Correcting price"))
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("th", [
-                                          _vm._v(
-                                            _vm._s(_vm.__("Approve contract"))
-                                          )
                                         ])
                                       ])
                                     ]),
                                     _vm._v(" "),
-                                    _c("tbody")
+                                    _c(
+                                      "tbody",
+                                      _vm._l(_vm.auction.results, function(
+                                        result,
+                                        index
+                                      ) {
+                                        return _c("tr", { key: index }, [
+                                          _c("td", [
+                                            result.contragent
+                                              ? _c(
+                                                  "div",
+                                                  {
+                                                    staticClass: "text-nowrap"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      { staticClass: "h6" },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(result.volume)
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e()
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            result.contragent
+                                              ? _c(
+                                                  "div",
+                                                  {
+                                                    staticClass: "text-nowrap"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      { staticClass: "h6" },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(result.price) +
+                                                            "₽"
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e()
+                                          ])
+                                        ])
+                                      }),
+                                      0
+                                    )
                                   ]
                                 )
                               ]
