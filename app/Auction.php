@@ -68,7 +68,7 @@ class Auction extends Model
 
     public function bets()
     {
-        return $this->hasMany('App\Bet');
+        return $this->hasMany('App\Bet')->orderBy('created_at', 'desc');;
     }
 
     public function multiplicity()

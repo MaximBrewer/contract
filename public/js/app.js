@@ -3998,9 +3998,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -4033,8 +4030,16 @@ __webpack_require__.r(__webpack_exports__);
 
         if (app.auction.contragent.id == contr) app.mine = 1;
       }
+
+      app.bid.price = aucton.price;
+      app.bid.volume = 1;
     })["catch"](function () {
-      alert(app.__("Failed to load auction"));
+      app.$fire({
+        title: app.__("Error!"),
+        text: app.__("Failed to load auction"),
+        type: "error",
+        timer: 5000
+      });
       app.isLoading = false;
     });
   },
@@ -4073,6 +4078,13 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (resp) {
         app.auction = resp.data;
         app.$modal.hide("add_bidder");
+      })["catch"](function (errors) {
+        app.$fire({
+          title: app.__("Error!"),
+          text: errors.response.data.message,
+          type: "error",
+          timer: 5000
+        });
       });
     },
     addBidder: function addBidder() {

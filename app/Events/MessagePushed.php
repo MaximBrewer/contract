@@ -19,15 +19,11 @@ class MessagePushed implements ShouldBroadcast
      *
      * @return void
      */
-    public $chatMessage;
-    public $user;
-    public $survey;
+    public $auction;
 
-    public function __construct($user)
+    public function __construct($auction)
     {
-        $this->user = $user;
-        $this->survey = new \stdClass;
-        $this->survey->id = 'chan';
+        $this->auction = $auction;
     }
 
     /**
@@ -37,6 +33,6 @@ class MessagePushed implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('survey.' . $this->survey->id);
+        return new Channel('message-pushed');
     }
 }

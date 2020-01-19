@@ -171,7 +171,9 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <div><label class="control-label">&nbsp;</label></div>
+                  <div>
+                    <label class="control-label">&nbsp;</label>
+                  </div>
                   <button class="btn btn-primary" @click="betIt">{{ __('Bet') }}</button>
                 </div>
               </div>
@@ -189,18 +191,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(bet, index) in auction.bets" v-bind:key="index">
-                      <td>
-                        <div v-if="bet.contragent" class="text-nowrap">
-                          <div class="h6">{{ bet.volume }}</div>
-                        </div>
-                      </td>
-                      <td>
-                        <div v-if="bet.contragent" class="text-nowrap">
-                          <div class="h6">{{ bet.price }}₽</div>
-                        </div>
-                      </td>
-                    </tr>
+                  <tr v-for="(bet, index) in auction.bets" v-bind:key="index">
+                    <td>
+                      <div v-if="bet.contragent" class="text-nowrap">
+                        <div class="h6">{{ bet.volume }}</div>
+                      </div>
+                    </td>
+                    <td>
+                      <div v-if="bet.contragent" class="text-nowrap">
+                        <div class="h6">{{ bet.price }}₽</div>
+                      </div>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -282,12 +284,7 @@
                       </td>
                       <td>
                         <div class="text-nowrap">
-                          <input
-                            class="form-control"
-                            size="10"
-                            type="text"
-                            v-model="bet.correct"
-                          />
+                          <input class="form-control" size="10" type="text" v-model="bet.correct" />
                         </div>
                       </td>
                       <td>
@@ -477,9 +474,16 @@ export default {
           }
           if (app.auction.contragent.id == contr) app.mine = 1;
         }
+        app.bid.price = aucton.price;
+        app.bid.volume = 1;
       })
       .catch(function() {
-        alert(app.__("Failed to load auction"));
+        app.$fire({
+          title: app.__("Error!"),
+          text: app.__("Failed to load auction"),
+          type: "error",
+          timer: 5000
+        });
         app.isLoading = false;
       });
   },
@@ -527,6 +531,14 @@ export default {
           .then(function(resp) {
             app.auction = resp.data;
             app.$modal.hide("add_bidder");
+          })
+          .catch(function(errors) {
+            app.$fire({
+              title: app.__("Error!"),
+              text: errors.response.data.message,
+              type: "error",
+              timer: 5000
+            });
           });
     },
     addBidder() {
