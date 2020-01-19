@@ -56,7 +56,7 @@ class PerMinute implements ShouldBroadcast
         }
 
 
-        $this->aucstartedtions = $started;
+        $this->started = $started;
         $this->finished = $finished;
         $this->time = $carbon->toDateTimeString();
 
