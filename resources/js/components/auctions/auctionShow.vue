@@ -477,15 +477,15 @@ export default {
         app.bid.price = aucton.price;
         app.bid.volume = 1;
       })
-      .catch(function() {
-        app.$fire({
-          title: app.__("Error!"),
-          text: app.__("Failed to load auction"),
-          type: "error",
-          timer: 5000
-        });
-        app.isLoading = false;
-      });
+      // .catch(function() {
+      //   app.$fire({
+      //     title: app.__("Error!"),
+      //     text: app.__("Failed to load auction"),
+      //     type: "error",
+      //     timer: 5000
+      //   });
+      //   app.isLoading = false;
+      // });
   },
   data: function() {
     return {
