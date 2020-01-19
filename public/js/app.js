@@ -91224,7 +91224,7 @@ var render = function() {
                           ])
                         ]),
                         _vm._v(" "),
-                        _vm.auction.results && _vm.auction.results.length
+                        _vm.auction.bets && _vm.auction.bets.length
                           ? _c(
                               "div",
                               {
@@ -91252,13 +91252,13 @@ var render = function() {
                                     _vm._v(" "),
                                     _c(
                                       "tbody",
-                                      _vm._l(_vm.auction.results, function(
-                                        result,
+                                      _vm._l(_vm.auction.bets, function(
+                                        bet,
                                         index
                                       ) {
                                         return _c("tr", { key: index }, [
                                           _c("td", [
-                                            result.contragent
+                                            bet.contragent
                                               ? _c(
                                                   "div",
                                                   {
@@ -91270,7 +91270,7 @@ var render = function() {
                                                       { staticClass: "h6" },
                                                       [
                                                         _vm._v(
-                                                          _vm._s(result.volume)
+                                                          _vm._s(bet.volume)
                                                         )
                                                       ]
                                                     )
@@ -91280,7 +91280,7 @@ var render = function() {
                                           ]),
                                           _vm._v(" "),
                                           _c("td", [
-                                            result.contragent
+                                            bet.contragent
                                               ? _c(
                                                   "div",
                                                   {
@@ -91292,7 +91292,7 @@ var render = function() {
                                                       { staticClass: "h6" },
                                                       [
                                                         _vm._v(
-                                                          _vm._s(result.price) +
+                                                          _vm._s(bet.price) +
                                                             "₽"
                                                         )
                                                       ]
@@ -91314,9 +91314,9 @@ var render = function() {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.auction.results && _vm.mine
+                _vm.auction.bets && _vm.mine
                   ? _c("div", { staticClass: "row" }, [
-                      _vm.auction.results.length
+                      _vm.auction.bets.length
                         ? _c("div", { staticClass: "col-md-12" }, [
                             _c("div", { staticClass: "card" }, [
                               _c("div", { staticClass: "card-header" }, [
@@ -91382,13 +91382,13 @@ var render = function() {
                                       _vm._v(" "),
                                       _c(
                                         "tbody",
-                                        _vm._l(_vm.auction.results, function(
-                                          result,
+                                        _vm._l(_vm.auction.bets, function(
+                                          bet,
                                           index
                                         ) {
                                           return _c("tr", [
                                             _c("td", [
-                                              result.contragent
+                                              bet.contragent
                                                 ? _c(
                                                     "div",
                                                     {
@@ -91401,7 +91401,7 @@ var render = function() {
                                                         [
                                                           _vm._v(
                                                             _vm._s(
-                                                              result.contragent
+                                                              bet.contragent
                                                                 .title
                                                             )
                                                           )
@@ -91434,8 +91434,8 @@ var render = function() {
                                                       staticClass: "btn",
                                                       class: {
                                                         "btn-success":
-                                                          result.took_part,
-                                                        "btn-danger": !result.took_part
+                                                          bet.took_part,
+                                                        "btn-danger": !bet.took_part
                                                       },
                                                       attrs: {
                                                         href:
@@ -91447,7 +91447,7 @@ var render = function() {
                                                         ) {
                                                           return _vm.canBet(
                                                             _vm.auction.id,
-                                                            result.id
+                                                            bet.id
                                                           )
                                                         }
                                                       }
@@ -91480,8 +91480,8 @@ var render = function() {
                                                       staticClass: "btn",
                                                       class: {
                                                         "btn-success":
-                                                          result.can_bet,
-                                                        "btn-danger": !result.can_bet
+                                                          bet.can_bet,
+                                                        "btn-danger": !bet.can_bet
                                                       },
                                                       attrs: {
                                                         href:
@@ -91493,7 +91493,7 @@ var render = function() {
                                                         ) {
                                                           return _vm.canBet(
                                                             _vm.auction.id,
-                                                            result.id
+                                                            bet.id
                                                           )
                                                         }
                                                       }
@@ -91570,9 +91570,9 @@ var render = function() {
                                                       ],
                                                       staticClass: "btn",
                                                       class: {
-                                                        "btn-warning": !result.approved,
+                                                        "btn-warning": !bet.approved,
                                                         "btn-secondary":
-                                                          result.approved
+                                                          bet.approved
                                                       },
                                                       attrs: {
                                                         href:
@@ -91583,7 +91583,7 @@ var render = function() {
                                                           $event
                                                         ) {
                                                           return _vm.approveVolume(
-                                                            result
+                                                            bet
                                                           )
                                                         }
                                                       }
@@ -91612,9 +91612,9 @@ var render = function() {
                                                       {
                                                         name: "model",
                                                         rawName: "v-model",
-                                                        value: result.correct,
+                                                        value: bet.correct,
                                                         expression:
-                                                          "result.correct"
+                                                          "bet.correct"
                                                       }
                                                     ],
                                                     staticClass: "form-control",
@@ -91623,7 +91623,7 @@ var render = function() {
                                                       type: "text"
                                                     },
                                                     domProps: {
-                                                      value: result.correct
+                                                      value: bet.correct
                                                     },
                                                     on: {
                                                       input: function($event) {
@@ -91634,7 +91634,7 @@ var render = function() {
                                                           return
                                                         }
                                                         _vm.$set(
-                                                          result,
+                                                          bet,
                                                           "correct",
                                                           $event.target.value
                                                         )
@@ -91667,10 +91667,10 @@ var render = function() {
                                                       staticClass: "btn",
                                                       class: {
                                                         "btn-warning": !(
-                                                          result.correct * 1
+                                                          bet.correct * 1
                                                         ),
                                                         "btn-secondary":
-                                                          result.correct * 1
+                                                          bet.correct * 1
                                                       },
                                                       attrs: {
                                                         href:
@@ -91681,7 +91681,7 @@ var render = function() {
                                                           $event
                                                         ) {
                                                           return _vm.approveContract(
-                                                            result
+                                                            bet
                                                           )
                                                         }
                                                       }
@@ -91720,14 +91720,14 @@ var render = function() {
                 _c("div", { staticClass: "col-md-12" }, [
                   _c("div", { staticClass: "card" }, [
                     _c("div", { staticClass: "card-header" }, [
-                      _vm._v(_vm._s(_vm.__("Auction Results")))
+                      _vm._v(_vm._s(_vm.__("Auction Bets")))
                     ]),
                     _vm._v(" "),
                     _c(
                       "div",
                       {
                         staticClass: "table-responsive",
-                        attrs: { id: "auction_results" }
+                        attrs: { id: "auction_bets" }
                       },
                       [
                         _c("table", { staticClass: "table table-bordered" }, [
@@ -91751,21 +91751,16 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "tbody",
-                            _vm._l(_vm.auction.results, function(
-                              result,
-                              index
-                            ) {
+                            _vm._l(_vm.auction.bets, function(bet, index) {
                               return _c("tr", [
                                 _c("td", [
-                                  result.contragent
+                                  bet.contragent
                                     ? _c(
                                         "div",
                                         { staticClass: "text-nowrap" },
                                         [
                                           _c("div", { staticClass: "h6" }, [
-                                            _vm._v(
-                                              _vm._s(result.contragent.title)
-                                            )
+                                            _vm._v(_vm._s(bet.contragent.title))
                                           ])
                                         ]
                                       )
@@ -91777,7 +91772,7 @@ var render = function() {
                                     _c("span", [
                                       _vm._v(
                                         _vm._s(
-                                          result.took_part
+                                          bet.took_part
                                             ? _vm.__("Yes")
                                             : _vm.__("No")
                                         )
@@ -91791,7 +91786,7 @@ var render = function() {
                                     _c("span", [
                                       _vm._v(
                                         _vm._s(
-                                          result.can_bet
+                                          bet.can_bet
                                             ? _vm.__("Yes")
                                             : _vm.__("No")
                                         )
@@ -91802,19 +91797,19 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("td", [
                                   _c("div", { staticClass: "text-nowrap" }, [
-                                    _c("span", [_vm._v(_vm._s(result.volume))])
+                                    _c("span", [_vm._v(_vm._s(bet.volume))])
                                   ])
                                 ]),
                                 _vm._v(" "),
                                 _c("td", [
                                   _c("div", { staticClass: "text-nowrap" }, [
-                                    _c("span", [_vm._v(_vm._s(result.price))])
+                                    _c("span", [_vm._v(_vm._s(bet.price))])
                                   ])
                                 ]),
                                 _vm._v(" "),
                                 _c("td", [
                                   _c("div", { staticClass: "text-nowrap" }, [
-                                    _c("span", [_vm._v(_vm._s(result.correct))])
+                                    _c("span", [_vm._v(_vm._s(bet.correct))])
                                   ])
                                 ]),
                                 _vm._v(" "),
@@ -91824,7 +91819,7 @@ var render = function() {
                                       _vm._v(
                                         _vm._s(
                                           _vm._f("formatDateTime")(
-                                            result.created_at
+                                            bet.created_at
                                           )
                                         )
                                       )

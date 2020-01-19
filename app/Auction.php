@@ -52,7 +52,7 @@ class Auction extends Model
         $this->product;
         $this->multiplicity;
         $this->contragent;
-        $this->results;
+        $this->bets;
         return true;
     }
 
@@ -66,9 +66,9 @@ class Auction extends Model
         return $this->belongsTo('App\Store');
     }
 
-    public function results()
+    public function bets()
     {
-        return $this->hasMany('App\Result');
+        return $this->hasMany('App\Bet');
     }
 
     public function multiplicity()

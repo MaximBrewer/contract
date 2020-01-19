@@ -179,7 +179,7 @@
             <div
               class="table-responsive"
               id="auction_activity"
-              v-if="auction.results && auction.results.length"
+              v-if="auction.bets && auction.bets.length"
             >
               <table class="table table-bordered">
                 <thead>
@@ -189,15 +189,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(result, index) in auction.results" v-bind:key="index">
+                    <tr v-for="(bet, index) in auction.bets" v-bind:key="index">
                       <td>
-                        <div v-if="result.contragent" class="text-nowrap">
-                          <div class="h6">{{ result.volume }}</div>
+                        <div v-if="bet.contragent" class="text-nowrap">
+                          <div class="h6">{{ bet.volume }}</div>
                         </div>
                       </td>
                       <td>
-                        <div v-if="result.contragent" class="text-nowrap">
-                          <div class="h6">{{ result.price }}₽</div>
+                        <div v-if="bet.contragent" class="text-nowrap">
+                          <div class="h6">{{ bet.price }}₽</div>
                         </div>
                       </td>
                     </tr>
@@ -208,8 +208,8 @@
         </div>
 
         <!--Mine-->
-        <div class="row" v-if="auction.results && mine">
-          <div class="col-md-12" v-if="auction.results.length">
+        <div class="row" v-if="auction.bets && mine">
+          <div class="col-md-12" v-if="auction.bets.length">
             <div class="card">
               <div class="card-header">{{ __("Auction activity") }}</div>
               <div class="table-responsive" id="auction_activity">
@@ -227,10 +227,10 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="result, index in auction.results">
+                    <tr v-for="bet, index in auction.bets">
                       <td>
-                        <div v-if="result.contragent" class="text-nowrap">
-                          <div class="h6">{{ result.contragent.title }}</div>
+                        <div v-if="bet.contragent" class="text-nowrap">
+                          <div class="h6">{{ bet.contragent.title }}</div>
                         </div>
                       </td>
                       <td>
@@ -239,8 +239,8 @@
                             v-tooltip="__('Is online')"
                             href="javascript:void(0)"
                             class="btn"
-                            v-bind:class="{ 'btn-success': result.took_part, 'btn-danger': !result.took_part }"
-                            @click="canBet(auction.id, result.id)"
+                            v-bind:class="{ 'btn-success': bet.took_part, 'btn-danger': !bet.took_part }"
+                            @click="canBet(auction.id, bet.id)"
                           >&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         </div>
                       </td>
@@ -250,8 +250,8 @@
                             v-tooltip="__('Can bet')"
                             href="javascript:void(0)"
                             class="btn"
-                            v-bind:class="{ 'btn-success': result.can_bet, 'btn-danger': !result.can_bet }"
-                            @click="canBet(auction.id, result.id)"
+                            v-bind:class="{ 'btn-success': bet.can_bet, 'btn-danger': !bet.can_bet }"
+                            @click="canBet(auction.id, bet.id)"
                           >
                             <i class="mdi mdi-check-circle" aria-hidden="true"></i>
                           </a>
@@ -273,8 +273,8 @@
                             v-tooltip="__('Approve volume')"
                             href="javascript:void(0)"
                             class="btn"
-                            v-bind:class="{ 'btn-warning': !result.approved, 'btn-secondary': result.approved }"
-                            @click="approveVolume(result)"
+                            v-bind:class="{ 'btn-warning': !bet.approved, 'btn-secondary': bet.approved }"
+                            @click="approveVolume(bet)"
                           >
                             <i class="mdi mdi-check-circle" aria-hidden="true"></i>
                           </a>
@@ -286,7 +286,7 @@
                             class="form-control"
                             size="10"
                             type="text"
-                            v-model="result.correct"
+                            v-model="bet.correct"
                           />
                         </div>
                       </td>
@@ -296,8 +296,8 @@
                             v-tooltip="__('Approve contract')"
                             href="javascript:void(0)"
                             class="btn"
-                            v-bind:class="{ 'btn-warning': !(result.correct*1), 'btn-secondary': (result.correct*1) }"
-                            @click="approveContract(result)"
+                            v-bind:class="{ 'btn-warning': !(bet.correct*1), 'btn-secondary': (bet.correct*1) }"
+                            @click="approveContract(bet)"
                           >
                             <i class="mdi mdi-check-circle" aria-hidden="true"></i>
                           </a>
@@ -315,8 +315,8 @@
       <div class="row" v-if="auction.finished">
         <div class="col-md-12">
           <div class="card">
-            <div class="card-header">{{ __("Auction Results") }}</div>
-            <div class="table-responsive" id="auction_results">
+            <div class="card-header">{{ __("Auction Bets") }}</div>
+            <div class="table-responsive" id="auction_bets">
               <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -330,40 +330,40 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="result, index in auction.results">
+                  <tr v-for="bet, index in auction.bets">
                     <td>
-                      <div v-if="result.contragent" class="text-nowrap">
-                        <div class="h6">{{ result.contragent.title }}</div>
+                      <div v-if="bet.contragent" class="text-nowrap">
+                        <div class="h6">{{ bet.contragent.title }}</div>
                       </div>
                     </td>
                     <td>
                       <div class="text-nowrap">
-                        <span>{{ result.took_part ? __("Yes") : __("No") }}</span>
+                        <span>{{ bet.took_part ? __("Yes") : __("No") }}</span>
                       </div>
                     </td>
                     <td>
                       <div class="text-nowrap">
-                        <span>{{ result.can_bet ? __("Yes") : __("No") }}</span>
+                        <span>{{ bet.can_bet ? __("Yes") : __("No") }}</span>
                       </div>
                     </td>
                     <td>
                       <div class="text-nowrap">
-                        <span>{{ result.volume }}</span>
+                        <span>{{ bet.volume }}</span>
                       </div>
                     </td>
                     <td>
                       <div class="text-nowrap">
-                        <span>{{ result.price }}</span>
+                        <span>{{ bet.price }}</span>
                       </div>
                     </td>
                     <td>
                       <div class="text-nowrap">
-                        <span>{{ result.correct }}</span>
+                        <span>{{ bet.correct }}</span>
                       </div>
                     </td>
                     <td>
                       <div class="text-nowrap">
-                        <span>{{ result.created_at | formatDateTime }}</span>
+                        <span>{{ bet.created_at | formatDateTime }}</span>
                       </div>
                     </td>
                   </tr>

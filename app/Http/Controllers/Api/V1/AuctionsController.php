@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \App\Auction;
-use \App\Result;
+use \App\Bet;
 use Illuminate\Support\Facades\Auth;
 use \App\Contragent;
 use \App\Target;
@@ -287,23 +287,32 @@ class AuctionsController extends Controller
                 'errors' => []
             ], 422);
         }
+        $auction = Auction::findOrFail($r->post('auction'));
 
-        if ($result = Result::where('contragent_id', $r->post('bidder'))->where('auction_id', $r->post('auction'))->where('price', $r->post('price'))->first()) {
-            $result->update([
-                'volume' => (int) $result->volume + (int) $r->post('volume'),
-                'took_part' => 1,
-                'can_bet' => 1,
-            ]);
-        } else {
-            Result::create([
-                'auction_id' => $r->post('auction'),
-                'contragent_id' => $r->post('bidder'),
-                'price' => (float) $r->post('price'),
-                'volume' => $r->post('volume'),
-                'took_part' => 1,
-                'can_bet' => 1,
-            ]);
+        $newBet = new Bet([
+            'auction_id' => $r->post('auction'),
+            'contragent_id' => $r->post('bidder'),
+            'price' => (float) $r->post('price'),
+            'volume' => $r->post('volume'),
+            'took_part' => 1,
+            'can_bet' => 1
+        ]);
+
+        $freeVolume = $auction->volume;
+
+        $auctionBets = Bet::where('auction_id', $r->post('auction'))->orderBy('price', 'desc')->orderBy('created_at', 'asc')->get();
+
+
+        foreach ($auctionBets as $ke => $auctionBet) {
+
+            if ($newBet->price > $auctionBet->price) {
+                array_splice($auctionBets, $ke, 0, [$newBet]);
+                break;
+            }
+
         }
+
+        return $auctionBets;
 
         return Auction::findOrFail($r->post('auction'));
     }

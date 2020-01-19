@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 use \App\Auction;
 use Illuminate\Support\Facades\Auth;
 use \App\Contragent;
-use \App\Result;
+use \App\Bet;
 use Illuminate\Validation\Rule;
 use \App\Store;
 use Illuminate\Support\Facades\Validator;
 
 
-class ResultsController extends Controller
+class BetsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +24,7 @@ class ResultsController extends Controller
     public function index($auction_id)
     {
 
-        return Result::where("auction_id", $auction_id)->get();
+        return Bet::where("auction_id", $auction_id)->get();
 
     }
 

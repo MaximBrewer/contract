@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateResultsTable extends Migration
+class UpdateBetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class UpdateResultsTable extends Migration
      */
     public function up()
     {
-        Schema::table('results', function ($table) {
+        Schema::table('bets', function ($table) {
             $table->timestamp('approved_volume')->nullable();
             $table->timestamp('approved_contract')->nullable();
         });
@@ -26,7 +26,7 @@ class UpdateResultsTable extends Migration
      */
     public function down()
     {
-        Schema::table('results', function ($table) {
+        Schema::table('bets', function ($table) {
             $table->dropColumn('approved_volume');
             $table->dropColumn('approved_contract');
         });
