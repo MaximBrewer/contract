@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use \App\Auction;
 use Illuminate\Support\Facades\Auth;
 use \App\Contragent;
+use \App\Target;
+use Illuminate\Validation\Rule;
+use \App\Store;
+use Illuminate\Support\Facades\Validator;
+
 
 class AuctionsController extends Controller
 {
@@ -41,17 +46,19 @@ class AuctionsController extends Controller
     public function storeManager(Request $request)
     {
 
+
         $request->validate([
             "multiplicity.id" => "required|exists:multiplicities,id",
             "product.id" => "required|exists:products,id",
             "store.id" => "required|exists:stores,id",
-            "start_at" => "",
-            "finish_at" => "",
+            "start_at" => "required",
+            "finish_at" => "required|after:start_at",
             "comment" => "",
-            "start_price" => "",
-            "volume" => "",
-            "step" => "",
+            "start_price" => "required",
+            "volume" => "required",
+            "step" => "required",
         ]);
+
 
         $auction = Auction::create([
             'contragent_id' => $request->post('contragent')['id'],
@@ -156,7 +163,28 @@ class AuctionsController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $auction = Auction::findOrFail($id);
+
+        if ($auction->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+
+        $request->validate([
+            "multiplicity.id" => "required|exists:multiplicities,id",
+            "product.id" => "required|exists:products,id",
+            "store.id" => "required|exists:stores,id",
+            "start_at" => "required",
+            "finish_at" => "required|after:start_at",
+            "comment" => "",
+            "start_price" => "required",
+            "volume" => "required",
+            "step" => "required",
+        ]);
+
         $auction->update([
             'product_id' => $request->post('product')['id'],
             'multiplicity_id' => $request->post('multiplicity')['id'],
@@ -167,6 +195,7 @@ class AuctionsController extends Controller
             'start_price' => $request->post('start_price'),
             'volume' => $request->post('volume'),
         ]);
+        
         $auction = Auction::findOrFail($id);
         return $auction;
     }

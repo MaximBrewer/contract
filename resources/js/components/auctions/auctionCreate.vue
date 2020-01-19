@@ -217,18 +217,10 @@ export default {
           newAuction
         )
         .then(function(resp) {
-          app.auction = resp.data;
           app.$router.replace(
             "/personal/auctions/show/" +
-              app.auction.id +
-              "?csrf_token=" +
-              window.csrf_token +
-              "&api_token=" +
-              window.api_token +
-              resp.data.id
+              app.auction.id
           );
-          app.isLoading = false;
-          return true;
         })
         .catch(function(errors) {
           app.errors = errors.response.data.errors;

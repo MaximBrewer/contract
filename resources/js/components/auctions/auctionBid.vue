@@ -1,6 +1,7 @@
 <template>
   <section>
-    <div class="container-fluid">
+    <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
+    <div class="container-fluid" v-if="auctions.length">
       <div class="row justify-content-end">
         <div class="col-lg-6">
           <div class="table-responsive" id="tergets" v-if="targets.length">
@@ -323,13 +324,9 @@ export default {
     };
   },
   mounted() {
-    var app = this;
-    let contragent_id = app.user.contragents[0].id;
-    let action = "bid";
-    app.getMultiplicities();
-    app.getProducts();
-    app.getStores();
-    app.getFederalDistricts();
+    let app = this,
+    contragent_id = app.user.contragents[0].id,
+    action = "bid";
     app.isLoading = true;
     axios
       .get(
@@ -342,10 +339,16 @@ export default {
       )
       .then(function(resp) {
         app.auctions = resp.data;
+        app.isLoading = false;
+        app.getMultiplicities();
+        app.getProducts();
+        app.getStores();
+        app.getFederalDistricts();
       })
       .catch(function(resp) {
         console.log(resp);
         alert(app.__("Failed to load auctions"));
+        app.isLoading = false;
       });
     axios
       .get(

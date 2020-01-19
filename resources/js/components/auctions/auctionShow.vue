@@ -85,11 +85,25 @@
       <div class="row">
         <div class="col-md-4">
           <div class="card text-center">
-            <a
-              href="javascript:void(0)"
-              class="btn btn-success"
-              @click="showPopupAddBidder(auction.id)"
-            >{{ __('Add bidder') }}</a>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <a
+                  href="javascript:void(0)"
+                  class="btn btn-success"
+                  @click="showPopupAddBidder(auction.id)"
+                >{{ __('Add bidder') }}</a>
+              </li>
+              <li
+                class="list-group-item"
+                v-if="user.contragents[0] && auction.contragent && user.contragents[0].id == auction.contragent.id"
+              >
+                <router-link
+                  v-tooltip="__('Edit auction')"
+                  :to="{name: 'editAuction', 'params': {'id': auction.id}}"
+                  class="btn btn-primary"
+                >{{ __('Edit auction') }}</router-link>
+              </li>
+            </ul>
           </div>
           <br />
         </div>
@@ -241,7 +255,7 @@ export default {
           )
           .then(function(resp) {
             app.auction = resp.data;
-            app.$modal.hide('add_bidder')
+            app.$modal.hide("add_bidder");
           });
     },
     fetchBidders(search, loading) {

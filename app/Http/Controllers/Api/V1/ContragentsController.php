@@ -37,13 +37,13 @@ class ContragentsController extends Controller
         $contragent->types()->sync($request->all()['typeIds']);
         $storesIds = [];
         $contragent->update($request->all());
-        if(count($request->all()['stores'])){
-            foreach($request->all()['stores'] as $store){
-                if($store['coords'] && $store['address']){
-                    if($store['id']){
+        if (count($request->all()['stores'])) {
+            foreach ($request->all()['stores'] as $store) {
+                if ($store['coords'] && $store['address']) {
+                    if ($store['id']) {
                         Store::find($store['id'])->update([
                             'contragent_id' => $contragent->id,
-                            'coords' => $store['coords'], 
+                            'coords' => $store['coords'],
                             'address' => $store['address'],
                             'federal_district_id' => $store['federal_district']['id'],
                             'region_id' => $store['region']['id']
@@ -83,73 +83,43 @@ class ContragentsController extends Controller
         return $contragent;
     }
 
-    private function checkUser($id){
-
-        if(Auth::user()->role_id == 1) return true;
-        if(Auth::user()->contragents[0]->id !== $id) return false;
-        return true;
-
-    }
-
 
     public function update(Request $request, $id)
     {
 
-        // $this->validate($request, [
-        //     'inn' => 'required|unique',
-        // ]);
-
-        // $validator = Validator::make($request->all(), [
-        //     'inn' => [
-        //         'required',
-        //         Rule::unique('contragents')->ignore($id),
-        //     ],
-        //     'title' => [
-        //         'required'
-        //     ],
-        //     'legal_address' => [
-        //         'required'
-        //     ],
-        // ]);
-
-        // if(true || !$this->checkUser($id)) return $request->withErrors($validator, 'login');
-
-        // if(!$validator->fails()){
-
-            $contragent = Contragent::findOrFail($id);
-            $contragent->types()->sync($request->all()['typeIds']);
-            $storesIds = [];
-            $contragent->update($request->all());
-            if(count($request->all()['stores'])){
-                foreach($request->all()['stores'] as $store){
-                    if($store['coords'] && $store['address']){
-                        if($store['id']){
-                            Store::find($store['id'])->update([
-                                'contragent_id' => $contragent->id,
-                                'coords' => $store['coords'], 
-                                'address' => $store['address'], 
-                                'federal_district_id' => $store['federal_district']['id'],
-                                'region_id' => $store['region']['id']
-                            ]);
-                            $storesIds[] = $store['id'];
-                        } else {
-                            $storesIds[] = Store::create([
-                                'contragent_id' => $contragent->id,
-                                'coords' => $store['coords'],
-                                'address' => $store['address'],
-                                'federal_district_id' => $store['federal_district']['id'],
-                                'region_id' => $store['region']['id']
-                            ])->id;
-                        }
+        $contragent = Contragent::findOrFail($id);
+        $contragent->types()->sync($request->all()['typeIds']);
+        $storesIds = [];
+        $contragent->update($request->all());
+        if (count($request->all()['stores'])) {
+            foreach ($request->all()['stores'] as $store) {
+                if ($store['coords'] && $store['address']) {
+                    if ($store['id']) {
+                        Store::find($store['id'])->update([
+                            'contragent_id' => $contragent->id,
+                            'coords' => $store['coords'],
+                            'address' => $store['address'],
+                            'federal_district_id' => $store['federal_district']['id'],
+                            'region_id' => $store['region']['id']
+                        ]);
+                        $storesIds[] = $store['id'];
+                    } else {
+                        $storesIds[] = Store::create([
+                            'contragent_id' => $contragent->id,
+                            'coords' => $store['coords'],
+                            'address' => $store['address'],
+                            'federal_district_id' => $store['federal_district']['id'],
+                            'region_id' => $store['region']['id']
+                        ])->id;
                     }
                 }
-                Store::whereNotIn('id', $storesIds)->where("contragent_id", $contragent->id)->delete();
             }
-        // }
+            Store::whereNotIn('id', $storesIds)->where("contragent_id", $contragent->id)->delete();
+        }
+
 
         $contragent = Contragent::findOrFail($id);
         return $contragent;
-
     }
 
 
@@ -162,56 +132,62 @@ class ContragentsController extends Controller
      */
     public function updateCompany(Request $request)
     {
+
         $id = Auth::user()->contragents[0]->id;
 
+
         $validator = Validator::make($request->all(), [
-            'inn' => [
-                'required',
-                Rule::unique('contragents')->ignore($id),
-            ],
-            'title' => [
-                'required'
-            ],
-            'legal_address' => [
-                'required'
-            ],
+            "title" => "required|min:3",
+            "fio" => "required|min:3",
+            "phone" => "required|min:6",
+            "legal_address" => "required|min:3",
+            "inn" => "required|numeric|min:10|max:12",
+            "federal_district.id" => "required|exists:federal_districts,id",
+            "region.id" => "required|exists:regions,id",
         ]);
 
         $validator->validate();
 
-        foreach($request->all()['stores'] as $store){
+        // if(empty($request->all()['stores']))
+        //     $validator->errors()->add('stores', 'You mast add minimum one store!');
 
-            $validator = Validator::make($store, [
-                'coords' => [
-                    'required',
-                ],
-                'address' => [
-                    'required'
-                ],
-                'federal_district.id' => [
-                    'required'
-                ],
-                'region.id' => [
-                    'required'
-                ],
-            ]);
+        // foreach ($request->all()['stores'] as $k => $store) {
 
-            $validator->validate();
+        //     $storeValidator = Validator::make($store, [
+        //         "address" => "required|min:3",
+        //         "coords" => "required",
+        //         "federal_district.id" => "required|exists:federal_districts,id",
+        //         "region.id" => "required|exists:regions,id",
+        //     ]);
 
-        }
+        //     $storeValidator->validate();
+
+
+        //     if($storeValidator->fails()){
+        //         //foreach($validator->errors() as $ke => $error)
+        //         $validator->errors()->add('stores', [$k => $storeValidator->errors()]);
+        //     }
+
+        // }
+
+        // if($validator->fails())
+        //     return response()->json([
+        //         'message' => __('It`s not yours!'),
+        //         'errors' => $validator->errors()
+        //     ], 422);
 
         $contragent = Contragent::findOrFail($id);
         $contragent->types()->sync($request->all()['typeIds']);
         $storesIds = [];
         $contragent->update($request->all());
-        if(count($request->all()['stores'])){
-            foreach($request->all()['stores'] as $store){
-                if($store['coords'] && $store['address']){
-                    if($store['id']){
+        if (count($request->all()['stores'])) {
+            foreach ($request->all()['stores'] as $store) {
+                if ($store['coords'] && $store['address']) {
+                    if ($store['id']) {
                         Store::find($store['id'])->update([
                             'contragent_id' => $contragent->id,
-                            'coords' => $store['coords'], 
-                            'address' => $store['address'], 
+                            'coords' => $store['coords'],
+                            'address' => $store['address'],
                             'federal_district_id' => $store['federal_district']['id'],
                             'region_id' => $store['region']['id']
                         ]);

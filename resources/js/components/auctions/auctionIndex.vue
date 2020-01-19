@@ -206,10 +206,10 @@ export default {
     };
   },
   mounted() {
-    let app = this;
+    let app = this,
+    contragent_id = app.user.contragents[0].id,
+    action = "all";
     app.isLoading = true;
-    let contragent_id = app.user.contragents[0].id;
-    let action = "all";
     axios
       .get(
         "/api/v1/auctions/" +

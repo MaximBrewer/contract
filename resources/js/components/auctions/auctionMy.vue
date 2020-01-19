@@ -68,7 +68,7 @@
       </div>
       <br />
       <div class="table-responsive" id="auctions">
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered">
           <thead>
             <tr>
               <th>#</th>
@@ -191,14 +191,10 @@ export default {
     };
   },
   mounted() {
-    let app = this;
-    app.getMultiplicities();
-    app.getProducts();
-    app.getStores();
-    app.getFederalDistricts();
+    let app = this,
+    contragent_id = app.user.contragents[0].id,
+    action = "my";
     app.isLoading = true;
-    let contragent_id = app.user.contragents[0].id;
-    let action = "my";
     axios
       .get(
         "/api/v1/auctions/" +
@@ -211,6 +207,10 @@ export default {
       .then(function(resp) {
         app.auctions = resp.data;
         app.isLoading = false;
+        app.getMultiplicities();
+        app.getProducts();
+        app.getStores();
+        app.getFederalDistricts();
       })
       .catch(function(resp) {
         console.log(resp);

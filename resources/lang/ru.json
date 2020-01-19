@@ -160,5 +160,7 @@
     "Take part in the auction": "Принять участие в аукционе",
     "Unsubscribe from the auction": "Отказаться от участия в аукционе",
     "Go to auction page": "Перейти на страницу аукциона",
-    "Sort by distance from store": "Сортировать по удаленности от склада"
+	"Sort by distance from store": "Сортировать по удаленности от склада",
+	"Edit auction": "Обновить аукцион",
+	"legal address": "Юридический адрес"
 }

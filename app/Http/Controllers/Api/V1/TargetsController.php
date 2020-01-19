@@ -70,9 +70,12 @@ class TargetsController extends Controller
 
         $target = Target::findOrFail($id);
 
-        Validator::make((array) $target, [
-            'contragent_id' => 'same:' . Auth::user()->contragents[0]->id,
-        ])->validate();
+        if ($target->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
 
 
         $target->update([

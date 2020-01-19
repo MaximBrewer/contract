@@ -39,6 +39,7 @@ Route::group([
     Route::get('auctions/{action}/bid/{id}', 'AuctionsController@bid');
     Route::get('auctions/{action}/unbid/{id}', 'AuctionsController@unbid');
     Route::post('auctions', 'AuctionsController@store');
+    Route::post('auction/edit/{id}', 'AuctionsController@update');
     Route::post('auctions/add_bidder', 'AuctionsController@addBidder');
 
 

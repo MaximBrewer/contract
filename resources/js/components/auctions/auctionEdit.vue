@@ -1,48 +1,127 @@
 <template>
   <section class="auction-edit-wrapper">
-    <div class="container">
-      <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
+    <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
+    <div class="container" v-if="auction">
       <form v-on:submit="saveForm()">
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction lot') }}</label>
-          <v-select label="title" :options="products" v-model="auction.product"></v-select>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">{{ __('Auction lot') }}</label>
+              <v-select
+                label="title"
+                :options="products"
+                v-model="auction.product"
+                v-bind:class="{ 'is-invalid': errors['product.id'] }"
+              ></v-select>
+              <span role="alert" class="invalid-feedback" v-if="errors['product.id']">
+                <strong v-for="error in errors['product.id']">{{ error }}</strong>
+              </span>
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Auction multiplicity') }}</label>
+              <v-select
+                label="title"
+                :options="multiplicities"
+                v-model="auction.multiplicity"
+                v-bind:class="{ 'is-invalid': errors['multiplicity.id'] }"
+              ></v-select>
+              <span role="alert" class="invalid-feedback" v-if="errors['multiplicity.id']">
+                <strong v-for="error in errors['multiplicity.id']">{{ error }}</strong>
+              </span>
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Auction store') }}</label>
+              <v-select
+                label="address"
+                :options="stores"
+                v-model="auction.store"
+                v-bind:class="{ 'is-invalid': errors['store.id'] }"
+              ></v-select>
+              <span role="alert" class="invalid-feedback" v-if="errors['store.id']">
+                <strong v-for="error in errors['store.id']">{{ error }}</strong>
+              </span>
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Auction Volume') }}</label>
+              <input
+                type="number"
+                v-model="auction.volume"
+                class="form-control"
+                v-bind:class="{ 'is-invalid': errors.volume }"
+              />
+              <span role="alert" class="invalid-feedback" v-if="errors.volume">
+                <strong v-for="error in errors.volume">{{ error }}</strong>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">{{ __('Auction Start Price') }}</label>
+              <input
+                type="number"
+                v-model="auction.start_price"
+                class="form-control"
+                v-bind:class="{ 'is-invalid': errors.start_price }"
+              />
+              <span role="alert" class="invalid-feedback" v-if="errors.start_price">
+                <strong v-for="error in errors.start_price">{{ error }}</strong>
+              </span>
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Auction Step') }}</label>
+              <input
+                type="decimal"
+                v-model="auction.step"
+                class="form-control"
+                v-bind:class="{ 'is-invalid': errors.step }"
+              />
+              <span role="alert" class="invalid-feedback" v-if="errors.step">
+                <strong v-for="error in errors.step">{{ error }}</strong>
+              </span>
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Auction start') }}</label>
+              <datetime
+                type="datetime"
+                class="theme-primary"
+                input-class="form-control"
+                v-model="auction.start_at"
+                v-bind:class="{ 'is-invalid': errors.start_at }"
+              ></datetime>
+              <span role="alert" class="invalid-feedback" v-if="errors.start_at">
+                <strong v-for="error in errors.start_at">{{ error }}</strong>
+              </span>
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{ __('Auction finish') }}</label>
+              <datetime
+                type="datetime"
+                class="theme-primary"
+                input-class="form-control"
+                v-model="auction.finish_at"
+                v-bind:class="{ 'is-invalid': errors.finish_at }"
+              ></datetime>
+              <span role="alert" class="invalid-feedback" v-if="errors.finish_at">
+                <strong v-for="error in errors.finish_at">{{ error }}</strong>
+              </span>
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction multiplicity') }}</label>
-          <v-select label="title" :options="multiplicities" v-model="auction.multiplicity"></v-select>
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction contragent') }}</label>
-          <v-select label="title" :options="contragents" v-model="auction.contragent"></v-select>
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction store') }}</label>
-          <v-select label="address" :options="stores" v-model="auction.store"></v-select>
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction start') }}</label>
-          <datetime
-            type="datetime"
-            class="theme-primary"
-            input-class="form-control"
-            v-model="auction.start_at"
-          ></datetime>
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction finish') }}</label>
-          <datetime
-            type="datetime"
-            class="theme-primary"
-            input-class="form-control"
-            v-model="auction.finish_at"
-          ></datetime>
-        </div>
-        <div class="form-group">
-          <label class="control-label">{{ __('Auction comment') }}</label>
-          <textarea v-model="auction.comment" class="form-control"></textarea>
-        </div>
-        <div class="form-group">
-          <button class="btn btn-primary btn-lg">{{ __('Edit') }}</button>
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label class="control-label">{{ __('Auction comment') }}</label>
+            <textarea
+              v-model="auction.comment"
+              class="form-control"
+              v-bind:class="{ 'is-invalid': errors.comment }"
+            ></textarea>
+            <span role="alert" class="invalid-feedback" v-if="errors['auction.comment']">
+              <strong v-for="error in errors.comment">{{ error }}</strong>
+            </span>
+          </div>
+          <div class="form-group text-right">
+            <button class="btn btn-primary">{{ __('Edit auction') }}</button>
+          </div>
         </div>
       </form>
     </div>
@@ -50,9 +129,7 @@
 </template>
 <script>
 import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
 import { Datetime } from "vue-datetime";
-import "vue-datetime/dist/vue-datetime.css";
 import vSelect from "vue-select";
 export default {
   components: {
@@ -63,16 +140,10 @@ export default {
   mounted() {
     let app = this;
     app.isLoading = true;
-    let id = app.$route.params.id;
-    app.getMultiplicities();
-    app.getProducts();
-    app.getStores();
-    app.getContragents();
-    app.auctionId = id;
     axios
       .get(
-        "/api/v1/auctions/" +
-          id +
+        "/api/v1/auction/" +
+          app.$route.params.id +
           "?csrf_token=" +
           window.csrf_token +
           "&api_token=" +
@@ -86,6 +157,10 @@ export default {
         alert(app.__("Failed to load auction"));
         app.isLoading = false;
       });
+    app.getMultiplicities();
+    app.getProducts();
+    app.getStores();
+    app.getContragents();
   },
   data: function() {
     return {
@@ -97,12 +172,8 @@ export default {
       stores: [],
       products: [],
       auctionId: null,
-      auction: {
-        name: "",
-        address: "",
-        website: "",
-        email: ""
-      }
+      auction: null,
+      errors: []
     };
   },
   methods: {
@@ -161,27 +232,25 @@ export default {
     saveForm() {
       event.preventDefault();
       var app = this;
-      var newAuction = app.auction;
       app.isLoading = true;
       axios
-        .patch(
-          "/api/v1/auctions/" +
-            app.auctionId +
+        .post(
+          "/api/v1/auction/edit/" +
+            app.auction.id +
             "?csrf_token=" +
             window.csrf_token +
             "&api_token=" +
             window.api_token,
-          newAuction
+          app.auction
         )
         .then(function(resp) {
-          app.auction = resp.data;
-          app.isLoading = false;
-          return true;
-          //app.$router.replace("/");
+          app.$router.replace(
+            "/personal/auctions/show/" +
+              app.auction.id
+          );
         })
-        .catch(function(resp) {
-          console.log(resp);
-          alert(app.__("Failed to update auction"));
+        .catch(function(errors) {
+          app.errors = errors.response.data.errors;
           app.isLoading = false;
         });
     }
