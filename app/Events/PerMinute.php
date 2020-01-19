@@ -49,9 +49,12 @@ class PerMinute implements ShouldBroadcast
             ]
         );
 
-        DB::table('auctions')->whereIn('id', $started)->update(array(
-            'started' => true,
-        ));
+        foreach($started as $auction){
+            DB::table('auctions')->where('id', $auction->id)->update(array(
+                'started' => 1,
+            ));
+        }
+
 
         $this->aucstartedtions = $started;
         $this->finished = $finished;
