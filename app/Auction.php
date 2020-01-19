@@ -55,53 +55,51 @@ class Auction extends Model
         $this->results;
         return true;
     }
-    
+
     public function product()
     {
         return $this->belongsTo('App\Product');
     }
-    
+
     public function store()
     {
         return $this->belongsTo('App\Store');
     }
-    
+
     public function results()
     {
         return $this->hasMany('App\Result');
     }
-    
+
     public function multiplicity()
     {
         return $this->belongsTo('App\Multiplicity');
     }
-    
+
     public function contragent()
     {
         return $this->belongsTo('App\Contragent');
     }
-    
+
     public function getBiddersAttribute()
     {
 
         $bidderIds = DB::select('select contragent_id from contragent_auction where auction_id = ?', [$this->id]);
         $bidderIdsArray = [];
-        foreach($bidderIds as $bidderId) $bidderIdsArray[] = $bidderId->contragent_id;
+        foreach ($bidderIds as $bidderId) $bidderIdsArray[] = $bidderId->contragent_id;
         $contragents = Contragent::whereIn('id', $bidderIdsArray)->select('id', 'title')->get();
         $cAgents = [];
-        foreach($contragents as $contragent) $cAgents[$contragent->id] = ['title' => $contragent->title];
+        foreach ($contragents as $contragent) $cAgents[$contragent->id] = ['id' => $contragent->id, 'title' => $contragent->title];
         return $cAgents;
-        
     }
-    
+
     public function getBidderAttribute()
     {
-        if(Auth::user() && count(Auth::user()->contragents)){
-            foreach(Auth::user()->contragents[0]->auctions as $auction){
-                if($auction->id == $this->id) return 1;
+        if (Auth::user() && count(Auth::user()->contragents)) {
+            foreach (Auth::user()->contragents[0]->auctions as $auction) {
+                if ($auction->id == $this->id) return 1;
             }
         }
         return 0;
     }
-    
 }
