@@ -462,7 +462,7 @@ export default {
           }
           if (app.auction.contragent.id == contr) app.mine = 1;
         }
-        console.log(app.mine, app.bidding);
+        console.log(app.auction.bidders, app.bidding);
 
       })
       .catch(function() {
