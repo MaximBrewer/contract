@@ -302,6 +302,7 @@ class AuctionsController extends Controller
 
         $auctionBets = Bet::where('auction_id', $r->post('auction'))->orderBy('price', 'desc')->orderBy('created_at', 'asc')->get();
 
+        return $auctionBets;
 
         foreach ($auctionBets as $ke => $auctionBet) {
 
