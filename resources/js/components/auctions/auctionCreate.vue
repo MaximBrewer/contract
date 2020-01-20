@@ -219,7 +219,7 @@ export default {
         .then(function(resp) {
           app.$router.replace(
             "/personal/auctions/show/" +
-              app.auction.id
+              resp.data.id
           );
         })
         .catch(function(errors) {
