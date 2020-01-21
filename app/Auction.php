@@ -41,7 +41,7 @@ class Auction extends Model
 
     public function getFreeVolumeAttribute()
     {
-        $cnt = DB::select('select sum(volume) as busy_volume from bets where (approved_volume is null or andapproved_volume <> 1) and auction_id = ?', [$this->id]);
+        $cnt = DB::select('select sum(volume) as busy_volume from bets where (approved_volume is null or approved_volume <> 1) and auction_id = ?', [$this->id]);
         return (int) $this->volume - (int) $cnt[0]->busy_volume;
     }
 
