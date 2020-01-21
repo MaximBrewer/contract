@@ -455,7 +455,7 @@ class AuctionsController extends Controller
         $auctionBets = Bet::where('auction_id', $r->post('auction'))->where(function ($query) {
             $query
                 ->whereNull('approved_volume')
-                ->orWhere('approved_volume', '<>', 1);
+                ->orWhere('approved_volume', '<', 1);
         })
             ->orderBy('price', 'desc')
             ->orderBy('volume', 'desc')
