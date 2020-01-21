@@ -345,7 +345,7 @@ class AuctionsController extends Controller
 
         $bet->update([
             'approved_contract' => Carbon::now(),
-            'correct' => $r->correct
+            'correct' => (float)$r->correct
         ]);
 
         $auction = Auction::findOrFail($auction->id);
