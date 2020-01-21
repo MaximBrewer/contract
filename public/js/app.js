@@ -4903,6 +4903,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -92961,8 +92975,10 @@ var render = function() {
                           staticClass: "invalid-feedback",
                           attrs: { role: "alert" }
                         },
-                        _vm._l(_vm.errors.title, function(error) {
-                          return _c("span", [_vm._v(_vm._s(error))])
+                        _vm._l(_vm.errors.title, function(error, index) {
+                          return _c("span", { key: index }, [
+                            _vm._v(_vm._s(error))
+                          ])
                         }),
                         0
                       )
@@ -93001,9 +93017,12 @@ var render = function() {
                             attrs: { role: "alert" }
                           },
                           _vm._l(_vm.errors["federal_district.id"], function(
-                            error
+                            error,
+                            index
                           ) {
-                            return _c("span", [_vm._v(_vm._s(error))])
+                            return _c("span", { key: index }, [
+                              _vm._v(_vm._s(error))
+                            ])
                           }),
                           0
                         )
@@ -93042,8 +93061,13 @@ var render = function() {
                             staticClass: "invalid-feedback",
                             attrs: { role: "alert" }
                           },
-                          _vm._l(_vm.errors["region.id"], function(error) {
-                            return _c("span", [_vm._v(_vm._s(error))])
+                          _vm._l(_vm.errors["region.id"], function(
+                            error,
+                            index
+                          ) {
+                            return _c("span", { key: index }, [
+                              _vm._v(_vm._s(error))
+                            ])
                           }),
                           0
                         )
@@ -93086,8 +93110,13 @@ var render = function() {
                             staticClass: "invalid-feedback",
                             attrs: { role: "alert" }
                           },
-                          _vm._l(_vm.errors["types.id"], function(error) {
-                            return _c("span", [_vm._v(_vm._s(error))])
+                          _vm._l(_vm.errors["types.id"], function(
+                            error,
+                            index
+                          ) {
+                            return _c("span", { key: index }, [
+                              _vm._v(_vm._s(error))
+                            ])
                           }),
                           0
                         )
@@ -93134,8 +93163,10 @@ var render = function() {
                           staticClass: "invalid-feedback",
                           attrs: { role: "alert" }
                         },
-                        _vm._l(_vm.errors.inn, function(error) {
-                          return _c("span", [_vm._v(_vm._s(error))])
+                        _vm._l(_vm.errors.inn, function(error, index) {
+                          return _c("span", { key: index }, [
+                            _vm._v(_vm._s(error))
+                          ])
                         }),
                         0
                       )
@@ -93184,8 +93215,13 @@ var render = function() {
                           staticClass: "invalid-feedback",
                           attrs: { role: "alert" }
                         },
-                        _vm._l(_vm.errors.legal_address, function(error) {
-                          return _c("span", [_vm._v(_vm._s(error))])
+                        _vm._l(_vm.errors.legal_address, function(
+                          error,
+                          index
+                        ) {
+                          return _c("span", { key: index }, [
+                            _vm._v(_vm._s(error))
+                          ])
                         }),
                         0
                       )
@@ -93230,8 +93266,10 @@ var render = function() {
                           staticClass: "invalid-feedback",
                           attrs: { role: "alert" }
                         },
-                        _vm._l(_vm.errors.fio, function(error) {
-                          return _c("span", [_vm._v(_vm._s(error))])
+                        _vm._l(_vm.errors.fio, function(error, index) {
+                          return _c("span", { key: index }, [
+                            _vm._v(_vm._s(error))
+                          ])
                         }),
                         0
                       )
@@ -93276,8 +93314,10 @@ var render = function() {
                           staticClass: "invalid-feedback",
                           attrs: { role: "alert" }
                         },
-                        _vm._l(_vm.errors.phone, function(error) {
-                          return _c("span", [_vm._v(_vm._s(error))])
+                        _vm._l(_vm.errors.phone, function(error, index) {
+                          return _c("span", { key: index }, [
+                            _vm._v(_vm._s(error))
+                          ])
                         }),
                         0
                       )
@@ -93329,86 +93369,82 @@ var render = function() {
                               _c(
                                 "div",
                                 { staticClass: "form-group" },
-                                [
-                                  _c(
-                                    "label",
-                                    { staticClass: "control-label" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.__("Store coords #", {
-                                            store: index + 1
-                                          })
-                                        )
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("store-map", { attrs: { store: store } }),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value:
-                                          _vm.contragent.stores[index].coords,
-                                        expression:
-                                          "contragent.stores[index].coords"
-                                      }
-                                    ],
-                                    ref: "stores_" + index + "_coords",
-                                    refInFor: true,
-                                    staticClass: "form-control",
-                                    class: {
-                                      "is-invalid":
-                                        _vm.errors.stores &&
-                                        _vm.errors.stores[index] &&
-                                        _vm.errors.stores[index].coords
-                                    },
-                                    attrs: { type: "text" },
-                                    domProps: {
-                                      value: _vm.contragent.stores[index].coords
-                                    },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          _vm.contragent.stores[index],
-                                          "coords",
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.errors.stores &&
-                                  _vm.errors.stores[index] &&
-                                  _vm.errors.stores[index].coords
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "invalid-feedback",
-                                          attrs: { role: "alert" }
-                                        },
-                                        _vm._l(
-                                          _vm.errors.stores[index].coords,
-                                          function(error) {
-                                            return _c("span", [
-                                              _vm._v(_vm._s(error))
-                                            ])
-                                          }
-                                        ),
-                                        0
-                                      )
-                                    : _vm._e()
-                                ],
+                                [_c("store-map", { attrs: { store: store } })],
                                 1
-                              ),
-                              _vm._v(" "),
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-6" }, [
                               _c("div", { staticClass: "form-group" }, [
+                                _c("label", { staticClass: "control-label" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.__("Store coords #", {
+                                        store: index + 1
+                                      })
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.contragent.stores[index].coords,
+                                      expression:
+                                        "contragent.stores[index].coords"
+                                    }
+                                  ],
+                                  ref: "stores_" + index + "_coords",
+                                  refInFor: true,
+                                  staticClass: "form-control",
+                                  class: {
+                                    "is-invalid":
+                                      _vm.errors.stores &&
+                                      _vm.errors.stores[index] &&
+                                      _vm.errors.stores[index].coords
+                                  },
+                                  attrs: { type: "text" },
+                                  domProps: {
+                                    value: _vm.contragent.stores[index].coords
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.contragent.stores[index],
+                                        "coords",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.errors.stores &&
+                                _vm.errors.stores[index] &&
+                                _vm.errors.stores[index].coords
+                                  ? _c(
+                                      "div",
+                                      {
+                                        staticClass: "invalid-feedback",
+                                        attrs: { role: "alert" }
+                                      },
+                                      _vm._l(
+                                        _vm.errors.stores[index].coords,
+                                        function(error, index) {
+                                          return _c("span", { key: index }, [
+                                            _vm._v(_vm._s(error))
+                                          ])
+                                        }
+                                      ),
+                                      0
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
                                 _c("label", { staticClass: "control-label" }, [
                                   _vm._v(
                                     _vm._s(
@@ -93468,8 +93504,8 @@ var render = function() {
                                       },
                                       _vm._l(
                                         _vm.errors.stores[index].address,
-                                        function(error) {
-                                          return _c("span", [
+                                        function(error, index) {
+                                          return _c("span", { key: index }, [
                                             _vm._v(_vm._s(error))
                                           ])
                                         }
@@ -93477,10 +93513,8 @@ var render = function() {
                                       0
                                     )
                                   : _vm._e()
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-6" }, [
+                              ]),
+                              _vm._v(" "),
                               _c(
                                 "div",
                                 { staticClass: "form-group" },
@@ -93546,8 +93580,8 @@ var render = function() {
                                           _vm.errors.stores[index][
                                             "federal_district.id"
                                           ],
-                                          function(error) {
-                                            return _c("span", [
+                                          function(error, index) {
+                                            return _c("span", { key: index }, [
                                               _vm._v(_vm._s(error))
                                             ])
                                           }
@@ -93616,10 +93650,12 @@ var render = function() {
                                         },
                                         _vm._l(
                                           _vm.errors.stores[index]["region.id"],
-                                          function(error) {
-                                            return _c("span", [
-                                              _vm._v(_vm._s(error))
-                                            ])
+                                          function(error, index) {
+                                            return _c(
+                                              "span",
+                                              { key: index, attrs: { Í: "" } },
+                                              [_vm._v(_vm._s(error))]
+                                            )
                                           }
                                         ),
                                         0

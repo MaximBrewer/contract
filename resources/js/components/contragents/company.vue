@@ -15,7 +15,7 @@
                 ref="title"
               />
               <div role="alert" class="invalid-feedback" v-if="errors.title">
-                <span v-for="error in errors.title">{{ error }}</span>
+                <span v-for="(error, index) in errors.title" :key="index">{{ error }}</span>
               </div>
             </div>
           </div>
@@ -29,7 +29,10 @@
                 v-model="contragent.federal_district"
               ></v-select>
               <div role="alert" class="invalid-feedback" v-if="errors['federal_district.id']">
-                <span v-for="error in errors['federal_district.id']">{{ error }}</span>
+                <span
+                  v-for="(error, index) in errors['federal_district.id']"
+                  :key="index"
+                >{{ error }}</span>
               </div>
             </div>
           </div>
@@ -44,7 +47,7 @@
                 ref="region"
               ></v-select>
               <div role="alert" class="invalid-feedback" v-if="errors['region.id']">
-                <span v-for="error in errors['region.id']">{{ error }}</span>
+                <span v-for="(error, index) in errors['region.id']" :key="index">{{ error }}</span>
               </div>
             </div>
           </div>
@@ -60,7 +63,7 @@
                 ref="types"
               ></v-select>
               <div role="alert" class="invalid-feedback" v-if="errors['types.id']">
-                <span v-for="error in errors['types.id']">{{ error }}</span>
+                <span v-for="(error, index) in errors['types.id']" :key="index">{{ error }}</span>
               </div>
             </div>
           </div>
@@ -75,7 +78,7 @@
                 ref="inn"
               />
               <div role="alert" class="invalid-feedback" v-if="errors.inn">
-                <span v-for="error in errors.inn">{{ error }}</span>
+                <span v-for="(error, index) in errors.inn" :key="index">{{ error }}</span>
               </div>
             </div>
           </div>
@@ -90,7 +93,7 @@
                 ref="legal_address"
               />
               <div role="alert" class="invalid-feedback" v-if="errors.legal_address">
-                <span v-for="error in errors.legal_address">{{ error }}</span>
+                <span v-for="(error, index) in errors.legal_address" :key="index">{{ error }}</span>
               </div>
             </div>
           </div>
@@ -105,7 +108,7 @@
                 ref="fio"
               />
               <div role="alert" class="invalid-feedback" v-if="errors.fio">
-                <span v-for="error in errors.fio">{{ error }}</span>
+                <span v-for="(error, index) in errors.fio" :key="index">{{ error }}</span>
               </div>
             </div>
           </div>
@@ -120,7 +123,7 @@
                 ref="phone"
               />
               <div role="alert" class="invalid-feedback" v-if="errors.phone">
-                <span v-for="error in errors.phone">{{ error }}</span>
+                <span v-for="(error, index) in errors.phone" :key="index">{{ error }}</span>
               </div>
             </div>
           </div>
@@ -134,10 +137,14 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
+                          <store-map :store="store" />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
                           <label
                             class="control-label"
                           >{{ __('Store coords #', {store: index + 1}) }}</label>
-                          <store-map :store="store"/>
                           <input
                             type="text"
                             v-bind:class="{ 'is-invalid': errors.stores && errors.stores[index] && errors.stores[index].coords }"
@@ -150,10 +157,11 @@
                             class="invalid-feedback"
                             v-if="errors.stores && errors.stores[index] && errors.stores[index].coords"
                           >
-                            <span v-for="error in errors.stores[index].coords">{{ error }}</span>
+                            <span
+                              v-for="(error, index) in errors.stores[index].coords"
+                              :key="index"
+                            >{{ error }}</span>
                           </div>
-                        </div>
-                        <div class="form-group">
                           <label
                             class="control-label"
                           >{{ __('Store address #', {store: index + 1}) }}</label>
@@ -169,11 +177,12 @@
                             class="invalid-feedback"
                             v-if="errors.stores && errors.stores[index] && errors.stores[index].address"
                           >
-                            <span v-for="error in errors.stores[index].address">{{ error }}</span>
+                            <span
+                              v-for="(error, index) in errors.stores[index].address"
+                              :key="index"
+                            >{{ error }}</span>
                           </div>
                         </div>
-                      </div>
-                      <div class="col-md-6">
                         <div class="form-group">
                           <label
                             class="control-label"
@@ -191,7 +200,8 @@
                             v-if="errors.stores && errors.stores[index] && errors.stores[index]['federal_district.id']"
                           >
                             <span
-                              v-for="error in errors.stores[index]['federal_district.id']"
+                              v-for="(error, index) in errors.stores[index]['federal_district.id']"
+                              :key="index"
                             >{{ error }}</span>
                           </div>
                         </div>
@@ -211,7 +221,11 @@
                             class="invalid-feedback"
                             v-if="errors.stores && errors.stores[index] && errors.stores[index]['region.id']"
                           >
-                            <span v-for="error in errors.stores[index]['region.id']">{{ error }}</span>
+                            <span
+                              v-for="(error, index) in errors.stores[index]['region.id']"
+                              :key="index"
+                              Í
+                            >{{ error }}</span>
                           </div>
                         </div>
                       </div>
