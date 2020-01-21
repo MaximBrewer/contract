@@ -276,6 +276,7 @@
                             v-tooltip="__('Approve volume')"
                             href="javascript:void(0)"
                             class="btn btn-sm"
+                            :disabled="bet.approved_volume"
                             v-bind:class="{ 'btn-success': !bet.approved_volume, 'btn-secondary': bet.approved_volume }"
                             @click="approveVolume(bet)"
                           >
@@ -299,6 +300,7 @@
                             v-tooltip="__('Approve contract')"
                             href="javascript:void(0)"
                             class="btn btn-sm"
+                            :disabled="bet.approved_contract"
                             v-bind:class="{ 'btn-success': !bet.approved_contract, 'btn-secondary': bet.approved_contract }"
                             @click="approveContract(bet)"
                           >

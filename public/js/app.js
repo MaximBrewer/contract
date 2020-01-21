@@ -4161,6 +4161,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -92013,7 +92015,9 @@ var render = function() {
                                                             },
                                                             attrs: {
                                                               href:
-                                                                "javascript:void(0)"
+                                                                "javascript:void(0)",
+                                                              disabled:
+                                                                bet.approved_volume
                                                             },
                                                             on: {
                                                               click: function(
@@ -92127,7 +92131,9 @@ var render = function() {
                                                             },
                                                             attrs: {
                                                               href:
-                                                                "javascript:void(0)"
+                                                                "javascript:void(0)",
+                                                              disabled:
+                                                                bet.approved_contract
                                                             },
                                                             on: {
                                                               click: function(
