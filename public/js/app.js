@@ -4269,18 +4269,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     listenForBroadcast: function listenForBroadcast() {
       var app = this;
-      Echo.channel("cross_contractru_database_every-minute").listen("PerMinute", function (e) {
-        e.started.forEach(function (auction) {
-          if (auction.id == app.auction.id) {
-            app.auction.started = true;
-          }
-        });
-        e.started.forEach(function (auction) {
-          if (auction.id == app.auction.id) {
-            app.auction.finished = true;
-          }
-        });
-      });
       Echo.channel("cross_contractru_database_message-pushed").listen("MessagePushed", function (e) {
         console.log(e.auction);
         if (app.auction.id == e.auction.id) app.auction == e.auction;

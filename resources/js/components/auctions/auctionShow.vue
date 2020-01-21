@@ -625,21 +625,6 @@ export default {
     },
     listenForBroadcast() {
       var app = this;
-      Echo.channel("cross_contractru_database_every-minute").listen(
-        "PerMinute",
-        function(e) {
-          e.started.forEach(auction => {
-            if (auction.id == app.auction.id) {
-              app.auction.started = true;
-            }
-          });
-          e.started.forEach(auction => {
-            if (auction.id == app.auction.id) {
-              app.auction.finished = true;
-            }
-          });
-        }
-      );
       Echo.channel("cross_contractru_database_message-pushed").listen(
         "MessagePushed",
         function(e) {
