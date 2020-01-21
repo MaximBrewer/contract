@@ -47,6 +47,9 @@ Route::get('/personal/targets/edit/{id}', 'PersonalController@index')->middlewar
 
 Route::get('/personal', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
 
+Route::get('/personal/contragents/reviews', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
+
+
 // Route::get('/about', 'AboutController@index')->name('about');
 // Route::get('/rating', 'RatingController@index')->name('rating');
 // Route::get('/auction', 'AuctionController@index')->name('auction');

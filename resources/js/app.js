@@ -48,6 +48,7 @@ import AuctionShow from "./components/auctions/auctionShow.vue";
 import TargetCreate from "./components/targets/targetCreate.vue";
 import TargetEdit from "./components/targets/targetEdit.vue";
 import TargetIndex from "./components/targets/targetIndex.vue";
+import ReviewsIndex from "./components/contragents/reviewsIndex.vue";
 
 const routes = [
     { path: "/personal", redirect: "/personal/auctions" },
@@ -55,6 +56,11 @@ const routes = [
         path: "/personal/contragents",
         component: ContragentIndex,
         name: "contragentIndex"
+    },
+    {
+        path: "/personal/contragents/reviews",
+        component: ReviewsIndex,
+        name: "reviews"
     },
     {
         path: "/personal/contragents/create",

@@ -32,7 +32,7 @@
       <div class="card">
         <div class="card-header">
           <star-rating class="float-right" :star-size="starSizeSmall" v-model="comment.votes" :show-rating="false" :read-only="true"></star-rating>
-          <strong>{{ comment.writer }}</strong>
+          <strong>{{ comment.by }}</strong>
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item"><p>{{comment.comment}}</p>
@@ -69,7 +69,6 @@ export default {
     };
   },
   methods: {
-    rate() {},
     fetchComments() {
       let app = this;
       axios

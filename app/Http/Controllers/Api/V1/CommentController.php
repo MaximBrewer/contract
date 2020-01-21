@@ -68,4 +68,19 @@ class CommentController extends Controller
             Comment::where('contragent_id', $contragentId)->where('writer', User::find(Auth::user()->id)->contragents[0]->id)->first()
         ];
     }
+
+    /**
+     * Get Comments for contragentId
+
+     * @return Comments
+     */
+
+    public function index()
+    {
+
+        $comments = Comment::where('writer', User::find(Auth::user()->id)->contragents[0]->id)->get();
+        return [
+            $comments
+        ];
+    }
 }

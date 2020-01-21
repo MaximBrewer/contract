@@ -16,21 +16,22 @@ class Comment extends Model
 
 
     protected $appends = [
-        'writer'
+        'by',
+        'to'
     ];
     protected $fillable = ['comment', 'votes', 'contragent_id', 'writer'];
     protected $dates = ['created_at', 'updated_at'];
 
 
-    public function getWriterAttribute()
+    public function getToAttribute()
     {
-        $contragent = Contragent::find($this->contragent_id)->select('title')->first();
-        return $contragent->title;
+        $to = Contragent::find($this->contragent_id);
+        return $to->title;
     }
 
-
-    public function contragent()
+    public function getByAttribute()
     {
-        return $this->belongsTo('App\Contragent');
+        $by = Contragent::find($this->writer);
+        return $by->title;
     }
 }
