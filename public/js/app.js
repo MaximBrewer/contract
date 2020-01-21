@@ -92023,9 +92023,13 @@ var render = function() {
                                                               click: function(
                                                                 $event
                                                               ) {
-                                                                return _vm.approveVolume(
-                                                                  bet
-                                                                )
+                                                                bet.approved_volume
+                                                                  ? function() {
+                                                                      return false
+                                                                    }
+                                                                  : _vm.approveVolume(
+                                                                      bet
+                                                                    )
                                                               }
                                                             }
                                                           },
@@ -92139,9 +92143,13 @@ var render = function() {
                                                               click: function(
                                                                 $event
                                                               ) {
-                                                                return _vm.approveContract(
-                                                                  bet
-                                                                )
+                                                                bet.approved_contract
+                                                                  ? function() {
+                                                                      return false
+                                                                    }
+                                                                  : _vm.approveContract(
+                                                                      bet
+                                                                    )
                                                               }
                                                             }
                                                           },

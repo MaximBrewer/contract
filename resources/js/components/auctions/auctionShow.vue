@@ -278,7 +278,7 @@
                             class="btn btn-sm"
                             :disabled="bet.approved_volume"
                             v-bind:class="{ 'btn-success': !bet.approved_volume, 'btn-secondary': bet.approved_volume }"
-                            @click="approveVolume(bet)"
+                            @click="bet.approved_volume ? function(){ return false; } : approveVolume(bet)"
                           >
                             <i class="mdi mdi-check-circle" aria-hidden="true"></i>
                           </a>
@@ -302,7 +302,7 @@
                             class="btn btn-sm"
                             :disabled="bet.approved_contract"
                             v-bind:class="{ 'btn-success': !bet.approved_contract, 'btn-secondary': bet.approved_contract }"
-                            @click="approveContract(bet)"
+                            @click="bet.approved_contract ? function(){ return false; } : approveContract(bet)"
                           >
                             <i class="mdi mdi-check-circle" aria-hidden="true"></i>
                           </a>
