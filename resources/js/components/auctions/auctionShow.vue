@@ -244,7 +244,7 @@
                             v-tooltip="__('Is online')"
                             href="javascript:void(0)"
                             class="online"
-                            v-bind:class="{ 'is-online': bet.contragent.is_online, 'is-offline': !bet.contragent.is_online }"
+                            v-bind:class="{ 'is-online': bet.took_part, 'is-offline': !bet.took_part }"
                           ></span>
                         </div>
                       </td>

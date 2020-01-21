@@ -91859,11 +91859,8 @@ var render = function() {
                                                           staticClass: "online",
                                                           class: {
                                                             "is-online":
-                                                              bet.contragent
-                                                                .is_online,
-                                                            "is-offline": !bet
-                                                              .contragent
-                                                              .is_online
+                                                              bet.took_part,
+                                                            "is-offline": !bet.took_part
                                                           },
                                                           attrs: {
                                                             href:

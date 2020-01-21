@@ -130,7 +130,7 @@ class AuctionsController extends Controller
     public function show($id)
     {
         $user = User::find(Auth::user()->id);
-        $user->contragents[0]->bets->update([
+        Bet::where('contragent_id', $user->contragents[0])->update([
             'took_part' => Carbon::now()
         ]);
         return Auction::findOrFail($id);
@@ -342,6 +342,7 @@ class AuctionsController extends Controller
         $auction = $bet->auction;
         
 
+
         if (empty($auction) || $auction->contragent_id != Auth::user()->contragents[0]->id) {
             return response()->json([
                 'message' => __('It`s not yours!'),
@@ -422,6 +423,12 @@ class AuctionsController extends Controller
             'volume' => $r->post('volume'),
             'took_part' => 1,
             'can_bet' => 1
+        ]);
+
+
+
+        Bet::where('contragent_id', $r->post('bidder'))->update([
+            'took_part' => Carbon::now()
         ]);
 
         $freeVolume = $auction->volume;
