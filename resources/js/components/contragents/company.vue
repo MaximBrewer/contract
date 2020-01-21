@@ -146,6 +146,7 @@
                             class="control-label"
                           >{{ __('Store coords #', {store: index + 1}) }}</label>
                           <input
+                            readonly
                             type="text"
                             v-bind:class="{ 'is-invalid': errors.stores && errors.stores[index] && errors.stores[index].coords }"
                             v-model="contragent.stores[index].coords"

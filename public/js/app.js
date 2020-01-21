@@ -4917,6 +4917,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -93406,7 +93407,7 @@ var render = function() {
                                       _vm.errors.stores[index] &&
                                       _vm.errors.stores[index].coords
                                   },
-                                  attrs: { type: "text" },
+                                  attrs: { readonly: "", type: "text" },
                                   domProps: {
                                     value: _vm.contragent.stores[index].coords
                                   },
