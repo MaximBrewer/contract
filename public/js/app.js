@@ -112538,11 +112538,15 @@ window.Vue.filter("formatDate", function (value) {
   if (value) {
     return moment__WEBPACK_IMPORTED_MODULE_1___default()(String(value)).utcOffset("+03:00").format("DD.MM.YYYY");
   }
+
+  return "";
 });
 window.Vue.filter("formatDateTime", function (value) {
   if (value) {
     return moment__WEBPACK_IMPORTED_MODULE_1___default()(String(value)).utcOffset("+03:00").format("DD.MM.YYYY HH:mm");
   }
+
+  return "";
 });
 
 /***/ }),

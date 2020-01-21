@@ -203,6 +203,7 @@ window.Vue.filter("formatDate", function(value) {
             .utcOffset("+03:00")
             .format("DD.MM.YYYY");
     }
+    return "";
 });
 
 window.Vue.filter("formatDateTime", function(value) {
@@ -211,4 +212,5 @@ window.Vue.filter("formatDateTime", function(value) {
             .utcOffset("+03:00")
             .format("DD.MM.YYYY HH:mm");
     }
+    return "";
 });
