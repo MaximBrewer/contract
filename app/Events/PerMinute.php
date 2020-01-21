@@ -58,7 +58,7 @@ class PerMinute implements ShouldBroadcast
 
         $this->started = $started;
         $this->finished = $finished;
-        $this->time = $carbon->toDateTimeString();
+        $this->time = Carbon::now()->format(DATE_ATOM);
 
     }
 
