@@ -81,7 +81,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="auction, index in auctions" v-if="!auction.hidden">
+            <tr v-for="auction in _auctions" :key="auction.id">
               <th>{{ auction.id }}</th>
               <td>
                 <div v-if="auction.contragent" class="text-nowrap">
@@ -197,6 +197,7 @@ export default {
   data: function() {
     return {
       auctions: [],
+      _auctions: [],
       isLoading: false,
       fullPage: true,
       store: null,
@@ -228,6 +229,7 @@ export default {
           window.api_token
       )
       .then(function(resp) {
+        app.filterAuctions(resp.data);
         app.auctions = resp.data;
         app.isLoading = false;
         app.getMultiplicities();
@@ -261,7 +263,7 @@ export default {
       return deg * (Math.PI / 180);
     },
     sorByDistanceAuctions() {
-      this.sorByDistance(this.auctions);
+      this.sorByDistance(this._auctions);
     },
     sorByDistance(auctions) {
       let app = this;
@@ -273,7 +275,6 @@ export default {
         let bs = b.store.coords.split(" ");
         if (as.length < 2) return false;
         if (bs.length < 2) return true;
-        console.log(coords, as, bs);
         let arange = app.getDistanceFromLatLonInKm(
           coords[0].trim(),
           coords[1].trim(),
@@ -286,10 +287,6 @@ export default {
           bs[0].trim(),
           bs[1].trim()
         );
-        console.log(a.store.address);
-        console.log(b.store.address);
-        console.log(arange);
-        console.log(brange);
         return arange - brange;
       });
     },
@@ -302,18 +299,23 @@ export default {
     },
     filterAuctions(auctions) {
       var app = this;
+      app._auctions = [];
+      let cnt = 0;
       for (let v in auctions) {
         let a = auctions[v];
         let f = app.filter;
         let s = a.store;
-
-        a.hidden =
-          (f.federal_district &&
-            f.federal_district.id != s.federal_district.id) ||
-          (f.region && f.region.id != s.region.id) ||
-          (f.product && f.product.id != a.product.id) ||
-          (f.multiplicity && f.multiplicity.id != a.multiplicity.id);
+        if (
+          (!f.federal_district ||
+            f.federal_district.id == s.federal_district.id) &&
+          (!f.region || f.region.id == s.region.id) &&
+          (!f.product || f.product.id == a.product.id) &&
+          (!f.multiplicity || f.multiplicity.id == a.multiplicity.id)
+        )
+          app._auctions.push(a);
+        ++cnt;
       }
+      if (auctions.length == cnt) app.sorByDistance(app._auctions);
     },
     getFederalDistricts() {
       let app = this;
@@ -396,7 +398,6 @@ export default {
             window.api_token
         )
         .then(function(resp) {
-          app.sorByDistance(resp.data);
           app.filterAuctions(resp.data);
           app.auctions = resp.data;
           app.isLoading = false;
@@ -419,7 +420,6 @@ export default {
             window.api_token
         )
         .then(function(resp) {
-          app.sorByDistance(resp.data);
           app.filterAuctions(resp.data);
           app.auctions = resp.data;
           app.isLoading = false;
