@@ -4283,7 +4283,6 @@ __webpack_require__.r(__webpack_exports__);
         volume: app.bid.volume,
         price: app.bid.price
       }).then(function (resp) {
-        app.auction = resp.data;
         app.$modal.hide("add_bidder");
       })["catch"](function (errors) {
         app.$fire({

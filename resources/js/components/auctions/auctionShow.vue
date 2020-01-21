@@ -609,7 +609,6 @@ export default {
             }
           )
           .then(function(resp) {
-            app.auction = resp.data;
             app.$modal.hide("add_bidder");
           })
           .catch(function(errors) {
