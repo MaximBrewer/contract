@@ -170,6 +170,7 @@
 	"Price": "Цена",
 	"Confirmed": "Подтвержден",
 	"Not confirmed": "Не подтвержден",
-	"Company edited successfully": "Компания успешно обновлена"
+	"Company edited successfully": "Компания успешно обновлена",
+	"You are an auction participant": "Вы участник аукциона"
 
 }
