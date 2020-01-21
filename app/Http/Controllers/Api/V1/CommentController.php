@@ -98,7 +98,7 @@ class CommentController extends Controller
     public function show($contragentId)
     {
 
-        $comments = Comment::where('contragent_id', $contragentId)->get();
+        $comments = Comment::where('contragent_id', $contragentId)->orderBy('updated_at', 'desc')->get();
         return [
             $comments,
             Contragent::find($contragentId)->rating,
@@ -115,7 +115,7 @@ class CommentController extends Controller
     public function index()
     {
 
-        $comments = Comment::where('writer', User::find(Auth::user()->id)->contragents[0]->id)->get();
+        $comments = Comment::where('writer', User::find(Auth::user()->id)->contragents[0]->id)->orderBy('updated_at', 'desc')->get();
         return [
             $comments
         ];
