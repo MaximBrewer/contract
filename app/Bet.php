@@ -27,4 +27,10 @@ class Bet extends Model
         ];
     }
 
+
+    public function auction()
+    {
+        return $this->belongsTo('App\Auction');
+    }
+
 }

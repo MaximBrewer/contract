@@ -2875,6 +2875,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4224,6 +4230,51 @@ __webpack_require__.r(__webpack_exports__);
     this.listenForBroadcast();
   },
   methods: {
+    removeBet: function removeBet(bet) {
+      app.$confirm(app.__("Are you sure?")).then(function () {
+        axios.get("/api/v1/auctions/bet/remove/" + bet.id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+          bet["delete"]();
+        })["catch"](function (errors) {
+          app.$fire({
+            title: app.__("Error!"),
+            text: errors.response.data.message,
+            type: "error",
+            timer: 5000
+          });
+        });
+      });
+    },
+    approveContract: function approveContract(bet) {
+      app.$confirm(app.__("Are you sure?")).then(function () {
+        axios.get("/api/v1/auctions/bet/contract?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
+          id: bet.id,
+          correct: bet.correct
+        }).then(function (resp) {
+          bet.approved_contract = 1;
+        })["catch"](function (errors) {
+          app.$fire({
+            title: app.__("Error!"),
+            text: errors.response.data.message,
+            type: "error",
+            timer: 5000
+          });
+        });
+      });
+    },
+    approveVolume: function approveVolume(bet) {
+      app.$confirm(app.__("Are you sure?")).then(function () {
+        axios.get("/api/v1/auctions/bet/volume/" + bet.id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+          bet.approved_volume = 1;
+        })["catch"](function (errors) {
+          app.$fire({
+            title: app.__("Error!"),
+            text: errors.response.data.message,
+            type: "error",
+            timer: 5000
+          });
+        });
+      });
+    },
     betIt: function betIt() {
       var app = this;
       if (app.auction) axios.post("/api/v1/auctions/bet?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
@@ -89620,7 +89671,11 @@ var render = function() {
                         _vm._v(" "),
                         _c("v-select", {
                           class: { "is-invalid": _vm.errors["product.id"] },
-                          attrs: { label: "title", options: _vm.products },
+                          attrs: {
+                            label: "title",
+                            options: _vm.products,
+                            disabled: _vm.auction.started
+                          },
                           model: {
                             value: _vm.auction.product,
                             callback: function($$v) {
@@ -89637,8 +89692,13 @@ var render = function() {
                                 staticClass: "invalid-feedback",
                                 attrs: { role: "alert" }
                               },
-                              _vm._l(_vm.errors["product.id"], function(error) {
-                                return _c("strong", [_vm._v(_vm._s(error))])
+                              _vm._l(_vm.errors["product.id"], function(
+                                error,
+                                index
+                              ) {
+                                return _c("strong", { key: index }, [
+                                  _vm._v(_vm._s(error))
+                                ])
                               }),
                               0
                             )
@@ -89661,6 +89721,7 @@ var render = function() {
                           },
                           attrs: {
                             label: "title",
+                            disabled: _vm.auction.started,
                             options: _vm.multiplicities
                           },
                           model: {
@@ -89680,9 +89741,12 @@ var render = function() {
                                 attrs: { role: "alert" }
                               },
                               _vm._l(_vm.errors["multiplicity.id"], function(
-                                error
+                                error,
+                                index
                               ) {
-                                return _c("strong", [_vm._v(_vm._s(error))])
+                                return _c("strong", { key: index }, [
+                                  _vm._v(_vm._s(error))
+                                ])
                               }),
                               0
                             )
@@ -89701,7 +89765,11 @@ var render = function() {
                         _vm._v(" "),
                         _c("v-select", {
                           class: { "is-invalid": _vm.errors["store.id"] },
-                          attrs: { label: "address", options: _vm.stores },
+                          attrs: {
+                            label: "address",
+                            disabled: _vm.auction.started,
+                            options: _vm.stores
+                          },
                           model: {
                             value: _vm.auction.store,
                             callback: function($$v) {
@@ -89718,8 +89786,13 @@ var render = function() {
                                 staticClass: "invalid-feedback",
                                 attrs: { role: "alert" }
                               },
-                              _vm._l(_vm.errors["store.id"], function(error) {
-                                return _c("strong", [_vm._v(_vm._s(error))])
+                              _vm._l(_vm.errors["store.id"], function(
+                                error,
+                                index
+                              ) {
+                                return _c("strong", { key: index }, [
+                                  _vm._v(_vm._s(error))
+                                ])
                               }),
                               0
                             )
@@ -89763,8 +89836,10 @@ var render = function() {
                               staticClass: "invalid-feedback",
                               attrs: { role: "alert" }
                             },
-                            _vm._l(_vm.errors.volume, function(error) {
-                              return _c("strong", [_vm._v(_vm._s(error))])
+                            _vm._l(_vm.errors.volume, function(error, index) {
+                              return _c("strong", { key: index }, [
+                                _vm._v(_vm._s(error))
+                              ])
                             }),
                             0
                           )
@@ -89789,7 +89864,10 @@ var render = function() {
                         ],
                         staticClass: "form-control",
                         class: { "is-invalid": _vm.errors.start_price },
-                        attrs: { type: "number" },
+                        attrs: {
+                          type: "number",
+                          disabled: _vm.auction.started
+                        },
                         domProps: { value: _vm.auction.start_price },
                         on: {
                           input: function($event) {
@@ -89812,8 +89890,13 @@ var render = function() {
                               staticClass: "invalid-feedback",
                               attrs: { role: "alert" }
                             },
-                            _vm._l(_vm.errors.start_price, function(error) {
-                              return _c("strong", [_vm._v(_vm._s(error))])
+                            _vm._l(_vm.errors.start_price, function(
+                              error,
+                              index
+                            ) {
+                              return _c("strong", { key: index }, [
+                                _vm._v(_vm._s(error))
+                              ])
                             }),
                             0
                           )
@@ -89836,7 +89919,10 @@ var render = function() {
                         ],
                         staticClass: "form-control",
                         class: { "is-invalid": _vm.errors.step },
-                        attrs: { type: "decimal" },
+                        attrs: {
+                          type: "decimal",
+                          disabled: _vm.auction.started
+                        },
                         domProps: { value: _vm.auction.step },
                         on: {
                           input: function($event) {
@@ -89855,8 +89941,10 @@ var render = function() {
                               staticClass: "invalid-feedback",
                               attrs: { role: "alert" }
                             },
-                            _vm._l(_vm.errors.step, function(error) {
-                              return _c("strong", [_vm._v(_vm._s(error))])
+                            _vm._l(_vm.errors.step, function(error, index) {
+                              return _c("strong", { key: index }, [
+                                _vm._v(_vm._s(error))
+                              ])
                             }),
                             0
                           )
@@ -89876,6 +89964,7 @@ var render = function() {
                           class: { "is-invalid": _vm.errors.start_at },
                           attrs: {
                             type: "datetime",
+                            disabled: _vm.auction.started,
                             "input-class": "form-control"
                           },
                           model: {
@@ -89894,8 +89983,13 @@ var render = function() {
                                 staticClass: "invalid-feedback",
                                 attrs: { role: "alert" }
                               },
-                              _vm._l(_vm.errors.start_at, function(error) {
-                                return _c("strong", [_vm._v(_vm._s(error))])
+                              _vm._l(_vm.errors.start_at, function(
+                                error,
+                                index
+                              ) {
+                                return _c("strong", { key: index }, [
+                                  _vm._v(_vm._s(error))
+                                ])
                               }),
                               0
                             )
@@ -89935,8 +90029,13 @@ var render = function() {
                                 staticClass: "invalid-feedback",
                                 attrs: { role: "alert" }
                               },
-                              _vm._l(_vm.errors.finish_at, function(error) {
-                                return _c("strong", [_vm._v(_vm._s(error))])
+                              _vm._l(_vm.errors.finish_at, function(
+                                error,
+                                index
+                              ) {
+                                return _c("strong", { key: index }, [
+                                  _vm._v(_vm._s(error))
+                                ])
                               }),
                               0
                             )
@@ -89982,8 +90081,10 @@ var render = function() {
                             staticClass: "invalid-feedback",
                             attrs: { role: "alert" }
                           },
-                          _vm._l(_vm.errors.comment, function(error) {
-                            return _c("strong", [_vm._v(_vm._s(error))])
+                          _vm._l(_vm.errors.comment, function(error, index) {
+                            return _c("strong", { key: index }, [
+                              _vm._v(_vm._s(error))
+                            ])
                           }),
                           0
                         )
@@ -91243,34 +91344,38 @@ var render = function() {
                             )
                           : _vm._e(),
                         _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            directives: [
+                        !_vm.auction.finished
+                          ? _c(
+                              "a",
                               {
-                                name: "tooltip",
-                                rawName: "v-tooltip",
-                                value: _vm.__("Add bidder"),
-                                expression: "__('Add bidder')"
-                              }
-                            ],
-                            staticClass: "btn btn-success",
-                            attrs: { href: "javascript:void(0)" },
-                            on: {
-                              click: function($event) {
-                                return _vm.showPopupAddBidder(_vm.auction.id)
-                              }
-                            }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "mdi mdi-account-plus",
-                              attrs: { "aria-hidden": "true" }
-                            })
-                          ]
-                        ),
+                                directives: [
+                                  {
+                                    name: "tooltip",
+                                    rawName: "v-tooltip",
+                                    value: _vm.__("Add bidder"),
+                                    expression: "__('Add bidder')"
+                                  }
+                                ],
+                                staticClass: "btn btn-success",
+                                attrs: { href: "javascript:void(0)" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.showPopupAddBidder(
+                                      _vm.auction.id
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "mdi mdi-account-plus",
+                                  attrs: { "aria-hidden": "true" }
+                                })
+                              ]
+                            )
+                          : _vm._e(),
                         _vm._v(" "),
-                        _vm.mine
+                        _vm.mine && !_vm.auction.finished
                           ? _c(
                               "router-link",
                               {
@@ -91299,7 +91404,7 @@ var render = function() {
                             )
                           : _vm._e(),
                         _vm._v(" "),
-                        _vm.mine
+                        _vm.mine && !_vm.auction.confirmed
                           ? _c(
                               "a",
                               {
@@ -91785,10 +91890,10 @@ var render = function() {
                                                                 rawName:
                                                                   "v-tooltip",
                                                                 value: _vm.__(
-                                                                  "Can bet"
+                                                                  "Delete bet"
                                                                 ),
                                                                 expression:
-                                                                  "__('Can bet')"
+                                                                  "__('Delete bet')"
                                                               }
                                                             ],
                                                             staticClass:
@@ -91802,7 +91907,7 @@ var render = function() {
                                                                 $event
                                                               ) {
                                                                 return _vm.removeBet(
-                                                                  bet.id
+                                                                  bet
                                                                 )
                                                               }
                                                             }
@@ -91900,9 +92005,9 @@ var render = function() {
                                                             staticClass:
                                                               "btn btn-sm",
                                                             class: {
-                                                              "btn-success": !bet.approved,
+                                                              "btn-success": !bet.approved_volume,
                                                               "btn-secondary":
-                                                                bet.approved
+                                                                bet.approved_volume
                                                             },
                                                             attrs: {
                                                               href:
@@ -92014,11 +92119,9 @@ var render = function() {
                                                             staticClass:
                                                               "btn btn-sm",
                                                             class: {
-                                                              "btn-success": !(
-                                                                bet.correct * 1
-                                                              ),
+                                                              "btn-success": !bet.approved_contract,
                                                               "btn-secondary":
-                                                                bet.correct * 1
+                                                                bet.approved_contract
                                                             },
                                                             attrs: {
                                                               href:

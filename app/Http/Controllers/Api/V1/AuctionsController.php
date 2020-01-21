@@ -281,6 +281,87 @@ class AuctionsController extends Controller
         return $auction;
     }
 
+    public function betRemove($id)
+    {
+        $bet = Bet::findOrFail($id);
+        $auction = $bet->auction;
+
+        if (empty($auction) || $auction->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+
+        $bet->destroy();
+
+        $auction = Auction::findOrFail($auction->id);
+
+        event(new \App\Events\MessagePushed($auction));
+
+        return ['ok'];
+    }
+
+    public function approveContract(Request $r)
+    {
+        $bet = Bet::findOrFail($r->id);
+        $auction = $bet->auction;
+        
+
+        if (empty($auction) || $auction->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+
+        if (!$bet->approved_volume) {
+            return response()->json([
+                'message' => __('Approve volume!'),
+                'errors' => []
+            ], 422);
+        }
+
+        $bet->update([
+            'approved_contract' => 1,
+            'correct' => $r->correct
+        ]);
+
+        $auction = Auction::findOrFail($auction->id);
+
+        event(new \App\Events\MessagePushed($auction));
+
+        return ['ok'];
+    }
+
+    public function approveVolume($id)
+    {
+        $bet = Bet::findOrFail($id);
+        $auction = $bet->auction;
+        
+
+        if (empty($auction) || $auction->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+
+        $bet->update([
+            'approved_volume' => 1
+        ]);
+
+        $auction = Auction::findOrFail($auction->id);
+
+        $auction->update([
+            'volume' => ($auction->volume - $bet->volume)
+        ]);
+
+        event(new \App\Events\MessagePushed($auction));
+
+        return ['ok'];
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -319,7 +400,12 @@ class AuctionsController extends Controller
             ], 422);
         }
 
-        $auctionBets = Bet::where('auction_id', $r->post('auction'))->orderBy('price', 'desc')->orderBy('created_at', 'asc')->get();
+        $auctionBets = Bet::where('auction_id', $r->post('auction'))
+            ->where('approved_volume', '<', 1)
+            ->orderBy('price', 'desc')
+            ->orderBy('volume', 'desc')
+            ->orderBy('created_at', 'asc')
+            ->get();
 
         $bets = [];
         $nev = false;

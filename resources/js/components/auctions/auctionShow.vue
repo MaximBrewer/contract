@@ -99,6 +99,7 @@
                 v-tooltip="__('Add bidder')"
                 href="javascript:void(0)"
                 class="btn btn-success"
+                v-if="!auction.finished"
                 @click="showPopupAddBidder(auction.id)"
               >
                 <i class="mdi mdi-account-plus" aria-hidden="true"></i>
@@ -106,7 +107,7 @@
               <router-link
                 v-tooltip="__('Edit auction')"
                 :to="{name: 'editAuction', 'params': {'id': auction.id}}"
-                v-if="mine"
+                v-if="mine && !auction.finished"
                 class="btn btn-dark"
               >
                 <i class="mdi mdi-pencil" aria-hidden="true"></i>
@@ -115,7 +116,7 @@
                 v-tooltip="__('Delete auction')"
                 href="javascript:void(0)"
                 class="btn btn-danger"
-                v-if="mine"
+                v-if="mine && !auction.confirmed"
                 @click="delAuction(auction.id)"
               >
                 <i class="mdi mdi-delete" aria-hidden="true"></i>
@@ -208,7 +209,6 @@
             </div>
           </div>
         </div>
-
         <!--Mine-->
         <div class="row" v-if="auction.bets && mine">
           <div class="col-md-12" v-if="auction.bets.length">
@@ -251,10 +251,10 @@
                       <td class="text-center">
                         <div class="text-nowrap">
                           <a
-                            v-tooltip="__('Can bet')"
+                            v-tooltip="__('Delete bet')"
                             href="javascript:void(0)"
                             class="btn btn-danger btn-sm"
-                            @click="removeBet(bet.id)"
+                            @click="removeBet(bet)"
                           >
                             <i class="mdi mdi-delete" aria-hidden="true"></i>
                           </a>
@@ -276,7 +276,7 @@
                             v-tooltip="__('Approve volume')"
                             href="javascript:void(0)"
                             class="btn btn-sm"
-                            v-bind:class="{ 'btn-success': !bet.approved, 'btn-secondary': bet.approved }"
+                            v-bind:class="{ 'btn-success': !bet.approved_volume, 'btn-secondary': bet.approved_volume }"
                             @click="approveVolume(bet)"
                           >
                             <i class="mdi mdi-check-circle" aria-hidden="true"></i>
@@ -299,7 +299,7 @@
                             v-tooltip="__('Approve contract')"
                             href="javascript:void(0)"
                             class="btn btn-sm"
-                            v-bind:class="{ 'btn-success': !(bet.correct*1), 'btn-secondary': (bet.correct*1) }"
+                            v-bind:class="{ 'btn-success': !bet.approved_contract, 'btn-secondary': bet.approved_contract }"
                             @click="approveContract(bet)"
                           >
                             <i class="mdi mdi-check-circle" aria-hidden="true"></i>
@@ -518,6 +518,80 @@ export default {
     this.listenForBroadcast();
   },
   methods: {
+    removeBet(bet) {
+      app.$confirm(app.__("Are you sure?")).then(() => {
+        axios
+          .get(
+            "/api/v1/auctions/bet/remove/" +
+              bet.id +
+              "?csrf_token=" +
+              window.csrf_token +
+              "&api_token=" +
+              window.api_token
+          )
+          .then(function(resp) {
+            bet.delete();
+          })
+          .catch(function(errors) {
+            app.$fire({
+              title: app.__("Error!"),
+              text: errors.response.data.message,
+              type: "error",
+              timer: 5000
+            });
+          });
+      });
+    },
+    approveContract(bet) {
+      app.$confirm(app.__("Are you sure?")).then(() => {
+        axios
+          .get(
+            "/api/v1/auctions/bet/contract?csrf_token=" +
+              window.csrf_token +
+              "&api_token=" +
+              window.api_token,
+            {
+              id: bet.id,
+              correct: bet.correct
+            }
+          )
+          .then(function(resp) {
+            bet.approved_contract = 1;
+          })
+          .catch(function(errors) {
+            app.$fire({
+              title: app.__("Error!"),
+              text: errors.response.data.message,
+              type: "error",
+              timer: 5000
+            });
+          });
+      });
+    },
+    approveVolume(bet) {
+      app.$confirm(app.__("Are you sure?")).then(() => {
+        axios
+          .get(
+            "/api/v1/auctions/bet/volume/" +
+              bet.id +
+              "?csrf_token=" +
+              window.csrf_token +
+              "&api_token=" +
+              window.api_token
+          )
+          .then(function(resp) {
+            bet.approved_volume = 1;
+          })
+          .catch(function(errors) {
+            app.$fire({
+              title: app.__("Error!"),
+              text: errors.response.data.message,
+              type: "error",
+              timer: 5000
+            });
+          });
+      });
+    },
     betIt() {
       var app = this;
       if (app.auction)

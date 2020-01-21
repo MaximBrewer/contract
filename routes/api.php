@@ -38,6 +38,9 @@ Route::group([
 
 
     Route::post('auctions/bet', 'AuctionsController@bet');
+    Route::get('auctions/bet/remove/{id}', 'AuctionsController@betRemove');
+    Route::get('auctions/bet/contract', 'AuctionsController@approveContract');
+    Route::get('auctions/bet/volume/{id}', 'AuctionsController@approveVolume');
     Route::get('auctions/{action}', 'AuctionsController@index');
     Route::get('auction/{id}', 'AuctionsController@show');
     Route::get('auction/delete/{id}', 'AuctionsController@destroy');
