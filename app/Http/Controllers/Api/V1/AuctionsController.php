@@ -425,7 +425,7 @@ class AuctionsController extends Controller
 
 
 
-        if ((float) $r->post('price') < $auction->price) {
+        if ((float) $r->post('price') < $auction->start_price) {
             return response()->json([
                 'message' => __('Too low price!'),
                 'errors' => []
