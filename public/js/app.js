@@ -2648,6 +2648,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -89414,6 +89418,8 @@ var render = function() {
                       class: { "is-invalid": _vm.errors.start_at },
                       attrs: {
                         type: "datetime",
+                        zone: "Europe/Moscow",
+                        "value-zone": "Europe/Moscow",
                         "input-class": "form-control"
                       },
                       model: {
@@ -89457,6 +89463,8 @@ var render = function() {
                       class: { "is-invalid": _vm.errors.finish_at },
                       attrs: {
                         type: "datetime",
+                        zone: "Europe/Moscow",
+                        "value-zone": "Europe/Moscow",
                         "input-class": "form-control"
                       },
                       model: {

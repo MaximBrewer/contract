@@ -84,6 +84,8 @@
               <datetime
                 type="datetime"
                 class="theme-primary"
+                zone="Europe/Moscow"
+                value-zone="Europe/Moscow"
                 input-class="form-control"
                 v-model="auction.start_at"
                 v-bind:class="{ 'is-invalid': errors.start_at }"
@@ -96,6 +98,8 @@
               <label class="control-label">{{ __('Auction finish') }}</label>
               <datetime
                 type="datetime"
+                zone="Europe/Moscow"
+                value-zone="Europe/Moscow"
                 class="theme-primary"
                 input-class="form-control"
                 v-model="auction.finish_at"
