@@ -12,6 +12,11 @@ class Bet extends Model
         'contragent_id',
         'auction_id',
         'price',
+        'approved_volume',
+        'approved_contract',
+        'took_part',
+        'can_bet',
+        'correct',
     ];
 
     protected $appends = [
