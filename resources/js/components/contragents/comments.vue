@@ -39,7 +39,7 @@
             <small>{{ comment.updated_at | formatDateTime }}</small>
           </li>
         </ul>
-      </div>
+      </div><br>
     </div>
   </div>
 </template>
