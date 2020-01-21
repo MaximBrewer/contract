@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \App\Auction;
 use \App\Bet;
+use \App\User;
 use Illuminate\Support\Facades\Auth;
 use \App\Contragent;
 use \App\Target;
@@ -128,6 +129,10 @@ class AuctionsController extends Controller
      */
     public function show($id)
     {
+        $user = User::find(Auth::user()->id);
+        $user->bets->update([
+            'took_part' => Carbon::now()
+        ]);
         return Auction::findOrFail($id);
     }
 
