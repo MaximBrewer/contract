@@ -385,6 +385,12 @@ class AuctionsController extends Controller
             'volume' => ($auction->volume - $bet->volume)
         ]);
 
+        if (!$auction->volume)
+            $auction->update([
+                'finish_at' => Carbon::now(),
+                'finished' => 1
+            ]);
+
         event(new \App\Events\MessagePushed($auction));
 
         return ['ok'];
