@@ -142,7 +142,16 @@ class AuctionsController extends Controller
     {
 
         if (count(Auth::user()->contragents)) Auth::user()->contragents[0]->auctions()->attach($id);
+
+        $auction = Auction::findOrFail($id);
+        if($auction) event(new \App\Events\MessagePushed($auction));
+
         return $this->index($request, $action);
+
+
+
+        
+
     }
 
     /**
@@ -155,7 +164,13 @@ class AuctionsController extends Controller
     public function unbid(Request $request, $action, $id)
     {
         if (count(Auth::user()->contragents)) Auth::user()->contragents[0]->auctions()->detach($id);
+
+        $auction = Auction::findOrFail($id);
+        if($auction) event(new \App\Events\MessagePushed($auction));
+
         return $this->index($request, $action);
+
+
     }
 
     /**
@@ -199,8 +214,9 @@ class AuctionsController extends Controller
             'start_price' => $request->post('start_price'),
             'volume' => $request->post('volume'),
         ]);
+        
+        if($auction) event(new \App\Events\MessagePushed($auction));
 
-        $auction = Auction::findOrFail($id);
         return $auction;
     }
 
@@ -242,6 +258,9 @@ class AuctionsController extends Controller
         $contragent = Contragent::findOrFail($request->post('bidder'));
         $contragent->auctions()->attach($auction->id);
         $auction = Auction::findOrFail($request->post('auction'));
+
+        if($auction) event(new \App\Events\MessagePushed($auction));
+
         return $auction;
     }
 
@@ -276,8 +295,10 @@ class AuctionsController extends Controller
                     'confirmed' => 1,
                 ]);
         }
-
+        
         $auction = Auction::findOrFail($id);
+        if($auction) event(new \App\Events\MessagePushed($auction));
+
         return $auction;
     }
 
@@ -293,7 +314,7 @@ class AuctionsController extends Controller
             ], 422);
         }
 
-        $bet->destroy();
+        $bet->delete();
 
         $auction = Auction::findOrFail($auction->id);
 
@@ -448,7 +469,7 @@ class AuctionsController extends Controller
         if ($auction = Auction::find($r->post('auction')))
             event(new \App\Events\MessagePushed($auction));
 
-        return Auction::findOrFail($r->post('auction'));
+        return ['ok'];
     }
     /**
      * Remove the specified resource from storage.
@@ -458,7 +479,6 @@ class AuctionsController extends Controller
      */
     public function destroy($id)
     {
-
         $auction = Auction::findOrFail($id);
 
         if ($auction->contragent_id != Auth::user()->contragents[0]->id) {
@@ -468,7 +488,13 @@ class AuctionsController extends Controller
             ], 422);
         }
 
-        $auction = Auction::findOrFail($id);
+        if ($auction->confirmed) {
+            return response()->json([
+                'message' => __('Auction has confirmed!'),
+                'errors' => []
+            ], 422);
+        }
+
         $auction->delete();
         return '';
     }
