@@ -1,5 +1,5 @@
 <template>
-  <section class="auction-edit-wrapper">
+  <section class="auction-edit-wrapper" v-if="auction">
     <div class="container">
       <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
       <div class="row">
