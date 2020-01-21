@@ -137,14 +137,7 @@
                           <label
                             class="control-label"
                           >{{ __('Store coords #', {store: index + 1}) }}</label>
-                          <yandex-map
-                            @click="onClick"
-                            :settings="settings"
-                            :props="{index: index}"
-                            :coords="defaultCoords"
-                          >
-                            <!--Markers-->
-                          </yandex-map>
+                          <store-map :store="store"/>
                           <input
                             type="text"
                             v-bind:class="{ 'is-invalid': errors.stores && errors.stores[index] && errors.stores[index].coords }"
@@ -252,15 +245,14 @@
 </template>
 <script>
 import Loading from "vue-loading-overlay";
-import { yandexMap, ymapMarker } from "vue-yandex-maps";
+import storeMap from "../storeMap";
 import "vue-loading-overlay/dist/vue-loading.css";
 import vSelect from "vue-select";
 export default {
   components: {
     vSelect: vSelect,
-    yandexMap: yandexMap,
-    ymapMarker: ymapMarker,
-    Loading: Loading
+    Loading: Loading,
+    storeMap: storeMap
   },
   mounted() {
     let app = this;
@@ -290,12 +282,6 @@ export default {
   },
   data: function() {
     return {
-      settings: {
-        apiKey: "a5c4997f-eb1b-4fee-bea6-fb5c83005b5a",
-        lang: "ru_RU",
-        coordorder: "latlong",
-        version: "2.1"
-      },
       isLoading: true,
       onCancel: false,
       fullPage: true,
@@ -305,28 +291,15 @@ export default {
       contragentId: null,
       contragent: {},
       errors: {},
-      currentStore: 0,
-      defaultCoords: [53.20988557121182, 39.46820949999999]
+      currentStore: 0
     };
   },
   methods: {
-    onClick(e){
-      var coords = e.get("coords");
-      console.log(e)
-    },
-    mapsLoaded(obj) {
-      let app = this;
-      obj.events.add("click", function(e) {
-        var coords = e.get("coords");
-        obj.geoObjects.removeAll().add(new ymaps.Placemark(coords));
-        app.contragent.stores[app.currentStore].coords = coords.join(',');
-      });
-    },
     addStore() {
       let app = this;
       app.contragent.stores.push({
         id: 0,
-        coords: "",
+        coords: false,
         addres: ""
       });
     },

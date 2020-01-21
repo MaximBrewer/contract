@@ -33,6 +33,8 @@ Route::group([
     Route::get('company', 'ContragentsController@my');
     Route::patch('company', 'ContragentsController@updateCompany');
 
+    Route::post('address', 'RegionsController@address');
+
 
     Route::post('auctions/bet', 'AuctionsController@bet');
     Route::get('auctions/{action}', 'AuctionsController@index');
