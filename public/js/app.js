@@ -92051,7 +92051,7 @@ var render = function() {
                   ])
                 : _vm._e(),
               _vm._v(" "),
-              _vm.auction.finished
+              _vm.auction.finished && _vm.mine
                 ? _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-md-12" }, [
                       _c("div", { staticClass: "card" }, [

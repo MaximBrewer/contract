@@ -315,7 +315,7 @@
         </div>
       </div>
       <!--Finished-->
-      <div class="row" v-if="auction.finished">
+      <div class="row" v-if="auction.finished && mine">
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">{{ __("Auction Bets") }}</div>
