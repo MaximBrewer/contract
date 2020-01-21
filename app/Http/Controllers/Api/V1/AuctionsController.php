@@ -11,6 +11,7 @@ use \App\Contragent;
 use \App\Target;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use \App\Store;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\AuctionResource;
@@ -252,6 +253,7 @@ class AuctionsController extends Controller
      */
     public function confirm($id)
     {
+        $timestamp = Carbon::now()->timestamp;
 
         $auction = Auction::findOrFail($id);
 
@@ -263,9 +265,17 @@ class AuctionsController extends Controller
             ], 422);
         }
 
-        $auction->update([
-            'confirmed' => 1,
-        ]);
+        if (strtotime($auction->finish_at) >= $timestamp) {
+            if (strtotime($auction->start_at) <= $timestamp)
+                $auction->update([
+                    'started' => 1,
+                    'confirmed' => 1,
+                ]);
+            else
+                $auction->update([
+                    'confirmed' => 1,
+                ]);
+        }
 
         $auction = Auction::findOrFail($id);
         return $auction;

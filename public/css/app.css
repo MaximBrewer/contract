@@ -11981,6 +11981,11 @@ span.online.is-offline {
   line-height: 2.2em;
 }
 
+.ymap-container {
+  width: 100%;
+  height: 150px;
+}
+
 .tooltip {
   display: block !important;
   z-index: 10000;

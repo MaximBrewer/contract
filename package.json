@@ -44,6 +44,7 @@
         "vue-simple-alert": "^1.1.1",
         "vue-star-rating": "^1.6.1",
         "vue-tooltip": "^0.1.0",
+        "vue-yandex-maps": "^0.10.6",
         "weekstart": "^1.0.1"
     }
 }

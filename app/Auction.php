@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 
 class Auction extends Model
 {
+
+    
     protected $fillable = [
         'contragent_id',
         'store_id',
@@ -24,7 +26,9 @@ class Auction extends Model
         'step',
         'start_price',
         'volume',
-        'confirmed'
+        'confirmed',
+        'finished',
+        'started'
     ];
 
     protected $appends = [

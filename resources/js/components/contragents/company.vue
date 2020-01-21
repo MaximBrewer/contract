@@ -129,7 +129,7 @@
               <label class="control-label">{{ __('Contragent stores') }}</label>
               <div class="stores">
                 <ul>
-                  <li class="store" v-for="store, index in contragent.stores">
+                  <li class="store" v-for="(store, index) in contragent.stores" :key="index">
                     <input type="hidden" v-model="contragent.stores[index].id" class="form-control" />
                     <div class="row">
                       <div class="col-md-6">
@@ -137,6 +137,14 @@
                           <label
                             class="control-label"
                           >{{ __('Store coords #', {store: index + 1}) }}</label>
+                          <yandex-map
+                            @click="onClick"
+                            :settings="settings"
+                            :props="{index: index}"
+                            :coords="defaultCoords"
+                          >
+                            <!--Markers-->
+                          </yandex-map>
                           <input
                             type="text"
                             v-bind:class="{ 'is-invalid': errors.stores && errors.stores[index] && errors.stores[index].coords }"
@@ -244,11 +252,14 @@
 </template>
 <script>
 import Loading from "vue-loading-overlay";
+import { yandexMap, ymapMarker } from "vue-yandex-maps";
 import "vue-loading-overlay/dist/vue-loading.css";
 import vSelect from "vue-select";
 export default {
   components: {
     vSelect: vSelect,
+    yandexMap: yandexMap,
+    ymapMarker: ymapMarker,
     Loading: Loading
   },
   mounted() {
@@ -279,6 +290,12 @@ export default {
   },
   data: function() {
     return {
+      settings: {
+        apiKey: "a5c4997f-eb1b-4fee-bea6-fb5c83005b5a",
+        lang: "ru_RU",
+        coordorder: "latlong",
+        version: "2.1"
+      },
       isLoading: true,
       onCancel: false,
       fullPage: true,
@@ -287,10 +304,24 @@ export default {
       regions: [],
       contragentId: null,
       contragent: {},
-      errors: {}
+      errors: {},
+      currentStore: 0,
+      defaultCoords: [53.20988557121182, 39.46820949999999]
     };
   },
   methods: {
+    onClick(e){
+      var coords = e.get("coords");
+      console.log(e)
+    },
+    mapsLoaded(obj) {
+      let app = this;
+      obj.events.add("click", function(e) {
+        var coords = e.get("coords");
+        obj.geoObjects.removeAll().add(new ymaps.Placemark(coords));
+        app.contragent.stores[app.currentStore].coords = coords.join(',');
+      });
+    },
     addStore() {
       let app = this;
       app.contragent.stores.push({
