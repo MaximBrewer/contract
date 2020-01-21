@@ -459,7 +459,7 @@ class AuctionsController extends Controller
         }
 
         $auctionBets = Bet::where('auction_id', $r->post('auction'))
-            //->where('approved_volume', 'is', null)
+            ->where('approved_volume', '<>', 1)
             ->orderBy('price', 'desc')
             ->orderBy('volume', 'desc')
             ->orderBy('created_at', 'asc')
@@ -470,7 +470,7 @@ class AuctionsController extends Controller
         $rft = false;
 
         foreach ($auctionBets as $auctionBet) {
-            if ($newBet->price - $auction->step > $auctionBet->price && !$rft) {
+            if ($newBet->price - $auction->step >= $auctionBet->price && !$rft) {
                 $bets[] = $newBet;
                 $rft = true;
             }
