@@ -405,7 +405,20 @@ class AuctionsController extends Controller
      */
     public function bet(Request $r)
     {
+
+
+
+
         $auction = DB::select('select contragent_id from contragent_auction where auction_id = ? && contragent_id = ?', [$r->post('auction'), $r->post('bidder')]);
+
+
+        if ((float) $r->post('price') < $auction->price) {
+            return response()->json([
+                'message' => __('Too low price!'),
+                'errors' => []
+            ], 422);
+        }
+
 
         if (empty($auction) || $r->post('bidder') != Auth::user()->contragents[0]->id) {
             return response()->json([
@@ -413,6 +426,8 @@ class AuctionsController extends Controller
                 'errors' => []
             ], 422);
         }
+
+        
         $auction = Auction::findOrFail($r->post('auction'));
 
         $newBet = new Bet([
