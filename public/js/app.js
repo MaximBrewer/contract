@@ -4403,6 +4403,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 
@@ -4417,17 +4421,24 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
   },
   data: function data() {
     return {
-      contragent: app.$route.params.id,
+      contragent: this.$route.params.id,
       comments: [],
+      rating: 0,
       message: null,
-      user: window.user
+      user: window.user,
+      errorComment: null,
+      starSize: 20,
+      starSizeSmall: 15
     };
   },
   methods: {
+    rate: function rate() {},
     fetchComments: function fetchComments() {
       var app = this;
-      axios.get("/api/v1/comments/?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.comments = resp.data;
+      axios.get("/api/v1/comments/" + app.contragent + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+        app.comments = resp.data[0];
+        app.rating = resp.data[1];
+        app.message = resp.data[2].comment;
         app.isLoading = false;
       })["catch"](function (e) {
         console.log(e);
@@ -4442,11 +4453,11 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
         axios.post("/api/v1/comments?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
           contragent_id: app.contragent,
           comment: app.message,
-          user_id: app.user.id
+          rate: app.rating
         }).then(function (resp) {
-          if (resp.data.status) {
-            app.comments = resp.data;
-          }
+          app.comments = resp.data[0];
+          app.rating = resp.data[1];
+          app.message = resp.data[2].comment;
         });
       } else {
         app.errorComment = "Please enter a comment to save";
@@ -92283,62 +92294,70 @@ var render = function() {
     "div",
     { staticClass: "comments-app" },
     [
-      _c("h1", [_vm._v(_vm._s(_vm.__("Comments")))]),
+      _c("h3", [_vm._v(_vm._s(_vm.__("Comments")))]),
       _vm._v(" "),
       _vm.user
         ? _c("div", { staticClass: "comment-form" }, [
             _c("form", { staticClass: "form", attrs: { name: "form" } }, [
-              _c(
-                "div",
-                { staticClass: "form-row" },
-                [
-                  _c("star-rating", {
-                    model: {
-                      value: _vm.contragent.rating,
-                      callback: function($$v) {
-                        _vm.$set(_vm.contragent, "rating", $$v)
+              _c("div", { staticClass: "form-group" }, [
+                _c(
+                  "div",
+                  { staticClass: "clearfix" },
+                  [
+                    _c("star-rating", {
+                      staticClass: "float-right",
+                      attrs: {
+                        "star-size": _vm.starSize,
+                        "show-rating": false
                       },
-                      expression: "contragent.rating"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.message,
-                        expression: "message"
+                      on: { "rating-selected": _vm.rate },
+                      model: {
+                        value: _vm.rating,
+                        callback: function($$v) {
+                          _vm.rating = $$v
+                        },
+                        expression: "rating"
                       }
-                    ],
-                    staticClass: "input",
-                    attrs: {
-                      placeholder: _vm.__("Add comment..."),
-                      required: ""
-                    },
-                    domProps: { value: _vm.message },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.message = $event.target.value
-                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.message,
+                      expression: "message"
                     }
-                  }),
-                  _vm._v(" "),
-                  _vm.errorComment
-                    ? _c(
-                        "span",
-                        { staticClass: "input", staticStyle: { color: "red" } },
-                        [_vm._v(_vm._s(_vm.errorComment))]
-                      )
-                    : _vm._e()
-                ],
-                1
-              ),
+                  ],
+                  staticClass: "form-control sixe-200",
+                  attrs: {
+                    placeholder: _vm.__("Add comment..."),
+                    required: ""
+                  },
+                  domProps: { value: _vm.message },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.message = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errorComment
+                  ? _c(
+                      "span",
+                      { staticClass: "input", staticStyle: { color: "red" } },
+                      [_vm._v(_vm._s(_vm.errorComment))]
+                    )
+                  : _vm._e()
+              ]),
               _vm._v(" "),
-              _c("div", { staticClass: "form-row" }, [
+              _c("div", { staticClass: "form-group text-right" }, [
                 _c("input", {
                   staticClass: "btn btn-success",
                   attrs: { type: "button", value: _vm.__("Add Comment") },
@@ -92351,21 +92370,38 @@ var render = function() {
       _vm._v(" "),
       _vm._l(_vm.comments, function(comment, index) {
         return _c("div", { key: index, staticClass: "comments" }, [
-          _c("div", { staticClass: "comment" }, [
-            _c("div", { staticClass: "comment-box" }, [
-              _c("div", { staticClass: "comment-text" }, [
-                _vm._v(_vm._s(comment.comment))
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "comment-footer" }, [
-                _c("div", { staticClass: "comment-info" }, [
-                  _c("span", { staticClass: "comment-author" }, [
-                    _c("em", [_vm._v(_vm._s(comment.name))])
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "comment-date" }, [
-                    _vm._v(_vm._s(comment.date))
-                  ])
+          _c("div", { staticClass: "card" }, [
+            _c(
+              "div",
+              { staticClass: "card-header" },
+              [
+                _c("star-rating", {
+                  staticClass: "float-right",
+                  attrs: {
+                    "star-size": _vm.starSizeSmall,
+                    "show-rating": false,
+                    "read-only": true
+                  },
+                  model: {
+                    value: comment.votes,
+                    callback: function($$v) {
+                      _vm.$set(comment, "votes", $$v)
+                    },
+                    expression: "comment.votes"
+                  }
+                }),
+                _vm._v(" "),
+                _c("strong", [_vm._v(_vm._s(comment.writer))])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("ul", { staticClass: "list-group list-group-flush" }, [
+              _c("li", { staticClass: "list-group-item" }, [
+                _c("p", [_vm._v(_vm._s(comment.comment))]),
+                _vm._v(" "),
+                _c("small", [
+                  _vm._v(_vm._s(_vm._f("formatDateTime")(comment.updated_at)))
                 ])
               ])
             ])

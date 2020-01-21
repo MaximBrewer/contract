@@ -6,19 +6,31 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    
+
     //
     /**
      * Fillable fields for a course
      *
      * @return array
      */
-    protected $fillable = ['comment','votes','spam','reply_id','contragent_id','user_id'];
+
+
+    protected $appends = [
+        'writer'
+    ];
+    protected $fillable = ['comment', 'votes', 'contragent_id', 'writer'];
     protected $dates = ['created_at', 'updated_at'];
 
-    public function replies()
+
+    public function getWriterAttribute()
     {
-        return $this->hasMany('App\Comment','id','reply_id');
+        $contragent = Contragent::find($this->contragent_id)->select('title')->first();
+        return $contragent->title;
     }
- 
+
+
+    public function contragent()
+    {
+        return $this->belongsTo('App\Contragent');
+    }
 }
