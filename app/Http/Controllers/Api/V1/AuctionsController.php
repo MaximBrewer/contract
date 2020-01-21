@@ -344,7 +344,7 @@ class AuctionsController extends Controller
         }
 
         $bet->update([
-            'approved_contract' => 1,
+            'approved_contract' => Carbon::now(),
             'correct' => $r->correct
         ]);
 
@@ -369,7 +369,7 @@ class AuctionsController extends Controller
         }
 
         $bet->update([
-            'approved_volume' => 1
+            'approved_volume' => Carbon::now()
         ]);
 
         $auction = Auction::findOrFail($auction->id);
