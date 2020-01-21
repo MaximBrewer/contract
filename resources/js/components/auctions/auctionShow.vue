@@ -549,7 +549,7 @@ export default {
       var app = this;
       app.$confirm(app.__("Are you sure?")).then(() => {
         axios
-          .get(
+          .post(
             "/api/v1/auctions/bet/contract?csrf_token=" +
               window.csrf_token +
               "&api_token=" +

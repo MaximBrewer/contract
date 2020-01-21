@@ -4250,7 +4250,7 @@ __webpack_require__.r(__webpack_exports__);
     approveContract: function approveContract(bet) {
       var app = this;
       app.$confirm(app.__("Are you sure?")).then(function () {
-        axios.get("/api/v1/auctions/bet/contract?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
+        axios.post("/api/v1/auctions/bet/contract?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
           id: bet.id,
           correct: bet.correct
         }).then(function (resp) {
