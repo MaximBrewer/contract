@@ -645,7 +645,7 @@ export default {
       Echo.channel("cross_contractru_database_message-pushed").listen(
         "MessagePushed",
         function(e) {
-          console.log(e)
+          console.log(e.auction)
           if (app.auction.id == e.auction.id) app.auction == e.auction;
         }
       );
