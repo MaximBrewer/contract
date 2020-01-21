@@ -628,7 +628,6 @@ export default {
       Echo.channel("cross_contractru_database_every-minute").listen(
         "PerMinute",
         function(e) {
-          this.$root.time = e.time;
           e.started.forEach(auction => {
             if (auction.id == app.auction.id) {
               app.auction.started = true;

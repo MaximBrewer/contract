@@ -4266,7 +4266,6 @@ __webpack_require__.r(__webpack_exports__);
     listenForBroadcast: function listenForBroadcast() {
       var app = this;
       Echo.channel("cross_contractru_database_every-minute").listen("PerMinute", function (e) {
-        this.$root.time = e.time;
         e.started.forEach(function (auction) {
           if (auction.id == app.auction.id) {
             app.auction.started = true;
