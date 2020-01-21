@@ -460,7 +460,8 @@ class AuctionsController extends Controller
         DB::connection()->enableQueryLog();
 
         $auctionBets = Bet::where('auction_id', $r->post('auction'))
-            ->where('approved_volume', '<>', 1)
+            ->whereNull('approved_volume')
+            ->orWhere('approved_volume', '<>', 1)
             ->orderBy('price', 'desc')
             ->orderBy('volume', 'desc')
             ->orderBy('created_at', 'asc')
