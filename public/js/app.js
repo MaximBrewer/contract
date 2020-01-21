@@ -92259,10 +92259,13 @@ var render = function() {
                               [
                                 _vm._v(
                                   _vm._s(bidder.title) +
-                                    ", " +
+                                    " (" +
                                     _vm._s(bidder.fio) +
                                     ", " +
-                                    _vm._s(bidder.phone)
+                                    _vm._s(_vm.__("Phone")) +
+                                    ": " +
+                                    _vm._s(bidder.phone) +
+                                    ")"
                                 )
                               ]
                             )

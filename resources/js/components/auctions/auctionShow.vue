@@ -388,7 +388,7 @@
                 class="list-group-item"
                 v-for="(bidder, index) in auction.bidders"
                 :key="index"
-              >{{ bidder.title }}, {{ bidder.fio }}, {{ bidder.phone }}</li>
+              >{{ bidder.title }} ({{ bidder.fio }}, {{ __('Phone') }}: {{ bidder.phone }})</li>
             </ul>
           </div>
           <br />
