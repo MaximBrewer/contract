@@ -481,7 +481,7 @@ export default {
           }
           if (app.auction.contragent.id == contr) app.mine = 1;
         }
-        app.bid.price = aucton.price;
+        app.bid.price = app.aucton.price;
         app.bid.volume = 1;
       });
     // .catch(function() {
