@@ -519,6 +519,7 @@ export default {
   },
   methods: {
     removeBet(bet) {
+      var app = this;
       app.$confirm(app.__("Are you sure?")).then(() => {
         axios
           .get(
@@ -543,6 +544,7 @@ export default {
       });
     },
     approveContract(bet) {
+      var app = this;
       app.$confirm(app.__("Are you sure?")).then(() => {
         axios
           .get(
@@ -569,6 +571,7 @@ export default {
       });
     },
     approveVolume(bet) {
+      var app = this;
       app.$confirm(app.__("Are you sure?")).then(() => {
         axios
           .get(

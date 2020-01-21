@@ -4231,6 +4231,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     removeBet: function removeBet(bet) {
+      var app = this;
       app.$confirm(app.__("Are you sure?")).then(function () {
         axios.get("/api/v1/auctions/bet/remove/" + bet.id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
           bet["delete"]();
@@ -4245,6 +4246,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     approveContract: function approveContract(bet) {
+      var app = this;
       app.$confirm(app.__("Are you sure?")).then(function () {
         axios.get("/api/v1/auctions/bet/contract?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
           id: bet.id,
@@ -4262,6 +4264,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     approveVolume: function approveVolume(bet) {
+      var app = this;
       app.$confirm(app.__("Are you sure?")).then(function () {
         axios.get("/api/v1/auctions/bet/volume/" + bet.id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
           bet.approved_volume = 1;
