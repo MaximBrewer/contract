@@ -438,7 +438,7 @@ class AuctionsController extends Controller
             'contragent_id' => $r->post('bidder'),
             'price' => (float) $r->post('price'),
             'volume' => $r->post('volume'),
-            'took_part' => 1,
+            'took_part' => Carbon::now(),
             'can_bet' => 1
         ]);
 
