@@ -51,7 +51,7 @@ class PerMinute implements ShouldBroadcast
             DB::table('auctions')->where('id', $auction->id)->update(array(
                 'started' => 1,
             ));
-            event(new \App\Events\MessagePushed(Auction::find($auction)));
+            event(new \App\Events\MessagePushed(Auction::find($auction->id)));
         }
 
 
