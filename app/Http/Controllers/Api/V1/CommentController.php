@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Comment;
 use App\CommentSpam;
 use App\CommentVote;
+use Carbon\Carbon;
 use App\User;
 use App\Contragent;
 
@@ -70,6 +71,7 @@ class CommentController extends Controller
             $comment->update([
                 'comment' => $request->post('comment'),
                 'votes' => (int) $request->post('rate'),
+                'updated_at' => Carbon::now()
             ]);
         else
             $comment = Comment::create([
