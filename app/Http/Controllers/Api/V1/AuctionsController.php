@@ -457,6 +457,7 @@ class AuctionsController extends Controller
                 'errors' => []
             ], 422);
         }
+        DB::connection()->enableQueryLog();
 
         $auctionBets = Bet::where('auction_id', $r->post('auction'))
             ->where('approved_volume', '<>', 1)
@@ -464,6 +465,10 @@ class AuctionsController extends Controller
             ->orderBy('volume', 'desc')
             ->orderBy('created_at', 'asc')
             ->get();
+
+
+        $queries = DB::getQueryLog();
+        info($queries);
 
         $bets = [];
         $nev = false;
