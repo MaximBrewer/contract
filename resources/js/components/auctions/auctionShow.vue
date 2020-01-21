@@ -315,8 +315,8 @@
         </div>
       </div>
       <!--Finished-->
-      <div class="row" v-if="auction.finished && mine">
-        <div class="col-md-12">
+      <div class="row" v-if="auction.finished">
+        <div class="col-md-12" v-if="mine">
           <div class="card">
             <div class="card-header">{{ __("Auction Bets") }}</div>
             <div class="table-responsive" id="auction_bets">
@@ -379,7 +379,7 @@
       </div>
       <!--Bidders-->
       <br />
-      <div class="row">
+      <div class="row" v-if="mine">
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">{{ __('Auction bidders') }}</div>

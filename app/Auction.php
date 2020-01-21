@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 class Auction extends Model
 {
 
-    
+
     protected $fillable = [
         'contragent_id',
         'store_id',
@@ -42,7 +42,7 @@ class Auction extends Model
     public function getFreeVolumeAttribute()
     {
         $cnt = DB::select('select sum(volume) as busy_volume from bets where auction_id = ?', [$this->id]);
-        return (int)$this->volume - (int)$cnt[0]->busy_volume;
+        return (int) $this->volume - (int) $cnt[0]->busy_volume;
     }
 
     public function getStartAtAttribute($value)
@@ -98,9 +98,16 @@ class Auction extends Model
         $bidderIds = DB::select('select contragent_id from contragent_auction where auction_id = ?', [$this->id]);
         $bidderIdsArray = [];
         foreach ($bidderIds as $bidderId) $bidderIdsArray[] = $bidderId->contragent_id;
-        $contragents = Contragent::whereIn('id', $bidderIdsArray)->select('id', 'title')->get();
+        $contragents = Contragent::whereIn('id', $bidderIdsArray)->select('id', 'title', 'fio', 'phone')->get();
         $cAgents = [];
-        foreach ($contragents as $contragent) $cAgents[$contragent->id] = ['id' => $contragent->id, 'title' => $contragent->title];
+        foreach ($contragents as $contragent) {
+            $cAgents[$contragent->id] = [
+                'id' => $contragent->id,
+                'title' => $contragent->title, 
+                'fio' => $contragent->fio, 
+                'phone' => $contragent->phone
+            ];
+        }
         return $cAgents;
     }
 

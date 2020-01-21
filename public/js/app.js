@@ -92051,212 +92051,222 @@ var render = function() {
                   ])
                 : _vm._e(),
               _vm._v(" "),
-              _vm.auction.finished && _vm.mine
+              _vm.auction.finished
+                ? _c("div", { staticClass: "row" }, [
+                    _vm.mine
+                      ? _c("div", { staticClass: "col-md-12" }, [
+                          _c("div", { staticClass: "card" }, [
+                            _c("div", { staticClass: "card-header" }, [
+                              _vm._v(_vm._s(_vm.__("Auction Bets")))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "table-responsive",
+                                attrs: { id: "auction_bets" }
+                              },
+                              [
+                                _c(
+                                  "table",
+                                  { staticClass: "table table-bordered" },
+                                  [
+                                    _c("thead", [
+                                      _c("tr", [
+                                        _c("th", [
+                                          _vm._v(_vm._s(_vm.__("Contragent")))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(_vm._s(_vm.__("Took part")))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(_vm._s(_vm.__("Made bets")))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(_vm._s(_vm.__("Volume")))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(_vm._s(_vm.__("Price")))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(_vm._s(_vm.__("Correct")))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(_vm._s(_vm.__("Time")))
+                                        ])
+                                      ])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(_vm.auction.bets, function(
+                                        bet,
+                                        index
+                                      ) {
+                                        return _c("tr", { key: index }, [
+                                          _c("td", [
+                                            bet.contragent
+                                              ? _c(
+                                                  "div",
+                                                  {
+                                                    staticClass: "text-nowrap"
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      { staticClass: "h6" },
+                                                      [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            bet.contragent.title
+                                                          )
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e()
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _c(
+                                              "div",
+                                              { staticClass: "text-nowrap" },
+                                              [
+                                                _c("span", [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      bet.took_part
+                                                        ? _vm.__("Yes")
+                                                        : _vm.__("No")
+                                                    )
+                                                  )
+                                                ])
+                                              ]
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _c(
+                                              "div",
+                                              { staticClass: "text-nowrap" },
+                                              [
+                                                _c("span", [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      bet.can_bet
+                                                        ? _vm.__("Yes")
+                                                        : _vm.__("No")
+                                                    )
+                                                  )
+                                                ])
+                                              ]
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _c(
+                                              "div",
+                                              { staticClass: "text-nowrap" },
+                                              [
+                                                _c("span", [
+                                                  _vm._v(_vm._s(bet.volume))
+                                                ])
+                                              ]
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _c(
+                                              "div",
+                                              { staticClass: "text-nowrap" },
+                                              [
+                                                _c("span", [
+                                                  _vm._v(_vm._s(bet.price))
+                                                ])
+                                              ]
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _c(
+                                              "div",
+                                              { staticClass: "text-nowrap" },
+                                              [
+                                                _c("span", [
+                                                  _vm._v(_vm._s(bet.correct))
+                                                ])
+                                              ]
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _c(
+                                              "div",
+                                              { staticClass: "text-nowrap" },
+                                              [
+                                                _c("span", [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      _vm._f("formatDateTime")(
+                                                        bet.created_at
+                                                      )
+                                                    )
+                                                  )
+                                                ])
+                                              ]
+                                            )
+                                          ])
+                                        ])
+                                      }),
+                                      0
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("br")
+                        ])
+                      : _vm._e()
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm.mine
                 ? _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-md-12" }, [
                       _c("div", { staticClass: "card" }, [
                         _c("div", { staticClass: "card-header" }, [
-                          _vm._v(_vm._s(_vm.__("Auction Bets")))
+                          _vm._v(_vm._s(_vm.__("Auction bidders")))
                         ]),
                         _vm._v(" "),
                         _c(
-                          "div",
-                          {
-                            staticClass: "table-responsive",
-                            attrs: { id: "auction_bets" }
-                          },
-                          [
-                            _c(
-                              "table",
-                              { staticClass: "table table-bordered" },
-                              [
-                                _c("thead", [
-                                  _c("tr", [
-                                    _c("th", [
-                                      _vm._v(_vm._s(_vm.__("Contragent")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("th", [
-                                      _vm._v(_vm._s(_vm.__("Took part")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("th", [
-                                      _vm._v(_vm._s(_vm.__("Made bets")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("th", [
-                                      _vm._v(_vm._s(_vm.__("Volume")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("th", [_vm._v(_vm._s(_vm.__("Price")))]),
-                                    _vm._v(" "),
-                                    _c("th", [
-                                      _vm._v(_vm._s(_vm.__("Correct")))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("th", [_vm._v(_vm._s(_vm.__("Time")))])
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "tbody",
-                                  _vm._l(_vm.auction.bets, function(
-                                    bet,
-                                    index
-                                  ) {
-                                    return _c("tr", { key: index }, [
-                                      _c("td", [
-                                        bet.contragent
-                                          ? _c(
-                                              "div",
-                                              { staticClass: "text-nowrap" },
-                                              [
-                                                _c(
-                                                  "div",
-                                                  { staticClass: "h6" },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        bet.contragent.title
-                                                      )
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          : _vm._e()
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c(
-                                          "div",
-                                          { staticClass: "text-nowrap" },
-                                          [
-                                            _c("span", [
-                                              _vm._v(
-                                                _vm._s(
-                                                  bet.took_part
-                                                    ? _vm.__("Yes")
-                                                    : _vm.__("No")
-                                                )
-                                              )
-                                            ])
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c(
-                                          "div",
-                                          { staticClass: "text-nowrap" },
-                                          [
-                                            _c("span", [
-                                              _vm._v(
-                                                _vm._s(
-                                                  bet.can_bet
-                                                    ? _vm.__("Yes")
-                                                    : _vm.__("No")
-                                                )
-                                              )
-                                            ])
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c(
-                                          "div",
-                                          { staticClass: "text-nowrap" },
-                                          [
-                                            _c("span", [
-                                              _vm._v(_vm._s(bet.volume))
-                                            ])
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c(
-                                          "div",
-                                          { staticClass: "text-nowrap" },
-                                          [
-                                            _c("span", [
-                                              _vm._v(_vm._s(bet.price))
-                                            ])
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c(
-                                          "div",
-                                          { staticClass: "text-nowrap" },
-                                          [
-                                            _c("span", [
-                                              _vm._v(_vm._s(bet.correct))
-                                            ])
-                                          ]
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _c(
-                                          "div",
-                                          { staticClass: "text-nowrap" },
-                                          [
-                                            _c("span", [
-                                              _vm._v(
-                                                _vm._s(
-                                                  _vm._f("formatDateTime")(
-                                                    bet.created_at
-                                                  )
-                                                )
-                                              )
-                                            ])
-                                          ]
-                                        )
-                                      ])
-                                    ])
-                                  }),
-                                  0
-                                )
-                              ]
+                          "ul",
+                          { staticClass: "list-group list-group-flush" },
+                          _vm._l(_vm.auction.bidders, function(bidder, index) {
+                            return _c(
+                              "li",
+                              { key: index, staticClass: "list-group-item" },
+                              [_vm._v(_vm._s(bidder.title))]
                             )
-                          ]
+                          }),
+                          0
                         )
                       ]),
                       _vm._v(" "),
                       _c("br")
                     ])
                   ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "card" }, [
-                    _c("div", { staticClass: "card-header" }, [
-                      _vm._v(_vm._s(_vm.__("Auction bidders")))
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "ul",
-                      { staticClass: "list-group list-group-flush" },
-                      _vm._l(_vm.auction.bidders, function(bidder, index) {
-                        return _c(
-                          "li",
-                          { key: index, staticClass: "list-group-item" },
-                          [_vm._v(_vm._s(bidder.title))]
-                        )
-                      }),
-                      0
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("br")
-                ])
-              ])
+                : _vm._e()
             ],
             1
           ),
