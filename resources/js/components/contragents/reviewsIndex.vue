@@ -83,7 +83,7 @@ export default {
         app.errorComment = null;
         axios
           .post(
-            "/api/v1/comments?csrf_token=" +
+            "/api/v1/commentsmy?csrf_token=" +
               window.csrf_token +
               "&api_token=" +
               window.api_token,

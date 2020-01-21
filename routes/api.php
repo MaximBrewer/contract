@@ -60,6 +60,7 @@ Route::group([
 
     Route::get('comments/{contragentId}', 'CommentController@show');
     Route::post('comments', 'CommentController@store');
+    Route::post('commentsmy', 'CommentController@storeMy');
     Route::get('comments', 'CommentController@index');
     Route::post('comments/{commentId}/{type}', 'CommentController@update');
 });

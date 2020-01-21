@@ -5868,7 +5868,7 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
       if (comment.comment != null && comment.comment != " ") {
         app.errorComment = null;
-        axios.post("/api/v1/comments?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
+        axios.post("/api/v1/commentsmy?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
           contragent_id: comment.contragent_id,
           comment: comment.comment,
           rate: comment.votes
