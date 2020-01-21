@@ -20,6 +20,7 @@ class PerMinute implements ShouldBroadcast
     public $time;
     public $started;
     public $finished;
+    public $auction;
 
     /**
      * Create a new event instance.
@@ -50,9 +51,10 @@ class PerMinute implements ShouldBroadcast
         );
 
         foreach($started as $auction){
-            DB::table('auctions')->where('id', $auction->id)->update(array(
+            DB::table('auctions')->where('id', $auction->id)->where('confirmed', 1)->update(array(
                 'started' => 1,
             ));
+            event(new \App\Events\MessagePushed(Auction::find($auction)));
         }
 
 
