@@ -67,7 +67,7 @@
           <div class="card text-center">
             <div class="card-header">{{ __('During time') }}</div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">{{ time | formatDateTime}}</li>
+              <li class="list-group-item">{{ $root.time | formatDateTime}}</li>
             </ul>
           </div>
           <br />
@@ -628,7 +628,7 @@ export default {
       Echo.channel("cross_contractru_database_every-minute").listen(
         "PerMinute",
         function(e) {
-          app.time = e.time;
+          this.$root.time = e.time;
           e.started.forEach(auction => {
             if (auction.id == app.auction.id) {
               app.auction.started = true;

@@ -4266,7 +4266,7 @@ __webpack_require__.r(__webpack_exports__);
     listenForBroadcast: function listenForBroadcast() {
       var app = this;
       Echo.channel("cross_contractru_database_every-minute").listen("PerMinute", function (e) {
-        app.time = e.time;
+        this.$root.time = e.time;
         e.started.forEach(function (auction) {
           if (auction.id == app.auction.id) {
             app.auction.started = true;
@@ -91166,7 +91166,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("ul", { staticClass: "list-group list-group-flush" }, [
                       _c("li", { staticClass: "list-group-item" }, [
-                        _vm._v(_vm._s(_vm._f("formatDateTime")(_vm.time)))
+                        _vm._v(_vm._s(_vm._f("formatDateTime")(_vm.$root.time)))
                       ])
                     ])
                   ]),
@@ -112420,76 +112420,62 @@ var routes = [{
 }, {
   path: "/personal/contragents",
   component: _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
-  name: "contragentIndex",
-  props: ["time"]
+  name: "contragentIndex"
 }, {
   path: "/personal/contragents/create",
   component: _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-  name: "createContragent",
-  props: ["time"]
+  name: "createContragent"
 }, {
   path: "/personal/contragents/show/:id",
   component: _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
-  name: "showContragent",
-  props: ["time"]
+  name: "showContragent"
 }, {
   path: "/personal/contragents/edit/:id",
   component: _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-  name: "editContragent",
-  props: ["time"]
+  name: "editContragent"
 }, {
   path: "/personal/auctions",
   component: _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
-  name: "auctionIndex",
-  props: ["time"]
+  name: "auctionIndex"
 }, {
   path: "/personal/auctions/my",
   component: _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
-  name: "auctionMy",
-  props: ["time"]
+  name: "auctionMy"
 }, {
   path: "/personal/auctions/bid",
   component: _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
-  name: "auctionBid",
-  props: ["time"]
+  name: "auctionBid"
 }, {
   path: "/personal/auctions/create",
   component: _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
-  name: "createAuction",
-  props: ["time"]
+  name: "createAuction"
 }, {
   path: "/personal/auctions/show/:id",
   component: _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
-  name: "showAuction",
-  props: ["time"]
+  name: "showAuction"
 }, {
   path: "/personal/auctions/edit/:id",
   component: _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
-  name: "editAuction",
-  props: ["time"]
+  name: "editAuction"
 }, {
   path: "/personal/targets",
   component: _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
-  name: "indexTarget",
-  props: ["time"]
+  name: "indexTarget"
 }];
 
 if (!!window.user && !!window.user.contragents && !!window.user.contragents[0]) {
   routes.push({
     path: "/personal/company",
     component: _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
-    name: "company",
-    props: ["time"]
+    name: "company"
   }, {
     path: "/personal/targets/create",
     component: _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
-    name: "createTarget",
-    props: ["time"]
+    name: "createTarget"
   }, {
     path: "/personal/targets/edit/:id",
     component: _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
-    name: "editTarget",
-    props: ["time"]
+    name: "editTarget"
   });
 }
 

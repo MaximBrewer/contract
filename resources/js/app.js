@@ -9,6 +9,7 @@ require("./bootstrap");
 window.Vue = require("vue");
 window.Vue.mixin(require("./trans"));
 
+
 import VueRouter from "vue-router";
 import moment from "moment";
 import VueFlashMessage from "vue-flash-message";
@@ -53,68 +54,57 @@ const routes = [
     {
         path: "/personal/contragents",
         component: ContragentIndex,
-        name: "contragentIndex",
-        props: ["time"]
+        name: "contragentIndex"
     },
     {
         path: "/personal/contragents/create",
         component: ContragentCreate,
-        name: "createContragent",
-        props: ["time"]
+        name: "createContragent"
     },
     {
         path: "/personal/contragents/show/:id",
         component: contragentShow,
-        name: "showContragent",
-        props: ["time"]
+        name: "showContragent"
     },
     {
         path: "/personal/contragents/edit/:id",
         component: ContragentEdit,
-        name: "editContragent",
-        props: ["time"]
+        name: "editContragent"
     },
     {
         path: "/personal/auctions",
         component: AuctionIndex,
-        name: "auctionIndex",
-        props: ["time"]
+        name: "auctionIndex"
     },
     {
         path: "/personal/auctions/my",
         component: AuctionMy,
-        name: "auctionMy",
-        props: ["time"]
+        name: "auctionMy"
     },
     {
         path: "/personal/auctions/bid",
         component: AuctionBid,
-        name: "auctionBid",
-        props: ["time"]
+        name: "auctionBid"
     },
     {
         path: "/personal/auctions/create",
         component: AuctionCreate,
-        name: "createAuction",
-        props: ["time"]
+        name: "createAuction"
     },
     {
         path: "/personal/auctions/show/:id",
         component: AuctionShow,
-        name: "showAuction",
-        props: ["time"]
+        name: "showAuction"
     },
     {
         path: "/personal/auctions/edit/:id",
         component: AuctionEdit,
-        name: "editAuction",
-        props: ["time"]
+        name: "editAuction"
     },
     {
         path: "/personal/targets",
         component: TargetIndex,
-        name: "indexTarget",
-        props: ["time"]
+        name: "indexTarget"
     }
 ];
 
@@ -127,20 +117,17 @@ if (
         {
             path: "/personal/company",
             component: Company,
-            name: "company",
-            props: ["time"]
+            name: "company"
         },
         {
             path: "/personal/targets/create",
             component: TargetCreate,
-            name: "createTarget",
-            props: ["time"]
+            name: "createTarget"
         },
         {
             path: "/personal/targets/edit/:id",
             component: TargetEdit,
-            name: "editTarget",
-            props: ["time"]
+            name: "editTarget"
         }
     );
 }
@@ -158,8 +145,8 @@ const app = new Vue({
         let survey_id = "chan";
         this.listenForBroadcast(survey_id);
     },
-    data: {
-      time: window.document.querySelector('meta[name="server-time"]').content
+    data:{
+        time: window.document.querySelector('meta[name="server-time"]').content
     },
     methods: {
         listenForBroadcast(survey_id) {
@@ -191,13 +178,17 @@ const app = new Vue({
                     app.time = e.time;
                     e.started.forEach(auction =>
                         that.flash(
-                            that.__("Auction #") + auction.id + that.__(" started"),
+                            that.__("Auction #") +
+                                auction.id +
+                                that.__(" started"),
                             "success"
                         )
                     );
                     e.finished.forEach(auction =>
                         that.flash(
-                            that.__("Auction #") + auction.id + that.__(" finished"),
+                            that.__("Auction #") +
+                                auction.id +
+                                that.__(" finished"),
                             "primary"
                         )
                     );
