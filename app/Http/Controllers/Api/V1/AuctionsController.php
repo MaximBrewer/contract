@@ -314,6 +314,13 @@ class AuctionsController extends Controller
             ], 422);
         }
 
+        if ($bet->approved_volume || $bet->approved_contract) {
+            return response()->json([
+                'message' => __('Bet already approved!'),
+                'errors' => []
+            ], 422);
+        }
+
         $bet->delete();
 
         $auction = Auction::findOrFail($auction->id);
@@ -325,7 +332,7 @@ class AuctionsController extends Controller
 
     public function approveContract(Request $r)
     {
-        
+
         $bet = Bet::findOrFail($r->id);
         $auction = $bet->auction;
         

@@ -4164,6 +4164,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -91902,18 +91904,31 @@ var render = function() {
                                                               }
                                                             ],
                                                             staticClass:
-                                                              "btn btn-danger btn-sm",
+                                                              "btn-sm",
+                                                            class: {
+                                                              "btn-danger": !bet.approved_volume,
+                                                              "btn-secondary":
+                                                                bet.approved_volume
+                                                            },
                                                             attrs: {
                                                               href:
-                                                                "javascript:void(0)"
+                                                                "javascript:void(0)",
+                                                              disabled:
+                                                                bet.approved_volume ||
+                                                                _vm.approved_contract
                                                             },
                                                             on: {
                                                               click: function(
                                                                 $event
                                                               ) {
-                                                                return _vm.removeBet(
-                                                                  bet
-                                                                )
+                                                                bet.approved_volume ||
+                                                                _vm.approved_contract
+                                                                  ? function() {
+                                                                      return false
+                                                                    }
+                                                                  : _vm.removeBet(
+                                                                      bet
+                                                                    )
                                                               }
                                                             }
                                                           },

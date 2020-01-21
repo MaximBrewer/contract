@@ -253,8 +253,10 @@
                           <a
                             v-tooltip="__('Delete bet')"
                             href="javascript:void(0)"
-                            class="btn btn-danger btn-sm"
-                            @click="removeBet(bet)"
+                            class="btn-sm"
+                            :disabled="bet.approved_volume || approved_contract"
+                            v-bind:class="{ 'btn-danger': !bet.approved_volume, 'btn-secondary': bet.approved_volume }"
+                            @click="bet.approved_volume || approved_contract ? function(){ return false; } : removeBet(bet)"
                           >
                             <i class="mdi mdi-delete" aria-hidden="true"></i>
                           </a>
