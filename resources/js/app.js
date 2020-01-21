@@ -158,6 +158,9 @@ const app = new Vue({
         let survey_id = "chan";
         this.listenForBroadcast(survey_id);
     },
+    data: {
+      time: window.document.querySelector('meta[name="server-time"]').content
+    },
     methods: {
         listenForBroadcast(survey_id) {
             var that = this;

@@ -496,7 +496,6 @@ export default {
   },
   data: function() {
     return {
-      time: window.document.querySelector('meta[name="server-time"]').content,
       isLoading: true,
       onCancel: false,
       fullPage: true,

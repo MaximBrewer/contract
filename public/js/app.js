@@ -4184,7 +4184,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      time: window.document.querySelector('meta[name="server-time"]').content,
       isLoading: true,
       onCancel: false,
       fullPage: true,
@@ -112504,6 +112503,9 @@ var app = new Vue({
   created: function created() {
     var survey_id = "chan";
     this.listenForBroadcast(survey_id);
+  },
+  data: {
+    time: window.document.querySelector('meta[name="server-time"]').content
   },
   methods: {
     listenForBroadcast: function listenForBroadcast(survey_id) {
