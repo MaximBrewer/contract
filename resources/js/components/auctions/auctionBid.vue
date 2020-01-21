@@ -22,7 +22,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="target in targets" :key="target.id">
+                <tr v-for="(target, index) in targets" :key="'target.' + target.id">
                   <td width="1">{{ index + 1 }}</td>
                   <td>{{ target.product.title }}</td>
                   <td>{{ target.volume }}</td>
@@ -151,7 +151,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="auction in _auctions" :key="auction.id">
+                <tr v-for="auction in _auctions" :key="'auction.' + auction.id">
                   <th>{{ auction.id }}</th>
                   <td>
                     <div v-if="auction.contragent" class="text-nowrap">

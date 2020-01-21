@@ -81,7 +81,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="auction in _auctions" :key="auction.id">
+            <tr v-for="auction in _auctions" :key="'auction.' + auction.id">
               <th>{{ auction.id }}</th>
               <td>
                 <div v-if="auction.contragent" class="text-nowrap">
