@@ -272,26 +272,30 @@ export default {
     sorByDistance(auctions) {
       let app = this;
       if (!app.store || !app.store.coords) return false;
-      let coords = app.store.coords.split(" ");
+      let coords = app.store.coords.split(",");
       if (coords.length < 2) return true;
       let cnt = 0;
       for (let i in auctions) {
-        let as = auctions[i].store.coords.split(" ");
+        let as = auctions[i].store.coords.split(",");
         if (as.length < 2) continue;
-        auctions[i].range = Math.round(app.getDistanceFromLatLonInKm(
-          coords[0].trim(),
-          coords[1].trim(),
-          as[0].trim(),
-          as[1].trim()
-        ) * 100) / 100;
+        auctions[i].range =
+          Math.round(
+            app.getDistanceFromLatLonInKm(
+              coords[0].trim(),
+              coords[1].trim(),
+              as[0].trim(),
+              as[1].trim()
+            ) * 100
+          ) / 100;
         ++cnt;
       }
-    if (cnt == auctions.length){
-      console.log(cnt)
-      console.log(auctions)
-      auctions.sort(function(a, b) {
-        return a.range - b.range;
-      });}
+      if (cnt == auctions.length) {
+        console.log(cnt);
+        console.log(auctions);
+        auctions.sort(function(a, b) {
+          return a.range - b.range;
+        });
+      }
     },
     filterGetRegions() {
       this.getRegions();

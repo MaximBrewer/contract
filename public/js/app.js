@@ -2418,17 +2418,24 @@ __webpack_require__.r(__webpack_exports__);
     sorByDistance: function sorByDistance(auctions) {
       var app = this;
       if (!app.store || !app.store.coords) return false;
-      var coords = app.store.coords.split(" ");
+      var coords = app.store.coords.split(",");
       if (coords.length < 2) return true;
-      auctions.sort(function (a, b) {
-        var as = a.store.coords.split(" ");
-        var bs = b.store.coords.split(" ");
-        if (as.length < 2) return false;
-        if (bs.length < 2) return true;
-        var arange = app.getDistanceFromLatLonInKm(coords[0].trim(), coords[1].trim(), as[0].trim(), as[1].trim());
-        var brange = app.getDistanceFromLatLonInKm(coords[0].trim(), coords[1].trim(), bs[0].trim(), bs[1].trim());
-        return arange - brange;
-      });
+      var cnt = 0;
+
+      for (var i in auctions) {
+        var as = auctions[i].store.coords.split(",");
+        if (as.length < 2) continue;
+        auctions[i].range = Math.round(app.getDistanceFromLatLonInKm(coords[0].trim(), coords[1].trim(), as[0].trim(), as[1].trim()) * 100) / 100;
+        ++cnt;
+      }
+
+      if (cnt == auctions.length) {
+        console.log(cnt);
+        console.log(auctions);
+        auctions.sort(function (a, b) {
+          return a.range - b.range;
+        });
+      }
     },
     filterGetRegions: function filterGetRegions() {
       this.getRegions();
@@ -3223,12 +3230,12 @@ __webpack_require__.r(__webpack_exports__);
     sorByDistance: function sorByDistance(auctions) {
       var app = this;
       if (!app.store || !app.store.coords) return false;
-      var coords = app.store.coords.split(" ");
+      var coords = app.store.coords.split(",");
       if (coords.length < 2) return true;
       var cnt = 0;
 
       for (var i in auctions) {
-        var as = auctions[i].store.coords.split(" ");
+        var as = auctions[i].store.coords.split(",");
         if (as.length < 2) continue;
         auctions[i].range = Math.round(app.getDistanceFromLatLonInKm(coords[0].trim(), coords[1].trim(), as[0].trim(), as[1].trim()) * 100) / 100;
         ++cnt;
@@ -3598,17 +3605,24 @@ __webpack_require__.r(__webpack_exports__);
     sorByDistance: function sorByDistance(auctions) {
       var app = this;
       if (!app.store || !app.store.coords) return false;
-      var coords = app.store.coords.split(" ");
+      var coords = app.store.coords.split(",");
       if (coords.length < 2) return true;
-      auctions.sort(function (a, b) {
-        var as = a.store.coords.split(" ");
-        var bs = b.store.coords.split(" ");
-        if (as.length < 2) return false;
-        if (bs.length < 2) return true;
-        var arange = app.getDistanceFromLatLonInKm(coords[0].trim(), coords[1].trim(), as[0].trim(), as[1].trim());
-        var brange = app.getDistanceFromLatLonInKm(coords[0].trim(), coords[1].trim(), bs[0].trim(), bs[1].trim());
-        return arange - brange;
-      });
+      var cnt = 0;
+
+      for (var i in auctions) {
+        var as = auctions[i].store.coords.split(",");
+        if (as.length < 2) continue;
+        auctions[i].range = Math.round(app.getDistanceFromLatLonInKm(coords[0].trim(), coords[1].trim(), as[0].trim(), as[1].trim()) * 100) / 100;
+        ++cnt;
+      }
+
+      if (cnt == auctions.length) {
+        console.log(cnt);
+        console.log(auctions);
+        auctions.sort(function (a, b) {
+          return a.range - b.range;
+        });
+      }
     },
     filterGetRegions: function filterGetRegions() {
       this.getRegions();
