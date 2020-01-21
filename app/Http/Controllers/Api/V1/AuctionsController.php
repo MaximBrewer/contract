@@ -325,7 +325,7 @@ class AuctionsController extends Controller
 
     public function approveContract(Request $r)
     {
-        return $r->id;
+        
         $bet = Bet::findOrFail($r->id);
         $auction = $bet->auction;
         
