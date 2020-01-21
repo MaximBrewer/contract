@@ -54,67 +54,67 @@ const routes = [
         path: "/personal/contragents",
         component: ContragentIndex,
         name: "contragentIndex",
-        props: "time"
+        props: ["time"]
     },
     {
         path: "/personal/contragents/create",
         component: ContragentCreate,
         name: "createContragent",
-        props: "time"
+        props: ["time"]
     },
     {
         path: "/personal/contragents/show/:id",
         component: contragentShow,
         name: "showContragent",
-        props: "time"
+        props: ["time"]
     },
     {
         path: "/personal/contragents/edit/:id",
         component: ContragentEdit,
         name: "editContragent",
-        props: "time"
+        props: ["time"]
     },
     {
         path: "/personal/auctions",
         component: AuctionIndex,
         name: "auctionIndex",
-        props: "time"
+        props: ["time"]
     },
     {
         path: "/personal/auctions/my",
         component: AuctionMy,
         name: "auctionMy",
-        props: "time"
+        props: ["time"]
     },
     {
         path: "/personal/auctions/bid",
         component: AuctionBid,
         name: "auctionBid",
-        props: "time"
+        props: ["time"]
     },
     {
         path: "/personal/auctions/create",
         component: AuctionCreate,
         name: "createAuction",
-        props: "time"
+        props: ["time"]
     },
     {
         path: "/personal/auctions/show/:id",
         component: AuctionShow,
         name: "showAuction",
-        props: "time"
+        props: ["time"]
     },
     {
         path: "/personal/auctions/edit/:id",
         component: AuctionEdit,
         name: "editAuction",
-        props: "time"
+        props: ["time"]
     },
     {
         path: "/personal/targets",
         component: TargetIndex,
         name: "indexTarget",
-        props: "time"
+        props: ["time"]
     }
 ];
 
@@ -128,19 +128,19 @@ if (
             path: "/personal/company",
             component: Company,
             name: "company",
-            props: "time"
+            props: ["time"]
         },
         {
             path: "/personal/targets/create",
             component: TargetCreate,
             name: "createTarget",
-            props: "time"
+            props: ["time"]
         },
         {
             path: "/personal/targets/edit/:id",
             component: TargetEdit,
             name: "editTarget",
-            props: "time"
+            props: ["time"]
         }
     );
 }
