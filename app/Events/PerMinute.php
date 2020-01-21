@@ -33,7 +33,7 @@ class PerMinute implements ShouldBroadcast
         $finished = DB::select(
             'select id from auctions where time(finish_at) < time(?) and confirmed = 1 and started = 1',
             [
-                Carbon::now()->toDateTimeString()
+                $carbon->toDateTimeString()
             ]
         );
 
@@ -44,7 +44,7 @@ class PerMinute implements ShouldBroadcast
         $started = DB::select(
             'select id from auctions where time(start_at) < time(?) and confirmed = 1',
             [
-                Carbon::now()->toDateTimeString()
+                $carbon->toDateTimeString()
             ]
         );
 
