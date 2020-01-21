@@ -63,6 +63,7 @@
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <router-link :to="{name: 'contragentIndex'}" class="dropdown-item">{{ __('All contragents') }}</router-link>
                                 <router-link :to="{name: 'createContragent'}" class="dropdown-item">{{ __('Create new contragent') }}</router-link>
+                                <router-link :to="{name: 'reviews'}" class="dropdown-item">{{ __('My reviews') }}</router-link>
                             </div>
                         </li>
 

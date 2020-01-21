@@ -79,7 +79,7 @@ export default {
     },
     saveComment(comment) {
       var app = this;
-      if (app.message != null && app.message != " ") {
+      if (comment.comment != null && comment.comment != " ") {
         app.errorComment = null;
         axios
           .post(
