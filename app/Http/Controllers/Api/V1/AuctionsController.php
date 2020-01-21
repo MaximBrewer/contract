@@ -130,7 +130,7 @@ class AuctionsController extends Controller
     public function show($id)
     {
         $user = User::find(Auth::user()->id);
-        $user->bets->update([
+        $user->contragents[0]->bets->update([
             'took_part' => Carbon::now()
         ]);
         return Auction::findOrFail($id);

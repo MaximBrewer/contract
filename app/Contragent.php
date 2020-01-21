@@ -58,5 +58,8 @@ class Contragent extends Model
     {
         return $this->hasMany('App\Store');
     }
+    public function bets(){
+        return $this->hasMany('App\Bet');
+    }
 
 }
