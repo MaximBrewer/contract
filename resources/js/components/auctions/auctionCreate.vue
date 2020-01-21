@@ -14,7 +14,7 @@
                 v-bind:class="{ 'is-invalid': errors['product.id'] }"
               ></v-select>
               <span role="alert" class="invalid-feedback" v-if="errors['product.id']">
-                <strong v-for="error in errors['product.id']">{{ error }}</strong>
+                <strong v-for="(error, index) in errors['product.id']" :key="index">{{ error }}</strong>
               </span>
             </div>
             <div class="form-group">
@@ -26,7 +26,7 @@
                 v-bind:class="{ 'is-invalid': errors['multiplicity.id'] }"
               ></v-select>
               <span role="alert" class="invalid-feedback" v-if="errors['multiplicity.id']">
-                <strong v-for="error in errors['multiplicity.id']">{{ error }}</strong>
+                <strong v-for="(error, index) in errors['multiplicity.id']" :key="index">{{ error }}</strong>
               </span>
             </div>
             <div class="form-group">
@@ -38,7 +38,7 @@
                 v-bind:class="{ 'is-invalid': errors['store.id'] }"
               ></v-select>
               <span role="alert" class="invalid-feedback" v-if="errors['store.id']">
-                <strong v-for="error in errors['store.id']">{{ error }}</strong>
+                <strong v-for="(error, index) in errors['store.id']" :key="index">{{ error }}</strong>
               </span>
             </div>
             <div class="form-group">
@@ -50,7 +50,7 @@
                 v-bind:class="{ 'is-invalid': errors.volume }"
               />
               <span role="alert" class="invalid-feedback" v-if="errors.volume">
-                <strong v-for="error in errors.volume">{{ error }}</strong>
+                <strong v-for="(error, index) in errors.volume" :key="index">{{ error }}</strong>
               </span>
             </div>
           </div>
@@ -64,7 +64,7 @@
                 v-bind:class="{ 'is-invalid': errors.start_price }"
               />
               <span role="alert" class="invalid-feedback" v-if="errors.start_price">
-                <strong v-for="error in errors.start_price">{{ error }}</strong>
+                <strong v-for="(error, index) in errors.start_price" :key="index">{{ error }}</strong>
               </span>
             </div>
             <div class="form-group">
@@ -76,7 +76,7 @@
                 v-bind:class="{ 'is-invalid': errors.step }"
               />
               <span role="alert" class="invalid-feedback" v-if="errors.step">
-                <strong v-for="error in errors.step">{{ error }}</strong>
+                <strong v-for="(error, index) in errors.step" :key="index">{{ error }}</strong>
               </span>
             </div>
             <div class="form-group">
@@ -89,7 +89,7 @@
                 v-bind:class="{ 'is-invalid': errors.start_at }"
               ></datetime>
               <span role="alert" class="invalid-feedback" v-if="errors.start_at">
-                <strong v-for="error in errors.start_at">{{ error }}</strong>
+                <strong v-for="(error, index) in errors.start_at" :key="index">{{ error }}</strong>
               </span>
             </div>
             <div class="form-group">
@@ -102,7 +102,7 @@
                 v-bind:class="{ 'is-invalid': errors.finish_at }"
               ></datetime>
               <span role="alert" class="invalid-feedback" v-if="errors.finish_at">
-                <strong v-for="error in errors.finish_at">{{ error }}</strong>
+                <strong v-for="(error, index) in errors.finish_at" :key="index">{{ error }}</strong>
               </span>
             </div>
           </div>
@@ -116,7 +116,7 @@
               v-bind:class="{ 'is-invalid': errors.comment }"
             ></textarea>
             <span role="alert" class="invalid-feedback" v-if="errors['auction.comment']">
-              <strong v-for="error in errors.comment">{{ error }}</strong>
+              <strong v-for="(error, index) in errors.comment" :key="index">{{ error }}</strong>
             </span>
           </div>
           <div class="form-group text-right">
@@ -217,14 +217,11 @@ export default {
           newAuction
         )
         .then(function(resp) {
-          app.$router.replace(
-            "/personal/auctions/show/" +
-              resp.data.id
-          );
+          app.$router.replace("/personal/auctions/show/" + resp.data.id);
         })
         .catch(function(errors) {
           app.errors = errors.response.data.errors;
-          console.log(app.errors['multiplicity.id']);
+          console.log(app.errors["multiplicity.id"]);
           app.isLoading = false;
         });
     }

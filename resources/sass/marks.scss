@@ -164,3 +164,26 @@ body.swal2-height-auto {
 .card .table-bordered {
     margin: 0;
 }
+
+
+span.online{
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    display: block;
+    line-height: 1.6em;
+    margin: 0 auto;
+    top: 6px;
+    position: relative;
+}
+
+span.online.is-online{
+    background:#38c172;
+}
+
+span.online.is-offline{
+    background:#6c757d;
+}
+.line-height-22 .text-nowrap{
+    line-height: 2.2em;
+}

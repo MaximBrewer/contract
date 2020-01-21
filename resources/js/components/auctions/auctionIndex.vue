@@ -76,6 +76,7 @@
               <th>{{ __('Time') }}</th>
               <th>{{ __('Store') }}</th>
               <th>{{ __('Description') }}</th>
+              <th>{{ __('Confirmed') }}</th>
               <th></th>
             </tr>
           </thead>
@@ -139,6 +140,13 @@
               </td>
               <td>
                 <span>{{ auction.comment }}</span>
+              </td>
+              <td>
+                <span
+                  v-tooltip="auction.confirmed ? __('Confirmed') : __('Not confirmed')"
+                  class="online"
+                  v-bind:class="{ 'is-online': auction.confirmed, 'is-offline': !auction.confirmed }"
+                ></span>
               </td>
               <td>
                 <div class="btn-group btn-group-sm" role="group">
@@ -207,8 +215,8 @@ export default {
   },
   mounted() {
     let app = this,
-    contragent_id = app.user.contragents[0].id,
-    action = "all";
+      contragent_id = app.user.contragents[0].id,
+      action = "all";
     app.isLoading = true;
     axios
       .get(

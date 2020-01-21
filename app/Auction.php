@@ -30,9 +30,16 @@ class Auction extends Model
     protected $appends = [
         'filled',
         'bidder',
-        'bidders'
+        'bidders',
+        'free_volume'
     ];
 
+
+    public function getFreeVolumeAttribute()
+    {
+        $cnt = DB::select('select sum(volume) as busy_volume from bets where auction_id = ?', [$this->id]);
+        return $this->volume - $cnt[0]->busy_volume;
+    }
 
     public function getStartAtAttribute($value)
     {

@@ -213,14 +213,14 @@
         <div class="row" v-if="auction.bets && mine">
           <div class="col-md-12" v-if="auction.bets.length">
             <div class="card">
-              <div class="card-header">{{ __("Auction activity") }}</div>
+              <div class="card-header">{{ __("Auction activity") }} <strong>{{ auction.free_volume }}/{{ auction.volume }}</strong></div>
               <div class="table-responsive" id="auction_activity">
-                <table class="table table-bordered">
+                <table class="table table-bordered line-height-22">
                   <thead>
                     <tr>
                       <th>{{ __('Contragent') }}</th>
                       <th>{{ __('Is online') }}</th>
-                      <th>{{ __('Can bet') }}</th>
+                      <th>{{ __('Remove bet') }}</th>
                       <th>{{ __('Active volume') }}</th>
                       <th>{{ __('Active price') }}</th>
                       <th>{{ __('Approve volume') }}</th>
@@ -235,47 +235,45 @@
                           <div class="h6">{{ bet.contragent.title }}</div>
                         </div>
                       </td>
-                      <td>
+                      <td class="text-center">
                         <div class="text-nowrap">
                           <span
                             v-tooltip="__('Is online')"
                             href="javascript:void(0)"
-                            class="btn"
-                            v-bind:class="{ 'btn-success': bet.took_part, 'btn-danger': !bet.took_part }"
-                            @click="canBet(auction.id, bet.id)"
-                          >&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                            class="online"
+                            v-bind:class="{ 'is-online': bet.contragent.is_online, 'is-offline': !bet.contragent.is_online }"
+                          ></span>
                         </div>
                       </td>
-                      <td>
+                      <td class="text-center">
                         <div class="text-nowrap">
                           <a
                             v-tooltip="__('Can bet')"
                             href="javascript:void(0)"
-                            class="btn"
-                            v-bind:class="{ 'btn-success': bet.can_bet, 'btn-danger': !bet.can_bet }"
-                            @click="canBet(auction.id, bet.id)"
+                            class="btn btn-danger btn-sm"
+                            @click="removeBet(bet.id)"
                           >
-                            <i class="mdi mdi-check-circle" aria-hidden="true"></i>
+                            <i class="mdi mdi-delete" aria-hidden="true"></i>
                           </a>
                         </div>
                       </td>
-                      <td>
+                      <td class="text-center">
                         <div class="text-nowrap">
-                          <span>{{ auction.active_volume }}/{{ auction.volume }}</span>
+                          <span>{{ bet.volume }}</span>
                         </div>
                       </td>
-                      <td>
+                      <td class="text-center">
                         <div class="text-nowrap">
-                          <span>{{ auction.active_price }}</span>
+                          <span>{{ bet.price }}</span>
                         </div>
                       </td>
-                      <td>
+                      <td class="text-center">
                         <div class="text-nowrap">
                           <a
                             v-tooltip="__('Approve volume')"
                             href="javascript:void(0)"
-                            class="btn"
-                            v-bind:class="{ 'btn-warning': !bet.approved, 'btn-secondary': bet.approved }"
+                            class="btn btn-sm"
+                            v-bind:class="{ 'btn-success': !bet.approved, 'btn-secondary': bet.approved }"
                             @click="approveVolume(bet)"
                           >
                             <i class="mdi mdi-check-circle" aria-hidden="true"></i>
@@ -284,16 +282,16 @@
                       </td>
                       <td>
                         <div class="text-nowrap">
-                          <input class="form-control" size="10" type="text" v-model="bet.correct" />
+                          <input class="text-right form-control" size="10" type="text" v-model="bet.correct" />
                         </div>
                       </td>
-                      <td>
+                      <td class="text-center">
                         <div class="text-nowrap">
                           <a
                             v-tooltip="__('Approve contract')"
                             href="javascript:void(0)"
-                            class="btn"
-                            v-bind:class="{ 'btn-warning': !(bet.correct*1), 'btn-secondary': (bet.correct*1) }"
+                            class="btn btn-sm"
+                            v-bind:class="{ 'btn-success': !(bet.correct*1), 'btn-secondary': (bet.correct*1) }"
                             @click="approveContract(bet)"
                           >
                             <i class="mdi mdi-check-circle" aria-hidden="true"></i>
@@ -372,6 +370,7 @@
         </div>
       </div>
       <!--Bidders-->
+      <br>
       <div class="row">
         <div class="col-md-12">
           <div class="card">
