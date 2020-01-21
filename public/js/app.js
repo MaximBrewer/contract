@@ -4129,6 +4129,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4272,6 +4280,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
       Echo.channel("cross_contractru_database_message-pushed").listen("MessagePushed", function (e) {
+        console.log(e);
         if (app.auction.id == e.auction.id) app.auction == e.auction;
       });
     }
@@ -6043,10 +6052,9 @@ __webpack_require__.r(__webpack_exports__);
             axios.post("/api/v1/address?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
               address: address
             }).then(function (resp) {
-              if (resp.data[0]) {
-                app.store.region = resp.data[0];
-                app.store.federal_district = resp.data[1];
-              }
+              // if (resp.data[0]) {
+              app.store.region = resp.data[0];
+              app.store.federal_district = resp.data[1]; // }
             });
           }
         });
@@ -91566,7 +91574,9 @@ var render = function() {
                             _c("div", { staticClass: "card" }, [
                               _c("div", { staticClass: "card-header" }, [
                                 _vm._v(
-                                  _vm._s(_vm.__("Auction activity")) + " "
+                                  "\n              " +
+                                    _vm._s(_vm.__("Auction activity")) +
+                                    "\n              "
                                 ),
                                 _c("strong", [
                                   _vm._v(
@@ -91643,7 +91653,7 @@ var render = function() {
                                           bet,
                                           index
                                         ) {
-                                          return _c("tr", [
+                                          return _c("tr", { key: index }, [
                                             _c("td", [
                                               bet.contragent
                                                 ? _c(
@@ -92024,7 +92034,7 @@ var render = function() {
                           _c(
                             "tbody",
                             _vm._l(_vm.auction.bets, function(bet, index) {
-                              return _c("tr", [
+                              return _c("tr", { key: index }, [
                                 _c("td", [
                                   bet.contragent
                                     ? _c(
@@ -92125,9 +92135,11 @@ var render = function() {
                   "ul",
                   { staticClass: "list-group list-group-flush" },
                   _vm._l(_vm.auction.bidders, function(bidder, index) {
-                    return _c("li", { staticClass: "list-group-item" }, [
-                      _vm._v(_vm._s(bidder.title))
-                    ])
+                    return _c(
+                      "li",
+                      { key: index, staticClass: "list-group-item" },
+                      [_vm._v(_vm._s(bidder.title))]
+                    )
                   }),
                   0
                 )

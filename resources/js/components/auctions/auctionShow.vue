@@ -213,7 +213,10 @@
         <div class="row" v-if="auction.bets && mine">
           <div class="col-md-12" v-if="auction.bets.length">
             <div class="card">
-              <div class="card-header">{{ __("Auction activity") }} <strong>{{ auction.free_volume }}/{{ auction.volume }}</strong></div>
+              <div class="card-header">
+                {{ __("Auction activity") }}
+                <strong>{{ auction.free_volume }}/{{ auction.volume }}</strong>
+              </div>
               <div class="table-responsive" id="auction_activity">
                 <table class="table table-bordered line-height-22">
                   <thead>
@@ -229,7 +232,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="bet, index in auction.bets">
+                    <tr v-for="(bet, index) in auction.bets" :key="index">
                       <td>
                         <div v-if="bet.contragent" class="text-nowrap">
                           <div class="h6">{{ bet.contragent.title }}</div>
@@ -282,7 +285,12 @@
                       </td>
                       <td>
                         <div class="text-nowrap">
-                          <input class="text-right form-control" size="10" type="text" v-model="bet.correct" />
+                          <input
+                            class="text-right form-control"
+                            size="10"
+                            type="text"
+                            v-model="bet.correct"
+                          />
                         </div>
                       </td>
                       <td class="text-center">
@@ -325,7 +333,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="bet, index in auction.bets">
+                  <tr v-for="(bet, index) in auction.bets" :key="index">
                     <td>
                       <div v-if="bet.contragent" class="text-nowrap">
                         <div class="h6">{{ bet.contragent.title }}</div>
@@ -370,7 +378,7 @@
         </div>
       </div>
       <!--Bidders-->
-      <br>
+      <br />
       <div class="row">
         <div class="col-md-12">
           <div class="card">
@@ -378,7 +386,8 @@
             <ul class="list-group list-group-flush">
               <li
                 class="list-group-item"
-                v-for="bidder, index in auction.bidders"
+                v-for="(bidder, index) in auction.bidders"
+                :key="index"
               >{{ bidder.title }}</li>
             </ul>
           </div>
@@ -386,7 +395,6 @@
         </div>
       </div>
     </div>
-
     <modal name="add_bidder" height="auto" :adaptive="true" width="90%" :maxWidth="maxModalWidth">
       <div class="modal-header">
         <h5 class="modal-title">
@@ -475,16 +483,16 @@ export default {
         }
         app.bid.price = aucton.price;
         app.bid.volume = 1;
-      })
-      // .catch(function() {
-      //   app.$fire({
-      //     title: app.__("Error!"),
-      //     text: app.__("Failed to load auction"),
-      //     type: "error",
-      //     timer: 5000
-      //   });
-      //   app.isLoading = false;
-      // });
+      });
+    // .catch(function() {
+    //   app.$fire({
+    //     title: app.__("Error!"),
+    //     text: app.__("Failed to load auction"),
+    //     type: "error",
+    //     timer: 5000
+    //   });
+    //   app.isLoading = false;
+    // });
   },
   data: function() {
     return {
@@ -637,7 +645,8 @@ export default {
       Echo.channel("cross_contractru_database_message-pushed").listen(
         "MessagePushed",
         function(e) {
-          if(app.auction.id == e.auction.id) app.auction == e.auction
+          console.log(e)
+          if (app.auction.id == e.auction.id) app.auction == e.auction;
         }
       );
     }

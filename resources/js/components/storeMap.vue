@@ -61,10 +61,10 @@ export default {
                 { address: address }
               )
               .then(function(resp) {
-                if (resp.data[0]) {
+                // if (resp.data[0]) {
                   app.store.region = resp.data[0];
                   app.store.federal_district = resp.data[1];
-                }
+                // }
               });
           }
         });
