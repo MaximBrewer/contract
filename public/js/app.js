@@ -91340,7 +91340,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm.auction.started
+              _vm.auction.started && !_vm.auction.finished
                 ? _c("div", [
                     _vm.bidding
                       ? _c("div", { staticClass: "row" }, [

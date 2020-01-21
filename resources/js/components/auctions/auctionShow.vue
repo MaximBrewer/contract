@@ -136,7 +136,7 @@
       </div>
       <!--Started-->
       <!--Bidding-->
-      <div v-if="auction.started">
+      <div v-if="auction.started && !auction.finished">
         <div class="row" v-if="bidding">
           <div class="col-md-12">
             <div class="h4">{{ __("You are an auction participant") }}</div>
@@ -628,7 +628,7 @@ export default {
       Echo.channel("cross_contractru_database_message-pushed").listen(
         "MessagePushed",
         function(e) {
-          console.log(e.auction)
+          console.log(e.auction);
           if (app.auction.id == e.auction.id) app.auction = e.auction;
         }
       );
