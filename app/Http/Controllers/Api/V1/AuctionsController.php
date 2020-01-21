@@ -149,14 +149,9 @@ class AuctionsController extends Controller
         if (count(Auth::user()->contragents)) Auth::user()->contragents[0]->auctions()->attach($id);
 
         $auction = Auction::findOrFail($id);
-        if($auction) event(new \App\Events\MessagePushed($auction));
+        if ($auction) event(new \App\Events\MessagePushed($auction));
 
         return $this->index($request, $action);
-
-
-
-        
-
     }
 
     /**
@@ -171,11 +166,9 @@ class AuctionsController extends Controller
         if (count(Auth::user()->contragents)) Auth::user()->contragents[0]->auctions()->detach($id);
 
         $auction = Auction::findOrFail($id);
-        if($auction) event(new \App\Events\MessagePushed($auction));
+        if ($auction) event(new \App\Events\MessagePushed($auction));
 
         return $this->index($request, $action);
-
-
     }
 
     /**
@@ -219,8 +212,8 @@ class AuctionsController extends Controller
             'start_price' => $request->post('start_price'),
             'volume' => $request->post('volume'),
         ]);
-        
-        if($auction) event(new \App\Events\MessagePushed($auction));
+
+        if ($auction) event(new \App\Events\MessagePushed($auction));
 
         return $auction;
     }
@@ -264,7 +257,7 @@ class AuctionsController extends Controller
         $contragent->auctions()->attach($auction->id);
         $auction = Auction::findOrFail($request->post('auction'));
 
-        if($auction) event(new \App\Events\MessagePushed($auction));
+        if ($auction) event(new \App\Events\MessagePushed($auction));
 
         return $auction;
     }
@@ -300,9 +293,9 @@ class AuctionsController extends Controller
                     'confirmed' => 1,
                 ]);
         }
-        
+
         $auction = Auction::findOrFail($id);
-        if($auction) event(new \App\Events\MessagePushed($auction));
+        if ($auction) event(new \App\Events\MessagePushed($auction));
 
         return $auction;
     }
@@ -340,7 +333,7 @@ class AuctionsController extends Controller
 
         $bet = Bet::findOrFail($r->id);
         $auction = $bet->auction;
-        
+
 
 
         if (empty($auction) || $auction->contragent_id != Auth::user()->contragents[0]->id) {
@@ -359,7 +352,7 @@ class AuctionsController extends Controller
 
         $bet->update([
             'approved_contract' => Carbon::now(),
-            'correct' => (float)$r->correct
+            'correct' => (float) $r->correct
         ]);
 
         $auction = Auction::findOrFail($auction->id);
@@ -373,7 +366,7 @@ class AuctionsController extends Controller
     {
         $bet = Bet::findOrFail($id);
         $auction = $bet->auction;
-        
+
 
         if (empty($auction) || $auction->contragent_id != Auth::user()->contragents[0]->id) {
             return response()->json([
@@ -457,19 +450,21 @@ class AuctionsController extends Controller
                 'errors' => []
             ], 422);
         }
-        DB::connection()->enableQueryLog();
+        // DB::connection()->enableQueryLog();
 
-        $auctionBets = Bet::where('auction_id', $r->post('auction'))
-            ->whereNull('approved_volume')
-            ->orWhere('approved_volume', '<>', 1)
-            ->orderBy('price', 'desc')
-            ->orderBy('volume', 'desc')
-            ->orderBy('created_at', 'asc')
-            ->get();
+        $auctionBets = Bet::where('auction_id', $r->post('auction'))->where(function ($query) {
+            $query
+                ->whereNull('approved_volume')
+                ->orWhere('approved_volume', '<>', 1);
+        })
+        ->orderBy('price', 'desc')
+        ->orderBy('volume', 'desc')
+        ->orderBy('created_at', 'asc')
+        ->get();
 
 
-        $queries = DB::getQueryLog();
-        info($queries);
+        // $queries = DB::getQueryLog();
+        // info($queries);
 
         $bets = [];
         $nev = false;
