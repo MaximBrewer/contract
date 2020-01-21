@@ -53,63 +53,68 @@ const routes = [
     {
         path: "/personal/contragents",
         component: ContragentIndex,
-        name: "contragentIndex"
+        name: "contragentIndex",
+        props: "time"
     },
     {
         path: "/personal/contragents/create",
         component: ContragentCreate,
-        name: "createContragent"
+        name: "createContragent",
+        props: "time"
     },
     {
         path: "/personal/contragents/show/:id",
         component: contragentShow,
-        name: "showContragent"
+        name: "showContragent",
+        props: "time"
     },
     {
         path: "/personal/contragents/edit/:id",
         component: ContragentEdit,
-        name: "editContragent"
+        name: "editContragent",
+        props: "time"
     },
     {
         path: "/personal/auctions",
         component: AuctionIndex,
-        name: "auctionIndex"
+        name: "auctionIndex",
+        props: "time"
     },
     {
         path: "/personal/auctions/my",
         component: AuctionMy,
         name: "auctionMy",
-        props: {
-            action: "my"
-        }
+        props: "time"
     },
     {
         path: "/personal/auctions/bid",
         component: AuctionBid,
         name: "auctionBid",
-        props: {
-            action: "bid"
-        }
+        props: "time"
     },
     {
         path: "/personal/auctions/create",
         component: AuctionCreate,
-        name: "createAuction"
+        name: "createAuction",
+        props: "time"
     },
     {
         path: "/personal/auctions/show/:id",
         component: AuctionShow,
-        name: "showAuction"
+        name: "showAuction",
+        props: "time"
     },
     {
         path: "/personal/auctions/edit/:id",
         component: AuctionEdit,
-        name: "editAuction"
+        name: "editAuction",
+        props: "time"
     },
     {
         path: "/personal/targets",
         component: TargetIndex,
-        name: "indexTarget"
+        name: "indexTarget",
+        props: "time"
     }
 ];
 
@@ -122,17 +127,20 @@ if (
         {
             path: "/personal/company",
             component: Company,
-            name: "company"
+            name: "company",
+            props: "time"
         },
         {
             path: "/personal/targets/create",
             component: TargetCreate,
-            name: "createTarget"
+            name: "createTarget",
+            props: "time"
         },
         {
             path: "/personal/targets/edit/:id",
             component: TargetEdit,
-            name: "editTarget"
+            name: "editTarget",
+            props: "time"
         }
     );
 }
@@ -177,8 +185,7 @@ const app = new Vue({
             Echo.channel("cross_contractru_database_every-minute").listen(
                 "PerMinute",
                 function(e) {
-                    console.log(e);
-                    console.log(window.user);
+                    app.time = e.time;
                     e.started.forEach(auction =>
                         that.flash(
                             that.__("Auction #") + auction.id + that.__(" started"),

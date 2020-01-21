@@ -112421,68 +112421,76 @@ var routes = [{
 }, {
   path: "/personal/contragents",
   component: _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
-  name: "contragentIndex"
+  name: "contragentIndex",
+  props: "time"
 }, {
   path: "/personal/contragents/create",
   component: _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-  name: "createContragent"
+  name: "createContragent",
+  props: "time"
 }, {
   path: "/personal/contragents/show/:id",
   component: _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
-  name: "showContragent"
+  name: "showContragent",
+  props: "time"
 }, {
   path: "/personal/contragents/edit/:id",
   component: _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-  name: "editContragent"
+  name: "editContragent",
+  props: "time"
 }, {
   path: "/personal/auctions",
   component: _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
-  name: "auctionIndex"
+  name: "auctionIndex",
+  props: "time"
 }, {
   path: "/personal/auctions/my",
   component: _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
   name: "auctionMy",
-  props: {
-    action: "my"
-  }
+  props: "time"
 }, {
   path: "/personal/auctions/bid",
   component: _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
   name: "auctionBid",
-  props: {
-    action: "bid"
-  }
+  props: "time"
 }, {
   path: "/personal/auctions/create",
   component: _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
-  name: "createAuction"
+  name: "createAuction",
+  props: "time"
 }, {
   path: "/personal/auctions/show/:id",
   component: _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
-  name: "showAuction"
+  name: "showAuction",
+  props: "time"
 }, {
   path: "/personal/auctions/edit/:id",
   component: _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
-  name: "editAuction"
+  name: "editAuction",
+  props: "time"
 }, {
   path: "/personal/targets",
   component: _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
-  name: "indexTarget"
+  name: "indexTarget",
+  props: "time"
 }];
 
 if (!!window.user && !!window.user.contragents && !!window.user.contragents[0]) {
   routes.push({
     path: "/personal/company",
     component: _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
-    name: "company"
+    name: "company",
+    props: "time"
   }, {
     path: "/personal/targets/create",
     component: _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
-    name: "createTarget"
+    name: "createTarget",
+    props: "time"
   }, {
     path: "/personal/targets/edit/:id",
     component: _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
-    name: "editTarget"
+    name: "editTarget",
+    props: "time"
   });
 }
 
@@ -112522,8 +112530,7 @@ var app = new Vue({
       // });
 
       Echo.channel("cross_contractru_database_every-minute").listen("PerMinute", function (e) {
-        console.log(e);
-        console.log(window.user);
+        app.time = e.time;
         e.started.forEach(function (auction) {
           return that.flash(that.__("Auction #") + auction.id + that.__(" started"), "success");
         });
