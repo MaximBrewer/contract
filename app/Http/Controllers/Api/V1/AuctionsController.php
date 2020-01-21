@@ -450,21 +450,21 @@ class AuctionsController extends Controller
                 'errors' => []
             ], 422);
         }
-        // DB::connection()->enableQueryLog();
+        DB::connection()->enableQueryLog();
 
         $auctionBets = Bet::where('auction_id', $r->post('auction'))->where(function ($query) {
             $query
                 ->whereNull('approved_volume')
                 ->orWhere('approved_volume', '<>', 1);
         })
-        ->orderBy('price', 'desc')
-        ->orderBy('volume', 'desc')
-        ->orderBy('created_at', 'asc')
-        ->get();
+            ->orderBy('price', 'desc')
+            ->orderBy('volume', 'desc')
+            ->orderBy('created_at', 'asc')
+            ->get();
 
 
-        // $queries = DB::getQueryLog();
-        // info($queries);
+        $queries = DB::getQueryLog();
+        info($queries);
 
         $bets = [];
         $nev = false;
