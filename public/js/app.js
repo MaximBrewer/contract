@@ -4360,143 +4360,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-star-rating */ "./node_modules/vue-star-rating/dist/star-rating.min.js");
+/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_star_rating__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -4540,61 +4405,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    var _ref;
 
-    return _ref = {
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    StarRating: vue_star_rating__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
+  mounted: function mounted() {
+    var app = this;
+    app.isLoading = true;
+    app.fetchComments();
+  },
+  data: function data() {
+    return {
+      contragent: app.$route.params.id,
       comments: [],
-      commentreplies: []
-    }, _defineProperty(_ref, "comments", 0), _defineProperty(_ref, "commentBoxs", []), _defineProperty(_ref, "message", null), _defineProperty(_ref, "replyCommentBoxs", []), _defineProperty(_ref, "commentsData", []), _defineProperty(_ref, "viewcomment", []), _defineProperty(_ref, "show", []), _defineProperty(_ref, "spamCommentsReply", []), _defineProperty(_ref, "spamComments", []), _defineProperty(_ref, "errorComment", null), _defineProperty(_ref, "errorReply", null), _defineProperty(_ref, "user", window.user), _defineProperty(_ref, "commentUrl", null), _ref;
+      message: null,
+      user: window.user
+    };
   },
   methods: {
     fetchComments: function fetchComments() {
       var app = this;
-      app.commentUrl = app.$route.params.id;
-      axios.get("/api/v1/comments/" + app.commentUrl + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.commentsData = resp.data;
-        app.commentsData = _.orderBy(resp.data, ["votes"], ["desc"]);
-        app.comments = 1;
+      axios.get("/api/v1/comments/?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+        app.comments = resp.data;
         app.isLoading = false;
-      })["catch"](function () {
-        alert(app.__("Failed to load comments"));
+      })["catch"](function (e) {
+        console.log(e);
         app.isLoading = false;
       });
-    },
-    showComments: function showComments(index) {
-      var app = this;
-
-      if (!app.viewcomment[index]) {
-        Vue.set(app.show, index, "hide");
-        Vue.set(app.viewcomment, index, 1);
-      } else {
-        Vue.set(app.show, index, "view");
-        Vue.set(app.viewcomment, index, 0);
-      }
-    },
-    openComment: function openComment(index) {
-      var app = this;
-
-      if (app.user) {
-        if (app.commentBoxs[index]) {
-          Vue.set(app.commentBoxs, index, 0);
-        } else {
-          Vue.set(app.commentBoxs, index, 1);
-        }
-      }
-    },
-    replyCommentBox: function replyCommentBox(index) {
-      var app = this;
-
-      if (app.user) {
-        if (app.replyCommentBoxs[index]) {
-          Vue.set(app.replyCommentBoxs, index, 0);
-        } else {
-          Vue.set(app.replyCommentBoxs, index, 1);
-        }
-      }
     },
     saveComment: function saveComment() {
       var app = this;
@@ -4602,112 +4440,18 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
       if (app.message != null && app.message != " ") {
         app.errorComment = null;
         axios.post("/api/v1/comments?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
-          contragent_id: app.commentUrl,
+          contragent_id: app.contragent,
           comment: app.message,
           user_id: app.user.id
         }).then(function (resp) {
           if (resp.data.status) {
-            app.commentsData.push({
-              commentid: resp.data.commentId,
-              name: app.user.name,
-              comment: app.message,
-              votes: 0,
-              reply: 0,
-              replies: []
-            });
-            app.message = null;
+            app.comments = resp.data;
           }
         });
       } else {
         app.errorComment = "Please enter a comment to save";
       }
-    },
-    replyComment: function replyComment(commentId, index) {
-      var app = this;
-      if (!!!app.commentsData[index].replies) app.commentsData[index].replies = [];
-
-      if (app.message != null && app.message != " ") {
-        app.errorReply = null;
-        axios.post("/api/v1/comments?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
-          comment: app.message,
-          user_id: app.user.id,
-          reply_id: commentId
-        }).then(function (res) {
-          if (res.data.status) {
-            if (!app.commentsData[index].reply) {
-              app.commentsData[index].replies.push({
-                commentid: res.data.commentId,
-                name: app.user.name,
-                comment: app.message,
-                votes: 0
-              });
-              app.commentsData[index].reply = 1;
-              Vue.set(app.replyCommentBoxs, index, 0);
-              Vue.set(app.commentBoxs, index, 0);
-            } else {
-              app.commentsData[index].replies.push({
-                commentid: res.data.commentId,
-                name: app.user.name,
-                comment: app.message,
-                votes: 0
-              });
-              Vue.set(app.replyCommentBoxs, index, 0);
-              Vue.set(app.commentBoxs, index, 0);
-            }
-
-            app.message = null;
-          }
-        });
-      } else {
-        app.errorReply = "Please enter a comment to save";
-      }
-    },
-    voteComment: function voteComment(commentId, commentType, index, index2, voteType) {
-      var app = this;
-
-      if (app.user) {
-        axios.post("/api/v1/comments/" + commentId + "/vote?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
-          user_id: app.user.id,
-          vote: voteType
-        }).then(function (res) {
-          if (res.data) {
-            if (commentType == "directcomment") {
-              if (voteType == "up") {
-                app.commentsData[index].votes++;
-              } else if (voteType == "down") {
-                app.commentsData[index].votes--;
-              }
-            } else if (commentType == "replycomment") {
-              if (voteType == "up") {
-                app.commentsData[index].replies[index2].votes++;
-              } else if (voteType == "down") {
-                app.commentsData[index].replies[index2].votes--;
-              }
-            }
-          }
-        });
-      }
-    },
-    spamComment: function spamComment(commentId, commentType, index, index2) {
-      var app = this;
-      console.log("spam here");
-
-      if (app.user) {
-        axios.post("/api/v1/comments/" + commentId + "/spam?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
-          user_id: app.user.id
-        }).then(function (res) {
-          if (commentType == "directcomment") {
-            Vue.set(app.spamComments, index, 1);
-            Vue.set(app.viewcomment, index, 1);
-          } else if (commentType == "replycomment") {
-            Vue.set(app.spamCommentsReply, index2, 1);
-          }
-        });
-      }
     }
-  },
-  mounted: function mounted() {
-    this.fetchComments();
   }
 });
 
@@ -5885,8 +5629,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
 /* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _comments_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./comments.vue */ "./resources/js/components/contragents/comments.vue");
-/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-star-rating */ "./node_modules/vue-star-rating/dist/star-rating.min.js");
-/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_star_rating__WEBPACK_IMPORTED_MODULE_4__);
 //
 //
 //
@@ -5958,23 +5700,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 
 
 
@@ -5983,8 +5708,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     vSelect: vue_select__WEBPACK_IMPORTED_MODULE_2___default.a,
     Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1___default.a,
-    comment: _comments_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    StarRating: vue_star_rating__WEBPACK_IMPORTED_MODULE_4___default.a
+    comment: _comments_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   mounted: function mounted() {
     var app = this;
@@ -92563,51 +92287,56 @@ var render = function() {
       _vm._v(" "),
       _vm.user
         ? _c("div", { staticClass: "comment-form" }, [
-            _vm._m(0),
-            _vm._v(" "),
             _c("form", { staticClass: "form", attrs: { name: "form" } }, [
-              _c("div", { staticClass: "form-row" }, [
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.message,
-                      expression: "message"
+              _c(
+                "div",
+                { staticClass: "form-row" },
+                [
+                  _c("star-rating", {
+                    model: {
+                      value: _vm.contragent.rating,
+                      callback: function($$v) {
+                        _vm.$set(_vm.contragent, "rating", $$v)
+                      },
+                      expression: "contragent.rating"
                     }
-                  ],
-                  staticClass: "input",
-                  attrs: {
-                    placeholder: _vm.__("Add comment..."),
-                    required: ""
-                  },
-                  domProps: { value: _vm.message },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                  }),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.message,
+                        expression: "message"
                       }
-                      _vm.message = $event.target.value
+                    ],
+                    staticClass: "input",
+                    attrs: {
+                      placeholder: _vm.__("Add comment..."),
+                      required: ""
+                    },
+                    domProps: { value: _vm.message },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.message = $event.target.value
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _vm.errorComment
-                  ? _c(
-                      "span",
-                      { staticClass: "input", staticStyle: { color: "red" } },
-                      [_vm._v(_vm._s(_vm.errorComment))]
-                    )
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-row" }, [
-                _c("input", {
-                  staticClass: "input",
-                  attrs: { placeholder: "Email", type: "text", disabled: "" },
-                  domProps: { value: _vm.user.email }
-                })
-              ]),
+                  }),
+                  _vm._v(" "),
+                  _vm.errorComment
+                    ? _c(
+                        "span",
+                        { staticClass: "input", staticStyle: { color: "red" } },
+                        [_vm._v(_vm._s(_vm.errorComment))]
+                      )
+                    : _vm._e()
+                ],
+                1
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "form-row" }, [
                 _c("input", {
@@ -92620,570 +92349,34 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _vm._l(_vm.commentsData, function(comment, index) {
-        return _vm.comments
-          ? _c("div", { staticClass: "comments" }, [
-              !_vm.spamComments[index] || !comment.spam
-                ? _c("div", { staticClass: "comment" }, [
-                    _vm._m(1, true),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "comment-box" }, [
-                      _c("div", { staticClass: "comment-text" }, [
-                        _vm._v(_vm._s(comment.comment))
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "comment-footer" }, [
-                        _c("div", { staticClass: "comment-info" }, [
-                          _c("span", { staticClass: "comment-author" }, [
-                            _c("em", [_vm._v(_vm._s(comment.name))])
-                          ]),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "comment-date" }, [
-                            _vm._v(_vm._s(comment.date))
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "comment-actions" }, [
-                          _c("ul", { staticClass: "list" }, [
-                            _c("li", [
-                              _vm._v(
-                                "\n                " +
-                                  _vm._s(_vm.__("Votes")) +
-                                  ": " +
-                                  _vm._s(comment.votes) +
-                                  "\n                "
-                              ),
-                              !comment.votedByUser
-                                ? _c(
-                                    "a",
-                                    {
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.voteComment(
-                                            comment.commentid,
-                                            "directcomment",
-                                            index,
-                                            0,
-                                            "up"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v(_vm._s(_vm.__("Up Votes")))]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              !comment.votedByUser
-                                ? _c(
-                                    "a",
-                                    {
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.voteComment(
-                                            comment.commentid,
-                                            "directcomment",
-                                            index,
-                                            0,
-                                            "down"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v(_vm._s(_vm.__("Down Votes")))]
-                                  )
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.spamComment(
-                                        comment.commentId,
-                                        "directcomment",
-                                        index,
-                                        0
-                                      )
-                                    }
-                                  }
-                                },
-                                [_vm._v(_vm._s(_vm.__("Spam")))]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.openComment(index)
-                                    }
-                                  }
-                                },
-                                [_vm._v(_vm._s(_vm.__("Reply")))]
-                              )
-                            ])
-                          ])
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _vm.commentBoxs[index]
-                      ? _c("div", { staticClass: "comment-form comment-v" }, [
-                          _vm._m(2, true),
-                          _vm._v(" "),
-                          _c(
-                            "form",
-                            { staticClass: "form", attrs: { name: "form" } },
-                            [
-                              _c("div", { staticClass: "form-row" }, [
-                                _c("textarea", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.message,
-                                      expression: "message"
-                                    }
-                                  ],
-                                  staticClass: "input",
-                                  attrs: {
-                                    placeholder: _vm.__("Add Comment..."),
-                                    required: ""
-                                  },
-                                  domProps: { value: _vm.message },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.message = $event.target.value
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _vm.errorReply
-                                  ? _c(
-                                      "span",
-                                      {
-                                        staticClass: "input",
-                                        staticStyle: { color: "red" }
-                                      },
-                                      [_vm._v(_vm._s(_vm.errorReply))]
-                                    )
-                                  : _vm._e()
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-row" }, [
-                                _c("input", {
-                                  staticClass: "input",
-                                  attrs: { placeholder: "Email", type: "text" },
-                                  domProps: { value: _vm.user.name }
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-row" }, [
-                                _c("input", {
-                                  staticClass: "btn btn-success",
-                                  attrs: {
-                                    type: "button",
-                                    value: _vm.__("Add Comment")
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.replyComment(
-                                        comment.commentid,
-                                        index
-                                      )
-                                    }
-                                  }
-                                })
-                              ])
-                            ]
-                          )
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    comment.replies
-                      ? _c(
-                          "div",
-                          _vm._l(comment.replies, function(replies, index2) {
-                            return _c("div", { staticClass: "comments" }, [
-                              !_vm.spamCommentsReply[index2] || !replies.spam
-                                ? _c("div", { staticClass: "comment reply" }, [
-                                    _vm._m(3, true),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "comment-box",
-                                        staticStyle: { background: "grey" }
-                                      },
-                                      [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass: "comment-text",
-                                            staticStyle: { color: "white" }
-                                          },
-                                          [_vm._v(_vm._s(replies.comment))]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          { staticClass: "comment-footer" },
-                                          [
-                                            _c(
-                                              "div",
-                                              { staticClass: "comment-info" },
-                                              [
-                                                _c(
-                                                  "span",
-                                                  {
-                                                    staticClass:
-                                                      "comment-author"
-                                                  },
-                                                  [_vm._v(_vm._s(replies.name))]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "span",
-                                                  {
-                                                    staticClass: "comment-date"
-                                                  },
-                                                  [_vm._v(_vm._s(replies.date))]
-                                                )
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass: "comment-actions"
-                                              },
-                                              [
-                                                _c(
-                                                  "ul",
-                                                  { staticClass: "list" },
-                                                  [
-                                                    _c("li", [
-                                                      _vm._v(
-                                                        "\n                      " +
-                                                          _vm._s(
-                                                            _vm.__(
-                                                              "Total votes"
-                                                            )
-                                                          ) +
-                                                          ": " +
-                                                          _vm._s(
-                                                            replies.votes
-                                                          ) +
-                                                          "\n                      "
-                                                      ),
-                                                      !replies.votedByUser
-                                                        ? _c(
-                                                            "a",
-                                                            {
-                                                              on: {
-                                                                click: function(
-                                                                  $event
-                                                                ) {
-                                                                  return _vm.voteComment(
-                                                                    replies.commentid,
-                                                                    "replycomment",
-                                                                    index,
-                                                                    index2,
-                                                                    "up"
-                                                                  )
-                                                                }
-                                                              }
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                _vm._s(
-                                                                  _vm.__(
-                                                                    "Up Votes"
-                                                                  )
-                                                                )
-                                                              )
-                                                            ]
-                                                          )
-                                                        : _vm._e(),
-                                                      _vm._v(" "),
-                                                      !replies.votedByUser
-                                                        ? _c(
-                                                            "a",
-                                                            {
-                                                              on: {
-                                                                click: function(
-                                                                  $event
-                                                                ) {
-                                                                  return _vm.voteComment(
-                                                                    comment.commentid,
-                                                                    "replycomment",
-                                                                    index,
-                                                                    index2,
-                                                                    "down"
-                                                                  )
-                                                                }
-                                                              }
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                _vm._s(
-                                                                  _vm.__(
-                                                                    "Down Votes"
-                                                                  )
-                                                                )
-                                                              )
-                                                            ]
-                                                          )
-                                                        : _vm._e()
-                                                    ]),
-                                                    _vm._v(" "),
-                                                    _c("li", [
-                                                      _c(
-                                                        "a",
-                                                        {
-                                                          on: {
-                                                            click: function(
-                                                              $event
-                                                            ) {
-                                                              return _vm.spamComment(
-                                                                replies.commentid,
-                                                                "replycomment",
-                                                                index,
-                                                                index2
-                                                              )
-                                                            }
-                                                          }
-                                                        },
-                                                        [
-                                                          _vm._v(
-                                                            _vm._s(
-                                                              _vm.__("Spam")
-                                                            )
-                                                          )
-                                                        ]
-                                                      )
-                                                    ]),
-                                                    _vm._v(" "),
-                                                    _c("li", [
-                                                      _c(
-                                                        "a",
-                                                        {
-                                                          on: {
-                                                            click: function(
-                                                              $event
-                                                            ) {
-                                                              return _vm.replyCommentBox(
-                                                                index2
-                                                              )
-                                                            }
-                                                          }
-                                                        },
-                                                        [
-                                                          _vm._v(
-                                                            _vm._s(
-                                                              _vm.__("Reply")
-                                                            )
-                                                          )
-                                                        ]
-                                                      )
-                                                    ])
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _vm.replyCommentBoxs[index2]
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "comment-form reply" },
-                                          [
-                                            _vm._m(4, true),
-                                            _vm._v(" "),
-                                            _c(
-                                              "form",
-                                              {
-                                                staticClass: "form",
-                                                attrs: { name: "form" }
-                                              },
-                                              [
-                                                _c(
-                                                  "div",
-                                                  { staticClass: "form-row" },
-                                                  [
-                                                    _c("textarea", {
-                                                      directives: [
-                                                        {
-                                                          name: "model",
-                                                          rawName: "v-model",
-                                                          value: _vm.message,
-                                                          expression: "message"
-                                                        }
-                                                      ],
-                                                      staticClass: "input",
-                                                      attrs: {
-                                                        placeholder: _vm.__(
-                                                          "Add comment..."
-                                                        ),
-                                                        required: ""
-                                                      },
-                                                      domProps: {
-                                                        value: _vm.message
-                                                      },
-                                                      on: {
-                                                        input: function(
-                                                          $event
-                                                        ) {
-                                                          if (
-                                                            $event.target
-                                                              .composing
-                                                          ) {
-                                                            return
-                                                          }
-                                                          _vm.message =
-                                                            $event.target.value
-                                                        }
-                                                      }
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _vm.errorReply
-                                                      ? _c(
-                                                          "span",
-                                                          {
-                                                            staticClass:
-                                                              "input",
-                                                            staticStyle: {
-                                                              color: "red"
-                                                            }
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              _vm._s(
-                                                                _vm.errorReply
-                                                              )
-                                                            )
-                                                          ]
-                                                        )
-                                                      : _vm._e()
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "div",
-                                                  { staticClass: "form-row" },
-                                                  [
-                                                    _c("input", {
-                                                      staticClass: "input",
-                                                      attrs: {
-                                                        placeholder: "Email",
-                                                        type: "text"
-                                                      },
-                                                      domProps: {
-                                                        value: _vm.user.name
-                                                      }
-                                                    })
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "div",
-                                                  { staticClass: "form-row" },
-                                                  [
-                                                    _c("input", {
-                                                      staticClass:
-                                                        "btn btn-success",
-                                                      attrs: {
-                                                        type: "button",
-                                                        value: _vm.__(
-                                                          "Add Comment"
-                                                        )
-                                                      },
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          return _vm.replyComment(
-                                                            comment.commentid,
-                                                            index
-                                                          )
-                                                        }
-                                                      }
-                                                    })
-                                                  ]
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      : _vm._e()
-                                  ])
-                                : _vm._e()
-                            ])
-                          }),
-                          0
-                        )
-                      : _vm._e()
+      _vm._l(_vm.comments, function(comment, index) {
+        return _c("div", { key: index, staticClass: "comments" }, [
+          _c("div", { staticClass: "comment" }, [
+            _c("div", { staticClass: "comment-box" }, [
+              _c("div", { staticClass: "comment-text" }, [
+                _vm._v(_vm._s(comment.comment))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "comment-footer" }, [
+                _c("div", { staticClass: "comment-info" }, [
+                  _c("span", { staticClass: "comment-author" }, [
+                    _c("em", [_vm._v(_vm._s(comment.name))])
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "comment-date" }, [
+                    _vm._v(_vm._s(comment.date))
                   ])
-                : _vm._e()
+                ])
+              ])
             ])
-          : _vm._e()
+          ])
+        ])
       })
     ],
     2
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-avatar" }, [
-      _c("img", { attrs: { src: "/storage/commentbox.png" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-avatar" }, [
-      _c("img", { attrs: { src: "/storage/comment.png" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-avatar" }, [
-      _c("img", { attrs: { src: "/storage/comment.png" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-avatar" }, [
-      _c("img", { attrs: { src: "/storage/comment.png" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "comment-avatar" }, [
-      _c("img", { attrs: { src: "/storage/comment.png" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -95769,63 +94962,13 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _vm._l(_vm.contragent.types, function(type, index) {
-                          return _c("span", [_vm._v(_vm._s(type.title))])
+                          return _c("span", { key: index }, [
+                            _vm._v(_vm._s(type.title))
+                          ])
                         })
                       ],
                       2
                     )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.contragent.legal_address
-                  ? _c("li", { staticClass: "list-group-item" }, [
-                      _c("strong", [
-                        _vm._v(_vm._s(_vm.__("Contragent Legal address")) + ":")
-                      ]),
-                      _vm._v(
-                        "\n              " +
-                          _vm._s(_vm.contragent.legal_address) +
-                          "\n            "
-                      )
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.contragent.fio
-                  ? _c("li", { staticClass: "list-group-item" }, [
-                      _c("strong", [
-                        _vm._v(_vm._s(_vm.__("Contragent contact")) + ":")
-                      ]),
-                      _vm._v(
-                        "\n              " +
-                          _vm._s(_vm.contragent.fio) +
-                          "\n            "
-                      )
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.contragent.phone
-                  ? _c("li", { staticClass: "list-group-item" }, [
-                      _c("strong", [
-                        _vm._v(_vm._s(_vm.__("Contragent phone")) + ":")
-                      ]),
-                      _vm._v(
-                        "\n              " +
-                          _vm._s(_vm.contragent.phone) +
-                          "\n            "
-                      )
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.contragent.inn
-                  ? _c("li", { staticClass: "list-group-item" }, [
-                      _c("strong", [
-                        _vm._v(_vm._s(_vm.__("Contragent TIN")) + ":")
-                      ]),
-                      _vm._v(
-                        "\n              " +
-                          _vm._s(_vm.contragent.inn) +
-                          "\n            "
-                      )
-                    ])
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.contragent.legal_address
@@ -95894,7 +95037,7 @@ var render = function() {
           "div",
           { staticClass: "row" },
           _vm._l(_vm.contragent.stores, function(store, index) {
-            return _c("div", { staticClass: "col-md-6" }, [
+            return _c("div", { key: index, staticClass: "col-md-6" }, [
               _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-header" }, [
                   _vm._v(_vm._s(_vm.contragent.stores[index].address))
@@ -95934,16 +95077,6 @@ var render = function() {
           }),
           0
         ),
-        _vm._v(" "),
-        _c("star-rating", {
-          model: {
-            value: _vm.contragent.rating,
-            callback: function($$v) {
-              _vm.$set(_vm.contragent, "rating", $$v)
-            },
-            expression: "contragent.rating"
-          }
-        }),
         _vm._v(" "),
         _c("comment")
       ],

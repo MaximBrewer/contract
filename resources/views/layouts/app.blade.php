@@ -20,7 +20,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script>
-        window._translations = {!!cache('translations') !!};
+        window._translations = {!! cache('translations'); !!};
     </script>
 </head>
 

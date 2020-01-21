@@ -22,7 +22,7 @@
               </li>
               <li class="list-group-item" v-if="contragent.types">
                 <strong>{{ __('Contragent type') }}:</strong>
-                <span v-for="type, index in contragent.types">{{ type.title }}</span>
+                <span v-for="(type, index) in contragent.types" :key="index">{{ type.title }}</span>
               </li>
               <li class="list-group-item" v-if="contragent.legal_address">
                 <strong>{{ __('Contragent Legal address') }}:</strong>
@@ -40,21 +40,6 @@
                 <strong>{{ __('Contragent TIN') }}:</strong>
                 {{ contragent.inn }}
               </li>
-              <li class="list-group-item" v-if="contragent.legal_address">
-                <strong>{{ __('Contragent Legal address') }}:</strong>
-                {{ contragent.legal_address }}
-              </li>
-              <li class="list-group-item" v-if="contragent.fio">
-                <strong>{{ __('Contragent contact') }}:</strong>
-                {{ contragent.fio }}
-              </li>
-              <li class="list-group-item" v-if="contragent.phone">
-                <strong>{{ __('Contragent phone') }}:</strong>
-                {{ contragent.phone }}
-              </li>
-              <li class="list-group-item" v-if="contragent.inn">
-                <strong>{{ __('Contragent TIN') }}:</strong>
-                {{ contragent.inn }}
               </li>
             </ul>
           </div>
@@ -63,7 +48,7 @@
       </div>
       <div class="h4">{{ __('Contragent stores') }}</div>
       <div class="row">
-        <div class="col-md-6" v-for="store, index in contragent.stores">
+        <div class="col-md-6" v-for="(store, index) in contragent.stores" :key="index">
           <div class="card">
             <div class="card-header">{{ contragent.stores[index].address }}</div>
             <ul class="list-group list-group-flush">
@@ -80,25 +65,21 @@
           </div>
         </div>
       </div>
-      <star-rating v-model="contragent.rating"></star-rating>
       <comment></comment>
     </div>
   </section>
 </template>
 <script>
 import "vue-loading-overlay/dist/vue-loading.css";
-
 import Loading from "vue-loading-overlay";
 import vSelect from "vue-select";
 import comment from "./comments.vue";
-import StarRating from "vue-star-rating";
 
 export default {
   components: {
     vSelect: vSelect,
     Loading: Loading,
-    comment: comment,
-    StarRating: StarRating
+    comment: comment
   },
   mounted() {
     let app = this;
