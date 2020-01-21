@@ -92256,7 +92256,15 @@ var render = function() {
                             return _c(
                               "li",
                               { key: index, staticClass: "list-group-item" },
-                              [_vm._v(_vm._s(bidder.title))]
+                              [
+                                _vm._v(
+                                  _vm._s(bidder.title) +
+                                    ", " +
+                                    _vm._s(bidder.fio) +
+                                    ", " +
+                                    _vm._s(bidder.phone)
+                                )
+                              ]
                             )
                           }),
                           0
