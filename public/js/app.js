@@ -3050,6 +3050,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -3123,15 +3127,22 @@ __webpack_require__.r(__webpack_exports__);
       if (!app.store || !app.store.coords) return false;
       var coords = app.store.coords.split(" ");
       if (coords.length < 2) return true;
-      auctions.sort(function (a, b) {
-        var as = a.store.coords.split(" ");
-        var bs = b.store.coords.split(" ");
-        if (as.length < 2) return false;
-        if (bs.length < 2) return true;
-        var arange = app.getDistanceFromLatLonInKm(coords[0].trim(), coords[1].trim(), as[0].trim(), as[1].trim());
-        var brange = app.getDistanceFromLatLonInKm(coords[0].trim(), coords[1].trim(), bs[0].trim(), bs[1].trim());
-        return arange - brange;
-      });
+      var cnt = 0;
+
+      for (var i in auctions) {
+        var as = auctions[i].store.coords.split(" ");
+        if (as.length < 2) continue;
+        auctions[i].range = Math.round(app.getDistanceFromLatLonInKm(coords[0].trim(), coords[1].trim(), as[0].trim(), as[1].trim()) * 100) / 100;
+        ++cnt;
+      }
+
+      if (cnt == auctions.length) {
+        console.log(cnt);
+        console.log(auctions);
+        auctions.sort(function (a, b) {
+          return a.range - b.range;
+        });
+      }
     },
     filterGetRegions: function filterGetRegions() {
       this.getRegions();
@@ -90068,7 +90079,17 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("span", [_vm._v(_vm._s(auction.volume))])
-                          ])
+                          ]),
+                          _vm._v(" "),
+                          auction.range
+                            ? _c("div", { staticClass: "text-nowrap" }, [
+                                _c("strong", [
+                                  _vm._v(_vm._s(_vm.__("Range")) + ":")
+                                ]),
+                                _vm._v(" "),
+                                _c("span", [_vm._v(_vm._s(auction.range))])
+                              ])
+                            : _vm._e()
                         ]),
                         _vm._v(" "),
                         _c("td", [

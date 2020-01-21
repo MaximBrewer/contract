@@ -100,6 +100,10 @@
                   <strong>{{ __('Volume') }}:</strong>
                   <span>{{ auction.volume }}</span>
                 </div>
+                <div class="text-nowrap" v-if="auction.range">
+                  <strong>{{ __('Range') }}:</strong>
+                  <span>{{ auction.range }}</span>
+                </div>
               </td>
               <td>
                 <div class="text-nowrap">
@@ -270,25 +274,24 @@ export default {
       if (!app.store || !app.store.coords) return false;
       let coords = app.store.coords.split(" ");
       if (coords.length < 2) return true;
-      auctions.sort(function(a, b) {
-        let as = a.store.coords.split(" ");
-        let bs = b.store.coords.split(" ");
-        if (as.length < 2) return false;
-        if (bs.length < 2) return true;
-        let arange = app.getDistanceFromLatLonInKm(
+      let cnt = 0;
+      for (let i in auctions) {
+        let as = auctions[i].store.coords.split(" ");
+        if (as.length < 2) continue;
+        auctions[i].range = Math.round(app.getDistanceFromLatLonInKm(
           coords[0].trim(),
           coords[1].trim(),
           as[0].trim(),
           as[1].trim()
-        );
-        let brange = app.getDistanceFromLatLonInKm(
-          coords[0].trim(),
-          coords[1].trim(),
-          bs[0].trim(),
-          bs[1].trim()
-        );
-        return arange - brange;
-      });
+        ) * 100) / 100;
+        ++cnt;
+      }
+    if (cnt == auctions.length){
+      console.log(cnt)
+      console.log(auctions)
+      auctions.sort(function(a, b) {
+        return a.range - b.range;
+      });}
     },
     filterGetRegions() {
       this.getRegions();
