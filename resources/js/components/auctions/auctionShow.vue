@@ -629,7 +629,7 @@ export default {
         "MessagePushed",
         function(e) {
           console.log(e.auction)
-          if (app.auction.id == e.auction.id) app.auction == e.auction;
+          if (app.auction.id == e.auction.id) app.auction = e.auction;
         }
       );
     }

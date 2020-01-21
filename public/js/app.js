@@ -4271,7 +4271,7 @@ __webpack_require__.r(__webpack_exports__);
       var app = this;
       Echo.channel("cross_contractru_database_message-pushed").listen("MessagePushed", function (e) {
         console.log(e.auction);
-        if (app.auction.id == e.auction.id) app.auction == e.auction;
+        if (app.auction.id == e.auction.id) app.auction = e.auction;
       });
     }
   }
