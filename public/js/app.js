@@ -4163,6 +4163,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -92070,7 +92071,9 @@ var render = function() {
                                                           "text-right form-control",
                                                         attrs: {
                                                           size: "10",
-                                                          type: "text"
+                                                          type: "text",
+                                                          disabled:
+                                                            bet.approved_contract
                                                         },
                                                         domProps: {
                                                           value: bet.correct

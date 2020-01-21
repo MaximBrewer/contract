@@ -291,6 +291,7 @@
                             size="10"
                             type="text"
                             v-model="bet.correct"
+                            :disabled="bet.approved_contract"
                           />
                         </div>
                       </td>
