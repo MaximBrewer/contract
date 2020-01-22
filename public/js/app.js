@@ -4179,9 +4179,7 @@ __webpack_require__.r(__webpack_exports__);
       app.isLoading = false;
       app.bid.price = app.auction.price;
       app.bid.volume = 1;
-      app.mine();
-      app.bidding();
-      app.can_bet();
+      var f = app.mine = app.bidding = app.can_bet;
     }); // .catch(function() {
     //   app.$fire({
     //     title: app.__("Error!"),
