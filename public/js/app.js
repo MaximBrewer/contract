@@ -92319,11 +92319,15 @@ var render = function() {
                                     ")\n              "
                                 ),
                                 _c("switch-checkbox", {
-                                  attrs: {
-                                    value: !!bidder.can_bet,
-                                    index: bidder.id
-                                  },
-                                  on: { input: _vm.toggleBidder }
+                                  attrs: { index: bidder.id },
+                                  on: { input: _vm.toggleBidder },
+                                  model: {
+                                    value: bidder.can_bet,
+                                    callback: function($$v) {
+                                      _vm.$set(bidder, "can_bet", $$v)
+                                    },
+                                    expression: "bidder.can_bet"
+                                  }
                                 })
                               ],
                               1

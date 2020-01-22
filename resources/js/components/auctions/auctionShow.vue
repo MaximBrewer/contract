@@ -391,7 +391,7 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item" v-for="(bidder, index) in auction.bidders" :key="index">
                 {{ bidder.title }} ({{ bidder.fio }}, {{ __('Phone') }}: {{ bidder.phone }})
-                <switch-checkbox :value="!!bidder.can_bet" @input="toggleBidder" :index="bidder.id"></switch-checkbox>
+                <switch-checkbox v-model="bidder.can_bet" @input="toggleBidder" :index="bidder.id"></switch-checkbox>
               </li>
             </ul>
           </div>
