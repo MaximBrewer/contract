@@ -112141,6 +112141,7 @@ var app = new Vue({
       // });
 
       Echo.channel("cross_contractru_database_every-minute").listen("PerMinute", function (e) {
+        console.log(e);
         app.time = e.time;
         e.started.forEach(function (auction) {
           return that.flash(that.__("Auction #") + auction.id + that.__(" started"), "success");
@@ -112150,7 +112151,7 @@ var app = new Vue({
         });
       });
       Echo.channel("cross_contractru_database_message-pushed").listen("MessagePushed", function (e) {
-        console.log(e.auction);
+        console.log(e);
         auction = (_readOnlyError("auction"), e.auction);
       });
     }

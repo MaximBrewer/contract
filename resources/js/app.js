@@ -244,6 +244,7 @@ const app = new Vue({
             Echo.channel("cross_contractru_database_every-minute").listen(
                 "PerMinute",
                 function(e) {
+                    console.log(e);
                     app.time = e.time;
                     e.started.forEach(auction =>
                         that.flash(
@@ -266,7 +267,7 @@ const app = new Vue({
             Echo.channel("cross_contractru_database_message-pushed").listen(
                 "MessagePushed",
                 function(e) {
-                    console.log(e.auction);
+                    console.log(e);
                     auction = e.auction;
                 }
             );
