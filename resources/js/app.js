@@ -70,8 +70,6 @@ import ReviewsIndex from "./components/contragents/reviewsIndex.vue";
 
 Vue.prototype.user = window.user;
 
-var auction = {};
-
 const app = new Vue({
     router: new VueRouter({
         mode: "history",
@@ -130,9 +128,6 @@ const app = new Vue({
                 path: "/personal/auctions/show/:id",
                 component: AuctionShow,
                 name: "showAuction",
-                props: {
-                    auction: auction
-                }
             },
             {
                 path: "/personal/auctions/edit/:id",
@@ -267,8 +262,8 @@ const app = new Vue({
             Echo.channel("message-pushed").listen(
                 "MessagePushed",
                 function(e) {
-                    console.log(e);
-                    auction = e.auction;
+                    console.log(e)
+                    this.$root.$emit('gotAuction', e.auction);
                 }
             );
         }

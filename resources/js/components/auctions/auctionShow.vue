@@ -452,6 +452,9 @@ export default {
     app.isLoading = true;
     let id = app.$route.params.id;
     app.auctionId = id;
+    app.$root.$on('gotAuction', function (auction) {
+      if(auction.id == app.auction.id) app.auction = auction;
+    })
     axios
       .get(
         "/api/v1/contragents?search=csrf_token=" +

@@ -4173,6 +4173,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     app.isLoading = true;
     var id = app.$route.params.id;
     app.auctionId = id;
+    app.$root.$on('gotAuction', function (auction) {
+      if (auction.id == app.auction.id) app.auction = auction;
+    });
     axios.get("/api/v1/contragents?search=csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
       app.bidders = resp.data;
     });
@@ -112012,7 +112015,6 @@ Vue.component("StarRating", vue_star_rating__WEBPACK_IMPORTED_MODULE_11___defaul
 
 
 Vue.prototype.user = window.user;
-var auction = {};
 var app = new Vue({
   router: new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
     mode: "history",
@@ -112061,10 +112063,7 @@ var app = new Vue({
     }, {
       path: "/personal/auctions/show/:id",
       component: _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_22__["default"],
-      name: "showAuction",
-      props: {
-        auction: auction
-      }
+      name: "showAuction"
     }, {
       path: "/personal/auctions/edit/:id",
       component: _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
@@ -112150,7 +112149,7 @@ var app = new Vue({
       });
       Echo.channel("message-pushed").listen("MessagePushed", function (e) {
         console.log(e);
-        auction = e.auction;
+        this.$root.$emit('gotAuction', e.auction);
       });
     }
   }
