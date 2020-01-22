@@ -28,30 +28,58 @@ export default {
     };
   },
   methods: {
+    toggleBidder(req) {
+      let app = this;
+      axios
+        .post(
+          "/api/v1/auctions/bidder/toggle?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token,
+          req
+        )
+        .then(function(resp) {
+          // bet.delete();
+        })
+        .catch(function(errors) {
+          app.$fire({
+            title: app.__("Error!"),
+            text: errors.response.data.message,
+            type: "error",
+            timer: 5000
+          });
+        });
+    },
     toggle(e) {
       if (this.disabled || e.keyCode === 9) {
         // not if disabled or tab is pressed
         e.stop();
       }
       this.toggled = !this.toggled;
-      this.$emit("input", {
-        status: this.toggled,
-        bidder_id: this.index
+      var app =this;
+      this.toggleBidder({
+        can_bet: app.toggled,
+        contragent_id: app.bidder.id,
+        auction_id: app.auction.id
       });
     }
   },
   props: {
-    disabled: {
-      type: Boolean,
-      default: false
+    auction: {
+      type: Object,
+      default: {}
     },
-    value: {
-      type: Number,
-      default: 0
+    bidder: {
+      type: Object,
+      default: {}
     },
     index: {
       type: Number,
       default: null
+    },
+    value: {
+      type: Number,
+      default: 0
     }
   }
 };

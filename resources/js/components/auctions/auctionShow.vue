@@ -391,7 +391,7 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item" v-for="(bidder, index) in auction.bidders" :key="index">
                 {{ bidder.title }} ({{ bidder.fio }}, {{ __('Phone') }}: {{ bidder.phone }})
-                <switch-checkbox :value="!!bidder.can_bet" v-model="bidder.can_bet" @input="toggleBidder" :index="bidder.id"></switch-checkbox>
+                <switch-checkbox v-model="bidder.can_bet" :auction="auction" :bidder="bidder"></switch-checkbox>
               </li>
             </ul>
           </div>
@@ -536,32 +536,6 @@ export default {
     }
   },
   methods: {
-    toggleBidder(val) {
-      let app = this;
-      axios
-        .post(
-          "/api/v1/auctions/bidder/toggle?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token,
-          {
-            can_bet: val.status,
-            contragent_id: val.bidder_id,
-            auction_id: app.auction.id
-          }
-        )
-        .then(function(resp) {
-          // bet.delete();
-        })
-        .catch(function(errors) {
-          app.$fire({
-            title: app.__("Error!"),
-            text: errors.response.data.message,
-            type: "error",
-            timer: 5000
-          });
-        });
-    },
     removeBet(bet) {
       var app = this;
       app.$confirm(app.__("Are you sure?")).then(() => {

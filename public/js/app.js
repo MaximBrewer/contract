@@ -4240,22 +4240,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: {
-    toggleBidder: function toggleBidder(val) {
-      var app = this;
-      axios.post("/api/v1/auctions/bidder/toggle?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
-        can_bet: val.status,
-        contragent_id: val.bidder_id,
-        auction_id: app.auction.id
-      }).then(function (resp) {// bet.delete();
-      })["catch"](function (errors) {
-        app.$fire({
-          title: app.__("Error!"),
-          text: errors.response.data.message,
-          type: "error",
-          timer: 5000
-        });
-      });
-    },
     removeBet: function removeBet(bet) {
       var app = this;
       app.$confirm(app.__("Are you sure?")).then(function () {
@@ -5986,6 +5970,18 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    toggleBidder: function toggleBidder(req) {
+      var app = this;
+      axios.post("/api/v1/auctions/bidder/toggle?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, req).then(function (resp) {// bet.delete();
+      })["catch"](function (errors) {
+        app.$fire({
+          title: app.__("Error!"),
+          text: errors.response.data.message,
+          type: "error",
+          timer: 5000
+        });
+      });
+    },
     toggle: function toggle(e) {
       if (this.disabled || e.keyCode === 9) {
         // not if disabled or tab is pressed
@@ -5993,24 +5989,30 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.toggled = !this.toggled;
-      this.$emit("input", {
-        status: this.toggled,
-        bidder_id: this.index
+      var app = this;
+      this.toggleBidder({
+        can_bet: app.toggled,
+        contragent_id: app.bidder.id,
+        auction_id: app.auction.id
       });
     }
   },
   props: {
-    disabled: {
-      type: Boolean,
-      "default": false
+    auction: {
+      type: Object,
+      "default": {}
     },
-    value: {
-      type: Number,
-      "default": 0
+    bidder: {
+      type: Object,
+      "default": {}
     },
     index: {
       type: Number,
       "default": null
+    },
+    value: {
+      type: Number,
+      "default": 0
     }
   }
 });
@@ -92320,10 +92322,9 @@ var render = function() {
                                 ),
                                 _c("switch-checkbox", {
                                   attrs: {
-                                    value: !!bidder.can_bet,
-                                    index: bidder.id
+                                    auction: _vm.auction,
+                                    bidder: bidder
                                   },
-                                  on: { input: _vm.toggleBidder },
                                   model: {
                                     value: bidder.can_bet,
                                     callback: function($$v) {
