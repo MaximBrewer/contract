@@ -9,7 +9,6 @@ require("./bootstrap");
 window.Vue = require("vue");
 window.Vue.mixin(require("./trans"));
 
-
 import VueRouter from "vue-router";
 import moment from "moment";
 import VueFlashMessage from "vue-flash-message";
@@ -24,8 +23,8 @@ Vue.component("v-popover", VPopover);
 
 require("vue-flash-message/dist/vue-flash-message.min.css");
 
-window.Vue.use(VueRouter);
-window.Vue.use(VueFlashMessage);
+Vue.use(VueRouter);
+Vue.use(VueFlashMessage);
 import VueSimpleAlert from "vue-simple-alert";
 
 Vue.use(VueSimpleAlert);
@@ -33,6 +32,25 @@ Vue.use(VueSimpleAlert);
 import VModal from "vue-js-modal";
 
 Vue.use(VModal);
+
+import Loading from "vue-loading-overlay";
+Vue.use(
+    Loading,
+    {
+        // props
+        color: "red"
+    },
+    {
+        // slots
+    }
+);
+
+import swicthCheckbox from "./components/swicthCheckbox.vue";
+Vue.component("switch-checkbox", swicthCheckbox, {});
+import vSelect from "vue-select";
+Vue.component("v-select", vSelect, {});
+import StarRating from "vue-star-rating";
+Vue.component("StarRating", StarRating, {});
 
 import ContragentIndex from "./components/contragents/contragentIndex.vue";
 import ContragentCreate from "./components/contragents/contragentCreate.vue";
@@ -151,10 +169,59 @@ const app = new Vue({
         let survey_id = "chan";
         this.listenForBroadcast(survey_id);
     },
-    data:{
+    data: {
         time: window.document.querySelector('meta[name="server-time"]').content
     },
     methods: {
+        getFederalDistricts(app) {
+            axios
+                .get(
+                    "/api/v1/federalDistricts?csrf_token=" +
+                        window.csrf_token +
+                        "&api_token=" +
+                        window.api_token
+                )
+                .then(function(resp) {
+                    app.federalDistricts = resp.data;
+                });
+        },
+        getRegions(app) {
+            axios
+                .get(
+                    "/api/v1/regions?csrf_token=" +
+                        window.csrf_token +
+                        "&api_token=" +
+                        window.api_token,
+                    app.contragent.federal_district
+                )
+                .then(function(resp) {
+                    app.regions = resp.data;
+                });
+        },
+        getTypes(app) {
+            axios
+                .get(
+                    "/api/v1/types?csrf_token=" +
+                        window.csrf_token +
+                        "&api_token=" +
+                        window.api_token
+                )
+                .then(function(resp) {
+                    app.types = resp.data;
+                });
+        },
+        getProducts(app) {
+            axios
+                .get(
+                    "/api/v1/types?csrf_token=" +
+                        window.csrf_token +
+                        "&api_token=" +
+                        window.api_token
+                )
+                .then(function(resp) {
+                    app.products = resp.data;
+                });
+        },
         listenForBroadcast(survey_id) {
             var that = this;
             // Echo.join("survey." + survey_id)

@@ -6,7 +6,13 @@
       <form class="form" name="form">
         <div class="form-group">
           <div class="clearfix">
-            <star-rating class="float-right" @rating-selected="rate" :star-size="starSize" v-model="rating" :show-rating="false"></star-rating>
+            <star-rating
+              class="float-right"
+              @rating-selected="rate"
+              :star-size="starSize"
+              v-model="rating"
+              :show-rating="false"
+            ></star-rating>
           </div>
           <textarea
             class="form-control sixe-200"
@@ -31,29 +37,30 @@
       <!-- Comment -->
       <div class="card">
         <div class="card-header">
-          <star-rating class="float-right" :star-size="starSizeSmall" v-model="comment.votes" :show-rating="false" :read-only="true"></star-rating>
+          <star-rating
+            class="float-right"
+            :star-size="starSizeSmall"
+            v-model="comment.votes"
+            :show-rating="false"
+            :read-only="true"
+          ></star-rating>
           <strong>{{ comment.by }}</strong>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"><p>{{comment.comment}}</p>
+          <li class="list-group-item">
+            <p>{{comment.comment}}</p>
             <small>{{ comment.updated_at | formatDateTime }}</small>
           </li>
         </ul>
-      </div><br>
+      </div>
+      <br />
     </div>
   </div>
 </template>
 <script>
-var _ = require("lodash");
-import StarRating from "vue-star-rating";
-
 export default {
-  components: {
-    StarRating: StarRating
-  },
   mounted() {
     let app = this;
-    app.isLoading = true;
     app.fetchComments();
   },
   data() {
@@ -71,6 +78,7 @@ export default {
   methods: {
     fetchComments() {
       let app = this;
+      let loader = Vue.$loading.show();
       axios
         .get(
           "/api/v1/comments/" +
@@ -84,16 +92,17 @@ export default {
           app.comments = resp.data[0];
           app.rating = resp.data[1];
           app.message = resp.data[2].comment;
-          app.isLoading = false;
+          loader.hide();
         })
         .catch(function(e) {
           console.log(e);
-          app.isLoading = false;
+          loader.hide();
         });
     },
     saveComment() {
       var app = this;
       if (app.message != null && app.message != " ") {
+        let loader = Vue.$loading.show();
         app.errorComment = null;
         axios
           .post(
@@ -111,12 +120,11 @@ export default {
             app.comments = resp.data[0];
             app.rating = resp.data[1];
             app.message = resp.data[2].comment;
+            loader.hide();
           });
-      } else {
-        app.errorComment = "Please enter a comment to save";
       }
+      s;
     }
   }
 };
-
 </script>

@@ -141,7 +141,7 @@
         <div class="row" v-if="bidding">
           <div class="col-md-12">
             <div class="h4">{{ __("You are an auction participant") }}</div>
-            <div class="row">
+            <div class="row" v-if="can_bet">
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="control-label">{{ __('Auction Volume') }}</label>
@@ -389,11 +389,10 @@
           <div class="card">
             <div class="card-header">{{ __('Auction bidders') }}</div>
             <ul class="list-group list-group-flush">
-              <li
-                class="list-group-item"
-                v-for="(bidder, index) in auction.bidders"
-                :key="index"
-              >{{ bidder.title }} ({{ bidder.fio }}, {{ __('Phone') }}: {{ bidder.phone }})</li>
+              <li class="list-group-item" v-for="(bidder, index) in auction.bidders" :key="index">
+                {{ bidder.title }} ({{ bidder.fio }}, {{ __('Phone') }}: {{ bidder.phone }})
+                <switch-checkbox v-model="bidder.can_bet"></switch-checkbox>
+              </li>
             </ul>
           </div>
           <br />
@@ -442,13 +441,9 @@
 </template>
 <script>
 import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
 import { Datetime } from "vue-datetime";
-import "vue-datetime/dist/vue-datetime.css";
-import vSelect from "vue-select";
 export default {
   components: {
-    vSelect: vSelect,
     Datetime: Datetime,
     Loading: Loading
   },
@@ -479,13 +474,6 @@ export default {
       .then(function(resp) {
         app.auction = resp.data;
         app.isLoading = false;
-        if (app.user && app.user.contragents && app.user.contragents[0]) {
-          let contr = app.user.contragents[0].id;
-          for (let r in app.auction.bidders) {
-            if (app.auction.bidders[r].id == contr) app.bidding = 1;
-          }
-          if (app.auction.contragent.id == contr) app.mine = 1;
-        }
         app.bid.price = app.auction.price;
         app.bid.volume = 1;
       });
@@ -510,6 +498,7 @@ export default {
       products: [],
       auctionId: null,
       bidding: 0,
+      can_bet: 0,
       bidders: [],
       bidder: null,
       mine: 0,
@@ -521,6 +510,20 @@ export default {
   },
   created() {
     this.listenForBroadcast();
+  },
+  watch: {
+    auction: function(auction) {
+      if (app.user && app.user.contragents && app.user.contragents[0]) {
+        let contr = app.user.contragents[0].id;
+        for (let r in auction.bidders) {
+          if (auction.bidders[r].id == contr) {
+            can_bet = auction.bidders[r].can_bet;
+            bidding = 1;
+          }
+        }
+        if (auction.contragent.id == contr) mine = 1;
+      }
+    }
   },
   methods: {
     removeBet(bet) {

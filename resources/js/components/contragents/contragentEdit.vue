@@ -1,7 +1,6 @@
 <template>
   <section class="contragent-edit-wrapper">
     <div class="container">
-      <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
       <form v-on:submit="saveForm()">
         <div class="row">
           <div class="col-md-6">
@@ -15,7 +14,7 @@
                 ref="title"
               />
               <div role="alert" class="invalid-feedback" v-if="errors.title">
-                <span v-for="error in errors.title">{{ error }}</span>
+                <span v-for="(error, index) in errors.title" :key="index">{{ error }}</span>
               </div>
             </div>
           </div>
@@ -29,7 +28,10 @@
                 v-model="contragent.federal_district"
               ></v-select>
               <div role="alert" class="invalid-feedback" v-if="errors['federal_district.id']">
-                <span v-for="error in errors['federal_district.id']">{{ error }}</span>
+                <span
+                  v-for="(error, index) in errors['federal_district.id']"
+                  :key="index"
+                >{{ error }}</span>
               </div>
             </div>
           </div>
@@ -44,7 +46,7 @@
                 ref="region"
               ></v-select>
               <div role="alert" class="invalid-feedback" v-if="errors['region.id']">
-                <span v-for="error in errors['region.id']">{{ error }}</span>
+                <span v-for="(error, index) in errors['region.id']" :key="index">{{ error }}</span>
               </div>
             </div>
           </div>
@@ -60,7 +62,7 @@
                 ref="types"
               ></v-select>
               <div role="alert" class="invalid-feedback" v-if="errors['types.id']">
-                <span v-for="error in errors['types.id']">{{ error }}</span>
+                <span v-for="(error, index) in errors['types.id']" :key="index">{{ error }}</span>
               </div>
             </div>
           </div>
@@ -75,7 +77,7 @@
                 ref="inn"
               />
               <div role="alert" class="invalid-feedback" v-if="errors.inn">
-                <span v-for="error in errors.inn">{{ error }}</span>
+                <span v-for="(error, index) in errors.inn" :key="index">{{ error }}</span>
               </div>
             </div>
           </div>
@@ -90,7 +92,7 @@
                 ref="legal_address"
               />
               <div role="alert" class="invalid-feedback" v-if="errors.legal_address">
-                <span v-for="error in errors.legal_address">{{ error }}</span>
+                <span v-for="(error, index) in errors.legal_address" :key="index">{{ error }}</span>
               </div>
             </div>
           </div>
@@ -105,7 +107,7 @@
                 ref="fio"
               />
               <div role="alert" class="invalid-feedback" v-if="errors.fio">
-                <span v-for="error in errors.fio">{{ error }}</span>
+                <span v-for="(error, index) in errors.fio" :key="index">{{ error }}</span>
               </div>
             </div>
           </div>
@@ -120,7 +122,7 @@
                 ref="phone"
               />
               <div role="alert" class="invalid-feedback" v-if="errors.phone">
-                <span v-for="error in errors.phone">{{ error }}</span>
+                <span v-for="(error, index) in errors.phone" :key="index">{{ error }}</span>
               </div>
             </div>
           </div>
@@ -129,7 +131,7 @@
               <label class="control-label">{{ __('Contragent stores') }}</label>
               <div class="stores">
                 <ul>
-                  <li class="store" v-for="store, index in contragent.stores">
+                  <li class="store" v-for="(store, index) in contragent.stores" :key="index">
                     <input type="hidden" v-model="contragent.stores[index].id" class="form-control" />
                     <div class="row">
                       <div class="col-md-6">
@@ -149,7 +151,10 @@
                             class="invalid-feedback"
                             v-if="errors.stores && errors.stores[index] && errors.stores[index].coords"
                           >
-                            <span v-for="error in errors.stores[index].coords">{{ error }}</span>
+                            <span
+                              v-for="(error, index) in errors.stores[index].coords"
+                              :key="index"
+                            >{{ error }}</span>
                           </div>
                         </div>
                         <div class="form-group">
@@ -168,7 +173,10 @@
                             class="invalid-feedback"
                             v-if="errors.stores && errors.stores[index] && errors.stores[index].address"
                           >
-                            <span v-for="error in errors.stores[index].address">{{ error }}</span>
+                            <span
+                              v-for="(error, index) in errors.stores[index].address"
+                              :key="index"
+                            >{{ error }}</span>
                           </div>
                         </div>
                       </div>
@@ -190,7 +198,8 @@
                             v-if="errors.stores && errors.stores[index] && errors.stores[index]['federal_district.id']"
                           >
                             <span
-                              v-for="error in errors.stores[index]['federal_district.id']"
+                              v-for="(error, index) in errors.stores[index]['federal_district.id']"
+                              :key="index"
                             >{{ error }}</span>
                           </div>
                         </div>
@@ -210,7 +219,10 @@
                             class="invalid-feedback"
                             v-if="errors.stores && errors.stores[index] && errors.stores[index]['region.id']"
                           >
-                            <span v-for="error in errors.stores[index]['region.id']">{{ error }}</span>
+                            <span
+                              v-for="(error, index) in errors.stores[index]['region.id']"
+                              :key="index"
+                            >{{ error }}</span>
                           </div>
                         </div>
                       </div>
@@ -243,23 +255,14 @@
   </section>
 </template>
 <script>
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
-import vSelect from "vue-select";
 export default {
-  components: {
-    vSelect: vSelect,
-    Loading: Loading
-  },
   mounted() {
     let app = this;
-    app.isLoading = true;
+    let loader = Vue.$loading.show();
     let id = app.user.contragents[0].id;
-
     if (!!app.$route.params.id) id = app.$route.params.id;
-    app.getFederalDistricts();
-    app.getRegions();
-    app.getTypes();
+    app.federal_districts = app.$root.getFederalDistricts(app);
+    app.types = app.$root.getTypes(app);
     app.contragentId = id;
     axios
       .get(
@@ -272,28 +275,24 @@ export default {
       )
       .then(function(resp) {
         app.contragent = resp.data;
-        app.isLoading = false;
+        loader.hide();
+        app.regions = app.$root.getRegions(app);
       })
       .catch(function() {
         alert(app.__("Failed to load contragent"));
-        app.isLoading = false;
+        loader.hide();
       });
   },
   data: function() {
     return {
-      isLoading: true,
       onCancel: false,
       fullPage: true,
       federalDistricts: [],
       types: [],
       regions: [],
       contragentId: null,
-      contragent: {
-        name: "",
-        address: "",
-        website: "",
-        email: ""
-      }
+      contragent: {},
+      errors: {}
     };
   },
   methods: {
@@ -309,51 +308,11 @@ export default {
       let app = this;
       app.contragent.stores.splice(index, 1);
     },
-    getFederalDistricts() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/federalDistricts?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.federalDistricts = resp.data;
-        });
-    },
-    getRegions() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/regions?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token,
-          this.contragent.federal_district
-        )
-        .then(function(resp) {
-          app.regions = resp.data;
-        });
-    },
-    getTypes() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/types?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.types = resp.data;
-        });
-    },
     saveForm() {
       event.preventDefault();
       var app = this;
       var newContragent = app.contragent;
-      app.isLoading = true;
+      let loader = Vue.$loading.show();
       if (newContragent.federal_district)
         newContragent.federal_district_id = newContragent.federal_district.id;
       if (newContragent.region)
@@ -373,14 +332,14 @@ export default {
         )
         .then(function(resp) {
           app.contragent = resp.data;
-          app.isLoading = false;
+          loader.hide();
           //app.$router.replace("/");
           return true;
         })
         .catch(function(resp) {
           console.log(resp);
           alert(app.__("Failed to edit contragent"));
-          app.isLoading = false;
+          loader.hide();
         });
     }
   }

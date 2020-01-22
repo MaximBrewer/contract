@@ -3716,14 +3716,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
 /* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
-/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-datetime */ "./node_modules/vue-datetime/dist/vue-datetime.js");
-/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_datetime__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-datetime/dist/vue-datetime.css */ "./node_modules/vue-datetime/dist/vue-datetime.css");
-/* harmony import */ var vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_datetime_dist_vue_datetime_css__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-datetime */ "./node_modules/vue-datetime/dist/vue-datetime.js");
+/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_datetime__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -4165,16 +4159,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-
-
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    vSelect: vue_select__WEBPACK_IMPORTED_MODULE_4___default.a,
-    Datetime: vue_datetime__WEBPACK_IMPORTED_MODULE_2__["Datetime"],
+    Datetime: vue_datetime__WEBPACK_IMPORTED_MODULE_1__["Datetime"],
     Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default.a
   },
   mounted: function mounted() {
@@ -4188,17 +4177,6 @@ __webpack_require__.r(__webpack_exports__);
     axios.get("/api/v1/auction/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
       app.auction = resp.data;
       app.isLoading = false;
-
-      if (app.user && app.user.contragents && app.user.contragents[0]) {
-        var contr = app.user.contragents[0].id;
-
-        for (var r in app.auction.bidders) {
-          if (app.auction.bidders[r].id == contr) app.bidding = 1;
-        }
-
-        if (app.auction.contragent.id == contr) app.mine = 1;
-      }
-
       app.bid.price = app.auction.price;
       app.bid.volume = 1;
     }); // .catch(function() {
@@ -4222,6 +4200,7 @@ __webpack_require__.r(__webpack_exports__);
       products: [],
       auctionId: null,
       bidding: 0,
+      can_bet: 0,
       bidders: [],
       bidder: null,
       mine: 0,
@@ -4233,6 +4212,22 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.listenForBroadcast();
+  },
+  watch: {
+    auction: function auction(_auction) {
+      if (app.user && app.user.contragents && app.user.contragents[0]) {
+        var contr = app.user.contragents[0].id;
+
+        for (var r in _auction.bidders) {
+          if (_auction.bidders[r].id == contr) {
+            can_bet = _auction.bidders[r].can_bet;
+            bidding = 1;
+          }
+        }
+
+        if (_auction.contragent.id == contr) mine = 1;
+      }
+    }
   },
   methods: {
     removeBet: function removeBet(bet) {
@@ -4360,8 +4355,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-star-rating */ "./node_modules/vue-star-rating/dist/star-rating.min.js");
-/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_star_rating__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -4407,16 +4400,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    StarRating: vue_star_rating__WEBPACK_IMPORTED_MODULE_0___default.a
-  },
   mounted: function mounted() {
     var app = this;
-    app.isLoading = true;
     app.fetchComments();
   },
   data: function data() {
@@ -4434,20 +4434,22 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
   methods: {
     fetchComments: function fetchComments() {
       var app = this;
+      var loader = Vue.$loading.show();
       axios.get("/api/v1/comments/" + app.contragent + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
         app.comments = resp.data[0];
         app.rating = resp.data[1];
         app.message = resp.data[2].comment;
-        app.isLoading = false;
+        loader.hide();
       })["catch"](function (e) {
         console.log(e);
-        app.isLoading = false;
+        loader.hide();
       });
     },
     saveComment: function saveComment() {
       var app = this;
 
       if (app.message != null && app.message != " ") {
+        var loader = Vue.$loading.show();
         app.errorComment = null;
         axios.post("/api/v1/comments?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
           contragent_id: app.contragent,
@@ -4457,10 +4459,11 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
           app.comments = resp.data[0];
           app.rating = resp.data[1];
           app.message = resp.data[2].comment;
+          loader.hide();
         });
-      } else {
-        app.errorComment = "Please enter a comment to save";
       }
+
+      s;
     }
   }
 });
@@ -4476,13 +4479,7 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _storeMap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../storeMap */ "./resources/js/components/storeMap.vue");
-/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
-/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _storeMap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../storeMap */ "./resources/js/components/storeMap.vue");
 //
 //
 //
@@ -4742,37 +4739,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-
-
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    vSelect: vue_select__WEBPACK_IMPORTED_MODULE_3___default.a,
-    Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default.a,
-    storeMap: _storeMap__WEBPACK_IMPORTED_MODULE_1__["default"]
+    storeMap: _storeMap__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mounted: function mounted() {
     var app = this;
-    app.isLoading = true;
     var id = app.user.contragents[0].id;
     if (!!app.$route.params.id) id = app.$route.params.id;
-    app.getFederalDistricts();
-    app.getRegions();
-    app.getTypes();
+    app.getFederalDistricts(app); // app.getRegions();
+    // app.getTypes();
+
     app.contragentId = id;
+    var loader = Vue.$loading.show();
     axios.get("/api/v1/company/?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
       app.contragent = resp.data;
-      app.isLoading = false;
+      loader.hide();
     })["catch"](function () {
       alert(app.__("Failed to load contragent"));
-      app.isLoading = false;
+      loader.hide();
     });
   },
   data: function data() {
     return {
-      isLoading: true,
       onCancel: false,
       fullPage: true,
       federalDistricts: [],
@@ -4818,8 +4808,8 @@ __webpack_require__.r(__webpack_exports__);
     saveForm: function saveForm() {
       event.preventDefault();
       var app = this;
+      var loader = Vue.$loading.show();
       var newContragent = app.contragent;
-      app.isLoading = true;
       if (newContragent.federal_district) newContragent.federal_district_id = newContragent.federal_district.id;
       if (newContragent.region) newContragent.region_id = newContragent.region.id;
       newContragent.typeIds = [];
@@ -4829,13 +4819,13 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       axios.patch("/api/v1/company/?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, newContragent).then(function (resp) {
-        app.isLoading = false; //app.$router.replace("/");
-
+        //app.$router.replace("/");
         app.flash(app.__("Company edited successfully"), "success");
+        loader.hide();
         return true;
       })["catch"](function (errors) {
         app.errors = errors.response.data.errors;
-        app.isLoading = false;
+        loader.hide();
       });
     }
   }
@@ -4852,12 +4842,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
-/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -5102,17 +5086,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    vSelect: vue_select__WEBPACK_IMPORTED_MODULE_0___default.a,
-    Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1___default.a
-  },
   mounted: function mounted() {
     var app = this;
-    app.isLoading = true;
+    var loader = Vue.$loading.show();
     app.getFederalDistricts();
     app.getRegions();
     app.getTypes();
@@ -5128,11 +5117,10 @@ __webpack_require__.r(__webpack_exports__);
       types: [],
       stores: []
     };
-    app.isLoading = false;
+    loader.hide();
   },
   data: function data() {
     return {
-      isLoading: true,
       onCancel: false,
       fullPage: true,
       federalDistricts: [],
@@ -5177,7 +5165,7 @@ __webpack_require__.r(__webpack_exports__);
     saveForm: function saveForm() {
       event.preventDefault();
       var app = this;
-      app.isLoading = true;
+      var loader = Vue.$loading.show();
       var newContragent = app.contragent;
       newContragent.federal_district_id = newContragent.federal_district.id;
       newContragent.region_id = newContragent.region.id;
@@ -5190,11 +5178,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/api/v1/contragents?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, newContragent).then(function (resp) {
         app.contragent = resp.data;
         app.$router.replace("/personal/contragents/show/" + app.contragent.id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token);
-        app.isLoading = false;
+        loader.hide();
         return true;
       })["catch"](function (errors) {
         app.errors = errors.response.data.errors;
-        app.isLoading = false;
+        loader.hide();
       });
     }
   }
@@ -5211,12 +5199,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
-/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -5461,46 +5443,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    vSelect: vue_select__WEBPACK_IMPORTED_MODULE_2___default.a,
-    Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default.a
-  },
   mounted: function mounted() {
     var app = this;
-    app.isLoading = true;
+    var loader = Vue.$loading.show();
     var id = app.user.contragents[0].id;
     if (!!app.$route.params.id) id = app.$route.params.id;
-    app.getFederalDistricts();
-    app.getRegions();
-    app.getTypes();
+    app.federal_districts = app.$root.getFederalDistricts(app);
+    app.types = app.$root.getTypes(app);
     app.contragentId = id;
     axios.get("/api/v1/contragents/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
       app.contragent = resp.data;
-      app.isLoading = false;
+      loader.hide();
+      app.regions = app.$root.getRegions(app);
     })["catch"](function () {
       alert(app.__("Failed to load contragent"));
-      app.isLoading = false;
+      loader.hide();
     });
   },
   data: function data() {
     return {
-      isLoading: true,
       onCancel: false,
       fullPage: true,
       federalDistricts: [],
       types: [],
       regions: [],
       contragentId: null,
-      contragent: {
-        name: "",
-        address: "",
-        website: "",
-        email: ""
-      }
+      contragent: {},
+      errors: {}
     };
   },
   methods: {
@@ -5516,29 +5498,11 @@ __webpack_require__.r(__webpack_exports__);
       var app = this;
       app.contragent.stores.splice(index, 1);
     },
-    getFederalDistricts: function getFederalDistricts() {
-      var app = this;
-      axios.get("/api/v1/federalDistricts?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.federalDistricts = resp.data;
-      });
-    },
-    getRegions: function getRegions() {
-      var app = this;
-      axios.get("/api/v1/regions?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, this.contragent.federal_district).then(function (resp) {
-        app.regions = resp.data;
-      });
-    },
-    getTypes: function getTypes() {
-      var app = this;
-      axios.get("/api/v1/types?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.types = resp.data;
-      });
-    },
     saveForm: function saveForm() {
       event.preventDefault();
       var app = this;
       var newContragent = app.contragent;
-      app.isLoading = true;
+      var loader = Vue.$loading.show();
       if (newContragent.federal_district) newContragent.federal_district_id = newContragent.federal_district.id;
       if (newContragent.region) newContragent.region_id = newContragent.region.id;
       newContragent.typeIds = [];
@@ -5549,13 +5513,13 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.patch("/api/v1/contragents/" + app.contragentId + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, newContragent).then(function (resp) {
         app.contragent = resp.data;
-        app.isLoading = false; //app.$router.replace("/");
+        loader.hide(); //app.$router.replace("/");
 
         return true;
       })["catch"](function (resp) {
         console.log(resp);
         alert(app.__("Failed to edit contragent"));
-        app.isLoading = false;
+        loader.hide();
       });
     }
   }
@@ -5959,6 +5923,69 @@ __webpack_require__.r(__webpack_exports__);
         obj.geoObjects.removeAll().add(new ymaps.Placemark(coords));
         app.store.coords = coords.join(",");
       });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckbox.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/swicthCheckbox.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    classes: function classes() {
+      return {
+        checked: this.toggled,
+        unchecked: !this.toggled,
+        disabled: this.disabled
+      };
+    }
+  },
+  data: function data() {
+    return {
+      toggled: !!this.value
+    };
+  },
+  methods: {
+    toggle: function toggle(e) {
+      if (this.disabled || e.keyCode === 9) {
+        // not if disabled or tab is pressed
+        e.stop();
+      }
+
+      this.toggled = !this.toggled;
+      this.$emit("input", this.toggled * 1);
+    }
+  },
+  props: {
+    disabled: {
+      type: Boolean,
+      "default": false
+    },
+    value: {
+      type: Number,
+      "default": 0
     }
   }
 });
@@ -91313,134 +91340,148 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-md-4" }, [
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { staticClass: "control-label" },
-                                    [_vm._v(_vm._s(_vm.__("Auction Volume")))]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.bid.volume,
-                                        expression: "bid.volume"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    class: { "is-invalid": _vm.errors.volume },
-                                    attrs: { type: "number" },
-                                    domProps: { value: _vm.bid.volume },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.$set(
-                                          _vm.bid,
-                                          "volume",
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.errors.volume
-                                    ? _c(
-                                        "span",
-                                        {
-                                          staticClass: "invalid-feedback",
-                                          attrs: { role: "alert" }
+                            _vm.can_bet
+                              ? _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-md-4" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c(
+                                        "label",
+                                        { staticClass: "control-label" },
+                                        [
+                                          _vm._v(
+                                            _vm._s(_vm.__("Auction Volume"))
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.bid.volume,
+                                            expression: "bid.volume"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        class: {
+                                          "is-invalid": _vm.errors.volume
                                         },
-                                        _vm._l(_vm.errors.volume, function(
-                                          error,
-                                          index
-                                        ) {
-                                          return _c("strong", { key: index }, [
-                                            _vm._v(_vm._s(error))
-                                          ])
-                                        }),
-                                        0
-                                      )
-                                    : _vm._e()
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-md-4" }, [
-                                _c("div", { staticClass: "form-group" }, [
-                                  _c(
-                                    "label",
-                                    { staticClass: "control-label" },
-                                    [_vm._v(_vm._s(_vm.__("Price")))]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.bid.price,
-                                        expression: "bid.price"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    class: { "is-invalid": _vm.errors.price },
-                                    attrs: { type: "number" },
-                                    domProps: { value: _vm.bid.price },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
+                                        attrs: { type: "number" },
+                                        domProps: { value: _vm.bid.volume },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.bid,
+                                              "volume",
+                                              $event.target.value
+                                            )
+                                          }
                                         }
-                                        _vm.$set(
-                                          _vm.bid,
-                                          "price",
-                                          $event.target.value
-                                        )
-                                      }
-                                    }
-                                  }),
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.errors.volume
+                                        ? _c(
+                                            "span",
+                                            {
+                                              staticClass: "invalid-feedback",
+                                              attrs: { role: "alert" }
+                                            },
+                                            _vm._l(_vm.errors.volume, function(
+                                              error,
+                                              index
+                                            ) {
+                                              return _c(
+                                                "strong",
+                                                { key: index },
+                                                [_vm._v(_vm._s(error))]
+                                              )
+                                            }),
+                                            0
+                                          )
+                                        : _vm._e()
+                                    ])
+                                  ]),
                                   _vm._v(" "),
-                                  _vm.errors.price
-                                    ? _c(
-                                        "span",
-                                        {
-                                          staticClass: "invalid-feedback",
-                                          attrs: { role: "alert" }
+                                  _c("div", { staticClass: "col-md-4" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c(
+                                        "label",
+                                        { staticClass: "control-label" },
+                                        [_vm._v(_vm._s(_vm.__("Price")))]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.bid.price,
+                                            expression: "bid.price"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        class: {
+                                          "is-invalid": _vm.errors.price
                                         },
-                                        _vm._l(_vm.errors.price, function(
-                                          error,
-                                          index
-                                        ) {
-                                          return _c("strong", { key: index }, [
-                                            _vm._v(_vm._s(error))
-                                          ])
-                                        }),
-                                        0
-                                      )
-                                    : _vm._e()
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-md-4" }, [
-                                _c("div", { staticClass: "form-group" }, [
-                                  _vm._m(0),
+                                        attrs: { type: "number" },
+                                        domProps: { value: _vm.bid.price },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.bid,
+                                              "price",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.errors.price
+                                        ? _c(
+                                            "span",
+                                            {
+                                              staticClass: "invalid-feedback",
+                                              attrs: { role: "alert" }
+                                            },
+                                            _vm._l(_vm.errors.price, function(
+                                              error,
+                                              index
+                                            ) {
+                                              return _c(
+                                                "strong",
+                                                { key: index },
+                                                [_vm._v(_vm._s(error))]
+                                              )
+                                            }),
+                                            0
+                                          )
+                                        : _vm._e()
+                                    ])
+                                  ]),
                                   _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-primary",
-                                      on: { click: _vm.betIt }
-                                    },
-                                    [_vm._v(_vm._s(_vm.__("Bet")))]
-                                  )
+                                  _c("div", { staticClass: "col-md-4" }, [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _vm._m(0),
+                                      _vm._v(" "),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-primary",
+                                          on: { click: _vm.betIt }
+                                        },
+                                        [_vm._v(_vm._s(_vm.__("Bet")))]
+                                      )
+                                    ])
+                                  ])
                                 ])
-                              ])
-                            ]),
+                              : _vm._e(),
                             _vm._v(" "),
                             _vm.auction.bets && _vm.auction.bets.length
                               ? _c(
@@ -92242,16 +92283,27 @@ var render = function() {
                               { key: index, staticClass: "list-group-item" },
                               [
                                 _vm._v(
-                                  _vm._s(bidder.title) +
+                                  "\n              " +
+                                    _vm._s(bidder.title) +
                                     " (" +
                                     _vm._s(bidder.fio) +
                                     ", " +
                                     _vm._s(_vm.__("Phone")) +
                                     ": " +
                                     _vm._s(bidder.phone) +
-                                    ")"
-                                )
-                              ]
+                                    ")\n              "
+                                ),
+                                _c("switch-checkbox", {
+                                  model: {
+                                    value: bidder.can_bet,
+                                    callback: function($$v) {
+                                      _vm.$set(bidder, "can_bet", $$v)
+                                    },
+                                    expression: "bidder.can_bet"
+                                  }
+                                })
+                              ],
+                              1
                             )
                           }),
                           0
@@ -92507,6 +92559,7 @@ var render = function() {
               ])
             ])
           ]),
+          _vm._v(" "),
           _c("br")
         ])
       })
@@ -92537,312 +92590,95 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("section", { staticClass: "contragent-edit-wrapper" }, [
-    _c(
-      "div",
-      { staticClass: "container" },
-      [
-        _c("loading", {
-          attrs: {
-            active: _vm.isLoading,
-            "can-cancel": true,
-            "is-full-page": _vm.fullPage
-          },
+    _c("div", { staticClass: "container" }, [
+      _c(
+        "form",
+        {
           on: {
-            "update:active": function($event) {
-              _vm.isLoading = $event
+            submit: function($event) {
+              return _vm.saveForm()
             }
           }
-        }),
-        _vm._v(" "),
-        _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                return _vm.saveForm()
-              }
-            }
-          },
-          [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent title")))
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.contragent.title,
-                        expression: "contragent.title"
-                      }
-                    ],
-                    ref: "title",
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errors.title },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.contragent.title },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.contragent, "title", $event.target.value)
-                      }
+        },
+        [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent title")))
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.contragent.title,
+                      expression: "contragent.title"
                     }
-                  }),
-                  _vm._v(" "),
-                  _vm.errors.title
-                    ? _c(
-                        "div",
-                        {
-                          staticClass: "invalid-feedback",
-                          attrs: { role: "alert" }
-                        },
-                        _vm._l(_vm.errors.title, function(error, index) {
-                          return _c("span", { key: index }, [
-                            _vm._v(_vm._s(error))
-                          ])
-                        }),
-                        0
-                      )
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", { staticClass: "control-label" }, [
-                      _vm._v(_vm._s(_vm.__("Contragent federal district")))
-                    ]),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      class: {
-                        "is-invalid": _vm.errors["federal_district.id"]
+                  ],
+                  ref: "title",
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.title },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.contragent.title },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.contragent, "title", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.title
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
                       },
-                      attrs: { label: "title", options: _vm.federalDistricts },
-                      model: {
-                        value: _vm.contragent.federal_district,
-                        callback: function($$v) {
-                          _vm.$set(_vm.contragent, "federal_district", $$v)
-                        },
-                        expression: "contragent.federal_district"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors["federal_district.id"]
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: "invalid-feedback",
-                            attrs: { role: "alert" }
-                          },
-                          _vm._l(_vm.errors["federal_district.id"], function(
-                            error,
-                            index
-                          ) {
-                            return _c("span", { key: index }, [
-                              _vm._v(_vm._s(error))
-                            ])
-                          }),
-                          0
-                        )
-                      : _vm._e()
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", { staticClass: "control-label" }, [
-                      _vm._v(_vm._s(_vm.__("Contragent region")))
-                    ]),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      ref: "region",
-                      class: { "is-invalid": _vm.errors["region.id"] },
-                      attrs: { label: "title", options: _vm.regions },
-                      model: {
-                        value: _vm.contragent.region,
-                        callback: function($$v) {
-                          _vm.$set(_vm.contragent, "region", $$v)
-                        },
-                        expression: "contragent.region"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors["region.id"]
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: "invalid-feedback",
-                            attrs: { role: "alert" }
-                          },
-                          _vm._l(_vm.errors["region.id"], function(
-                            error,
-                            index
-                          ) {
-                            return _c("span", { key: index }, [
-                              _vm._v(_vm._s(error))
-                            ])
-                          }),
-                          0
-                        )
-                      : _vm._e()
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", { staticClass: "control-label" }, [
-                      _vm._v(_vm._s(_vm.__("Contragent type")))
-                    ]),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      ref: "types",
-                      class: { "is-invalid": _vm.errors["types.id"] },
-                      attrs: {
-                        label: "title",
-                        options: _vm.types,
-                        multiple: true
+                      _vm._l(_vm.errors.title, function(error, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(_vm._s(error))
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", { staticClass: "control-label" }, [
+                    _vm._v(_vm._s(_vm.__("Contragent federal district")))
+                  ]),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    class: { "is-invalid": _vm.errors["federal_district.id"] },
+                    attrs: { label: "title", options: _vm.federalDistricts },
+                    model: {
+                      value: _vm.contragent.federal_district,
+                      callback: function($$v) {
+                        _vm.$set(_vm.contragent, "federal_district", $$v)
                       },
-                      model: {
-                        value: _vm.contragent.types,
-                        callback: function($$v) {
-                          _vm.$set(_vm.contragent, "types", $$v)
-                        },
-                        expression: "contragent.types"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors["types.id"]
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: "invalid-feedback",
-                            attrs: { role: "alert" }
-                          },
-                          _vm._l(_vm.errors["types.id"], function(
-                            error,
-                            index
-                          ) {
-                            return _c("span", { key: index }, [
-                              _vm._v(_vm._s(error))
-                            ])
-                          }),
-                          0
-                        )
-                      : _vm._e()
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent TIN")))
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.contragent.inn,
-                        expression: "contragent.inn"
-                      }
-                    ],
-                    ref: "inn",
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errors.inn },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.contragent.inn },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.contragent, "inn", $event.target.value)
-                      }
+                      expression: "contragent.federal_district"
                     }
                   }),
                   _vm._v(" "),
-                  _vm.errors.inn
+                  _vm.errors["federal_district.id"]
                     ? _c(
                         "div",
                         {
                           staticClass: "invalid-feedback",
                           attrs: { role: "alert" }
                         },
-                        _vm._l(_vm.errors.inn, function(error, index) {
-                          return _c("span", { key: index }, [
-                            _vm._v(_vm._s(error))
-                          ])
-                        }),
-                        0
-                      )
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent Legal address")))
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.contragent.legal_address,
-                        expression: "contragent.legal_address"
-                      }
-                    ],
-                    ref: "legal_address",
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errors.legal_address },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.contragent.legal_address },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.contragent,
-                          "legal_address",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.errors.legal_address
-                    ? _c(
-                        "div",
-                        {
-                          staticClass: "invalid-feedback",
-                          attrs: { role: "alert" }
-                        },
-                        _vm._l(_vm.errors.legal_address, function(
+                        _vm._l(_vm.errors["federal_district.id"], function(
                           error,
                           index
                         ) {
@@ -92853,47 +92689,41 @@ var render = function() {
                         0
                       )
                     : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
                   _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent contact")))
+                    _vm._v(_vm._s(_vm.__("Contragent region")))
                   ]),
                   _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.contragent.fio,
-                        expression: "contragent.fio"
-                      }
-                    ],
-                    ref: "fio",
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errors.fio },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.contragent.fio },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.contragent, "fio", $event.target.value)
-                      }
+                  _c("v-select", {
+                    ref: "region",
+                    class: { "is-invalid": _vm.errors["region.id"] },
+                    attrs: { label: "title", options: _vm.regions },
+                    model: {
+                      value: _vm.contragent.region,
+                      callback: function($$v) {
+                        _vm.$set(_vm.contragent, "region", $$v)
+                      },
+                      expression: "contragent.region"
                     }
                   }),
                   _vm._v(" "),
-                  _vm.errors.fio
+                  _vm.errors["region.id"]
                     ? _c(
                         "div",
                         {
                           staticClass: "invalid-feedback",
                           attrs: { role: "alert" }
                         },
-                        _vm._l(_vm.errors.fio, function(error, index) {
+                        _vm._l(_vm.errors["region.id"], function(error, index) {
                           return _c("span", { key: index }, [
                             _vm._v(_vm._s(error))
                           ])
@@ -92901,47 +92731,45 @@ var render = function() {
                         0
                       )
                     : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
                   _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent phone")))
+                    _vm._v(_vm._s(_vm.__("Contragent type")))
                   ]),
                   _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.contragent.phone,
-                        expression: "contragent.phone"
-                      }
-                    ],
-                    ref: "phone",
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errors.phone },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.contragent.phone },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.contragent, "phone", $event.target.value)
-                      }
+                  _c("v-select", {
+                    ref: "types",
+                    class: { "is-invalid": _vm.errors["types.id"] },
+                    attrs: {
+                      label: "title",
+                      options: _vm.types,
+                      multiple: true
+                    },
+                    model: {
+                      value: _vm.contragent.types,
+                      callback: function($$v) {
+                        _vm.$set(_vm.contragent, "types", $$v)
+                      },
+                      expression: "contragent.types"
                     }
                   }),
                   _vm._v(" "),
-                  _vm.errors.phone
+                  _vm.errors["types.id"]
                     ? _c(
                         "div",
                         {
                           staticClass: "invalid-feedback",
                           attrs: { role: "alert" }
                         },
-                        _vm._l(_vm.errors.phone, function(error, index) {
+                        _vm._l(_vm.errors["types.id"], function(error, index) {
                           return _c("span", { key: index }, [
                             _vm._v(_vm._s(error))
                           ])
@@ -92949,111 +92777,441 @@ var render = function() {
                         0
                       )
                     : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-12" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent stores")))
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "stores" }, [
-                    _c(
-                      "ul",
-                      _vm._l(_vm.contragent.stores, function(store, index) {
-                        return _c("li", { key: index, staticClass: "store" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.contragent.stores[index].id,
-                                expression: "contragent.stores[index].id"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "hidden" },
-                            domProps: {
-                              value: _vm.contragent.stores[index].id
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.contragent.stores[index],
-                                  "id",
-                                  $event.target.value
-                                )
-                              }
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent TIN")))
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.contragent.inn,
+                      expression: "contragent.inn"
+                    }
+                  ],
+                  ref: "inn",
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.inn },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.contragent.inn },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.contragent, "inn", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.inn
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      _vm._l(_vm.errors.inn, function(error, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(_vm._s(error))
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent Legal address")))
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.contragent.legal_address,
+                      expression: "contragent.legal_address"
+                    }
+                  ],
+                  ref: "legal_address",
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.legal_address },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.contragent.legal_address },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.contragent,
+                        "legal_address",
+                        $event.target.value
+                      )
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.legal_address
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      _vm._l(_vm.errors.legal_address, function(error, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(_vm._s(error))
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent contact")))
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.contragent.fio,
+                      expression: "contragent.fio"
+                    }
+                  ],
+                  ref: "fio",
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.fio },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.contragent.fio },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.contragent, "fio", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.fio
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      _vm._l(_vm.errors.fio, function(error, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(_vm._s(error))
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent phone")))
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.contragent.phone,
+                      expression: "contragent.phone"
+                    }
+                  ],
+                  ref: "phone",
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.phone },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.contragent.phone },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.contragent, "phone", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.phone
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      _vm._l(_vm.errors.phone, function(error, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(_vm._s(error))
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent stores")))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "stores" }, [
+                  _c(
+                    "ul",
+                    _vm._l(_vm.contragent.stores, function(store, index) {
+                      return _c("li", { key: index, staticClass: "store" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.contragent.stores[index].id,
+                              expression: "contragent.stores[index].id"
                             }
-                          }),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-md-6" }, [
-                              _c(
-                                "div",
-                                { staticClass: "form-group" },
-                                [_c("store-map", { attrs: { store: store } })],
-                                1
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "hidden" },
+                          domProps: { value: _vm.contragent.stores[index].id },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.contragent.stores[index],
+                                "id",
+                                $event.target.value
                               )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-6" }, [
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [_c("store-map", { attrs: { store: store } })],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-6" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", { staticClass: "control-label" }, [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.__("Store coords #", {
+                                      store: index + 1
+                                    })
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.contragent.stores[index].coords,
+                                    expression:
+                                      "contragent.stores[index].coords"
+                                  }
+                                ],
+                                ref: "stores_" + index + "_coords",
+                                refInFor: true,
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid":
+                                    _vm.errors.stores &&
+                                    _vm.errors.stores[index] &&
+                                    _vm.errors.stores[index].coords
+                                },
+                                attrs: { readonly: "", type: "text" },
+                                domProps: {
+                                  value: _vm.contragent.stores[index].coords
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.contragent.stores[index],
+                                      "coords",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.stores &&
+                              _vm.errors.stores[index] &&
+                              _vm.errors.stores[index].coords
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass: "invalid-feedback",
+                                      attrs: { role: "alert" }
+                                    },
+                                    _vm._l(
+                                      _vm.errors.stores[index].coords,
+                                      function(error, index) {
+                                        return _c("span", { key: index }, [
+                                          _vm._v(_vm._s(error))
+                                        ])
+                                      }
+                                    ),
+                                    0
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c("label", { staticClass: "control-label" }, [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.__("Store address #", {
+                                      store: index + 1
+                                    })
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.contragent.stores[index].address,
+                                    expression:
+                                      "contragent.stores[index].address"
+                                  }
+                                ],
+                                ref: "stores_" + index + "_address",
+                                refInFor: true,
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid":
+                                    _vm.errors.stores &&
+                                    _vm.errors.stores[index] &&
+                                    _vm.errors.stores[index].address
+                                },
+                                attrs: { type: "text" },
+                                domProps: {
+                                  value: _vm.contragent.stores[index].address
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.contragent.stores[index],
+                                      "address",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.stores &&
+                              _vm.errors.stores[index] &&
+                              _vm.errors.stores[index].address
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass: "invalid-feedback",
+                                      attrs: { role: "alert" }
+                                    },
+                                    _vm._l(
+                                      _vm.errors.stores[index].address,
+                                      function(error, index) {
+                                        return _c("span", { key: index }, [
+                                          _vm._v(_vm._s(error))
+                                        ])
+                                      }
+                                    ),
+                                    0
+                                  )
+                                : _vm._e()
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "col-md-6" }, [
-                              _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
                                 _c("label", { staticClass: "control-label" }, [
                                   _vm._v(
                                     _vm._s(
-                                      _vm.__("Store coords #", {
+                                      _vm.__("Store federal district #", {
                                         store: index + 1
                                       })
                                     )
                                   )
                                 ]),
                                 _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value:
-                                        _vm.contragent.stores[index].coords,
-                                      expression:
-                                        "contragent.stores[index].coords"
-                                    }
-                                  ],
-                                  ref: "stores_" + index + "_coords",
+                                _c("v-select", {
+                                  ref: "stores_" + index + "_federal_district",
                                   refInFor: true,
-                                  staticClass: "form-control",
                                   class: {
                                     "is-invalid":
                                       _vm.errors.stores &&
                                       _vm.errors.stores[index] &&
-                                      _vm.errors.stores[index].coords
+                                      _vm.errors.stores[index][
+                                        "federal_district.id"
+                                      ]
                                   },
-                                  attrs: { readonly: "", type: "text" },
-                                  domProps: {
-                                    value: _vm.contragent.stores[index].coords
+                                  attrs: {
+                                    label: "title",
+                                    options: _vm.federalDistricts
                                   },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
+                                  model: {
+                                    value:
+                                      _vm.contragent.stores[index]
+                                        .federal_district,
+                                    callback: function($$v) {
                                       _vm.$set(
                                         _vm.contragent.stores[index],
-                                        "coords",
-                                        $event.target.value
+                                        "federal_district",
+                                        $$v
                                       )
-                                    }
+                                    },
+                                    expression:
+                                      "contragent.stores[index].federal_district"
                                   }
                                 }),
                                 _vm._v(" "),
                                 _vm.errors.stores &&
                                 _vm.errors.stores[index] &&
-                                _vm.errors.stores[index].coords
+                                _vm.errors.stores[index]["federal_district.id"]
                                   ? _c(
                                       "div",
                                       {
@@ -93061,76 +93219,9 @@ var render = function() {
                                         attrs: { role: "alert" }
                                       },
                                       _vm._l(
-                                        _vm.errors.stores[index].coords,
-                                        function(error, index) {
-                                          return _c("span", { key: index }, [
-                                            _vm._v(_vm._s(error))
-                                          ])
-                                        }
-                                      ),
-                                      0
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _c("label", { staticClass: "control-label" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.__("Store address #", {
-                                        store: index + 1
-                                      })
-                                    )
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value:
-                                        _vm.contragent.stores[index].address,
-                                      expression:
-                                        "contragent.stores[index].address"
-                                    }
-                                  ],
-                                  ref: "stores_" + index + "_address",
-                                  refInFor: true,
-                                  staticClass: "form-control",
-                                  class: {
-                                    "is-invalid":
-                                      _vm.errors.stores &&
-                                      _vm.errors.stores[index] &&
-                                      _vm.errors.stores[index].address
-                                  },
-                                  attrs: { type: "text" },
-                                  domProps: {
-                                    value: _vm.contragent.stores[index].address
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.contragent.stores[index],
-                                        "address",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _vm.errors.stores &&
-                                _vm.errors.stores[index] &&
-                                _vm.errors.stores[index].address
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass: "invalid-feedback",
-                                        attrs: { role: "alert" }
-                                      },
-                                      _vm._l(
-                                        _vm.errors.stores[index].address,
+                                        _vm.errors.stores[index][
+                                          "federal_district.id"
+                                        ],
                                         function(error, index) {
                                           return _c("span", { key: index }, [
                                             _vm._v(_vm._s(error))
@@ -93140,206 +93231,123 @@ var render = function() {
                                       0
                                     )
                                   : _vm._e()
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group" },
-                                [
-                                  _c(
-                                    "label",
-                                    { staticClass: "control-label" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.__("Store federal district #", {
-                                            store: index + 1
-                                          })
-                                        )
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("v-select", {
-                                    ref:
-                                      "stores_" + index + "_federal_district",
-                                    refInFor: true,
-                                    class: {
-                                      "is-invalid":
-                                        _vm.errors.stores &&
-                                        _vm.errors.stores[index] &&
-                                        _vm.errors.stores[index][
-                                          "federal_district.id"
-                                        ]
-                                    },
-                                    attrs: {
-                                      label: "title",
-                                      options: _vm.federalDistricts
-                                    },
-                                    model: {
-                                      value:
-                                        _vm.contragent.stores[index]
-                                          .federal_district,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.contragent.stores[index],
-                                          "federal_district",
-                                          $$v
-                                        )
-                                      },
-                                      expression:
-                                        "contragent.stores[index].federal_district"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.errors.stores &&
-                                  _vm.errors.stores[index] &&
-                                  _vm.errors.stores[index][
-                                    "federal_district.id"
-                                  ]
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "invalid-feedback",
-                                          attrs: { role: "alert" }
-                                        },
-                                        _vm._l(
-                                          _vm.errors.stores[index][
-                                            "federal_district.id"
-                                          ],
-                                          function(error, index) {
-                                            return _c("span", { key: index }, [
-                                              _vm._v(_vm._s(error))
-                                            ])
-                                          }
-                                        ),
-                                        0
-                                      )
-                                    : _vm._e()
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group" },
-                                [
-                                  _c(
-                                    "label",
-                                    { staticClass: "control-label" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.__("Store region #", {
-                                            store: index + 1
-                                          })
-                                        )
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("v-select", {
-                                    ref: "stores_" + index + "_region",
-                                    refInFor: true,
-                                    class: {
-                                      "is-invalid":
-                                        _vm.errors.stores &&
-                                        _vm.errors.stores[index] &&
-                                        _vm.errors.stores[index]["region.id"]
-                                    },
-                                    attrs: {
-                                      label: "title",
-                                      options: _vm.federalDistricts
-                                    },
-                                    model: {
-                                      value:
-                                        _vm.contragent.stores[index].region,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.contragent.stores[index],
-                                          "region",
-                                          $$v
-                                        )
-                                      },
-                                      expression:
-                                        "contragent.stores[index].region"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.errors.stores &&
-                                  _vm.errors.stores[index] &&
-                                  _vm.errors.stores[index]["region.id"]
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "invalid-feedback",
-                                          attrs: { role: "alert" }
-                                        },
-                                        _vm._l(
-                                          _vm.errors.stores[index]["region.id"],
-                                          function(error, index) {
-                                            return _c(
-                                              "span",
-                                              { key: index, attrs: { Í: "" } },
-                                              [_vm._v(_vm._s(error))]
-                                            )
-                                          }
-                                        ),
-                                        0
-                                      )
-                                    : _vm._e()
-                                ],
-                                1
-                              )
-                            ]),
+                              ],
+                              1
+                            ),
                             _vm._v(" "),
-                            _c("div", { staticClass: "col-md-12 text-right" }, [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "btn btn-danger btn-sm",
-                                  attrs: { href: "javascript:void(0)" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleteStore(index)
-                                    }
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c("label", { staticClass: "control-label" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.__("Store region #", {
+                                        store: index + 1
+                                      })
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("v-select", {
+                                  ref: "stores_" + index + "_region",
+                                  refInFor: true,
+                                  class: {
+                                    "is-invalid":
+                                      _vm.errors.stores &&
+                                      _vm.errors.stores[index] &&
+                                      _vm.errors.stores[index]["region.id"]
+                                  },
+                                  attrs: {
+                                    label: "title",
+                                    options: _vm.federalDistricts
+                                  },
+                                  model: {
+                                    value: _vm.contragent.stores[index].region,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.contragent.stores[index],
+                                        "region",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "contragent.stores[index].region"
                                   }
-                                },
-                                [_vm._v(_vm._s(_vm.__("Delete store")))]
-                              )
-                            ])
+                                }),
+                                _vm._v(" "),
+                                _vm.errors.stores &&
+                                _vm.errors.stores[index] &&
+                                _vm.errors.stores[index]["region.id"]
+                                  ? _c(
+                                      "div",
+                                      {
+                                        staticClass: "invalid-feedback",
+                                        attrs: { role: "alert" }
+                                      },
+                                      _vm._l(
+                                        _vm.errors.stores[index]["region.id"],
+                                        function(error, index) {
+                                          return _c(
+                                            "span",
+                                            { key: index, attrs: { Í: "" } },
+                                            [_vm._v(_vm._s(error))]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    )
+                                  : _vm._e()
+                              ],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-12 text-right" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-danger btn-sm",
+                                attrs: { href: "javascript:void(0)" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteStore(index)
+                                  }
+                                }
+                              },
+                              [_vm._v(_vm._s(_vm.__("Delete store")))]
+                            )
                           ])
                         ])
-                      }),
-                      0
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "text-right" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-primary btn-sm",
-                          attrs: { href: "javascript:void(0)" },
-                          on: { click: _vm.addStore }
-                        },
-                        [_vm._v(_vm._s(_vm.__("Add store")))]
-                      )
-                    ])
+                      ])
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "text-right" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-primary btn-sm",
+                        attrs: { href: "javascript:void(0)" },
+                        on: { click: _vm.addStore }
+                      },
+                      [_vm._v(_vm._s(_vm.__("Add store")))]
+                    )
                   ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group text-right" }, [
-                  _c("button", { staticClass: "btn btn-primary" }, [
-                    _vm._v(_vm._s(_vm.__("Save")))
-                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group text-right" }, [
+                _c("button", { staticClass: "btn btn-primary" }, [
+                  _vm._v(_vm._s(_vm.__("Save")))
                 ])
               ])
             ])
-          ]
-        )
-      ],
-      1
-    )
+          ])
+        ]
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -93365,776 +93373,757 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("section", { staticClass: "contragent-edit-wrapper" }, [
-    _c(
-      "div",
-      { staticClass: "container" },
-      [
-        _c("loading", {
-          attrs: {
-            active: _vm.isLoading,
-            "can-cancel": true,
-            "is-full-page": _vm.fullPage
-          },
+    _c("div", { staticClass: "container" }, [
+      _c(
+        "form",
+        {
           on: {
-            "update:active": function($event) {
-              _vm.isLoading = $event
+            submit: function($event) {
+              return _vm.saveForm()
             }
           }
-        }),
-        _vm._v(" "),
-        _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                return _vm.saveForm()
-              }
-            }
-          },
-          [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent title")))
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.contragent.title,
-                        expression: "contragent.title"
-                      }
-                    ],
-                    ref: "title",
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errors.title },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.contragent.title },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.contragent, "title", $event.target.value)
-                      }
+        },
+        [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent title")))
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.contragent.title,
+                      expression: "contragent.title"
                     }
-                  }),
-                  _vm._v(" "),
-                  _vm.errors.title
-                    ? _c(
-                        "div",
-                        {
-                          staticClass: "invalid-feedback",
-                          attrs: { role: "alert" }
-                        },
-                        _vm._l(_vm.errors.title, function(error) {
-                          return _c("span", [_vm._v(_vm._s(error))])
-                        }),
-                        0
-                      )
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", { staticClass: "control-label" }, [
-                      _vm._v(_vm._s(_vm.__("Contragent federal district")))
-                    ]),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      class: {
-                        "is-invalid": _vm.errors["federal_district.id"]
+                  ],
+                  ref: "title",
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.title },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.contragent.title },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.contragent, "title", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.title
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
                       },
-                      attrs: { label: "title", options: _vm.federalDistricts },
-                      model: {
-                        value: _vm.contragent.federal_district,
-                        callback: function($$v) {
-                          _vm.$set(_vm.contragent, "federal_district", $$v)
-                        },
-                        expression: "contragent.federal_district"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors["federal_district.id"]
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: "invalid-feedback",
-                            attrs: { role: "alert" }
-                          },
-                          _vm._l(_vm.errors["federal_district.id"], function(
-                            error
-                          ) {
-                            return _c("span", [_vm._v(_vm._s(error))])
-                          }),
-                          0
-                        )
-                      : _vm._e()
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", { staticClass: "control-label" }, [
-                      _vm._v(_vm._s(_vm.__("Contragent region")))
-                    ]),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      ref: "region",
-                      class: { "is-invalid": _vm.errors["region.id"] },
-                      attrs: { label: "title", options: _vm.regions },
-                      model: {
-                        value: _vm.contragent.region,
-                        callback: function($$v) {
-                          _vm.$set(_vm.contragent, "region", $$v)
-                        },
-                        expression: "contragent.region"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors["region.id"]
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: "invalid-feedback",
-                            attrs: { role: "alert" }
-                          },
-                          _vm._l(_vm.errors["region.id"], function(error) {
-                            return _c("span", [_vm._v(_vm._s(error))])
-                          }),
-                          0
-                        )
-                      : _vm._e()
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", { staticClass: "control-label" }, [
-                      _vm._v(_vm._s(_vm.__("Contragent type")))
-                    ]),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      ref: "types",
-                      class: { "is-invalid": _vm.errors["types.id"] },
-                      attrs: {
-                        label: "title",
-                        options: _vm.types,
-                        multiple: true
-                      },
-                      model: {
-                        value: _vm.contragent.types,
-                        callback: function($$v) {
-                          _vm.$set(_vm.contragent, "types", $$v)
-                        },
-                        expression: "contragent.types"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors["types.id"]
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: "invalid-feedback",
-                            attrs: { role: "alert" }
-                          },
-                          _vm._l(_vm.errors["types.id"], function(error) {
-                            return _c("span", [_vm._v(_vm._s(error))])
-                          }),
-                          0
-                        )
-                      : _vm._e()
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent TIN")))
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.contragent.inn,
-                        expression: "contragent.inn"
-                      }
-                    ],
-                    ref: "inn",
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errors.inn },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.contragent.inn },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.contragent, "inn", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.errors.inn
-                    ? _c(
-                        "div",
-                        {
-                          staticClass: "invalid-feedback",
-                          attrs: { role: "alert" }
-                        },
-                        _vm._l(_vm.errors.inn, function(error) {
-                          return _c("span", [_vm._v(_vm._s(error))])
-                        }),
-                        0
-                      )
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent Legal address")))
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.contragent.legal_address,
-                        expression: "contragent.legal_address"
-                      }
-                    ],
-                    ref: "legal_address",
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errors.legal_address },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.contragent.legal_address },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.contragent,
-                          "legal_address",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.errors.legal_address
-                    ? _c(
-                        "div",
-                        {
-                          staticClass: "invalid-feedback",
-                          attrs: { role: "alert" }
-                        },
-                        _vm._l(_vm.errors.legal_address, function(error) {
-                          return _c("span", [_vm._v(_vm._s(error))])
-                        }),
-                        0
-                      )
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent contact")))
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.contragent.fio,
-                        expression: "contragent.fio"
-                      }
-                    ],
-                    ref: "fio",
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errors.fio },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.contragent.fio },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.contragent, "fio", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.errors.fio
-                    ? _c(
-                        "div",
-                        {
-                          staticClass: "invalid-feedback",
-                          attrs: { role: "alert" }
-                        },
-                        _vm._l(_vm.errors.fio, function(error) {
-                          return _c("span", [_vm._v(_vm._s(error))])
-                        }),
-                        0
-                      )
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent phone")))
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.contragent.phone,
-                        expression: "contragent.phone"
-                      }
-                    ],
-                    ref: "phone",
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errors.phone },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.contragent.phone },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.contragent, "phone", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.errors.phone
-                    ? _c(
-                        "div",
-                        {
-                          staticClass: "invalid-feedback",
-                          attrs: { role: "alert" }
-                        },
-                        _vm._l(_vm.errors.phone, function(error) {
-                          return _c("span", [_vm._v(_vm._s(error))])
-                        }),
-                        0
-                      )
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-12" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent stores")))
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "stores" }, [
-                    _c(
-                      "ul",
-                      _vm._l(_vm.contragent.stores, function(store, index) {
-                        return _c("li", { staticClass: "store" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.contragent.stores[index].id,
-                                expression: "contragent.stores[index].id"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "hidden" },
-                            domProps: {
-                              value: _vm.contragent.stores[index].id
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.contragent.stores[index],
-                                  "id",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-md-6" }, [
-                              _c("div", { staticClass: "form-group" }, [
-                                _c("label", { staticClass: "control-label" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.__("Store coords #", {
-                                        store: index + 1
-                                      })
-                                    )
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value:
-                                        _vm.contragent.stores[index].coords,
-                                      expression:
-                                        "contragent.stores[index].coords"
-                                    }
-                                  ],
-                                  ref: "stores_" + index + "_coords",
-                                  refInFor: true,
-                                  staticClass: "form-control",
-                                  class: {
-                                    "is-invalid":
-                                      _vm.errors.stores &&
-                                      _vm.errors.stores[index] &&
-                                      _vm.errors.stores[index].coords
-                                  },
-                                  attrs: { type: "text" },
-                                  domProps: {
-                                    value: _vm.contragent.stores[index].coords
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.contragent.stores[index],
-                                        "coords",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _vm.errors.stores &&
-                                _vm.errors.stores[index] &&
-                                _vm.errors.stores[index].coords
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass: "invalid-feedback",
-                                        attrs: { role: "alert" }
-                                      },
-                                      _vm._l(
-                                        _vm.errors.stores[index].coords,
-                                        function(error) {
-                                          return _c("span", [
-                                            _vm._v(_vm._s(error))
-                                          ])
-                                        }
-                                      ),
-                                      0
-                                    )
-                                  : _vm._e()
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group" }, [
-                                _c("label", { staticClass: "control-label" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.__("Store address #", {
-                                        store: index + 1
-                                      })
-                                    )
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value:
-                                        _vm.contragent.stores[index].address,
-                                      expression:
-                                        "contragent.stores[index].address"
-                                    }
-                                  ],
-                                  ref: "stores_" + index + "_address",
-                                  refInFor: true,
-                                  staticClass: "form-control",
-                                  class: {
-                                    "is-invalid":
-                                      _vm.errors.stores &&
-                                      _vm.errors.stores[index] &&
-                                      _vm.errors.stores[index].address
-                                  },
-                                  attrs: { type: "text" },
-                                  domProps: {
-                                    value: _vm.contragent.stores[index].address
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.contragent.stores[index],
-                                        "address",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _vm.errors.stores &&
-                                _vm.errors.stores[index] &&
-                                _vm.errors.stores[index].address
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass: "invalid-feedback",
-                                        attrs: { role: "alert" }
-                                      },
-                                      _vm._l(
-                                        _vm.errors.stores[index].address,
-                                        function(error) {
-                                          return _c("span", [
-                                            _vm._v(_vm._s(error))
-                                          ])
-                                        }
-                                      ),
-                                      0
-                                    )
-                                  : _vm._e()
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-6" }, [
-                              _c(
-                                "div",
-                                { staticClass: "form-group" },
-                                [
-                                  _c(
-                                    "label",
-                                    { staticClass: "control-label" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.__("Store federal district #", {
-                                            store: index + 1
-                                          })
-                                        )
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("v-select", {
-                                    ref:
-                                      "stores_" + index + "_federal_district",
-                                    refInFor: true,
-                                    class: {
-                                      "is-invalid":
-                                        _vm.errors.stores &&
-                                        _vm.errors.stores[index] &&
-                                        _vm.errors.stores[index][
-                                          "federal_district.id"
-                                        ]
-                                    },
-                                    attrs: {
-                                      label: "title",
-                                      options: _vm.federalDistricts
-                                    },
-                                    model: {
-                                      value:
-                                        _vm.contragent.stores[index]
-                                          .federal_district,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.contragent.stores[index],
-                                          "federal_district",
-                                          $$v
-                                        )
-                                      },
-                                      expression:
-                                        "contragent.stores[index].federal_district"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.errors.stores &&
-                                  _vm.errors.stores[index] &&
-                                  _vm.errors.stores[index][
-                                    "federal_district.id"
-                                  ]
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "invalid-feedback",
-                                          attrs: { role: "alert" }
-                                        },
-                                        _vm._l(
-                                          _vm.errors.stores[index][
-                                            "federal_district.id"
-                                          ],
-                                          function(error) {
-                                            return _c("span", [
-                                              _vm._v(_vm._s(error))
-                                            ])
-                                          }
-                                        ),
-                                        0
-                                      )
-                                    : _vm._e()
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group" },
-                                [
-                                  _c(
-                                    "label",
-                                    { staticClass: "control-label" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.__("Store region #", {
-                                            store: index + 1
-                                          })
-                                        )
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("v-select", {
-                                    ref: "stores_" + index + "_region",
-                                    refInFor: true,
-                                    class: {
-                                      "is-invalid":
-                                        _vm.errors.stores &&
-                                        _vm.errors.stores[index] &&
-                                        _vm.errors.stores[index]["region.id"]
-                                    },
-                                    attrs: {
-                                      label: "title",
-                                      options: _vm.federalDistricts
-                                    },
-                                    model: {
-                                      value:
-                                        _vm.contragent.stores[index].region,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.contragent.stores[index],
-                                          "region",
-                                          $$v
-                                        )
-                                      },
-                                      expression:
-                                        "contragent.stores[index].region"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.errors.stores &&
-                                  _vm.errors.stores[index] &&
-                                  _vm.errors.stores[index]["region.id"]
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "invalid-feedback",
-                                          attrs: { role: "alert" }
-                                        },
-                                        _vm._l(
-                                          _vm.errors.stores[index]["region.id"],
-                                          function(error) {
-                                            return _c("span", [
-                                              _vm._v(_vm._s(error))
-                                            ])
-                                          }
-                                        ),
-                                        0
-                                      )
-                                    : _vm._e()
-                                ],
-                                1
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-12 text-right" }, [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "btn btn-danger btn-sm",
-                                  attrs: { href: "javascript:void(0)" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleteStore(index)
-                                    }
-                                  }
-                                },
-                                [_vm._v(_vm._s(_vm.__("Delete store")))]
-                              )
-                            ])
-                          ])
+                      _vm._l(_vm.errors.title, function(error, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(_vm._s(error))
                         ])
                       }),
                       0
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "text-right" }, [
-                      _c(
-                        "a",
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", { staticClass: "control-label" }, [
+                    _vm._v(_vm._s(_vm.__("Contragent federal district")))
+                  ]),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    class: { "is-invalid": _vm.errors["federal_district.id"] },
+                    attrs: { label: "title", options: _vm.federalDistricts },
+                    model: {
+                      value: _vm.contragent.federal_district,
+                      callback: function($$v) {
+                        _vm.$set(_vm.contragent, "federal_district", $$v)
+                      },
+                      expression: "contragent.federal_district"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors["federal_district.id"]
+                    ? _c(
+                        "div",
                         {
-                          staticClass: "btn btn-primary btn-sm",
-                          attrs: { href: "javascript:void(0)" },
-                          on: { click: _vm.addStore }
+                          staticClass: "invalid-feedback",
+                          attrs: { role: "alert" }
                         },
-                        [_vm._v(_vm._s(_vm.__("Add store")))]
+                        _vm._l(_vm.errors["federal_district.id"], function(
+                          error,
+                          index
+                        ) {
+                          return _c("span", { key: index }, [
+                            _vm._v(_vm._s(error))
+                          ])
+                        }),
+                        0
                       )
-                    ])
-                  ])
+                    : _vm._e()
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", { staticClass: "control-label" }, [
+                    _vm._v(_vm._s(_vm.__("Contragent region")))
+                  ]),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    ref: "region",
+                    class: { "is-invalid": _vm.errors["region.id"] },
+                    attrs: { label: "title", options: _vm.regions },
+                    model: {
+                      value: _vm.contragent.region,
+                      callback: function($$v) {
+                        _vm.$set(_vm.contragent, "region", $$v)
+                      },
+                      expression: "contragent.region"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors["region.id"]
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "invalid-feedback",
+                          attrs: { role: "alert" }
+                        },
+                        _vm._l(_vm.errors["region.id"], function(error, index) {
+                          return _c("span", { key: index }, [
+                            _vm._v(_vm._s(error))
+                          ])
+                        }),
+                        0
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", { staticClass: "control-label" }, [
+                    _vm._v(_vm._s(_vm.__("Contragent type")))
+                  ]),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    ref: "types",
+                    class: { "is-invalid": _vm.errors["types.id"] },
+                    attrs: {
+                      label: "title",
+                      options: _vm.types,
+                      multiple: true
+                    },
+                    model: {
+                      value: _vm.contragent.types,
+                      callback: function($$v) {
+                        _vm.$set(_vm.contragent, "types", $$v)
+                      },
+                      expression: "contragent.types"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors["types.id"]
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "invalid-feedback",
+                          attrs: { role: "alert" }
+                        },
+                        _vm._l(_vm.errors["types.id"], function(error, index) {
+                          return _c("span", { key: index }, [
+                            _vm._v(_vm._s(error))
+                          ])
+                        }),
+                        0
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent TIN")))
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "form-group text-right" }, [
-                  _c("button", { staticClass: "btn btn-primary" }, [
-                    _vm._v(_vm._s(_vm.__("Save")))
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.contragent.inn,
+                      expression: "contragent.inn"
+                    }
+                  ],
+                  ref: "inn",
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.inn },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.contragent.inn },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.contragent, "inn", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.inn
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      _vm._l(_vm.errors.inn, function(error, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(_vm._s(error))
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent Legal address")))
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.contragent.legal_address,
+                      expression: "contragent.legal_address"
+                    }
+                  ],
+                  ref: "legal_address",
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.legal_address },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.contragent.legal_address },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.contragent,
+                        "legal_address",
+                        $event.target.value
+                      )
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.legal_address
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      _vm._l(_vm.errors.legal_address, function(error, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(_vm._s(error))
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent contact")))
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.contragent.fio,
+                      expression: "contragent.fio"
+                    }
+                  ],
+                  ref: "fio",
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.fio },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.contragent.fio },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.contragent, "fio", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.fio
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      _vm._l(_vm.errors.fio, function(error, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(_vm._s(error))
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent phone")))
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.contragent.phone,
+                      expression: "contragent.phone"
+                    }
+                  ],
+                  ref: "phone",
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.phone },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.contragent.phone },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.contragent, "phone", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.phone
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      _vm._l(_vm.errors.phone, function(error, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(_vm._s(error))
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent stores")))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "stores" }, [
+                  _c(
+                    "ul",
+                    _vm._l(_vm.contragent.stores, function(store, index) {
+                      return _c("li", { key: index, staticClass: "store" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.contragent.stores[index].id,
+                              expression: "contragent.stores[index].id"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "hidden" },
+                          domProps: { value: _vm.contragent.stores[index].id },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.contragent.stores[index],
+                                "id",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-6" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", { staticClass: "control-label" }, [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.__("Store coords #", {
+                                      store: index + 1
+                                    })
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.contragent.stores[index].coords,
+                                    expression:
+                                      "contragent.stores[index].coords"
+                                  }
+                                ],
+                                ref: "stores_" + index + "_coords",
+                                refInFor: true,
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid":
+                                    _vm.errors.stores &&
+                                    _vm.errors.stores[index] &&
+                                    _vm.errors.stores[index].coords
+                                },
+                                attrs: { type: "text" },
+                                domProps: {
+                                  value: _vm.contragent.stores[index].coords
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.contragent.stores[index],
+                                      "coords",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.stores &&
+                              _vm.errors.stores[index] &&
+                              _vm.errors.stores[index].coords
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass: "invalid-feedback",
+                                      attrs: { role: "alert" }
+                                    },
+                                    _vm._l(
+                                      _vm.errors.stores[index].coords,
+                                      function(error, index) {
+                                        return _c("span", { key: index }, [
+                                          _vm._v(_vm._s(error))
+                                        ])
+                                      }
+                                    ),
+                                    0
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", { staticClass: "control-label" }, [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.__("Store address #", {
+                                      store: index + 1
+                                    })
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.contragent.stores[index].address,
+                                    expression:
+                                      "contragent.stores[index].address"
+                                  }
+                                ],
+                                ref: "stores_" + index + "_address",
+                                refInFor: true,
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid":
+                                    _vm.errors.stores &&
+                                    _vm.errors.stores[index] &&
+                                    _vm.errors.stores[index].address
+                                },
+                                attrs: { type: "text" },
+                                domProps: {
+                                  value: _vm.contragent.stores[index].address
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.contragent.stores[index],
+                                      "address",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.stores &&
+                              _vm.errors.stores[index] &&
+                              _vm.errors.stores[index].address
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass: "invalid-feedback",
+                                      attrs: { role: "alert" }
+                                    },
+                                    _vm._l(
+                                      _vm.errors.stores[index].address,
+                                      function(error, index) {
+                                        return _c("span", { key: index }, [
+                                          _vm._v(_vm._s(error))
+                                        ])
+                                      }
+                                    ),
+                                    0
+                                  )
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-6" }, [
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c("label", { staticClass: "control-label" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.__("Store federal district #", {
+                                        store: index + 1
+                                      })
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("v-select", {
+                                  ref: "stores_" + index + "_federal_district",
+                                  refInFor: true,
+                                  class: {
+                                    "is-invalid":
+                                      _vm.errors.stores &&
+                                      _vm.errors.stores[index] &&
+                                      _vm.errors.stores[index][
+                                        "federal_district.id"
+                                      ]
+                                  },
+                                  attrs: {
+                                    label: "title",
+                                    options: _vm.federalDistricts
+                                  },
+                                  model: {
+                                    value:
+                                      _vm.contragent.stores[index]
+                                        .federal_district,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.contragent.stores[index],
+                                        "federal_district",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "contragent.stores[index].federal_district"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.errors.stores &&
+                                _vm.errors.stores[index] &&
+                                _vm.errors.stores[index]["federal_district.id"]
+                                  ? _c(
+                                      "div",
+                                      {
+                                        staticClass: "invalid-feedback",
+                                        attrs: { role: "alert" }
+                                      },
+                                      _vm._l(
+                                        _vm.errors.stores[index][
+                                          "federal_district.id"
+                                        ],
+                                        function(error, index) {
+                                          return _c("span", { key: index }, [
+                                            _vm._v(_vm._s(error))
+                                          ])
+                                        }
+                                      ),
+                                      0
+                                    )
+                                  : _vm._e()
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c("label", { staticClass: "control-label" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.__("Store region #", {
+                                        store: index + 1
+                                      })
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("v-select", {
+                                  ref: "stores_" + index + "_region",
+                                  refInFor: true,
+                                  class: {
+                                    "is-invalid":
+                                      _vm.errors.stores &&
+                                      _vm.errors.stores[index] &&
+                                      _vm.errors.stores[index]["region.id"]
+                                  },
+                                  attrs: {
+                                    label: "title",
+                                    options: _vm.federalDistricts
+                                  },
+                                  model: {
+                                    value: _vm.contragent.stores[index].region,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.contragent.stores[index],
+                                        "region",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "contragent.stores[index].region"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.errors.stores &&
+                                _vm.errors.stores[index] &&
+                                _vm.errors.stores[index]["region.id"]
+                                  ? _c(
+                                      "div",
+                                      {
+                                        staticClass: "invalid-feedback",
+                                        attrs: { role: "alert" }
+                                      },
+                                      _vm._l(
+                                        _vm.errors.stores[index]["region.id"],
+                                        function(error, index) {
+                                          return _c("span", { key: index }, [
+                                            _vm._v(_vm._s(error))
+                                          ])
+                                        }
+                                      ),
+                                      0
+                                    )
+                                  : _vm._e()
+                              ],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-12 text-right" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-danger btn-sm",
+                                attrs: { href: "javascript:void(0)" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteStore(index)
+                                  }
+                                }
+                              },
+                              [_vm._v(_vm._s(_vm.__("Delete store")))]
+                            )
+                          ])
+                        ])
+                      ])
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "text-right" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-primary btn-sm",
+                        attrs: { href: "javascript:void(0)" },
+                        on: { click: _vm.addStore }
+                      },
+                      [_vm._v(_vm._s(_vm.__("Add store")))]
+                    )
                   ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group text-right" }, [
+                _c("button", { staticClass: "btn btn-primary" }, [
+                  _vm._v(_vm._s(_vm.__("Save")))
                 ])
               ])
             ])
-          ]
-        )
-      ],
-      1
-    )
+          ])
+        ]
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -94160,776 +94149,757 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("section", { staticClass: "contragent-edit-wrapper" }, [
-    _c(
-      "div",
-      { staticClass: "container" },
-      [
-        _c("loading", {
-          attrs: {
-            active: _vm.isLoading,
-            "can-cancel": true,
-            "is-full-page": _vm.fullPage
-          },
+    _c("div", { staticClass: "container" }, [
+      _c(
+        "form",
+        {
           on: {
-            "update:active": function($event) {
-              _vm.isLoading = $event
+            submit: function($event) {
+              return _vm.saveForm()
             }
           }
-        }),
-        _vm._v(" "),
-        _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                return _vm.saveForm()
-              }
-            }
-          },
-          [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent title")))
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.contragent.title,
-                        expression: "contragent.title"
-                      }
-                    ],
-                    ref: "title",
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errors.title },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.contragent.title },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.contragent, "title", $event.target.value)
-                      }
+        },
+        [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent title")))
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.contragent.title,
+                      expression: "contragent.title"
                     }
-                  }),
-                  _vm._v(" "),
-                  _vm.errors.title
-                    ? _c(
-                        "div",
-                        {
-                          staticClass: "invalid-feedback",
-                          attrs: { role: "alert" }
-                        },
-                        _vm._l(_vm.errors.title, function(error) {
-                          return _c("span", [_vm._v(_vm._s(error))])
-                        }),
-                        0
-                      )
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", { staticClass: "control-label" }, [
-                      _vm._v(_vm._s(_vm.__("Contragent federal district")))
-                    ]),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      class: {
-                        "is-invalid": _vm.errors["federal_district.id"]
+                  ],
+                  ref: "title",
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.title },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.contragent.title },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.contragent, "title", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.title
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
                       },
-                      attrs: { label: "title", options: _vm.federalDistricts },
-                      model: {
-                        value: _vm.contragent.federal_district,
-                        callback: function($$v) {
-                          _vm.$set(_vm.contragent, "federal_district", $$v)
-                        },
-                        expression: "contragent.federal_district"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors["federal_district.id"]
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: "invalid-feedback",
-                            attrs: { role: "alert" }
-                          },
-                          _vm._l(_vm.errors["federal_district.id"], function(
-                            error
-                          ) {
-                            return _c("span", [_vm._v(_vm._s(error))])
-                          }),
-                          0
-                        )
-                      : _vm._e()
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", { staticClass: "control-label" }, [
-                      _vm._v(_vm._s(_vm.__("Contragent region")))
-                    ]),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      ref: "region",
-                      class: { "is-invalid": _vm.errors["region.id"] },
-                      attrs: { label: "title", options: _vm.regions },
-                      model: {
-                        value: _vm.contragent.region,
-                        callback: function($$v) {
-                          _vm.$set(_vm.contragent, "region", $$v)
-                        },
-                        expression: "contragent.region"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors["region.id"]
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: "invalid-feedback",
-                            attrs: { role: "alert" }
-                          },
-                          _vm._l(_vm.errors["region.id"], function(error) {
-                            return _c("span", [_vm._v(_vm._s(error))])
-                          }),
-                          0
-                        )
-                      : _vm._e()
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c(
-                  "div",
-                  { staticClass: "form-group" },
-                  [
-                    _c("label", { staticClass: "control-label" }, [
-                      _vm._v(_vm._s(_vm.__("Contragent type")))
-                    ]),
-                    _vm._v(" "),
-                    _c("v-select", {
-                      ref: "types",
-                      class: { "is-invalid": _vm.errors["types.id"] },
-                      attrs: {
-                        label: "title",
-                        options: _vm.types,
-                        multiple: true
-                      },
-                      model: {
-                        value: _vm.contragent.types,
-                        callback: function($$v) {
-                          _vm.$set(_vm.contragent, "types", $$v)
-                        },
-                        expression: "contragent.types"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.errors["types.id"]
-                      ? _c(
-                          "div",
-                          {
-                            staticClass: "invalid-feedback",
-                            attrs: { role: "alert" }
-                          },
-                          _vm._l(_vm.errors["types.id"], function(error) {
-                            return _c("span", [_vm._v(_vm._s(error))])
-                          }),
-                          0
-                        )
-                      : _vm._e()
-                  ],
-                  1
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent TIN")))
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.contragent.inn,
-                        expression: "contragent.inn"
-                      }
-                    ],
-                    ref: "inn",
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errors.inn },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.contragent.inn },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.contragent, "inn", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.errors.inn
-                    ? _c(
-                        "div",
-                        {
-                          staticClass: "invalid-feedback",
-                          attrs: { role: "alert" }
-                        },
-                        _vm._l(_vm.errors.inn, function(error) {
-                          return _c("span", [_vm._v(_vm._s(error))])
-                        }),
-                        0
-                      )
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent Legal address")))
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.contragent.legal_address,
-                        expression: "contragent.legal_address"
-                      }
-                    ],
-                    ref: "legal_address",
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errors.legal_address },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.contragent.legal_address },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.contragent,
-                          "legal_address",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.errors.legal_address
-                    ? _c(
-                        "div",
-                        {
-                          staticClass: "invalid-feedback",
-                          attrs: { role: "alert" }
-                        },
-                        _vm._l(_vm.errors.legal_address, function(error) {
-                          return _c("span", [_vm._v(_vm._s(error))])
-                        }),
-                        0
-                      )
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent contact")))
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.contragent.fio,
-                        expression: "contragent.fio"
-                      }
-                    ],
-                    ref: "fio",
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errors.fio },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.contragent.fio },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.contragent, "fio", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.errors.fio
-                    ? _c(
-                        "div",
-                        {
-                          staticClass: "invalid-feedback",
-                          attrs: { role: "alert" }
-                        },
-                        _vm._l(_vm.errors.fio, function(error) {
-                          return _c("span", [_vm._v(_vm._s(error))])
-                        }),
-                        0
-                      )
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent phone")))
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.contragent.phone,
-                        expression: "contragent.phone"
-                      }
-                    ],
-                    ref: "phone",
-                    staticClass: "form-control",
-                    class: { "is-invalid": _vm.errors.phone },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.contragent.phone },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.contragent, "phone", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.errors.phone
-                    ? _c(
-                        "div",
-                        {
-                          staticClass: "invalid-feedback",
-                          attrs: { role: "alert" }
-                        },
-                        _vm._l(_vm.errors.phone, function(error) {
-                          return _c("span", [_vm._v(_vm._s(error))])
-                        }),
-                        0
-                      )
-                    : _vm._e()
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-12" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("label", { staticClass: "control-label" }, [
-                    _vm._v(_vm._s(_vm.__("Contragent stores")))
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "stores" }, [
-                    _c(
-                      "ul",
-                      _vm._l(_vm.contragent.stores, function(store, index) {
-                        return _c("li", { staticClass: "store" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.contragent.stores[index].id,
-                                expression: "contragent.stores[index].id"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "hidden" },
-                            domProps: {
-                              value: _vm.contragent.stores[index].id
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.contragent.stores[index],
-                                  "id",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-md-6" }, [
-                              _c("div", { staticClass: "form-group" }, [
-                                _c("label", { staticClass: "control-label" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.__("Store coords #", {
-                                        store: index + 1
-                                      })
-                                    )
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value:
-                                        _vm.contragent.stores[index].coords,
-                                      expression:
-                                        "contragent.stores[index].coords"
-                                    }
-                                  ],
-                                  ref: "stores_" + index + "_coords",
-                                  refInFor: true,
-                                  staticClass: "form-control",
-                                  class: {
-                                    "is-invalid":
-                                      _vm.errors.stores &&
-                                      _vm.errors.stores[index] &&
-                                      _vm.errors.stores[index].coords
-                                  },
-                                  attrs: { type: "text" },
-                                  domProps: {
-                                    value: _vm.contragent.stores[index].coords
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.contragent.stores[index],
-                                        "coords",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _vm.errors.stores &&
-                                _vm.errors.stores[index] &&
-                                _vm.errors.stores[index].coords
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass: "invalid-feedback",
-                                        attrs: { role: "alert" }
-                                      },
-                                      _vm._l(
-                                        _vm.errors.stores[index].coords,
-                                        function(error) {
-                                          return _c("span", [
-                                            _vm._v(_vm._s(error))
-                                          ])
-                                        }
-                                      ),
-                                      0
-                                    )
-                                  : _vm._e()
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "form-group" }, [
-                                _c("label", { staticClass: "control-label" }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.__("Store address #", {
-                                        store: index + 1
-                                      })
-                                    )
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value:
-                                        _vm.contragent.stores[index].address,
-                                      expression:
-                                        "contragent.stores[index].address"
-                                    }
-                                  ],
-                                  ref: "stores_" + index + "_address",
-                                  refInFor: true,
-                                  staticClass: "form-control",
-                                  class: {
-                                    "is-invalid":
-                                      _vm.errors.stores &&
-                                      _vm.errors.stores[index] &&
-                                      _vm.errors.stores[index].address
-                                  },
-                                  attrs: { type: "text" },
-                                  domProps: {
-                                    value: _vm.contragent.stores[index].address
-                                  },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.contragent.stores[index],
-                                        "address",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _vm.errors.stores &&
-                                _vm.errors.stores[index] &&
-                                _vm.errors.stores[index].address
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass: "invalid-feedback",
-                                        attrs: { role: "alert" }
-                                      },
-                                      _vm._l(
-                                        _vm.errors.stores[index].address,
-                                        function(error) {
-                                          return _c("span", [
-                                            _vm._v(_vm._s(error))
-                                          ])
-                                        }
-                                      ),
-                                      0
-                                    )
-                                  : _vm._e()
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-6" }, [
-                              _c(
-                                "div",
-                                { staticClass: "form-group" },
-                                [
-                                  _c(
-                                    "label",
-                                    { staticClass: "control-label" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.__("Store federal district #", {
-                                            store: index + 1
-                                          })
-                                        )
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("v-select", {
-                                    ref:
-                                      "stores_" + index + "_federal_district",
-                                    refInFor: true,
-                                    class: {
-                                      "is-invalid":
-                                        _vm.errors.stores &&
-                                        _vm.errors.stores[index] &&
-                                        _vm.errors.stores[index][
-                                          "federal_district.id"
-                                        ]
-                                    },
-                                    attrs: {
-                                      label: "title",
-                                      options: _vm.federalDistricts
-                                    },
-                                    model: {
-                                      value:
-                                        _vm.contragent.stores[index]
-                                          .federal_district,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.contragent.stores[index],
-                                          "federal_district",
-                                          $$v
-                                        )
-                                      },
-                                      expression:
-                                        "contragent.stores[index].federal_district"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.errors.stores &&
-                                  _vm.errors.stores[index] &&
-                                  _vm.errors.stores[index][
-                                    "federal_district.id"
-                                  ]
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "invalid-feedback",
-                                          attrs: { role: "alert" }
-                                        },
-                                        _vm._l(
-                                          _vm.errors.stores[index][
-                                            "federal_district.id"
-                                          ],
-                                          function(error) {
-                                            return _c("span", [
-                                              _vm._v(_vm._s(error))
-                                            ])
-                                          }
-                                        ),
-                                        0
-                                      )
-                                    : _vm._e()
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "form-group" },
-                                [
-                                  _c(
-                                    "label",
-                                    { staticClass: "control-label" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.__("Store region #", {
-                                            store: index + 1
-                                          })
-                                        )
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("v-select", {
-                                    ref: "stores_" + index + "_region",
-                                    refInFor: true,
-                                    class: {
-                                      "is-invalid":
-                                        _vm.errors.stores &&
-                                        _vm.errors.stores[index] &&
-                                        _vm.errors.stores[index]["region.id"]
-                                    },
-                                    attrs: {
-                                      label: "title",
-                                      options: _vm.federalDistricts
-                                    },
-                                    model: {
-                                      value:
-                                        _vm.contragent.stores[index].region,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.contragent.stores[index],
-                                          "region",
-                                          $$v
-                                        )
-                                      },
-                                      expression:
-                                        "contragent.stores[index].region"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.errors.stores &&
-                                  _vm.errors.stores[index] &&
-                                  _vm.errors.stores[index]["region.id"]
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass: "invalid-feedback",
-                                          attrs: { role: "alert" }
-                                        },
-                                        _vm._l(
-                                          _vm.errors.stores[index]["region.id"],
-                                          function(error) {
-                                            return _c("span", [
-                                              _vm._v(_vm._s(error))
-                                            ])
-                                          }
-                                        ),
-                                        0
-                                      )
-                                    : _vm._e()
-                                ],
-                                1
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-md-12 text-right" }, [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "btn btn-danger btn-sm",
-                                  attrs: { href: "javascript:void(0)" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleteStore(index)
-                                    }
-                                  }
-                                },
-                                [_vm._v(_vm._s(_vm.__("Delete store")))]
-                              )
-                            ])
-                          ])
+                      _vm._l(_vm.errors.title, function(error, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(_vm._s(error))
                         ])
                       }),
                       0
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "text-right" }, [
-                      _c(
-                        "a",
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", { staticClass: "control-label" }, [
+                    _vm._v(_vm._s(_vm.__("Contragent federal district")))
+                  ]),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    class: { "is-invalid": _vm.errors["federal_district.id"] },
+                    attrs: { label: "title", options: _vm.federalDistricts },
+                    model: {
+                      value: _vm.contragent.federal_district,
+                      callback: function($$v) {
+                        _vm.$set(_vm.contragent, "federal_district", $$v)
+                      },
+                      expression: "contragent.federal_district"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors["federal_district.id"]
+                    ? _c(
+                        "div",
                         {
-                          staticClass: "btn btn-primary btn-sm",
-                          attrs: { href: "javascript:void(0)" },
-                          on: { click: _vm.addStore }
+                          staticClass: "invalid-feedback",
+                          attrs: { role: "alert" }
                         },
-                        [_vm._v(_vm._s(_vm.__("Add store")))]
+                        _vm._l(_vm.errors["federal_district.id"], function(
+                          error,
+                          index
+                        ) {
+                          return _c("span", { key: index }, [
+                            _vm._v(_vm._s(error))
+                          ])
+                        }),
+                        0
                       )
-                    ])
-                  ])
+                    : _vm._e()
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", { staticClass: "control-label" }, [
+                    _vm._v(_vm._s(_vm.__("Contragent region")))
+                  ]),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    ref: "region",
+                    class: { "is-invalid": _vm.errors["region.id"] },
+                    attrs: { label: "title", options: _vm.regions },
+                    model: {
+                      value: _vm.contragent.region,
+                      callback: function($$v) {
+                        _vm.$set(_vm.contragent, "region", $$v)
+                      },
+                      expression: "contragent.region"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors["region.id"]
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "invalid-feedback",
+                          attrs: { role: "alert" }
+                        },
+                        _vm._l(_vm.errors["region.id"], function(error, index) {
+                          return _c("span", { key: index }, [
+                            _vm._v(_vm._s(error))
+                          ])
+                        }),
+                        0
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c("label", { staticClass: "control-label" }, [
+                    _vm._v(_vm._s(_vm.__("Contragent type")))
+                  ]),
+                  _vm._v(" "),
+                  _c("v-select", {
+                    ref: "types",
+                    class: { "is-invalid": _vm.errors["types.id"] },
+                    attrs: {
+                      label: "title",
+                      options: _vm.types,
+                      multiple: true
+                    },
+                    model: {
+                      value: _vm.contragent.types,
+                      callback: function($$v) {
+                        _vm.$set(_vm.contragent, "types", $$v)
+                      },
+                      expression: "contragent.types"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors["types.id"]
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "invalid-feedback",
+                          attrs: { role: "alert" }
+                        },
+                        _vm._l(_vm.errors["types.id"], function(error, index) {
+                          return _c("span", { key: index }, [
+                            _vm._v(_vm._s(error))
+                          ])
+                        }),
+                        0
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent TIN")))
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "form-group text-right" }, [
-                  _c("button", { staticClass: "btn btn-primary" }, [
-                    _vm._v(_vm._s(_vm.__("Save")))
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.contragent.inn,
+                      expression: "contragent.inn"
+                    }
+                  ],
+                  ref: "inn",
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.inn },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.contragent.inn },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.contragent, "inn", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.inn
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      _vm._l(_vm.errors.inn, function(error, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(_vm._s(error))
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent Legal address")))
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.contragent.legal_address,
+                      expression: "contragent.legal_address"
+                    }
+                  ],
+                  ref: "legal_address",
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.legal_address },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.contragent.legal_address },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.contragent,
+                        "legal_address",
+                        $event.target.value
+                      )
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.legal_address
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      _vm._l(_vm.errors.legal_address, function(error, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(_vm._s(error))
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent contact")))
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.contragent.fio,
+                      expression: "contragent.fio"
+                    }
+                  ],
+                  ref: "fio",
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.fio },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.contragent.fio },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.contragent, "fio", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.fio
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      _vm._l(_vm.errors.fio, function(error, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(_vm._s(error))
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent phone")))
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.contragent.phone,
+                      expression: "contragent.phone"
+                    }
+                  ],
+                  ref: "phone",
+                  staticClass: "form-control",
+                  class: { "is-invalid": _vm.errors.phone },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.contragent.phone },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.contragent, "phone", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors.phone
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "invalid-feedback",
+                        attrs: { role: "alert" }
+                      },
+                      _vm._l(_vm.errors.phone, function(error, index) {
+                        return _c("span", { key: index }, [
+                          _vm._v(_vm._s(error))
+                        ])
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { staticClass: "control-label" }, [
+                  _vm._v(_vm._s(_vm.__("Contragent stores")))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "stores" }, [
+                  _c(
+                    "ul",
+                    _vm._l(_vm.contragent.stores, function(store, index) {
+                      return _c("li", { key: index, staticClass: "store" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.contragent.stores[index].id,
+                              expression: "contragent.stores[index].id"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "hidden" },
+                          domProps: { value: _vm.contragent.stores[index].id },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.contragent.stores[index],
+                                "id",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-6" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", { staticClass: "control-label" }, [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.__("Store coords #", {
+                                      store: index + 1
+                                    })
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.contragent.stores[index].coords,
+                                    expression:
+                                      "contragent.stores[index].coords"
+                                  }
+                                ],
+                                ref: "stores_" + index + "_coords",
+                                refInFor: true,
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid":
+                                    _vm.errors.stores &&
+                                    _vm.errors.stores[index] &&
+                                    _vm.errors.stores[index].coords
+                                },
+                                attrs: { type: "text" },
+                                domProps: {
+                                  value: _vm.contragent.stores[index].coords
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.contragent.stores[index],
+                                      "coords",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.stores &&
+                              _vm.errors.stores[index] &&
+                              _vm.errors.stores[index].coords
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass: "invalid-feedback",
+                                      attrs: { role: "alert" }
+                                    },
+                                    _vm._l(
+                                      _vm.errors.stores[index].coords,
+                                      function(error, index) {
+                                        return _c("span", { key: index }, [
+                                          _vm._v(_vm._s(error))
+                                        ])
+                                      }
+                                    ),
+                                    0
+                                  )
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", { staticClass: "control-label" }, [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.__("Store address #", {
+                                      store: index + 1
+                                    })
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.contragent.stores[index].address,
+                                    expression:
+                                      "contragent.stores[index].address"
+                                  }
+                                ],
+                                ref: "stores_" + index + "_address",
+                                refInFor: true,
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid":
+                                    _vm.errors.stores &&
+                                    _vm.errors.stores[index] &&
+                                    _vm.errors.stores[index].address
+                                },
+                                attrs: { type: "text" },
+                                domProps: {
+                                  value: _vm.contragent.stores[index].address
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.contragent.stores[index],
+                                      "address",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.stores &&
+                              _vm.errors.stores[index] &&
+                              _vm.errors.stores[index].address
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass: "invalid-feedback",
+                                      attrs: { role: "alert" }
+                                    },
+                                    _vm._l(
+                                      _vm.errors.stores[index].address,
+                                      function(error, index) {
+                                        return _c("span", { key: index }, [
+                                          _vm._v(_vm._s(error))
+                                        ])
+                                      }
+                                    ),
+                                    0
+                                  )
+                                : _vm._e()
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-6" }, [
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c("label", { staticClass: "control-label" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.__("Store federal district #", {
+                                        store: index + 1
+                                      })
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("v-select", {
+                                  ref: "stores_" + index + "_federal_district",
+                                  refInFor: true,
+                                  class: {
+                                    "is-invalid":
+                                      _vm.errors.stores &&
+                                      _vm.errors.stores[index] &&
+                                      _vm.errors.stores[index][
+                                        "federal_district.id"
+                                      ]
+                                  },
+                                  attrs: {
+                                    label: "title",
+                                    options: _vm.federalDistricts
+                                  },
+                                  model: {
+                                    value:
+                                      _vm.contragent.stores[index]
+                                        .federal_district,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.contragent.stores[index],
+                                        "federal_district",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "contragent.stores[index].federal_district"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.errors.stores &&
+                                _vm.errors.stores[index] &&
+                                _vm.errors.stores[index]["federal_district.id"]
+                                  ? _c(
+                                      "div",
+                                      {
+                                        staticClass: "invalid-feedback",
+                                        attrs: { role: "alert" }
+                                      },
+                                      _vm._l(
+                                        _vm.errors.stores[index][
+                                          "federal_district.id"
+                                        ],
+                                        function(error, index) {
+                                          return _c("span", { key: index }, [
+                                            _vm._v(_vm._s(error))
+                                          ])
+                                        }
+                                      ),
+                                      0
+                                    )
+                                  : _vm._e()
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [
+                                _c("label", { staticClass: "control-label" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.__("Store region #", {
+                                        store: index + 1
+                                      })
+                                    )
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("v-select", {
+                                  ref: "stores_" + index + "_region",
+                                  refInFor: true,
+                                  class: {
+                                    "is-invalid":
+                                      _vm.errors.stores &&
+                                      _vm.errors.stores[index] &&
+                                      _vm.errors.stores[index]["region.id"]
+                                  },
+                                  attrs: {
+                                    label: "title",
+                                    options: _vm.federalDistricts
+                                  },
+                                  model: {
+                                    value: _vm.contragent.stores[index].region,
+                                    callback: function($$v) {
+                                      _vm.$set(
+                                        _vm.contragent.stores[index],
+                                        "region",
+                                        $$v
+                                      )
+                                    },
+                                    expression:
+                                      "contragent.stores[index].region"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _vm.errors.stores &&
+                                _vm.errors.stores[index] &&
+                                _vm.errors.stores[index]["region.id"]
+                                  ? _c(
+                                      "div",
+                                      {
+                                        staticClass: "invalid-feedback",
+                                        attrs: { role: "alert" }
+                                      },
+                                      _vm._l(
+                                        _vm.errors.stores[index]["region.id"],
+                                        function(error, index) {
+                                          return _c("span", { key: index }, [
+                                            _vm._v(_vm._s(error))
+                                          ])
+                                        }
+                                      ),
+                                      0
+                                    )
+                                  : _vm._e()
+                              ],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-12 text-right" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-danger btn-sm",
+                                attrs: { href: "javascript:void(0)" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteStore(index)
+                                  }
+                                }
+                              },
+                              [_vm._v(_vm._s(_vm.__("Delete store")))]
+                            )
+                          ])
+                        ])
+                      ])
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "text-right" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-primary btn-sm",
+                        attrs: { href: "javascript:void(0)" },
+                        on: { click: _vm.addStore }
+                      },
+                      [_vm._v(_vm._s(_vm.__("Add store")))]
+                    )
                   ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group text-right" }, [
+                _c("button", { staticClass: "btn btn-primary" }, [
+                  _vm._v(_vm._s(_vm.__("Save")))
                 ])
               ])
             ])
-          ]
-        )
-      ],
-      1
-    )
+          ])
+        ]
+      )
+    ])
   ])
 }
 var staticRenderFns = []
@@ -95381,6 +95351,48 @@ var render = function() {
         : _vm._e()
     ],
     1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckbox.vue?vue&type=template&id=a1ef3840&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/swicthCheckbox.vue?vue&type=template&id=a1ef3840& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "checkbox-toggle",
+      attrs: { role: "checkbox", tabindex: "0", "aria-checked": _vm.toggled },
+      on: {
+        keydown: _vm.toggle,
+        click: function($event) {
+          $event.stopPropagation()
+          return _vm.toggle($event)
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "checkbox-slide", class: _vm.classes }, [
+        _c("div", { staticClass: "checkbox-switch", class: _vm.classes })
+      ])
+    ]
   )
 }
 var staticRenderFns = []
@@ -111905,21 +111917,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_simple_alert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-simple-alert */ "./node_modules/vue-simple-alert/lib/index.js");
 /* harmony import */ var vue_js_modal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-js-modal */ "./node_modules/vue-js-modal/dist/index.js");
 /* harmony import */ var vue_js_modal__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(vue_js_modal__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/contragents/contragentIndex.vue */ "./resources/js/components/contragents/contragentIndex.vue");
-/* harmony import */ var _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/contragents/contragentCreate.vue */ "./resources/js/components/contragents/contragentCreate.vue");
-/* harmony import */ var _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/contragents/contragentEdit.vue */ "./resources/js/components/contragents/contragentEdit.vue");
-/* harmony import */ var _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/contragents/company.vue */ "./resources/js/components/contragents/company.vue");
-/* harmony import */ var _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/contragents/contragentShow.vue */ "./resources/js/components/contragents/contragentShow.vue");
-/* harmony import */ var _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/auctions/auctionIndex.vue */ "./resources/js/components/auctions/auctionIndex.vue");
-/* harmony import */ var _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/auctions/auctionMy.vue */ "./resources/js/components/auctions/auctionMy.vue");
-/* harmony import */ var _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/auctions/auctionBid.vue */ "./resources/js/components/auctions/auctionBid.vue");
-/* harmony import */ var _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/auctions/auctionCreate.vue */ "./resources/js/components/auctions/auctionCreate.vue");
-/* harmony import */ var _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/auctions/auctionEdit.vue */ "./resources/js/components/auctions/auctionEdit.vue");
-/* harmony import */ var _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/auctions/auctionShow.vue */ "./resources/js/components/auctions/auctionShow.vue");
-/* harmony import */ var _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/targets/targetCreate.vue */ "./resources/js/components/targets/targetCreate.vue");
-/* harmony import */ var _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/targets/targetEdit.vue */ "./resources/js/components/targets/targetEdit.vue");
-/* harmony import */ var _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/targets/targetIndex.vue */ "./resources/js/components/targets/targetIndex.vue");
-/* harmony import */ var _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/contragents/reviewsIndex.vue */ "./resources/js/components/contragents/reviewsIndex.vue");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _components_swicthCheckbox_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/swicthCheckbox.vue */ "./resources/js/components/swicthCheckbox.vue");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue-star-rating */ "./node_modules/vue-star-rating/dist/star-rating.min.js");
+/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(vue_star_rating__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/contragents/contragentIndex.vue */ "./resources/js/components/contragents/contragentIndex.vue");
+/* harmony import */ var _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/contragents/contragentCreate.vue */ "./resources/js/components/contragents/contragentCreate.vue");
+/* harmony import */ var _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/contragents/contragentEdit.vue */ "./resources/js/components/contragents/contragentEdit.vue");
+/* harmony import */ var _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/contragents/company.vue */ "./resources/js/components/contragents/company.vue");
+/* harmony import */ var _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/contragents/contragentShow.vue */ "./resources/js/components/contragents/contragentShow.vue");
+/* harmony import */ var _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/auctions/auctionIndex.vue */ "./resources/js/components/auctions/auctionIndex.vue");
+/* harmony import */ var _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/auctions/auctionMy.vue */ "./resources/js/components/auctions/auctionMy.vue");
+/* harmony import */ var _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/auctions/auctionBid.vue */ "./resources/js/components/auctions/auctionBid.vue");
+/* harmony import */ var _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/auctions/auctionCreate.vue */ "./resources/js/components/auctions/auctionCreate.vue");
+/* harmony import */ var _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/auctions/auctionEdit.vue */ "./resources/js/components/auctions/auctionEdit.vue");
+/* harmony import */ var _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/auctions/auctionShow.vue */ "./resources/js/components/auctions/auctionShow.vue");
+/* harmony import */ var _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/targets/targetCreate.vue */ "./resources/js/components/targets/targetCreate.vue");
+/* harmony import */ var _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/targets/targetEdit.vue */ "./resources/js/components/targets/targetEdit.vue");
+/* harmony import */ var _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/targets/targetIndex.vue */ "./resources/js/components/targets/targetIndex.vue");
+/* harmony import */ var _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/contragents/reviewsIndex.vue */ "./resources/js/components/contragents/reviewsIndex.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -111941,12 +111960,24 @@ Vue.component("v-popover", v_tooltip__WEBPACK_IMPORTED_MODULE_5__["VPopover"]);
 
 __webpack_require__(/*! vue-flash-message/dist/vue-flash-message.min.css */ "./node_modules/vue-flash-message/dist/vue-flash-message.min.css");
 
-window.Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
-window.Vue.use(vue_flash_message__WEBPACK_IMPORTED_MODULE_2___default.a);
+Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
+Vue.use(vue_flash_message__WEBPACK_IMPORTED_MODULE_2___default.a);
 
 Vue.use(vue_simple_alert__WEBPACK_IMPORTED_MODULE_6__["default"]);
 
 Vue.use(vue_js_modal__WEBPACK_IMPORTED_MODULE_7___default.a);
+
+Vue.use(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_8___default.a, {
+  // props
+  color: "red"
+}, {// slots
+});
+
+Vue.component("switch-checkbox", _components_swicthCheckbox_vue__WEBPACK_IMPORTED_MODULE_9__["default"], {});
+
+Vue.component("v-select", vue_select__WEBPACK_IMPORTED_MODULE_10___default.a, {});
+
+Vue.component("StarRating", vue_star_rating__WEBPACK_IMPORTED_MODULE_11___default.a, {});
 
 
 
@@ -111967,66 +111998,66 @@ var routes = [{
   redirect: "/personal/auctions"
 }, {
   path: "/personal/contragents",
-  component: _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+  component: _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
   name: "contragentIndex"
 }, {
   path: "/personal/contragents/reviews",
-  component: _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_23__["default"],
+  component: _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_26__["default"],
   name: "reviews"
 }, {
   path: "/personal/contragents/create",
-  component: _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+  component: _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
   name: "createContragent"
 }, {
   path: "/personal/contragents/show/:id",
-  component: _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+  component: _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
   name: "showContragent"
 }, {
   path: "/personal/contragents/edit/:id",
-  component: _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+  component: _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
   name: "editContragent"
 }, {
   path: "/personal/auctions",
-  component: _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+  component: _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
   name: "auctionIndex"
 }, {
   path: "/personal/auctions/my",
-  component: _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+  component: _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
   name: "auctionMy"
 }, {
   path: "/personal/auctions/bid",
-  component: _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+  component: _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
   name: "auctionBid"
 }, {
   path: "/personal/auctions/create",
-  component: _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+  component: _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
   name: "createAuction"
 }, {
   path: "/personal/auctions/show/:id",
-  component: _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
+  component: _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_22__["default"],
   name: "showAuction"
 }, {
   path: "/personal/auctions/edit/:id",
-  component: _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+  component: _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
   name: "editAuction"
 }, {
   path: "/personal/targets",
-  component: _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
+  component: _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_25__["default"],
   name: "indexTarget"
 }];
 
 if (!!window.user && !!window.user.contragents && !!window.user.contragents[0]) {
   routes.push({
     path: "/personal/company",
-    component: _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+    component: _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
     name: "company"
   }, {
     path: "/personal/targets/create",
-    component: _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
+    component: _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_23__["default"],
     name: "createTarget"
   }, {
     path: "/personal/targets/edit/:id",
-    component: _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
+    component: _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_24__["default"],
     name: "editTarget"
   });
 }
@@ -112046,6 +112077,26 @@ var app = new Vue({
     time: window.document.querySelector('meta[name="server-time"]').content
   },
   methods: {
+    getFederalDistricts: function getFederalDistricts(app) {
+      axios.get("/api/v1/federalDistricts?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+        app.federalDistricts = resp.data;
+      });
+    },
+    getRegions: function getRegions(app) {
+      axios.get("/api/v1/regions?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, app.contragent.federal_district).then(function (resp) {
+        app.regions = resp.data;
+      });
+    },
+    getTypes: function getTypes(app) {
+      axios.get("/api/v1/types?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+        app.types = resp.data;
+      });
+    },
+    getProducts: function getProducts(app) {
+      axios.get("/api/v1/types?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+        app.products = resp.data;
+      });
+    },
     listenForBroadcast: function listenForBroadcast(survey_id) {
       var that = this; // Echo.join("survey." + survey_id)
       //     .here(users => {
@@ -113120,6 +113171,76 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_storeMap_vue_vue_type_template_id_ffdb2ef4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_storeMap_vue_vue_type_template_id_ffdb2ef4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/swicthCheckbox.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/swicthCheckbox.vue ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _swicthCheckbox_vue_vue_type_template_id_a1ef3840___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./swicthCheckbox.vue?vue&type=template&id=a1ef3840& */ "./resources/js/components/swicthCheckbox.vue?vue&type=template&id=a1ef3840&");
+/* harmony import */ var _swicthCheckbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./swicthCheckbox.vue?vue&type=script&lang=js& */ "./resources/js/components/swicthCheckbox.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _swicthCheckbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _swicthCheckbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _swicthCheckbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _swicthCheckbox_vue_vue_type_template_id_a1ef3840___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _swicthCheckbox_vue_vue_type_template_id_a1ef3840___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/swicthCheckbox.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/swicthCheckbox.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/swicthCheckbox.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./swicthCheckbox.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckbox.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/swicthCheckbox.vue?vue&type=template&id=a1ef3840&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/swicthCheckbox.vue?vue&type=template&id=a1ef3840& ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckbox_vue_vue_type_template_id_a1ef3840___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./swicthCheckbox.vue?vue&type=template&id=a1ef3840& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckbox.vue?vue&type=template&id=a1ef3840&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckbox_vue_vue_type_template_id_a1ef3840___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckbox_vue_vue_type_template_id_a1ef3840___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

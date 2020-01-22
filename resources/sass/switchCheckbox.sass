@@ -1,0 +1,64 @@
+$slideWidth: 4em
+$borderRadius: 0.25em
+
+$switchWidth: $slideWidth/2
+$switchHeight: $slideWidth/2
+
+$distance: $slideWidth/2
+
+$switchColor: rgb(56, 74, 93)
+$sliderColorActive: rgb(103, 175, 127)
+$sliderColorInactive: rgb(211, 211, 211)
+
+$transitionTime: 350ms
+
+.checkbox-toggle
+  width: $slideWidth * 3
+  outline: none
+  display: flex
+  flex-direction: row
+  justify-content: flex-start
+  align-items: center
+  margin: 0.5em
+
+.checkbox-slide
+  width: $slideWidth
+  padding: 0
+  margin: 0
+  border-radius: .25em
+  cursor: pointer
+  
+.checkbox-switch 
+  padding: 0
+  margin: 0
+  width: $switchWidth
+  height: $switchHeight
+  border-radius: $borderRadius
+  background: $switchColor
+  cursor: pointer
+
+.checkbox-label
+  margin-left: 0.5em
+
+.checkbox-switch.checked
+  transform: translateX($distance)
+  transition: all $transitionTime
+
+.checkbox-switch.unchecked
+  transition: all $transitionTime
+ 
+.checkbox-slide.checked
+  transition: all $transitionTime
+  background: $sliderColorActive
+
+.checkbox-slide.unchecked
+  transition: all $transitionTime
+  background: $sliderColorInactive  
+  
+.checkbox-switch.disabled
+  cursor: not-allowed
+  background: lighten($switchColor, 35%)
+
+.checkbox-slide.disabled
+  cursor: not-allowd
+  background: lighten($sliderColorInactive, 5%)

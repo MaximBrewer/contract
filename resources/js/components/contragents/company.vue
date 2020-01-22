@@ -1,7 +1,6 @@
 <template>
   <section class="contragent-edit-wrapper">
     <div class="container">
-      <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
       <form v-on:submit="saveForm()">
         <div class="row">
           <div class="col-md-6">
@@ -259,26 +258,20 @@
   </section>
 </template>
 <script>
-import Loading from "vue-loading-overlay";
 import storeMap from "../storeMap";
-import "vue-loading-overlay/dist/vue-loading.css";
-import vSelect from "vue-select";
 export default {
   components: {
-    vSelect: vSelect,
-    Loading: Loading,
     storeMap: storeMap
   },
   mounted() {
     let app = this;
-    app.isLoading = true;
     let id = app.user.contragents[0].id;
-
     if (!!app.$route.params.id) id = app.$route.params.id;
-    app.getFederalDistricts();
-    app.getRegions();
-    app.getTypes();
+    app.getFederalDistricts(app);
+    // app.getRegions();
+    // app.getTypes();
     app.contragentId = id;
+    let loader = Vue.$loading.show();
     axios
       .get(
         "/api/v1/company/?csrf_token=" +
@@ -288,16 +281,15 @@ export default {
       )
       .then(function(resp) {
         app.contragent = resp.data;
-        app.isLoading = false;
+        loader.hide();
       })
       .catch(function() {
         alert(app.__("Failed to load contragent"));
-        app.isLoading = false;
+        loader.hide();
       });
   },
   data: function() {
     return {
-      isLoading: true,
       onCancel: false,
       fullPage: true,
       federalDistricts: [],
@@ -365,8 +357,8 @@ export default {
     saveForm() {
       event.preventDefault();
       var app = this;
+      let loader = Vue.$loading.show();
       var newContragent = app.contragent;
-      app.isLoading = true;
       if (newContragent.federal_district)
         newContragent.federal_district_id = newContragent.federal_district.id;
       if (newContragent.region)
@@ -383,14 +375,14 @@ export default {
           newContragent
         )
         .then(function(resp) {
-          app.isLoading = false;
           //app.$router.replace("/");
           app.flash(app.__("Company edited successfully"), "success");
+          loader.hide();
           return true;
         })
         .catch(function(errors) {
           app.errors = errors.response.data.errors;
-          app.isLoading = false;
+          loader.hide();
         });
     }
   }
