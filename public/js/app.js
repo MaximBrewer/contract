@@ -4179,7 +4179,6 @@ __webpack_require__.r(__webpack_exports__);
       app.isLoading = false;
       app.bid.price = app.auction.price;
       app.bid.volume = 1;
-      var f = app.mine = app.bidding = app.can_bet;
     }); // .catch(function() {
     //   app.$fire({
     //     title: app.__("Error!"),
@@ -4200,8 +4199,11 @@ __webpack_require__.r(__webpack_exports__);
       stores: [],
       products: [],
       auctionId: null,
+      bidding: 0,
+      can_bet: 0,
       bidders: [],
       bidder: null,
+      mine: 0,
       maxModalWidth: 600,
       auction: {},
       bid: {},
@@ -4211,30 +4213,19 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.listenForBroadcast();
   },
-  computed: {
-    can_bet: function can_bet() {
+  watch: {
+    auction: function auction(_auction) {
       if (app.user && app.user.contragents && app.user.contragents[0]) {
         var contr = app.user.contragents[0].id;
 
-        for (var r in auction.bidders) {
-          if (auction.bidders[r].id == contr) return auction.bidders[r].can_bet;
+        for (var r in _auction.bidders) {
+          if (_auction.bidders[r].id == contr) {
+            can_bet = _auction.bidders[r].can_bet;
+            bidding = 1;
+          }
         }
-      }
-    },
-    bidding: function bidding() {
-      if (app.user && app.user.contragents && app.user.contragents[0]) {
-        var contr = app.user.contragents[0].id;
 
-        for (var r in auction.bidders) {
-          if (auction.bidders[r].id == contr) return true;
-        }
-      }
-    },
-    mine: function mine() {
-      if (app.user && app.user.contragents && app.user.contragents[0]) {
-        var contr = app.user.contragents[0].id;
-        console.log(auction.contragent.id == contr);
-        if (auction.contragent.id == contr) return true;else return false;
+        if (_auction.contragent.id == contr) mine = 1;
       }
     }
   },

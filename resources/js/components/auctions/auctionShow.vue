@@ -476,7 +476,6 @@ export default {
         app.isLoading = false;
         app.bid.price = app.auction.price;
         app.bid.volume = 1;
-        let f = app.mine = app.bidding = app.can_bet;
       });
     // .catch(function() {
     //   app.$fire({
@@ -498,8 +497,11 @@ export default {
       stores: [],
       products: [],
       auctionId: null,
+      bidding: 0,
+      can_bet: 0,
       bidders: [],
       bidder: null,
+      mine: 0,
       maxModalWidth: 600,
       auction: {},
       bid: {},
@@ -509,27 +511,17 @@ export default {
   created() {
     this.listenForBroadcast();
   },
-  computed: {
-    can_bet: function() {
+  watch: {
+    auction: function(auction) {
       if (app.user && app.user.contragents && app.user.contragents[0]) {
         let contr = app.user.contragents[0].id;
-        for (let r in auction.bidders)
-          if (auction.bidders[r].id == contr) return auction.bidders[r].can_bet;
-      }
-    },
-    bidding: function() {
-      if (app.user && app.user.contragents && app.user.contragents[0]) {
-        let contr = app.user.contragents[0].id;
-        for (let r in auction.bidders)
-          if (auction.bidders[r].id == contr) return true;
-      }
-    },
-    mine: function() {
-      if (app.user && app.user.contragents && app.user.contragents[0]) {
-        let contr = app.user.contragents[0].id;
-        console.log(auction.contragent.id == contr);
-        if (auction.contragent.id == contr) return true;
-        else return false;
+        for (let r in auction.bidders) {
+          if (auction.bidders[r].id == contr) {
+            can_bet = auction.bidders[r].can_bet;
+            bidding = 1;
+          }
+        }
+        if (auction.contragent.id == contr) mine = 1;
       }
     }
   },
