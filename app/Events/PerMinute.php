@@ -35,7 +35,7 @@ class PerMinute implements ShouldBroadcast
         DB::connection()->enableQueryLog();
         
         $finished = DB::select(
-            'select id from auctions where time(finish_at) < time(?) and confirmed = 1 and started = 1 and finished = 0',
+            'select id from auctions where timestamp(finish_at) < timestamp(?) and confirmed = 1 and started = 1 and finished = 0',
             [
                 $carbon->toDateTimeString()
             ]
@@ -52,7 +52,7 @@ class PerMinute implements ShouldBroadcast
         }
 
         $started = DB::select(
-            'select id from auctions where time(start_at) < time(?) and confirmed = 1 and started = 0',
+            'select id from auctions where timestamp(start_at) < timestamp(?) and confirmed = 1 and started = 0',
             [
                 $carbon->toDateTimeString()
             ]
