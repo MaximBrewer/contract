@@ -4232,6 +4232,7 @@ __webpack_require__.r(__webpack_exports__);
     mine: function mine() {
       if (app.user && app.user.contragents && app.user.contragents[0]) {
         var contr = app.user.contragents[0].id;
+        console.log(auction.contragent.id == contr);
         if (auction.contragent.id == contr) return true;else return false;
       }
     }

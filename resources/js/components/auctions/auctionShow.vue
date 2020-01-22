@@ -526,6 +526,7 @@ export default {
     mine: function() {
       if (app.user && app.user.contragents && app.user.contragents[0]) {
         let contr = app.user.contragents[0].id;
+        console.log(auction.contragent.id == contr);
         if (auction.contragent.id == contr) return true;
         else return false;
       }
