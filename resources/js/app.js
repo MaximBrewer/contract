@@ -162,8 +162,7 @@ const app = new Vue({
         ]
     }),
     created() {
-        let survey_id = "chan";
-        this.listenForBroadcast(survey_id);
+        this.listenForBroadcast();
     },
     data: {
         time: window.document.querySelector('meta[name="server-time"]').content,
@@ -219,7 +218,7 @@ const app = new Vue({
                     app.products = resp.data;
                 });
         },
-        listenForBroadcast(survey_id) {
+        listenForBroadcast() {
             var that = this;
             // Echo.join("survey." + survey_id)
             //     .here(users => {
