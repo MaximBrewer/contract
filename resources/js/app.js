@@ -70,7 +70,7 @@ import ReviewsIndex from "./components/contragents/reviewsIndex.vue";
 
 Vue.prototype.user = window.user;
 
-const auction = {};
+var auction = {};
 
 const app = new Vue({
     router: new VueRouter({

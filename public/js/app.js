@@ -111957,8 +111957,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/targets/targetEdit.vue */ "./resources/js/components/targets/targetEdit.vue");
 /* harmony import */ var _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/targets/targetIndex.vue */ "./resources/js/components/targets/targetIndex.vue");
 /* harmony import */ var _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/contragents/reviewsIndex.vue */ "./resources/js/components/contragents/reviewsIndex.vue");
-function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -112152,7 +112150,7 @@ var app = new Vue({
       });
       Echo.channel("message-pushed").listen("MessagePushed", function (e) {
         console.log(e);
-        auction = (_readOnlyError("auction"), e.auction);
+        auction = e.auction;
       });
     }
   }
