@@ -391,7 +391,7 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item" v-for="(bidder, index) in auction.bidders" :key="index">
                 {{ bidder.title }} ({{ bidder.fio }}, {{ __('Phone') }}: {{ bidder.phone }})
-                <switch-checkbox v-model="bidder.can_bet"></switch-checkbox>
+                <switch-checkbox v-model="bidder.can_bet" @input="toggleBidder"></switch-checkbox>
               </li>
             </ul>
           </div>
@@ -533,6 +533,9 @@ export default {
     }
   },
   methods: {
+    toggleBidder(val){
+      console.log(val)
+    },
     removeBet(bet) {
       var app = this;
       app.$confirm(app.__("Are you sure?")).then(() => {

@@ -4238,6 +4238,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: {
+    toggleBidder: function toggleBidder(val) {
+      console.log(val);
+    },
     removeBet: function removeBet(bet) {
       var app = this;
       app.$confirm(app.__("Are you sure?")).then(function () {
@@ -4756,9 +4759,9 @@ __webpack_require__.r(__webpack_exports__);
     var app = this;
     var id = app.user.contragents[0].id;
     if (!!app.$route.params.id) id = app.$route.params.id;
-    app.getFederalDistricts(app); // app.getRegions();
-    // app.getTypes();
-
+    app.getFederalDistricts(app);
+    app.getRegions(app);
+    app.getTypes(app);
     app.contragentId = id;
     var loader = Vue.$loading.show();
     axios.get("/api/v1/company/?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
@@ -5983,7 +5986,10 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.toggled = !this.toggled;
-      this.$emit("input", this.toggled * 1);
+      this.$emit("input", {
+        value: this.toggled * 1,
+        index: this.index
+      });
     }
   },
   props: {
@@ -5994,6 +6000,10 @@ __webpack_require__.r(__webpack_exports__);
     value: {
       type: Number,
       "default": 0
+    },
+    index: {
+      type: Number,
+      "default": null
     }
   }
 });
@@ -92302,6 +92312,7 @@ var render = function() {
                                     ")\n              "
                                 ),
                                 _c("switch-checkbox", {
+                                  on: { input: _vm.toggleBidder },
                                   model: {
                                     value: bidder.can_bet,
                                     callback: function($$v) {

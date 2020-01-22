@@ -268,8 +268,8 @@ export default {
     let id = app.user.contragents[0].id;
     if (!!app.$route.params.id) id = app.$route.params.id;
     app.getFederalDistricts(app);
-    // app.getRegions();
-    // app.getTypes();
+    app.getRegions(app);
+    app.getTypes(app);
     app.contragentId = id;
     let loader = Vue.$loading.show();
     axios

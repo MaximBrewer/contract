@@ -35,7 +35,10 @@ export default {
         e.stop();
       }
       this.toggled = !this.toggled;
-      this.$emit("input", this.toggled * 1);
+      this.$emit("input", {
+        value: this.toggled * 1,
+        index: this.index
+      });
     }
   },
   props: {
@@ -46,6 +49,10 @@ export default {
     value: {
       type: Number,
       default: 0
+    },
+    index: {
+      type: Number,
+      default: null
     }
   }
 };
