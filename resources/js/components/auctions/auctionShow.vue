@@ -545,8 +545,8 @@ export default {
             "&api_token=" +
             window.api_token,
           {
-            can_bet: val.value,
-            contragent_id: val.index,
+            can_bet: val.status,
+            contragent_id: val.bidder_id,
             auction_id: app.auction.id
           }
         )

@@ -4243,8 +4243,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     toggleBidder: function toggleBidder(val) {
       var app = this;
       axios.post("/api/v1/auctions/bidder/toggle?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
-        can_bet: val.value,
-        contragent_id: val.index,
+        can_bet: val.status,
+        contragent_id: val.bidder_id,
         auction_id: app.auction.id
       }).then(function (resp) {// bet.delete();
       })["catch"](function (errors) {
@@ -5994,8 +5994,8 @@ __webpack_require__.r(__webpack_exports__);
 
       this.toggled = !this.toggled;
       this.$emit("input", {
-        value: this.toggled,
-        index: this.index
+        status: this.toggled,
+        bidder_id: this.index
       });
     }
   },

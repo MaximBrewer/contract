@@ -35,8 +35,8 @@ export default {
       }
       this.toggled = !this.toggled;
       this.$emit("input", {
-        value: this.toggled,
-        index: this.index
+        status: this.toggled,
+        bidder_id: this.index
       });
     }
   },
