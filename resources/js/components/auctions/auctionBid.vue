@@ -1,6 +1,5 @@
 <template>
   <section>
-    <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
     <div class="container-fluid" v-if="auctions.length">
       <div class="row justify-content-end">
         <div class="col-lg-6">
@@ -299,15 +298,7 @@
   </section>
 </template>
 <script>
-import { Datetime } from "vue-datetime";
-import vSelect from "vue-select";
-import Loading from "vue-loading-overlay";
 export default {
-  components: {
-    vSelect: vSelect,
-    Datetime: Datetime,
-    Loading: Loading
-  },
   data: function() {
     return {
       auctions: [],
@@ -316,7 +307,6 @@ export default {
       modal_target: null,
       modal_auction: null,
       maxModalWidth: 600,
-      isLoading: false,
       fullPage: true,
       store: null,
       filter: {
@@ -334,14 +324,19 @@ export default {
   },
   mounted() {
     let app = this,
-      contragent_id = app.user.contragents[0].id,
-      action = "bid";
-    app.isLoading = true;
+      contragent_id = app.user.contragents[0].id
+    let loader = Vue.$loading.show();
+    app.$root.$on("gotAuction", function(auction) {
+      app.checkTargets();
+    });
+    app.$root.getFederalDistricts(app);
+    app.$root.getRegions(app, app.filter.federal_district ? app.filter.federal_district.id : false);
+    app.$root.getProducts(app);
+    app.$root.getMultiplicities(app);
+    app.$root.getMyStores(app);
     axios
       .get(
-        "/api/v1/auctions/" +
-          action +
-          "?csrf_token=" +
+        "/api/v1/auctions/bid?csrf_token=" +
           window.csrf_token +
           "&api_token=" +
           window.api_token
@@ -349,33 +344,30 @@ export default {
       .then(function(resp) {
         app.filterAuctions(resp.data);
         app.auctions = resp.data;
-        app.isLoading = false;
-        app.getMultiplicities();
-        app.getProducts();
-        app.getStores();
-        app.getFederalDistricts();
+        loader.hide();
       })
       .catch(function(resp) {
         console.log(resp);
-        alert(app.__("Failed to load auctions"));
-        app.isLoading = false;
+        loader.hide();
       });
-    axios
-      .get(
-        "/api/v1/targets/?csrf_token=" +
-          window.csrf_token +
-          "&api_token=" +
-          window.api_token
-      )
-      .then(function(resp) {
-        app.targets = resp.data;
-      })
-      .catch(function(resp) {
-        console.log(resp);
-        alert(app.__("Failed to load targets"));
-      });
+    app.checkTargets();
   },
   methods: {
+    checkTargets() {
+      axios
+        .get(
+          "/api/v1/targets/?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token
+        )
+        .then(function(resp) {
+          app.targets = resp.data;
+        })
+        .catch(function(resp) {
+          console.log(resp);
+        });
+    },
     showPopup(controller, id, template, index) {
       var app = this;
       axios
@@ -468,7 +460,7 @@ export default {
       }
     },
     filterGetRegions() {
-      this.getRegions();
+      this.$root.getRegions(app, app.filter.federal_district ? app.filter.federal_district.id : false);
       this.filterAuctionsAuctions();
     },
     filterAuctionsAuctions() {
@@ -494,77 +486,9 @@ export default {
       }
       if (auctions.length == cnt) app.sorByDistance(app._auctions);
     },
-    getFederalDistricts() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/federalDistricts?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.federalDistricts = resp.data;
-        });
-    },
-    getRegions() {
-      let app = this;
-      if (!app.filter.federal_district) return [];
-      axios
-        .get(
-          "/api/v1/regions?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token +
-            "&federal_district_id=" +
-            app.filter.federal_district.id
-        )
-        .then(function(resp) {
-          app.regions = resp.data;
-        });
-    },
-    getMultiplicities() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/multiplicities?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.multiplicities = resp.data;
-        });
-    },
-    getStores() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/stores?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.stores = resp.data;
-        });
-    },
-    getProducts() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/products?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.products = resp.data;
-        });
-    },
     unbidAuction(id) {
       var app = this;
-      app.isLoading = true;
+      let loader = Vue.$loading.show();
       axios
         .get(
           "/api/v1/auctions/all/unbid/" +
@@ -577,11 +501,11 @@ export default {
         .then(function(resp) {
           app.filterAuctions(resp.data);
           app.auctions = resp.data;
-          app.isLoading = false;
+          loader.hide();
         })
         .catch(function(resp) {
           alert(app.__("Failed to bid auction"));
-          app.isLoading = false;
+          loader.hide();
         });
     },
     formatDate(indate) {

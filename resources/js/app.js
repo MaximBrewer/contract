@@ -73,9 +73,9 @@ Vue.prototype.user = window.user;
 const app = new Vue({
     router: new VueRouter({
         mode: "history",
-        beforeRouteUpdate (to, from, next) {
-          // react to route changes...
-          // don't forget to call next()
+        beforeRouteUpdate(to, from, next) {
+            // react to route changes...
+            // don't forget to call next()
         },
         routes: [
             { path: "/personal", redirect: "/personal/auctions" },
@@ -127,7 +127,7 @@ const app = new Vue({
             {
                 path: "/personal/auctions/show/:id",
                 component: AuctionShow,
-                name: "showAuction",
+                name: "showAuction"
             },
             {
                 path: "/personal/auctions/edit/:id",
@@ -176,14 +176,14 @@ const app = new Vue({
                     app.federalDistricts = resp.data;
                 });
         },
-        getRegions(app) {
+        getRegions(app, fd) {
             axios
                 .get(
                     "/api/v1/regions?csrf_token=" +
                         window.csrf_token +
                         "&api_token=" +
                         window.api_token,
-                    app.contragent.federal_district
+                    fd
                 )
                 .then(function(resp) {
                     app.regions = resp.data;
@@ -199,6 +199,30 @@ const app = new Vue({
                 )
                 .then(function(resp) {
                     app.types = resp.data;
+                });
+        },
+        getMyStores() {
+            axios
+                .get(
+                    "/api/v1/stores?csrf_token=" +
+                        window.csrf_token +
+                        "&api_token=" +
+                        window.api_token
+                )
+                .then(function(resp) {
+                    app.stores = resp.data;
+                });
+        },
+        getMultiplicities(app) {
+            axios
+                .get(
+                    "/api/v1/multiplicities?csrf_token=" +
+                        window.csrf_token +
+                        "&api_token=" +
+                        window.api_token
+                )
+                .then(function(resp) {
+                    app.multiplicities = resp.data;
                 });
         },
         getProducts(app) {
@@ -236,36 +260,28 @@ const app = new Vue({
             // ).listen("MessagePushed", function(e) {
             //     console.log(e);
             // });
-            Echo.channel("every-minute").listen(
-                "PerMinute",
-                function(e) {
-                    console.log(e);
-                    app.time = e.time;
-                    e.started.forEach(auction =>
-                        that.flash(
-                            that.__("Auction #") +
-                                auction.id +
-                                that.__(" started"),
-                            "success"
-                        )
-                    );
-                    e.finished.forEach(auction =>
-                        that.flash(
-                            that.__("Auction #") +
-                                auction.id +
-                                that.__(" finished"),
-                            "primary"
-                        )
-                    );
-                }
-            );
-            Echo.channel("message-pushed").listen(
-                "MessagePushed",
-                function(e) {
-                    console.log(e)
-                    that.$emit('gotAuction', e.auction);
-                }
-            );
+            Echo.channel("every-minute").listen("PerMinute", function(e) {
+                console.log(e);
+                app.time = e.time;
+                e.started.forEach(auction =>
+                    that.flash(
+                        that.__("Auction #") + auction.id + that.__(" started"),
+                        "success"
+                    )
+                );
+                e.finished.forEach(auction =>
+                    that.flash(
+                        that.__("Auction #") +
+                            auction.id +
+                            that.__(" finished"),
+                        "primary"
+                    )
+                );
+            });
+            Echo.channel("message-pushed").listen("MessagePushed", function(e) {
+                console.log(e);
+                that.$emit("gotAuction", e.auction);
+            });
         }
     }
 }).$mount("#app");

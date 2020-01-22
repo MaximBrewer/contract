@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Bet;
 
 class Target extends Model
 {
@@ -17,6 +18,7 @@ class Target extends Model
 
     protected $appends = [
         'filled',
+        'restof'
     ];
 
     public function getFilledAttribute()
@@ -26,6 +28,11 @@ class Target extends Model
         $this->contragent;
         $this->multiplicity;
         return true;
+    }
+
+    public function getRestofAttribute()
+    {
+        return Bet::where('multiplicity_id', $this->multiplicity->id)->where('product_id', $this->product->id)->sum('volume');
     }
 
     

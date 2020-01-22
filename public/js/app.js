@@ -2011,12 +2011,6 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-datetime */ "./node_modules/vue-datetime/dist/vue-datetime.js");
-/* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_datetime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -2316,16 +2310,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-
-
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    vSelect: vue_select__WEBPACK_IMPORTED_MODULE_1___default.a,
-    Datetime: vue_datetime__WEBPACK_IMPORTED_MODULE_0__["Datetime"],
-    Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_2___default.a
-  },
   data: function data() {
     return {
       auctions: [],
@@ -2334,7 +2319,6 @@ __webpack_require__.r(__webpack_exports__);
       modal_target: null,
       modal_auction: null,
       maxModalWidth: 600,
-      isLoading: false,
       fullPage: true,
       store: null,
       filter: {
@@ -2352,30 +2336,34 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var app = this,
-        contragent_id = app.user.contragents[0].id,
-        action = "bid";
-    app.isLoading = true;
-    axios.get("/api/v1/auctions/" + action + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+        contragent_id = app.user.contragents[0].id;
+    var loader = Vue.$loading.show();
+    app.$root.$on("gotAuction", function (auction) {
+      app.checkTargets();
+    });
+    app.$root.getFederalDistricts(app);
+    app.$root.getRegions(app, app.filter.federal_district ? app.filter.federal_district.id : false);
+    app.$root.getProducts(app);
+    app.$root.getMultiplicities(app);
+    app.$root.getMyStores(app);
+    axios.get("/api/v1/auctions/bid?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
       app.filterAuctions(resp.data);
       app.auctions = resp.data;
-      app.isLoading = false;
-      app.getMultiplicities();
-      app.getProducts();
-      app.getStores();
-      app.getFederalDistricts();
+      loader.hide();
     })["catch"](function (resp) {
       console.log(resp);
-      alert(app.__("Failed to load auctions"));
-      app.isLoading = false;
+      loader.hide();
     });
-    axios.get("/api/v1/targets/?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-      app.targets = resp.data;
-    })["catch"](function (resp) {
-      console.log(resp);
-      alert(app.__("Failed to load targets"));
-    });
+    app.checkTargets();
   },
   methods: {
+    checkTargets: function checkTargets() {
+      axios.get("/api/v1/targets/?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+        app.targets = resp.data;
+      })["catch"](function (resp) {
+        console.log(resp);
+      });
+    },
     showPopup: function showPopup(controller, id, template, index) {
       var app = this;
       axios.get("/api/v1/" + controller + "/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
@@ -2438,7 +2426,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     filterGetRegions: function filterGetRegions() {
-      this.getRegions();
+      this.$root.getRegions(app, app.filter.federal_district ? app.filter.federal_district.id : false);
       this.filterAuctionsAuctions();
     },
     filterAuctionsAuctions: function filterAuctionsAuctions() {
@@ -2459,47 +2447,16 @@ __webpack_require__.r(__webpack_exports__);
 
       if (auctions.length == cnt) app.sorByDistance(app._auctions);
     },
-    getFederalDistricts: function getFederalDistricts() {
-      var app = this;
-      axios.get("/api/v1/federalDistricts?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.federalDistricts = resp.data;
-      });
-    },
-    getRegions: function getRegions() {
-      var app = this;
-      if (!app.filter.federal_district) return [];
-      axios.get("/api/v1/regions?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token + "&federal_district_id=" + app.filter.federal_district.id).then(function (resp) {
-        app.regions = resp.data;
-      });
-    },
-    getMultiplicities: function getMultiplicities() {
-      var app = this;
-      axios.get("/api/v1/multiplicities?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.multiplicities = resp.data;
-      });
-    },
-    getStores: function getStores() {
-      var app = this;
-      axios.get("/api/v1/stores?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.stores = resp.data;
-      });
-    },
-    getProducts: function getProducts() {
-      var app = this;
-      axios.get("/api/v1/products?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.products = resp.data;
-      });
-    },
     unbidAuction: function unbidAuction(id) {
       var app = this;
-      app.isLoading = true;
+      var loader = Vue.$loading.show();
       axios.get("/api/v1/auctions/all/unbid/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
         app.filterAuctions(resp.data);
         app.auctions = resp.data;
-        app.isLoading = false;
+        loader.hide();
       })["catch"](function (resp) {
         alert(app.__("Failed to bid auction"));
-        app.isLoading = false;
+        loader.hide();
       });
     },
     formatDate: function formatDate(indate) {
@@ -4174,7 +4131,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var id = app.$route.params.id;
     app.auctionId = id;
     app.$root.$on('gotAuction', function (auction) {
-      console.log(auction.id == app.auction.id);
       if (auction.id == app.auction.id) app.auction = auction;
     });
     axios.get("/api/v1/contragents?search=csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
@@ -88257,19 +88213,6 @@ var render = function() {
   return _c(
     "section",
     [
-      _c("loading", {
-        attrs: {
-          active: _vm.isLoading,
-          "can-cancel": true,
-          "is-full-page": _vm.fullPage
-        },
-        on: {
-          "update:active": function($event) {
-            _vm.isLoading = $event
-          }
-        }
-      }),
-      _vm._v(" "),
       _vm.auctions.length
         ? _c("div", { staticClass: "container-fluid" }, [
             _c("div", { staticClass: "row justify-content-end" }, [
@@ -112113,14 +112056,24 @@ var app = new Vue({
         app.federalDistricts = resp.data;
       });
     },
-    getRegions: function getRegions(app) {
-      axios.get("/api/v1/regions?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, app.contragent.federal_district).then(function (resp) {
+    getRegions: function getRegions(app, fd) {
+      axios.get("/api/v1/regions?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, fd).then(function (resp) {
         app.regions = resp.data;
       });
     },
     getTypes: function getTypes(app) {
       axios.get("/api/v1/types?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
         app.types = resp.data;
+      });
+    },
+    getMyStores: function getMyStores() {
+      axios.get("/api/v1/stores?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+        app.stores = resp.data;
+      });
+    },
+    getMultiplicities: function getMultiplicities(app) {
+      axios.get("/api/v1/multiplicities?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+        app.multiplicities = resp.data;
       });
     },
     getProducts: function getProducts(app) {
@@ -112163,7 +112116,7 @@ var app = new Vue({
       });
       Echo.channel("message-pushed").listen("MessagePushed", function (e) {
         console.log(e);
-        that.$emit('gotAuction', e.auction);
+        that.$emit("gotAuction", e.auction);
       });
     }
   }
