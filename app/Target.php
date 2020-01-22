@@ -32,7 +32,10 @@ class Target extends Model
 
     public function getRestofAttribute()
     {
-        return Bet::where('multiplicity_id', $this->multiplicity->id)->where('product_id', $this->product->id)->sum('volume');
+        $auctions = Auction::where('multiplicity_id', $this->multiplicity->id)->where('product_id', $this->product->id)->get();
+        $ids = [];
+        foreach($auctions as $auction) $ids[] = $auctions->id;
+        return Bet::whereIn('auction_id', $ids)->sum('volume');
     }
 
     
