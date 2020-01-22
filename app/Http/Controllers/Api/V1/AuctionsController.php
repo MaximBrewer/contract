@@ -41,6 +41,29 @@ class AuctionsController extends Controller
                 break;
         }
     }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function toggleBidder(Request $r)
+    {
+
+        \App\ContragentAuction::where('auction_id', $r->post('auction_id'))->where('contragent_id', $r->post('contragent_id'))->update(['can_bet' => $r->post('can_bet')]);
+        
+        $auction = Auction::findOrFail($r->post('auction_id'));
+
+        if(!$r->post('can_bet')){
+            Bet::where('auction_id', $r->post('auction_id'))->where('contragent_id', $r->post('contragent_id'))->delete();
+        }
+
+
+        if ($auction) event(new \App\Events\MessagePushed($auction));
+
+        return 1;
+
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -406,9 +429,7 @@ class AuctionsController extends Controller
     {
 
 
-
-
-        $auction = DB::select('select contragent_id from contragent_auction where auction_id = ? && contragent_id = ?', [$r->post('auction'), $r->post('bidder')]);
+        $auction = DB::select('select contragent_id, can_bet from contragent_auction where auction_id = ? && contragent_id = ?', [$r->post('auction'), $r->post('bidder')]);
 
 
 
@@ -420,8 +441,23 @@ class AuctionsController extends Controller
         }
 
 
+        if (!$auction->can_bet) {
+            return response()->json([
+                'message' => __('You can`t bet!'),
+                'errors' => []
+            ], 422);
+        }
+
         $auction = Auction::findOrFail($r->post('auction'));
 
+
+
+        if ((float) $r->post('price') < $auction->start_price) {
+            return response()->json([
+                'message' => __('Ai Ai!'),
+                'errors' => []
+            ], 422);
+        }
 
 
         if ((float) $r->post('price') < $auction->start_price) {

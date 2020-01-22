@@ -391,7 +391,7 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item" v-for="(bidder, index) in auction.bidders" :key="index">
                 {{ bidder.title }} ({{ bidder.fio }}, {{ __('Phone') }}: {{ bidder.phone }})
-                <switch-checkbox v-model="bidder.can_bet" @input="toggleBidder"></switch-checkbox>
+                <switch-checkbox :value="!!bidder.can_bet" @input="toggleBidder" :index="bidder.id"></switch-checkbox>
               </li>
             </ul>
           </div>
@@ -510,12 +510,11 @@ export default {
       renew: 0,
       mine: 0,
       bidding: 0,
-      can_bet: 0,
-
+      can_bet: 0
     };
   },
   created() {
-    this.listenForBroadcast();
+    
   },
   watch: {
     renew: function(value) {
@@ -533,8 +532,31 @@ export default {
     }
   },
   methods: {
-    toggleBidder(val){
-      console.log(val)
+    toggleBidder(val) {
+      let app = this;
+      axios
+        .post(
+          "/api/v1/auctions/bidder/toggle?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token,
+          {
+            can_bet: val.value,
+            contragent_id: val.index,
+            auction_id: app.auction.id
+          }
+        )
+        .then(function(resp) {
+          // bet.delete();
+        })
+        .catch(function(errors) {
+          app.$fire({
+            title: app.__("Error!"),
+            text: errors.response.data.message,
+            type: "error",
+            timer: 5000
+          });
+        });
     },
     removeBet(bet) {
       var app = this;
@@ -716,16 +738,6 @@ export default {
     showPopupAddBidder() {
       var app = this;
       app.$modal.show("add_bidder");
-    },
-    listenForBroadcast() {
-      var app = this;
-      Echo.channel("cross_contractru_database_message-pushed").listen(
-        "MessagePushed",
-        function(e) {
-          console.log(e.auction);
-          if (app.auction.id == e.auction.id) app.auction = e.auction;
-        }
-      );
     }
   }
 };

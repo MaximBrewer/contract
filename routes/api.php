@@ -50,6 +50,9 @@ Route::group([
     Route::post('auctions', 'AuctionsController@store');
     Route::post('auction/edit/{id}', 'AuctionsController@update');
     Route::post('auctions/add_bidder', 'AuctionsController@addBidder');
+    Route::post('auctions/bidder/toggle', 'AuctionsController@toggleBidder');
+
+    
 
 
     Route::get('targets/all', 'TargetsController@all');

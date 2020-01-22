@@ -4216,9 +4216,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       renew: 0
     }, _defineProperty(_ref, "mine", 0), _defineProperty(_ref, "bidding", 0), _defineProperty(_ref, "can_bet", 0), _ref;
   },
-  created: function created() {
-    this.listenForBroadcast();
-  },
+  created: function created() {},
   watch: {
     renew: function renew(value) {
       var app = this;
@@ -4239,7 +4237,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     toggleBidder: function toggleBidder(val) {
-      console.log(val);
+      var app = this;
+      axios.post("/api/v1/auctions/bidder/toggle?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
+        can_bet: val.value,
+        contragent_id: val.index,
+        auction_id: app.auction.id
+      }).then(function (resp) {// bet.delete();
+      })["catch"](function (errors) {
+        app.$fire({
+          title: app.__("Error!"),
+          text: errors.response.data.message,
+          type: "error",
+          timer: 5000
+        });
+      });
     },
     removeBet: function removeBet(bet) {
       var app = this;
@@ -4344,13 +4355,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     showPopupAddBidder: function showPopupAddBidder() {
       var app = this;
       app.$modal.show("add_bidder");
-    },
-    listenForBroadcast: function listenForBroadcast() {
-      var app = this;
-      Echo.channel("cross_contractru_database_message-pushed").listen("MessagePushed", function (e) {
-        console.log(e.auction);
-        if (app.auction.id == e.auction.id) app.auction = e.auction;
-      });
     }
   }
 });
@@ -5962,7 +5966,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     classes: function classes() {
@@ -5987,7 +5990,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.toggled = !this.toggled;
       this.$emit("input", {
-        value: this.toggled * 1,
+        value: this.toggled,
         index: this.index
       });
     }
@@ -5998,8 +6001,8 @@ __webpack_require__.r(__webpack_exports__);
       "default": false
     },
     value: {
-      type: Number,
-      "default": 0
+      type: Boolean,
+      "default": false
     },
     index: {
       type: Number,
@@ -92312,14 +92315,11 @@ var render = function() {
                                     ")\n              "
                                 ),
                                 _c("switch-checkbox", {
-                                  on: { input: _vm.toggleBidder },
-                                  model: {
-                                    value: bidder.can_bet,
-                                    callback: function($$v) {
-                                      _vm.$set(bidder, "can_bet", $$v)
-                                    },
-                                    expression: "bidder.can_bet"
-                                  }
+                                  attrs: {
+                                    value: !!bidder.can_bet,
+                                    index: bidder.id
+                                  },
+                                  on: { input: _vm.toggleBidder }
                                 })
                               ],
                               1
@@ -95400,7 +95400,6 @@ var render = function() {
       staticClass: "checkbox-toggle",
       attrs: { role: "checkbox", tabindex: "0", "aria-checked": _vm.toggled },
       on: {
-        keydown: _vm.toggle,
         click: function($event) {
           $event.stopPropagation()
           return _vm.toggle($event)
@@ -111958,6 +111957,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/targets/targetEdit.vue */ "./resources/js/components/targets/targetEdit.vue");
 /* harmony import */ var _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/targets/targetIndex.vue */ "./resources/js/components/targets/targetIndex.vue");
 /* harmony import */ var _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/contragents/reviewsIndex.vue */ "./resources/js/components/contragents/reviewsIndex.vue");
+function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -112012,88 +112013,89 @@ Vue.component("StarRating", vue_star_rating__WEBPACK_IMPORTED_MODULE_11___defaul
 
 
 
-var routes = [{
-  path: "/personal",
-  redirect: "/personal/auctions"
-}, {
-  path: "/personal/contragents",
-  component: _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
-  name: "contragentIndex"
-}, {
-  path: "/personal/contragents/reviews",
-  component: _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_26__["default"],
-  name: "reviews"
-}, {
-  path: "/personal/contragents/create",
-  component: _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
-  name: "createContragent"
-}, {
-  path: "/personal/contragents/show/:id",
-  component: _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
-  name: "showContragent"
-}, {
-  path: "/personal/contragents/edit/:id",
-  component: _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
-  name: "editContragent"
-}, {
-  path: "/personal/auctions",
-  component: _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
-  name: "auctionIndex"
-}, {
-  path: "/personal/auctions/my",
-  component: _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
-  name: "auctionMy"
-}, {
-  path: "/personal/auctions/bid",
-  component: _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
-  name: "auctionBid"
-}, {
-  path: "/personal/auctions/create",
-  component: _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
-  name: "createAuction"
-}, {
-  path: "/personal/auctions/show/:id",
-  component: _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_22__["default"],
-  name: "showAuction"
-}, {
-  path: "/personal/auctions/edit/:id",
-  component: _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
-  name: "editAuction"
-}, {
-  path: "/personal/targets",
-  component: _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_25__["default"],
-  name: "indexTarget"
-}];
-
-if (!!window.user && !!window.user.contragents && !!window.user.contragents[0]) {
-  routes.push({
-    path: "/personal/company",
-    component: _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
-    name: "company"
-  }, {
-    path: "/personal/targets/create",
-    component: _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_23__["default"],
-    name: "createTarget"
-  }, {
-    path: "/personal/targets/edit/:id",
-    component: _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_24__["default"],
-    name: "editTarget"
-  });
-}
-
 Vue.prototype.user = window.user;
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
-  mode: "history",
-  routes: routes
-});
+var auction = {};
 var app = new Vue({
-  router: router,
+  router: new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
+    mode: "history",
+    beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {// react to route changes...
+      // don't forget to call next()
+    },
+    routes: [{
+      path: "/personal",
+      redirect: "/personal/auctions"
+    }, {
+      path: "/personal/contragents",
+      component: _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+      name: "contragentIndex"
+    }, {
+      path: "/personal/contragents/reviews",
+      component: _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_26__["default"],
+      name: "reviews"
+    }, {
+      path: "/personal/contragents/create",
+      component: _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+      name: "createContragent"
+    }, {
+      path: "/personal/contragents/show/:id",
+      component: _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+      name: "showContragent"
+    }, {
+      path: "/personal/contragents/edit/:id",
+      component: _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+      name: "editContragent"
+    }, {
+      path: "/personal/auctions",
+      component: _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+      name: "auctionIndex"
+    }, {
+      path: "/personal/auctions/my",
+      component: _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
+      name: "auctionMy"
+    }, {
+      path: "/personal/auctions/bid",
+      component: _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
+      name: "auctionBid"
+    }, {
+      path: "/personal/auctions/create",
+      component: _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
+      name: "createAuction"
+    }, {
+      path: "/personal/auctions/show/:id",
+      component: _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_22__["default"],
+      name: "showAuction",
+      props: {
+        auction: auction
+      }
+    }, {
+      path: "/personal/auctions/edit/:id",
+      component: _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
+      name: "editAuction"
+    }, {
+      path: "/personal/targets",
+      component: _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_25__["default"],
+      name: "indexTarget"
+    }, {
+      path: "/personal/company",
+      component: _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+      name: "company"
+    }, {
+      path: "/personal/targets/create",
+      component: _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_23__["default"],
+      name: "createTarget"
+    }, {
+      path: "/personal/targets/edit/:id",
+      component: _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_24__["default"],
+      name: "editTarget"
+    }]
+  }),
   created: function created() {
     var survey_id = "chan";
     this.listenForBroadcast(survey_id);
   },
   data: {
-    time: window.document.querySelector('meta[name="server-time"]').content
+    time: window.document.querySelector('meta[name="server-time"]').content,
+    auction: {}
   },
   methods: {
     getFederalDistricts: function getFederalDistricts(app) {
@@ -112147,6 +112149,10 @@ var app = new Vue({
         e.finished.forEach(function (auction) {
           return that.flash(that.__("Auction #") + auction.id + that.__(" finished"), "primary");
         });
+      });
+      Echo.channel("cross_contractru_database_message-pushed").listen("MessagePushed", function (e) {
+        console.log(e.auction);
+        auction = (_readOnlyError("auction"), e.auction);
       });
     }
   }

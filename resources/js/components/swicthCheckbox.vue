@@ -2,7 +2,6 @@
   <div
     class="checkbox-toggle"
     role="checkbox"
-    @keydown="toggle"
     @click.stop="toggle"
     tabindex="0"
     :aria-checked="toggled"
@@ -36,7 +35,7 @@ export default {
       }
       this.toggled = !this.toggled;
       this.$emit("input", {
-        value: this.toggled * 1,
+        value: this.toggled,
         index: this.index
       });
     }
@@ -47,8 +46,8 @@ export default {
       default: false
     },
     value: {
-      type: Number,
-      default: 0
+      type: Boolean,
+      default: false
     },
     index: {
       type: Number,

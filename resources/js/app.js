@@ -68,109 +68,106 @@ import TargetEdit from "./components/targets/targetEdit.vue";
 import TargetIndex from "./components/targets/targetIndex.vue";
 import ReviewsIndex from "./components/contragents/reviewsIndex.vue";
 
-const routes = [
-    { path: "/personal", redirect: "/personal/auctions" },
-    {
-        path: "/personal/contragents",
-        component: ContragentIndex,
-        name: "contragentIndex"
-    },
-    {
-        path: "/personal/contragents/reviews",
-        component: ReviewsIndex,
-        name: "reviews"
-    },
-    {
-        path: "/personal/contragents/create",
-        component: ContragentCreate,
-        name: "createContragent"
-    },
-    {
-        path: "/personal/contragents/show/:id",
-        component: contragentShow,
-        name: "showContragent"
-    },
-    {
-        path: "/personal/contragents/edit/:id",
-        component: ContragentEdit,
-        name: "editContragent"
-    },
-    {
-        path: "/personal/auctions",
-        component: AuctionIndex,
-        name: "auctionIndex"
-    },
-    {
-        path: "/personal/auctions/my",
-        component: AuctionMy,
-        name: "auctionMy"
-    },
-    {
-        path: "/personal/auctions/bid",
-        component: AuctionBid,
-        name: "auctionBid"
-    },
-    {
-        path: "/personal/auctions/create",
-        component: AuctionCreate,
-        name: "createAuction"
-    },
-    {
-        path: "/personal/auctions/show/:id",
-        component: AuctionShow,
-        name: "showAuction"
-    },
-    {
-        path: "/personal/auctions/edit/:id",
-        component: AuctionEdit,
-        name: "editAuction"
-    },
-    {
-        path: "/personal/targets",
-        component: TargetIndex,
-        name: "indexTarget"
-    }
-];
-
-if (
-    !!window.user &&
-    !!window.user.contragents &&
-    !!window.user.contragents[0]
-) {
-    routes.push(
-        {
-            path: "/personal/company",
-            component: Company,
-            name: "company"
-        },
-        {
-            path: "/personal/targets/create",
-            component: TargetCreate,
-            name: "createTarget"
-        },
-        {
-            path: "/personal/targets/edit/:id",
-            component: TargetEdit,
-            name: "editTarget"
-        }
-    );
-}
-
 Vue.prototype.user = window.user;
 
-const router = new VueRouter({
-    mode: "history",
-    routes: routes
-});
+const auction = {};
 
 const app = new Vue({
-    router: router,
+    router: new VueRouter({
+        mode: "history",
+        beforeRouteUpdate (to, from, next) {
+          // react to route changes...
+          // don't forget to call next()
+        },
+        routes: [
+            { path: "/personal", redirect: "/personal/auctions" },
+            {
+                path: "/personal/contragents",
+                component: ContragentIndex,
+                name: "contragentIndex"
+            },
+            {
+                path: "/personal/contragents/reviews",
+                component: ReviewsIndex,
+                name: "reviews"
+            },
+            {
+                path: "/personal/contragents/create",
+                component: ContragentCreate,
+                name: "createContragent"
+            },
+            {
+                path: "/personal/contragents/show/:id",
+                component: contragentShow,
+                name: "showContragent"
+            },
+            {
+                path: "/personal/contragents/edit/:id",
+                component: ContragentEdit,
+                name: "editContragent"
+            },
+            {
+                path: "/personal/auctions",
+                component: AuctionIndex,
+                name: "auctionIndex"
+            },
+            {
+                path: "/personal/auctions/my",
+                component: AuctionMy,
+                name: "auctionMy"
+            },
+            {
+                path: "/personal/auctions/bid",
+                component: AuctionBid,
+                name: "auctionBid"
+            },
+            {
+                path: "/personal/auctions/create",
+                component: AuctionCreate,
+                name: "createAuction"
+            },
+            {
+                path: "/personal/auctions/show/:id",
+                component: AuctionShow,
+                name: "showAuction",
+                props: {
+                    auction: auction
+                }
+            },
+            {
+                path: "/personal/auctions/edit/:id",
+                component: AuctionEdit,
+                name: "editAuction"
+            },
+            {
+                path: "/personal/targets",
+                component: TargetIndex,
+                name: "indexTarget"
+            },
+            {
+                path: "/personal/company",
+                component: Company,
+                name: "company"
+            },
+            {
+                path: "/personal/targets/create",
+                component: TargetCreate,
+                name: "createTarget"
+            },
+            {
+                path: "/personal/targets/edit/:id",
+                component: TargetEdit,
+                name: "editTarget"
+            }
+        ]
+    }),
     created() {
         let survey_id = "chan";
         this.listenForBroadcast(survey_id);
     },
     data: {
-        time: window.document.querySelector('meta[name="server-time"]').content
+        time: window.document.querySelector('meta[name="server-time"]').content,
+        auction: {}
     },
     methods: {
         getFederalDistricts(app) {
@@ -265,6 +262,13 @@ const app = new Vue({
                             "primary"
                         )
                     );
+                }
+            );
+            Echo.channel("cross_contractru_database_message-pushed").listen(
+                "MessagePushed",
+                function(e) {
+                    console.log(e.auction);
+                    auction = e.auction;
                 }
             );
         }
