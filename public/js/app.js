@@ -88247,7 +88247,7 @@ var render = function() {
                         _c(
                           "tbody",
                           _vm._l(_vm.targets, function(target, index) {
-                            return _c("tr", { key: "target." + target.id }, [
+                            return _c("tr", { key: index }, [
                               _c("td", { attrs: { width: "1" } }, [
                                 _vm._v(_vm._s(index + 1))
                               ]),

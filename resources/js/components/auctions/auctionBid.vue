@@ -21,7 +21,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(target, index) in targets" :key="'target.' + target.id">
+                <tr v-for="(target, index) in targets" :key="index">
                   <td width="1">{{ index + 1 }}</td>
                   <td>{{ target.product.title }}</td>
                   <td>{{ target.volume }}</td>
