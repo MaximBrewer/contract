@@ -4213,19 +4213,29 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.listenForBroadcast();
   },
-  watch: {
-    auction: function auction(_auction) {
+  computed: {
+    can_bet: function can_bet() {
       if (app.user && app.user.contragents && app.user.contragents[0]) {
         var contr = app.user.contragents[0].id;
 
-        for (var r in _auction.bidders) {
-          if (_auction.bidders[r].id == contr) {
-            can_bet = _auction.bidders[r].can_bet;
-            bidding = 1;
-          }
+        for (var r in auction.bidders) {
+          if (auction.bidders[r].id == contr) return auction.bidders[r].can_bet;
         }
+      }
+    },
+    bidding: function bidding() {
+      if (app.user && app.user.contragents && app.user.contragents[0]) {
+        var contr = app.user.contragents[0].id;
 
-        if (_auction.contragent.id == contr) mine = 1;
+        for (var r in auction.bidders) {
+          if (auction.bidders[r].id == contr) return true;
+        }
+      }
+    },
+    mine: function mine() {
+      if (app.user && app.user.contragents && app.user.contragents[0]) {
+        var contr = app.user.contragents[0].id;
+        if (auction.contragent.id == contr) return true;else return false;
       }
     }
   },
@@ -113180,15 +113190,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************!*\
   !*** ./resources/js/components/swicthCheckbox.vue ***!
   \****************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _swicthCheckbox_vue_vue_type_template_id_a1ef3840___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./swicthCheckbox.vue?vue&type=template&id=a1ef3840& */ "./resources/js/components/swicthCheckbox.vue?vue&type=template&id=a1ef3840&");
 /* harmony import */ var _swicthCheckbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./swicthCheckbox.vue?vue&type=script&lang=js& */ "./resources/js/components/swicthCheckbox.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _swicthCheckbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _swicthCheckbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -113218,7 +113227,7 @@ component.options.__file = "resources/js/components/swicthCheckbox.vue"
 /*!*****************************************************************************!*\
   !*** ./resources/js/components/swicthCheckbox.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

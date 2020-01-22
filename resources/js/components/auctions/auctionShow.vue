@@ -511,17 +511,26 @@ export default {
   created() {
     this.listenForBroadcast();
   },
-  watch: {
-    auction: function(auction) {
+  computed: {
+    can_bet: function() {
       if (app.user && app.user.contragents && app.user.contragents[0]) {
         let contr = app.user.contragents[0].id;
-        for (let r in auction.bidders) {
-          if (auction.bidders[r].id == contr) {
-            can_bet = auction.bidders[r].can_bet;
-            bidding = 1;
-          }
-        }
-        if (auction.contragent.id == contr) mine = 1;
+        for (let r in auction.bidders)
+          if (auction.bidders[r].id == contr) return auction.bidders[r].can_bet;
+      }
+    },
+    bidding: function() {
+      if (app.user && app.user.contragents && app.user.contragents[0]) {
+        let contr = app.user.contragents[0].id;
+        for (let r in auction.bidders)
+          if (auction.bidders[r].id == contr) return true;
+      }
+    },
+    mine: function() {
+      if (app.user && app.user.contragents && app.user.contragents[0]) {
+        let contr = app.user.contragents[0].id;
+        if (auction.contragent.id == contr) return true;
+        else return false;
       }
     }
   },
