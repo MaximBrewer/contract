@@ -4174,7 +4174,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var id = app.$route.params.id;
     app.auctionId = id;
     app.$root.$on('gotAuction', function (auction) {
-      console.log(auction);
+      console.log(auction.id == app.auction.id);
       if (auction.id == app.auction.id) app.auction = auction;
     });
     axios.get("/api/v1/contragents?search=csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
