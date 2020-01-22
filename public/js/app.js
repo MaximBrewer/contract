@@ -4179,6 +4179,7 @@ __webpack_require__.r(__webpack_exports__);
       app.isLoading = false;
       app.bid.price = app.auction.price;
       app.bid.volume = 1;
+      app.renew = !app.renew;
     }); // .catch(function() {
     //   app.$fire({
     //     title: app.__("Error!"),
@@ -4207,25 +4208,28 @@ __webpack_require__.r(__webpack_exports__);
       maxModalWidth: 600,
       auction: {},
       bid: {},
-      errors: {}
+      errors: {},
+      renew: 0
     };
   },
   created: function created() {
     this.listenForBroadcast();
   },
   watch: {
-    auction: function auction(_auction) {
+    renew: function renew(value) {
+      var app = this;
+
       if (app.user && app.user.contragents && app.user.contragents[0]) {
         var contr = app.user.contragents[0].id;
 
-        for (var r in _auction.bidders) {
-          if (_auction.bidders[r].id == contr) {
-            can_bet = _auction.bidders[r].can_bet;
+        for (var r in app.auction.bidders) {
+          if (app.auction.bidders[r].id == contr) {
+            can_bet = app.auction.bidders[r].can_bet;
             bidding = 1;
           }
         }
 
-        if (_auction.contragent.id == contr) mine = 1;
+        if (app.auction.contragent.id == contr) mine = 1;
       }
     }
   },

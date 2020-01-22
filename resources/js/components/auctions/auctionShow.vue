@@ -476,6 +476,7 @@ export default {
         app.isLoading = false;
         app.bid.price = app.auction.price;
         app.bid.volume = 1;
+        app.renew = !app.renew;
       });
     // .catch(function() {
     //   app.$fire({
@@ -505,23 +506,25 @@ export default {
       maxModalWidth: 600,
       auction: {},
       bid: {},
-      errors: {}
+      errors: {},
+      renew: 0
     };
   },
   created() {
     this.listenForBroadcast();
   },
   watch: {
-    auction: function(auction) {
+    renew: function(value) {
+      let app = this;
       if (app.user && app.user.contragents && app.user.contragents[0]) {
         let contr = app.user.contragents[0].id;
-        for (let r in auction.bidders) {
-          if (auction.bidders[r].id == contr) {
-            can_bet = auction.bidders[r].can_bet;
+        for (let r in app.auction.bidders) {
+          if (app.auction.bidders[r].id == contr) {
+            can_bet = app.auction.bidders[r].can_bet;
             bidding = 1;
           }
         }
-        if (auction.contragent.id == contr) mine = 1;
+        if (app.auction.contragent.id == contr) mine = 1;
       }
     }
   },
