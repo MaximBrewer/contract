@@ -88256,7 +88256,9 @@ var render = function() {
                               _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(target.volume))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(target.remain))]),
+                              _c("td", [
+                                _vm._v(_vm._s(target.volume - target.restof))
+                              ]),
                               _vm._v(" "),
                               _c("td", { attrs: { width: "1" } }, [
                                 _c(

@@ -25,7 +25,7 @@
                   <td width="1">{{ index + 1 }}</td>
                   <td>{{ target.product.title }}</td>
                   <td>{{ target.volume }}</td>
-                  <td>{{ target.remain }}</td>
+                  <td>{{ target.volume - target.restof }}</td>
                   <!-- <td>{{ target.renain }}</td>
               <td
                 v-if="target.multiplicity && target.multiplicity.title"
