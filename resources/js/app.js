@@ -241,7 +241,7 @@ const app = new Vue({
             // ).listen("MessagePushed", function(e) {
             //     console.log(e);
             // });
-            Echo.channel("cross_contractru_database_every-minute").listen(
+            Echo.channel("every-minute").listen(
                 "PerMinute",
                 function(e) {
                     console.log(e);
@@ -264,7 +264,7 @@ const app = new Vue({
                     );
                 }
             );
-            Echo.channel("cross_contractru_database_message-pushed").listen(
+            Echo.channel("message-pushed").listen(
                 "MessagePushed",
                 function(e) {
                     console.log(e);
