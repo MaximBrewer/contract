@@ -30,12 +30,19 @@ class PerMinute implements ShouldBroadcast
     public function __construct()
     {
         $carbon = new Carbon();
+
+
+        DB::connection()->enableQueryLog();
+        
         $finished = DB::select(
             'select id from auctions where time(finish_at) < time(?) and confirmed = 1 and started = 1 and finished = 0',
             [
                 $carbon->toDateTimeString()
             ]
         );
+
+        $queries = DB::getQueryLog();
+        info($queries);
 
         foreach($finished as $auction){
             DB::table('auctions')->where('id', $auction->id)->update(array(
