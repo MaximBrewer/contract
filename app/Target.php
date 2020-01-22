@@ -34,7 +34,7 @@ class Target extends Model
     {
         $auctions = Auction::where('multiplicity_id', $this->multiplicity->id)->where('product_id', $this->product->id)->get();
         $ids = [];
-        foreach($auctions as $auction) $ids[] = $auctions->id;
+        foreach($auctions as $auction) $ids[] = $auction->id;
         return Bet::whereIn('auction_id', $ids)->sum('volume');
     }
 
