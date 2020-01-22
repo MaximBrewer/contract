@@ -112149,7 +112149,7 @@ var app = new Vue({
       });
       Echo.channel("message-pushed").listen("MessagePushed", function (e) {
         console.log(e);
-        that.$root.$emit('gotAuction', e.auction);
+        that.$emit('gotAuction', e.auction);
       });
     }
   }
