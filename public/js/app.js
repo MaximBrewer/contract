@@ -3718,6 +3718,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-datetime */ "./node_modules/vue-datetime/dist/vue-datetime.js");
 /* harmony import */ var vue_datetime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_datetime__WEBPACK_IMPORTED_MODULE_1__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -4191,7 +4193,9 @@ __webpack_require__.r(__webpack_exports__);
     // });
   },
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       isLoading: true,
       onCancel: false,
       fullPage: true,
@@ -4210,7 +4214,7 @@ __webpack_require__.r(__webpack_exports__);
       bid: {},
       errors: {},
       renew: 0
-    };
+    }, _defineProperty(_ref, "mine", 0), _defineProperty(_ref, "bidding", 0), _defineProperty(_ref, "can_bet", 0), _ref;
   },
   created: function created() {
     this.listenForBroadcast();
@@ -4224,12 +4228,12 @@ __webpack_require__.r(__webpack_exports__);
 
         for (var r in app.auction.bidders) {
           if (app.auction.bidders[r].id == contr) {
-            can_bet = app.auction.bidders[r].can_bet;
-            bidding = 1;
+            app.can_bet = app.auction.bidders[r].can_bet;
+            app.bidding = 1;
           }
         }
 
-        if (app.auction.contragent.id == contr) mine = 1;
+        if (app.auction.contragent.id == contr) app.mine = 1;
       }
     }
   },

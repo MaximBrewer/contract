@@ -507,7 +507,11 @@ export default {
       auction: {},
       bid: {},
       errors: {},
-      renew: 0
+      renew: 0,
+      mine: 0,
+      bidding: 0,
+      can_bet: 0,
+
     };
   },
   created() {
@@ -520,11 +524,11 @@ export default {
         let contr = app.user.contragents[0].id;
         for (let r in app.auction.bidders) {
           if (app.auction.bidders[r].id == contr) {
-            can_bet = app.auction.bidders[r].can_bet;
-            bidding = 1;
+            app.can_bet = app.auction.bidders[r].can_bet;
+            app.bidding = 1;
           }
         }
-        if (app.auction.contragent.id == contr) mine = 1;
+        if (app.auction.contragent.id == contr) app.mine = 1;
       }
     }
   },
