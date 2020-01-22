@@ -263,7 +263,7 @@ const app = new Vue({
                 "MessagePushed",
                 function(e) {
                     console.log(e)
-                    this.$root.$emit('gotAuction', e.auction);
+                    this.$emit('gotAuction', e.auction);
                 }
             );
         }
