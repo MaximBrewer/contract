@@ -453,6 +453,7 @@ export default {
     let id = app.$route.params.id;
     app.auctionId = id;
     app.$root.$on('gotAuction', function (auction) {
+      console.log(auction);
       if(auction.id == app.auction.id) app.auction = auction;
     })
     axios
