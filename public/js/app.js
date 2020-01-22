@@ -2358,6 +2358,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     checkTargets: function checkTargets() {
+      var app = this;
       axios.get("/api/v1/targets/?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
         app.targets = resp.data;
       })["catch"](function (resp) {
@@ -88213,152 +88214,137 @@ var render = function() {
   return _c(
     "section",
     [
-      _vm.auctions.length
-        ? _c("div", { staticClass: "container-fluid" }, [
-            _c("div", { staticClass: "row justify-content-end" }, [
-              _c("div", { staticClass: "col-lg-6" }, [
-                _vm.targets.length
-                  ? _c(
-                      "div",
-                      {
-                        staticClass: "table-responsive",
-                        attrs: { id: "tergets" }
-                      },
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row justify-content-end" }, [
+          _c("div", { staticClass: "col-lg-6" }, [
+            _vm.targets.length
+              ? _c(
+                  "div",
+                  { staticClass: "table-responsive", attrs: { id: "tergets" } },
+                  [
+                    _c("div", { staticClass: "h2 text-center" }, [
+                      _vm._v(_vm._s(_vm.__("My Targets")))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "table",
+                      { staticClass: "table table-hover table-bordered" },
                       [
-                        _c("div", { staticClass: "h2 text-center" }, [
-                          _vm._v(_vm._s(_vm.__("My Targets")))
+                        _c("thead", [
+                          _c("tr", [
+                            _c("th", [_vm._v("#")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v(_vm._s(_vm.__("Product")))]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v(_vm._s(_vm.__("Volume")))]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v(_vm._s(_vm.__("Remain")))]),
+                            _vm._v(" "),
+                            _c("th")
+                          ])
                         ]),
                         _vm._v(" "),
                         _c(
-                          "table",
-                          { staticClass: "table table-hover table-bordered" },
-                          [
-                            _c("thead", [
-                              _c("tr", [
-                                _c("th", [_vm._v("#")]),
-                                _vm._v(" "),
-                                _c("th", [_vm._v(_vm._s(_vm.__("Product")))]),
-                                _vm._v(" "),
-                                _c("th", [_vm._v(_vm._s(_vm.__("Volume")))]),
-                                _vm._v(" "),
-                                _c("th", [_vm._v(_vm._s(_vm.__("Remain")))]),
-                                _vm._v(" "),
-                                _c("th")
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "tbody",
-                              _vm._l(_vm.targets, function(target, index) {
-                                return _c(
-                                  "tr",
-                                  { key: "target." + target.id },
+                          "tbody",
+                          _vm._l(_vm.targets, function(target, index) {
+                            return _c("tr", { key: "target." + target.id }, [
+                              _c("td", { attrs: { width: "1" } }, [
+                                _vm._v(_vm._s(index + 1))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(target.product.title))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(target.volume))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(target.remain))]),
+                              _vm._v(" "),
+                              _c("td", { attrs: { width: "1" } }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "btn-group btn-group-sm",
+                                    attrs: { role: "group" }
+                                  },
                                   [
-                                    _c("td", { attrs: { width: "1" } }, [
-                                      _vm._v(_vm._s(index + 1))
-                                    ]),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "btn btn-secondary",
+                                        attrs: { href: "javascript:void(0)" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.showPopup(
+                                              "targets",
+                                              target.id,
+                                              "target",
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "mdi mdi-eye",
+                                          attrs: { "aria-hidden": "true" }
+                                        })
+                                      ]
+                                    ),
                                     _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(_vm._s(target.product.title))
-                                    ]),
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass: "btn btn-primary",
+                                        attrs: {
+                                          to: {
+                                            name: "editTarget",
+                                            params: { id: target.id }
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "mdi mdi-pencil",
+                                          attrs: { "aria-hidden": "true" }
+                                        })
+                                      ]
+                                    ),
                                     _vm._v(" "),
-                                    _c("td", [_vm._v(_vm._s(target.volume))]),
-                                    _vm._v(" "),
-                                    _c("td", [_vm._v(_vm._s(target.remain))]),
-                                    _vm._v(" "),
-                                    _c("td", { attrs: { width: "1" } }, [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "btn-group btn-group-sm",
-                                          attrs: { role: "group" }
-                                        },
-                                        [
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass: "btn btn-secondary",
-                                              attrs: {
-                                                href: "javascript:void(0)"
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.showPopup(
-                                                    "targets",
-                                                    target.id,
-                                                    "target",
-                                                    index
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _c("i", {
-                                                staticClass: "mdi mdi-eye",
-                                                attrs: { "aria-hidden": "true" }
-                                              })
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "router-link",
-                                            {
-                                              staticClass: "btn btn-primary",
-                                              attrs: {
-                                                to: {
-                                                  name: "editTarget",
-                                                  params: { id: target.id }
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _c("i", {
-                                                staticClass: "mdi mdi-pencil",
-                                                attrs: { "aria-hidden": "true" }
-                                              })
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass: "btn btn-danger",
-                                              attrs: {
-                                                href: "javascript:void(0)"
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.deleteTarget(
-                                                    target.id
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _c("i", {
-                                                staticClass: "mdi mdi-delete",
-                                                attrs: { "aria-hidden": "true" }
-                                              })
-                                            ]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ])
-                                  ]
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "btn btn-danger",
+                                        attrs: { href: "javascript:void(0)" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.deleteTarget(target.id)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "mdi mdi-delete",
+                                          attrs: { "aria-hidden": "true" }
+                                        })
+                                      ]
+                                    )
+                                  ],
+                                  1
                                 )
-                              }),
-                              0
-                            )
-                          ]
+                              ])
+                            ])
+                          }),
+                          0
                         )
                       ]
                     )
-                  : _vm._e()
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
+                  ]
+                )
+              : _vm._e()
+          ])
+        ]),
+        _vm._v(" "),
+        _vm.auctions.length
+          ? _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-lg-12" }, [
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-sm-6 col-md-5th" }, [
@@ -88820,8 +88806,8 @@ var render = function() {
                 )
               ])
             ])
-          ])
-        : _vm._e(),
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _c(
         "modal",

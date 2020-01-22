@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="container-fluid" v-if="auctions.length">
+    <div class="container-fluid">
       <div class="row justify-content-end">
         <div class="col-lg-6">
           <div class="table-responsive" id="tergets" v-if="targets.length">
@@ -71,7 +71,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-if="auctions.length">
         <div class="col-lg-12">
           <div class="row">
             <div class="col-sm-6 col-md-5th">
@@ -324,13 +324,16 @@ export default {
   },
   mounted() {
     let app = this,
-      contragent_id = app.user.contragents[0].id
+      contragent_id = app.user.contragents[0].id;
     let loader = Vue.$loading.show();
     app.$root.$on("gotAuction", function(auction) {
       app.checkTargets();
     });
     app.$root.getFederalDistricts(app);
-    app.$root.getRegions(app, app.filter.federal_district ? app.filter.federal_district.id : false);
+    app.$root.getRegions(
+      app,
+      app.filter.federal_district ? app.filter.federal_district.id : false
+    );
     app.$root.getProducts(app);
     app.$root.getMultiplicities(app);
     app.$root.getMyStores(app);
@@ -354,6 +357,7 @@ export default {
   },
   methods: {
     checkTargets() {
+      let app = this;
       axios
         .get(
           "/api/v1/targets/?csrf_token=" +
@@ -460,7 +464,10 @@ export default {
       }
     },
     filterGetRegions() {
-      this.$root.getRegions(app, app.filter.federal_district ? app.filter.federal_district.id : false);
+      this.$root.getRegions(
+        app,
+        app.filter.federal_district ? app.filter.federal_district.id : false
+      );
       this.filterAuctionsAuctions();
     },
     filterAuctionsAuctions() {
