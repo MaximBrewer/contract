@@ -13,6 +13,11 @@
 </template>
 <script>
 export default {
+  watch: {
+    value: function(val){
+      this.toggled = !!val
+    }
+  },
   computed: {
     classes() {
       return {
@@ -42,6 +47,8 @@ export default {
           // bet.delete();
         })
         .catch(function(errors) {
+          app.toggled = !app.toggled;
+          app.$emit("input", app.toggled * 1);
           app.$fire({
             title: app.__("Error!"),
             text: errors.response.data.message,
@@ -56,7 +63,8 @@ export default {
         e.stop();
       }
       this.toggled = !this.toggled;
-      var app =this;
+      this.$emit("input", this.toggled * 1);
+      var app = this;
       this.toggleBidder({
         can_bet: app.toggled,
         contragent_id: app.bidder.id,
@@ -72,10 +80,6 @@ export default {
     bidder: {
       type: Object,
       default: {}
-    },
-    index: {
-      type: Number,
-      default: null
     },
     value: {
       type: Number,

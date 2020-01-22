@@ -5955,6 +5955,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  watch: {
+    value: function value(val) {
+      this.toggled = !!val;
+    }
+  },
   computed: {
     classes: function classes() {
       return {
@@ -5974,6 +5979,8 @@ __webpack_require__.r(__webpack_exports__);
       var app = this;
       axios.post("/api/v1/auctions/bidder/toggle?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, req).then(function (resp) {// bet.delete();
       })["catch"](function (errors) {
+        app.toggled = !app.toggled;
+        app.$emit("input", app.toggled * 1);
         app.$fire({
           title: app.__("Error!"),
           text: errors.response.data.message,
@@ -5989,6 +5996,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.toggled = !this.toggled;
+      this.$emit("input", this.toggled * 1);
       var app = this;
       this.toggleBidder({
         can_bet: app.toggled,
@@ -6005,10 +6013,6 @@ __webpack_require__.r(__webpack_exports__);
     bidder: {
       type: Object,
       "default": {}
-    },
-    index: {
-      type: Number,
-      "default": null
     },
     value: {
       type: Number,
@@ -92322,6 +92326,7 @@ var render = function() {
                                 ),
                                 _c("switch-checkbox", {
                                   attrs: {
+                                    value: bidder.can_bet,
                                     auction: _vm.auction,
                                     bidder: bidder
                                   },
