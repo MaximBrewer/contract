@@ -6005,8 +6005,8 @@ __webpack_require__.r(__webpack_exports__);
       "default": false
     },
     value: {
-      type: Boolean,
-      "default": false
+      type: Number,
+      "default": 0
     },
     index: {
       type: Number,
