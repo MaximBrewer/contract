@@ -17,6 +17,8 @@ import { VTooltip, VPopover, VClosePopover } from "v-tooltip";
 Vue.directive("tooltip", VTooltip);
 Vue.directive("close-popover", VClosePopover);
 Vue.component("v-popover", VPopover);
+import Datetime from "vue-datetime"
+Vue.component("datetime", Datetime);
 Vue.use(VueRouter);
 Vue.use(VueFlashMessage);
 import VueSimpleAlert from "vue-simple-alert";
