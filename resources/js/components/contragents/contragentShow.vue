@@ -70,7 +70,11 @@
   </section>
 </template>
 <script>
+import Comment from "./comments.vue"
 export default {
+  components: {
+    Comment: Comment
+  },
   mounted() {
     let app = this;
     let loader = Vue.$loading.show();
