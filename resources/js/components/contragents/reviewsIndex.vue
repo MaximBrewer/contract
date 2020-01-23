@@ -46,7 +46,6 @@ export default {
   },
   mounted() {
     let app = this;
-    let loader = Vue.$loading.show();
     app.fetchComments();
   },
   data() {
@@ -59,6 +58,7 @@ export default {
   methods: {
     fetchComments() {
       let app = this;
+      let loader = Vue.$loading.show();
       axios
         .get(
           "/api/v1/comments?csrf_token=" +

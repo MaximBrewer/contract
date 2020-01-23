@@ -5553,7 +5553,6 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
   },
   mounted: function mounted() {
     var app = this;
-    var loader = Vue.$loading.show();
     app.fetchComments();
   },
   data: function data() {
@@ -5566,6 +5565,7 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
   methods: {
     fetchComments: function fetchComments() {
       var app = this;
+      var loader = Vue.$loading.show();
       axios.get("/api/v1/comments?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
         app.comments = resp.data[0];
         loader.hide();
