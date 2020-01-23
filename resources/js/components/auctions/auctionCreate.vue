@@ -133,6 +133,7 @@
 <script>
 export default {
   mounted() {
+    let loader = Vue.$loading.show();
     let app = this;
     app.getMultiplicities();
     app.getProducts();
