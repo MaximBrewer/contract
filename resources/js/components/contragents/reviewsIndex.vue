@@ -8,7 +8,6 @@
             <div class="clearfix">
               <star-rating
                 class="float-right"
-                @rating-selected="rate"
                 :star-size="starSize"
                 v-model="comment.votes"
                 :show-rating="false"

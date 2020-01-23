@@ -5543,7 +5543,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 
@@ -94637,7 +94636,6 @@ var render = function() {
                           "star-size": _vm.starSize,
                           "show-rating": false
                         },
-                        on: { "rating-selected": _vm.rate },
                         model: {
                           value: comment.votes,
                           callback: function($$v) {
