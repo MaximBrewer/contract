@@ -70,6 +70,7 @@
             <div class="form-group">
               <label class="control-label">{{ __('Contragent TIN') }}</label>
               <input
+                readonly
                 v-bind:class="{ 'is-invalid': errors.inn }"
                 type="text"
                 v-model="contragent.inn"
