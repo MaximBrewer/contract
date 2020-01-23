@@ -498,7 +498,7 @@ export default {
       let loader = Vue.$loading.show();
       axios
         .get(
-          "/api/v1/auctions/all/unbid/" +
+          "/api/v1/auctions/bid/unbid/" +
             id +
             "?csrf_token=" +
             window.csrf_token +

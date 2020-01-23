@@ -2451,7 +2451,7 @@ __webpack_require__.r(__webpack_exports__);
     unbidAuction: function unbidAuction(id) {
       var app = this;
       var loader = Vue.$loading.show();
-      axios.get("/api/v1/auctions/all/unbid/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+      axios.get("/api/v1/auctions/bid/unbid/" + id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
         app.filterAuctions(resp.data);
         app.auctions = resp.data;
         loader.hide();
