@@ -431,7 +431,7 @@ class AuctionsController extends Controller
 
         $auction = DB::select('select contragent_id, can_bet from contragent_auction where auction_id = ? && contragent_id = ?', [$r->post('auction'), $r->post('bidder')]);
 
-
+return[$auction];
 
         if (empty($auction) || $r->post('bidder') != Auth::user()->contragents[0]->id) {
             return response()->json([

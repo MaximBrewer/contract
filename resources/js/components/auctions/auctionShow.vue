@@ -1,7 +1,6 @@
 <template>
   <section class="auction-edit-wrapper" v-if="auction">
     <div class="container">
-      <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
       <div class="row">
         <div class="col-md-6">
           <div class="card">
@@ -440,16 +439,10 @@
   </section>
 </template>
 <script>
-import Loading from "vue-loading-overlay";
-import { Datetime } from "vue-datetime";
 export default {
-  components: {
-    Datetime: Datetime,
-    Loading: Loading
-  },
   mounted() {
     let app = this;
-    app.isLoading = true;
+    let loader = Vue.$loading.show();
     let id = app.$route.params.id;
     app.auctionId = id;
     app.$root.$on('gotAuction', function (auction) {
@@ -476,7 +469,7 @@ export default {
       )
       .then(function(resp) {
         app.auction = resp.data;
-        app.isLoading = false;
+        loader.hide();
         app.bid.price = app.auction.price;
         app.bid.volume = 1;
         app.renew = !app.renew;
@@ -488,7 +481,7 @@ export default {
     //     type: "error",
     //     timer: 5000
     //   });
-    //   app.isLoading = false;
+    //   loader.hide();
     // });
   },
   data: function() {

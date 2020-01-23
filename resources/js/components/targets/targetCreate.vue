@@ -1,7 +1,7 @@
 <template>
   <section class="target-edit-wrapper">
     <div class="container">
-      <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
+      
         <div class="h2 text-center">{{ __('Creating target') }}</div><br>
       <form v-on:submit="saveForm()" v-if="target">
         <div class="row">
@@ -20,7 +20,7 @@
                 v-bind:class="{ 'is-invalid': errors['product.id'] }"
               ></v-select>
               <span role="alert" class="invalid-feedback" v-if="errors['product.id']">
-                <strong v-for="error in errors['product.id']">{{ error }}</strong>
+                <strong v-for="(error, index) in errors['product.id']" :key="index">{{ error }}</strong>
               </span>
             </div>
             <div class="form-group">
@@ -32,7 +32,7 @@
                 v-bind:class="{ 'is-invalid': errors['multiplicity.id'] }"
               ></v-select>
               <span role="alert" class="invalid-feedback" v-if="errors['multiplicity.id']">
-                <strong v-for="error in errors['multiplicity.id']">{{ error }}</strong>
+                <strong v-for="(error, index) in errors['multiplicity.id']" :key="index">{{ error }}</strong>
               </span>
             </div>
             <div class="form-group">
@@ -44,7 +44,7 @@
                 v-bind:class="{ 'is-invalid': errors['store.id'] }"
               ></v-select>
               <span role="alert" class="invalid-feedback" v-if="errors['store.id']">
-                <strong v-for="error in errors['store.id']">{{ error }}</strong>
+                <strong v-for="(error, index) in errors['store.id']" :key="index">{{ error }}</strong>
               </span>
             </div>
             <div class="form-group">
@@ -56,7 +56,7 @@
                 v-bind:class="{ 'is-invalid': errors.volume }"
               />
               <span role="alert" class="invalid-feedback" v-if="errors.volume">
-                <strong v-for="error in errors.volume">{{ error }}</strong>
+                <strong v-for="(error, index) in errors.volume" :key="index">{{ error }}</strong>
               </span>
             </div>
             <div class="form-group text-right">
@@ -69,20 +69,13 @@
   </section>
 </template>
 <script>
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
-import vSelect from "vue-select";
 export default {
-  components: {
-    vSelect: vSelect,
-    Loading: Loading
-  },
   mounted() {
     let app = this;
     app.getMultiplicities();
     app.getProducts();
     app.getStores();
-    app.isLoading = false;
+    loader.hide();
   },
   data: function() {
     return {
@@ -144,7 +137,7 @@ export default {
     saveForm() {
       event.preventDefault();
       var app = this;
-      app.isLoading = true;
+      let loader = Vue.$loading.show();
       axios
         .post(
           "/api/v1/targets?csrf_token=" +
@@ -162,12 +155,12 @@ export default {
               "&api_token=" +
               window.api_token
           );
-          app.isLoading = false;
+          loader.hide();
           return true;
         })
         .catch(function(errors) {
           app.errors = errors.response.data.errors;
-          app.isLoading = false;
+          loader.hide();
         });
     }
   }

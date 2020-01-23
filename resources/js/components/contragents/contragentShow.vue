@@ -1,7 +1,7 @@
 <template>
   <section class="contragent-edit-wrapper">
     <div class="container">
-      <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
+      
       <div class="row">
         <div class="col-md-12">
           <div class="card">
@@ -70,20 +70,10 @@
   </section>
 </template>
 <script>
-import "vue-loading-overlay/dist/vue-loading.css";
-import Loading from "vue-loading-overlay";
-import vSelect from "vue-select";
-import comment from "./comments.vue";
-
 export default {
-  components: {
-    vSelect: vSelect,
-    Loading: Loading,
-    comment: comment
-  },
   mounted() {
     let app = this;
-    app.isLoading = true;
+    let loader = Vue.$loading.show();
     let id = app.$route.params.id;
     app.contragentId = id;
     axios
@@ -97,11 +87,11 @@ export default {
       )
       .then(function(resp) {
         app.contragent = resp.data;
-        app.isLoading = false;
+        loader.hide();
       })
       .catch(function() {
         alert(app.__("Failed to load contragent"));
-        app.isLoading = false;
+        loader.hide();
       });
   },
   data: function() {
@@ -128,7 +118,7 @@ export default {
       event.preventDefault();
       var app = this;
       var newContragent = app.contragent;
-      app.isLoading = true;
+      let loader = Vue.$loading.show();
       if (newContragent.federal_district)
         newContragent.federal_district_id = newContragent.federal_district.id;
       if (newContragent.region)
@@ -148,14 +138,14 @@ export default {
         )
         .then(function(resp) {
           app.contragent = resp.data;
-          app.isLoading = false;
+          loader.hide();
           //app.$router.replace("/");
           return true;
         })
         .catch(function(resp) {
           console.log(resp);
           alert(app.__("Failed to edit contragent"));
-          app.isLoading = false;
+          loader.hide();
         });
     }
   }

@@ -1,6 +1,5 @@
 <template>
   <section class="auction-edit-wrapper">
-    <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
     <div class="container">
       <form v-on:submit="saveForm()">
         <div class="row">
@@ -132,21 +131,13 @@
   </section>
 </template>
 <script>
-import { Datetime } from "vue-datetime";
-import vSelect from "vue-select";
-import Loading from "vue-loading-overlay";
 export default {
-  components: {
-    vSelect: vSelect,
-    Datetime: Datetime,
-    Loading: Loading
-  },
   mounted() {
     let app = this;
     app.getMultiplicities();
     app.getProducts();
     app.getStores();
-    app.isLoading = false;
+    loader.hide()
   },
   data: function() {
     return {
@@ -210,7 +201,7 @@ export default {
     saveForm() {
       event.preventDefault();
       var app = this;
-      app.isLoading = true;
+      let loader = Vue.$loading.show();
       var newAuction = app.auction;
       axios
         .post(
@@ -226,7 +217,7 @@ export default {
         .catch(function(errors) {
           app.errors = errors.response.data.errors;
           console.log(app.errors["multiplicity.id"]);
-          app.isLoading = false;
+          loader.hide()
         });
     }
   }

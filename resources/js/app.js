@@ -3,35 +3,32 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+import "vue-loading-overlay/dist/vue-loading.css";
+import "vue-datetime/dist/vue-datetime.css";
+import "vue-flash-message/dist/vue-flash-message.min.css";
 
 require("./bootstrap");
-
 window.Vue = require("vue");
 window.Vue.mixin(require("./trans"));
-
 import VueRouter from "vue-router";
 import moment from "moment";
 import VueFlashMessage from "vue-flash-message";
-import "vue-loading-overlay/dist/vue-loading.css";
-import "vue-datetime/dist/vue-datetime.css";
-
 import { VTooltip, VPopover, VClosePopover } from "v-tooltip";
-
 Vue.directive("tooltip", VTooltip);
 Vue.directive("close-popover", VClosePopover);
 Vue.component("v-popover", VPopover);
-
-require("vue-flash-message/dist/vue-flash-message.min.css");
-
 Vue.use(VueRouter);
 Vue.use(VueFlashMessage);
 import VueSimpleAlert from "vue-simple-alert";
-
 Vue.use(VueSimpleAlert);
-
 import VModal from "vue-js-modal";
-
 Vue.use(VModal);
+import swicthCheckbox from "./components/swicthCheckbox.vue";
+Vue.component("switch-checkbox", swicthCheckbox, {});
+import vSelect from "vue-select";
+Vue.component("v-select", vSelect, {});
+import StarRating from "vue-star-rating";
+Vue.component("StarRating", StarRating, {});
 
 import Loading from "vue-loading-overlay";
 Vue.use(
@@ -45,12 +42,6 @@ Vue.use(
     }
 );
 
-import swicthCheckbox from "./components/swicthCheckbox.vue";
-Vue.component("switch-checkbox", swicthCheckbox, {});
-import vSelect from "vue-select";
-Vue.component("v-select", vSelect, {});
-import StarRating from "vue-star-rating";
-Vue.component("StarRating", StarRating, {});
 
 import ContragentIndex from "./components/contragents/contragentIndex.vue";
 import ContragentCreate from "./components/contragents/contragentCreate.vue";

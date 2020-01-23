@@ -37,18 +37,16 @@
     </div>
   </section>
 </template>
-
 <script>
 var _ = require("lodash");
 import StarRating from "vue-star-rating";
-
 export default {
   components: {
     StarRating: StarRating
   },
   mounted() {
     let app = this;
-    app.isLoading = true;
+    let loader = Vue.$loading.show();
     app.fetchComments();
   },
   data() {
@@ -70,11 +68,11 @@ export default {
         )
         .then(function(resp) {
           app.comments = resp.data[0];
-          app.isLoading = false;
+          loader.hide();
         })
         .catch(function(e) {
           console.log(e);
-          app.isLoading = false;
+          loader.hide();
         });
     },
     saveComment(comment) {

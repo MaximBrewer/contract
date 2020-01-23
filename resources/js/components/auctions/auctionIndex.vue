@@ -1,9 +1,7 @@
 <template>
   <section>
-    <loading :active.sync="isLoading" :can-cancel="true" :is-full-page="fullPage"></loading>
     <div class="container-fluid" v-if="auctions.length">
       <div class="h2 text-center">{{ __('Upcoming auctions') }}</div>
-
       <div class="row">
         <div class="col-sm-6 col-md-5th">
           <div class="form-group">
@@ -189,15 +187,7 @@
   </section>
 </template>
 <script>
-import { Datetime } from "vue-datetime";
-import vSelect from "vue-select";
-import Loading from "vue-loading-overlay";
 export default {
-  components: {
-    vSelect: vSelect,
-    Datetime: Datetime,
-    Loading: Loading
-  },
   data: function() {
     return {
       auctions: [],
@@ -222,7 +212,7 @@ export default {
     let app = this,
       contragent_id = app.user.contragents[0].id,
       action = "all";
-    app.isLoading = true;
+    let loader = Vue.$loading.show();
     axios
       .get(
         "/api/v1/auctions/" +
@@ -235,7 +225,7 @@ export default {
       .then(function(resp) {
         app.filterAuctions(resp.data);
         app.auctions = resp.data;
-        app.isLoading = false;
+        loader.hide();
         app.getMultiplicities();
         app.getProducts();
         app.getStores();
@@ -243,7 +233,7 @@ export default {
       })
       .catch(function(resp) {
         console.log(resp);
-        app.isLoading = false;
+        loader.hide();
         alert(app.__("Failed to load auctions"));
       });
   },
@@ -394,7 +384,7 @@ export default {
     },
     bidAuction(id) {
       var app = this;
-      app.isLoading = true;
+      let loader = Vue.$loading.show();
       axios
         .get(
           "/api/v1/auctions/all/bid/" +
@@ -407,16 +397,16 @@ export default {
         .then(function(resp) {
           app.filterAuctions(resp.data);
           app.auctions = resp.data;
-          app.isLoading = false;
+          loader.hide();
         })
         .catch(function(resp) {
           alert(app.__("Failed to bid auction"));
-          app.isLoading = false;
+          loader.hide();
         });
     },
     unbidAuction(id) {
       var app = this;
-      app.isLoading = true;
+      let loader = Vue.$loading.show();
       axios
         .get(
           "/api/v1/auctions/all/unbid/" +
@@ -429,11 +419,11 @@ export default {
         .then(function(resp) {
           app.filterAuctions(resp.data);
           app.auctions = resp.data;
-          app.isLoading = false;
+          loader.hide();
         })
         .catch(function(resp) {
           alert(app.__("Failed to bid auction"));
-          app.isLoading = false;
+          loader.hide();
         });
     },
     formatDate(indate) {
