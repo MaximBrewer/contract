@@ -5567,7 +5567,7 @@ __webpack_require__.r(__webpack_exports__);
       app.contragent = resp.data;
       loader.hide();
     })["catch"](function () {
-      alert(app.__("Failed to load contragent"));
+      // alert(app.__("Failed to load contragent"));
       loader.hide();
     });
   },
@@ -5589,33 +5589,43 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
     };
-  },
-  methods: {
-    saveForm: function saveForm() {
-      event.preventDefault();
-      var app = this;
-      var newContragent = app.contragent;
-      var loader = Vue.$loading.show();
-      if (newContragent.federal_district) newContragent.federal_district_id = newContragent.federal_district.id;
-      if (newContragent.region) newContragent.region_id = newContragent.region.id;
-      newContragent.typeIds = [];
+  } // methods: {
+  //   saveForm() {
+  //     event.preventDefault();
+  //     var app = this;
+  //     var newContragent = app.contragent;
+  //     let loader = Vue.$loading.show();
+  //     if (newContragent.federal_district)
+  //       newContragent.federal_district_id = newContragent.federal_district.id;
+  //     if (newContragent.region)
+  //       newContragent.region_id = newContragent.region.id;
+  //     newContragent.typeIds = [];
+  //     for (let t in newContragent.types)
+  //       newContragent.typeIds.push(newContragent.types[t].id);
+  //     axios
+  //       .patch(
+  //         "/api/v1/contragents/" +
+  //           app.contragentId +
+  //           "?csrf_token=" +
+  //           window.csrf_token +
+  //           "&api_token=" +
+  //           window.api_tokens,
+  //         newContragent
+  //       )
+  //       .then(function(resp) {
+  //         app.contragent = resp.data;
+  //         loader.hide();
+  //         //app.$router.replace("/");
+  //         return true;
+  //       })
+  //       .catch(function(resp) {
+  //         console.log(resp);
+  //         alert(app.__("Failed to edit contragent"));
+  //         loader.hide();
+  //       });
+  //   }
+  // }
 
-      for (var t in newContragent.types) {
-        newContragent.typeIds.push(newContragent.types[t].id);
-      }
-
-      axios.patch("/api/v1/contragents/" + app.contragentId + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_tokens, newContragent).then(function (resp) {
-        app.contragent = resp.data;
-        loader.hide(); //app.$router.replace("/");
-
-        return true;
-      })["catch"](function (resp) {
-        console.log(resp);
-        alert(app.__("Failed to edit contragent"));
-        loader.hide();
-      });
-    }
-  }
 });
 
 /***/ }),
