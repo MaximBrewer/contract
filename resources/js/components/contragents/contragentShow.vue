@@ -1,7 +1,6 @@
 <template>
   <section class="contragent-edit-wrapper">
     <div class="container">
-      
       <div class="row">
         <div class="col-md-12">
           <div class="card">
@@ -40,7 +39,6 @@
                 <strong>{{ __('Contragent TIN') }}:</strong>
                 {{ contragent.inn }}
               </li>
-              </li>
             </ul>
           </div>
           <br />
@@ -70,7 +68,7 @@
   </section>
 </template>
 <script>
-import Comment from "./comments.vue"
+import Comment from "./comments.vue";
 export default {
   components: {
     Comment: Comment
