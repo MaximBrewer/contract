@@ -4301,7 +4301,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var app = this;
@@ -92150,7 +92149,6 @@ var render = function() {
                         "star-size": _vm.starSize,
                         "show-rating": false
                       },
-                      on: { "rating-selected": _vm.rate },
                       model: {
                         value: _vm.rating,
                         callback: function($$v) {
