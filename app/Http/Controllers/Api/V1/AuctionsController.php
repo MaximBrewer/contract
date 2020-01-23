@@ -429,7 +429,7 @@ class AuctionsController extends Controller
     {
 
 
-        $auction = DB::select('select contragent_id, can_bet from contragent_auction where auction_id = ? && contragent_id = ?', [$r->post('auction'), $r->post('bidder')]);
+        $auction = DB::select('select id, contragent_id, can_bet from contragent_auction where auction_id = ? && contragent_id = ?', [$r->post('auction'), $r->post('bidder')]);
 
 return[$auction];
 
