@@ -431,8 +431,6 @@ class AuctionsController extends Controller
 
         $auction = DB::select('select id, contragent_id, can_bet from contragent_auction where auction_id = ? && contragent_id = ?', [$r->post('auction'), $r->post('bidder')]);
 
-return[$auction];
-
         if (empty($auction) || $r->post('bidder') != Auth::user()->contragents[0]->id) {
             return response()->json([
                 'message' => __('It`s not yours!'),
@@ -440,8 +438,7 @@ return[$auction];
             ], 422);
         }
 
-
-        if (!$auction->can_bet) {
+        if (!$auction[0]->can_bet) {
             return response()->json([
                 'message' => __('You can`t bet!'),
                 'errors' => []
