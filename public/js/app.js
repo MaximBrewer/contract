@@ -4198,6 +4198,7 @@ __webpack_require__.r(__webpack_exports__);
         price: app.bid.price,
         store: app.bid.store ? app.bid.store.id : false
       }).then(function (resp) {
+        console.log(app.bid);
         app.$modal.hide("add_bidder");
       })["catch"](function (errors) {
         app.$fire({

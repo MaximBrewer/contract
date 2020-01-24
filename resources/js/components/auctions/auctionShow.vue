@@ -638,6 +638,7 @@ export default {
             }
           )
           .then(function(resp) {
+            console.log(app.bid);
             app.$modal.hide("add_bidder");
           })
           .catch(function(errors) {
