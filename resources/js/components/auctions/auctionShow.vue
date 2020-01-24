@@ -141,7 +141,7 @@
           <div class="col-md-12">
             <div class="h4">{{ __("You are an auction participant") }}</div>
             <div class="row" v-if="can_bet">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label class="control-label">{{ __('Auction Volume') }}</label>
                   <input
@@ -155,7 +155,7 @@
                   </span>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label class="control-label">{{ __('Price') }}</label>
                   <input
@@ -169,7 +169,21 @@
                   </span>
                 </div>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label class="control-label">{{ __('Target store') }}</label>
+                  <v-select
+                    label="address"
+                    :options="stores"
+                    v-model="bid.store"
+                    v-bind:class="{ 'is-invalid': errors['store.id'] }"
+                  ></v-select>
+                  <span role="alert" class="invalid-feedback" v-if="errors['store.id']">
+                    <strong v-for="(error, index) in errors['store.id']" :key="index">{{ error }}</strong>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-3">
                 <div class="form-group">
                   <div>
                     <label class="control-label">&nbsp;</label>
@@ -390,7 +404,12 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item" v-for="(bidder, index) in auction.bidders" :key="index">
                 {{ bidder.title }} ({{ bidder.fio }}, {{ __('Phone') }}: {{ bidder.phone }})
-                <switch-checkbox v-model="bidder.can_bet" :value="bidder.can_bet" :auction="auction" :bidder="bidder"></switch-checkbox>
+                <switch-checkbox
+                  v-model="bidder.can_bet"
+                  :value="bidder.can_bet"
+                  :auction="auction"
+                  :bidder="bidder"
+                ></switch-checkbox>
               </li>
             </ul>
           </div>
@@ -444,10 +463,11 @@ export default {
     let app = this;
     let loader = Vue.$loading.show();
     let id = app.$route.params.id;
+    app.$root.getMyStores(app);
     app.auctionId = id;
-    app.$root.$on('gotAuction', function (auction) {
-      if(auction.id == app.auction.id) app.auction = auction;
-    })
+    app.$root.$on("gotAuction", function(auction) {
+      if (auction.id == app.auction.id) app.auction = auction;
+    });
     axios
       .get(
         "/api/v1/contragents?search=csrf_token=" +
@@ -504,14 +524,9 @@ export default {
       bid: {},
       errors: {},
       renew: 0,
-      mine: 0,
-      bidding: 0,
-      can_bet: 0
     };
   },
-  created() {
-    
-  },
+  created() {},
   watch: {
     renew: function(value) {
       let app = this;

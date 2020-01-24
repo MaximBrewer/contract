@@ -17,6 +17,7 @@ class Bet extends Model
         'took_part',
         'can_bet',
         'correct',
+        'store_id',
     ];
 
     protected $appends = [
@@ -30,6 +31,12 @@ class Bet extends Model
             'id' => $contragent->id,
             'title' => $contragent->title,
         ];
+    }
+
+
+    public function store()
+    {
+        return $this->belongsTo('App\Store');
     }
 
 
