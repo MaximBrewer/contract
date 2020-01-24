@@ -39,7 +39,6 @@ class Target extends Model
         $auctionIdsArray = [];
         foreach ($auctionIds as $auctionId) $auctionIdsArray[] = $auctionId->auction_id;
 
-        return [$auctionIdsArray];
 
         $auctions = Auction::whereIn('id', $auctionIdsArray)
             ->where('multiplicity_id', $this->multiplicity->id)
