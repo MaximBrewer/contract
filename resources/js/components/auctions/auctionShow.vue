@@ -662,7 +662,7 @@ export default {
               window.api_token,
             {
               auction: app.auction.id,
-              bidder: app.add_bidders
+              bidders: app.add_bidders
             }
           )
           .then(function(resp) {

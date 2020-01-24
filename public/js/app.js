@@ -4214,7 +4214,7 @@ __webpack_require__.r(__webpack_exports__);
       var app = this;
       if (app.auction && app.add_bidders.length) axios.post("/api/v1/auctions/add_bidder?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
         auction: app.auction.id,
-        bidder: app.add_bidders
+        bidders: app.add_bidders
       }).then(function (resp) {
         app.auction = resp.data;
         app.$modal.hide("add_bidder");

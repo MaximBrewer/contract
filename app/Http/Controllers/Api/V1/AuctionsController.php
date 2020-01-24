@@ -51,10 +51,10 @@ class AuctionsController extends Controller
     {
 
         \App\ContragentAuction::where('auction_id', $r->post('auction_id'))->where('contragent_id', $r->post('contragent_id'))->update(['can_bet' => $r->post('can_bet')]);
-        
+
         $auction = Auction::findOrFail($r->post('auction_id'));
 
-        if(!$r->post('can_bet')){
+        if (!$r->post('can_bet')) {
             Bet::where('auction_id', $r->post('auction_id'))->where('contragent_id', $r->post('contragent_id'))->delete();
         }
 
@@ -62,7 +62,6 @@ class AuctionsController extends Controller
         if ($auction) event(new \App\Events\MessagePushed($auction));
 
         return 1;
-
     }
 
     /**
@@ -275,9 +274,11 @@ class AuctionsController extends Controller
      */
     public function addBidder(Request $request)
     {
-        $auction = Auction::findOrFail($request->post('auction'));
-        $contragent = Contragent::findOrFail($request->post('bidder'));
-        $contragent->auctions()->attach($auction->id);
+        foreach ($request->post('bidders') as $bidder) {
+            $auction = Auction::findOrFail($request->post('auction'));
+            $contragent = Contragent::findOrFail($bidder['id']);
+            $contragent->auctions()->attach($auction->id);
+        }
         $auction = Auction::findOrFail($request->post('auction'));
 
         if ($auction) event(new \App\Events\MessagePushed($auction));
@@ -429,14 +430,14 @@ class AuctionsController extends Controller
     {
 
 
-        if (!(float)$r->post('price')) {
+        if (!(float) $r->post('price')) {
             return response()->json([
                 'message' => __('Input price!'),
                 'errors' => []
             ], 422);
         }
 
-        if (!(int)$r->post('volume')) {
+        if (!(int) $r->post('volume')) {
             return response()->json([
                 'message' => __('Input volume!'),
                 'errors' => []
