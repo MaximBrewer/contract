@@ -634,7 +634,7 @@ export default {
               bidder: app.user.contragents[0].id,
               volume: app.bid.volume,
               price: app.bid.price,
-              store: app.bid.strore.id
+              store: app.bid.strore ? app.bid.strore.id : false
             }
           )
           .then(function(resp) {
