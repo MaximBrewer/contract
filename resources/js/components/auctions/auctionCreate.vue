@@ -57,7 +57,7 @@
             <div class="form-group">
               <label class="control-label">{{ __('Auction Start Price') }}</label>
               <input
-                v-mask="'9[99999].99'"
+                v-mask="'9[99999][.99]'"
                 v-model="auction.start_price"
                 class="form-control"
                 v-bind:class="{ 'is-invalid': errors.start_price }"
@@ -69,7 +69,7 @@
             <div class="form-group">
               <label class="control-label">{{ __('Auction Step') }}</label>
               <input
-                v-mask="'[999].99'"
+                v-mask="'[999][.99]'"
                 v-model="auction.step"
                 class="form-control"
                 v-bind:class="{ 'is-invalid': errors.step }"
