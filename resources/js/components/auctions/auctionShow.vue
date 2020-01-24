@@ -653,7 +653,7 @@ export default {
     },
     addBidder() {
       var app = this;
-      if (app.auction && app.bidder)
+      if (app.auction && app.add_bidders.length)
         axios
           .post(
             "/api/v1/auctions/add_bidder?csrf_token=" +
