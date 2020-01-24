@@ -70,7 +70,7 @@
               <label class="control-label">{{ __('Auction Step') }}</label>
               <input
                 type="decimal"
-                 vue-input-mask="'999.99'"
+                v-mask="'999.99'"
                 v-model="auction.step"
                 class="form-control"
                 v-bind:class="{ 'is-invalid': errors.step }"
@@ -139,7 +139,7 @@ export default {
     app.getMultiplicities();
     app.getProducts();
     app.getStores();
-    loader.hide()
+    loader.hide();
   },
   data: function() {
     return {
@@ -219,7 +219,7 @@ export default {
         .catch(function(errors) {
           app.errors = errors.response.data.errors;
           console.log(app.errors["multiplicity.id"]);
-          loader.hide()
+          loader.hide();
         });
     }
   }

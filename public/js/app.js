@@ -89282,6 +89282,12 @@ var render = function() {
                 _c("input", {
                   directives: [
                     {
+                      name: "mask",
+                      rawName: "v-mask",
+                      value: "999.99",
+                      expression: "'999.99'"
+                    },
+                    {
                       name: "model",
                       rawName: "v-model",
                       value: _vm.auction.step,
@@ -89290,7 +89296,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   class: { "is-invalid": _vm.errors.step },
-                  attrs: { type: "decimal", "vue-input-mask": "'999.99'" },
+                  attrs: { type: "decimal" },
                   domProps: { value: _vm.auction.step },
                   on: {
                     input: function($event) {
