@@ -194,7 +194,7 @@ const app = new Vue({
                     app.types = resp.data;
                 });
         },
-        getMyStores() {
+        getMyStores(app) {
             axios
                 .get(
                     "/api/v1/stores?csrf_token=" +
