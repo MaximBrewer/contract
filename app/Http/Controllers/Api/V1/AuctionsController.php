@@ -492,7 +492,7 @@ class AuctionsController extends Controller
             'price' => (float) $r->post('price'),
             'volume' => $r->post('volume'),
             'took_part' => Carbon::now(),
-            'strore_id' => $r->post('store'),
+            'store_id' => $r->post('store'),
             'can_bet' => 1
         ]);
 
