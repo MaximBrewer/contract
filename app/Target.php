@@ -54,7 +54,7 @@ class Target extends Model
 
 
 
-        return $rest > $this->volume ? 0 : $rest;
+        return $rest > $this->volume ? $this->volume : $rest;
     }
 
 
