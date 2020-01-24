@@ -51,7 +51,9 @@ class Target extends Model
             $ids[] = $auction->id;
         }
         if($this->store)
-        $rest = Bet::whereIn('auction_id', $ids)->where('store_id', $this->store->id)->sum('volume');
+            $rest = Bet::whereIn('auction_id', $ids)->where('store_id', $this->store->id)->sum('volume');
+            else 
+            $rest = 0;
 
 
 
