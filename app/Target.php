@@ -46,8 +46,6 @@ class Target extends Model
             ->get();
         $ids = [];
 
-        return [$auctions];
-
         foreach ($auctions as $auction) {
 
             $ids[] = $auction->id;
