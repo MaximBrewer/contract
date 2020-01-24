@@ -4070,6 +4070,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var app = this;
@@ -4112,7 +4113,7 @@ __webpack_require__.r(__webpack_exports__);
       bidding: 0,
       can_bet: 0,
       bidders: [],
-      bidder: null,
+      add_bidders: [],
       mine: 0,
       maxModalWidth: 600,
       auction: {},
@@ -4213,7 +4214,7 @@ __webpack_require__.r(__webpack_exports__);
       var app = this;
       if (app.auction && app.bidder) axios.post("/api/v1/auctions/add_bidder?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, {
         auction: app.auction.id,
-        bidder: app.bidder.id
+        bidder: app.add_bidders
       }).then(function (resp) {
         app.auction = resp.data;
         app.$modal.hide("add_bidder");
@@ -92280,15 +92281,16 @@ var render = function() {
                       attrs: {
                         "max-height": "50px",
                         options: _vm.bidders,
-                        label: "title"
+                        label: "title",
+                        multiple: true
                       },
                       on: { search: _vm.fetchBidders },
                       model: {
-                        value: _vm.bidder,
+                        value: _vm.add_bidders,
                         callback: function($$v) {
-                          _vm.bidder = $$v
+                          _vm.add_bidders = $$v
                         },
-                        expression: "bidder"
+                        expression: "add_bidders"
                       }
                     }),
                     _vm._v(" "),

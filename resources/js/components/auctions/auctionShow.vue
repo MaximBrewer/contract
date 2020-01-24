@@ -438,8 +438,9 @@
             max-height="50px"
             :options="bidders"
             label="title"
+            :multiple="true"
             @search="fetchBidders"
-            v-model="bidder"
+            v-model="add_bidders"
           ></v-select>
           <br />
           <br />
@@ -517,13 +518,13 @@ export default {
       bidding: 0,
       can_bet: 0,
       bidders: [],
-      bidder: null,
+      add_bidders: [],
       mine: 0,
       maxModalWidth: 600,
       auction: {},
       bid: {},
       errors: {},
-      renew: 0,
+      renew: 0
     };
   },
   created() {},
@@ -661,7 +662,7 @@ export default {
               window.api_token,
             {
               auction: app.auction.id,
-              bidder: app.bidder.id
+              bidder: app.add_bidders
             }
           )
           .then(function(resp) {
