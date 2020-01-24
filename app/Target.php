@@ -50,7 +50,7 @@ class Target extends Model
 
             $ids[] = $auction->id;
         }
-        return Bet::whereIn('auction_id', $ids)->sum('volume');
+        return Bet::whereIn('auction_id', $ids)->where('store_id', $this->store->id)->sum('volume');
     }
 
 
