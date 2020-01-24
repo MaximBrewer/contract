@@ -429,6 +429,20 @@ class AuctionsController extends Controller
     {
 
 
+        if (!(float)$r->post('price')) {
+            return response()->json([
+                'message' => __('Input price!'),
+                'errors' => []
+            ], 422);
+        }
+
+        if (!(int)$r->post('volume')) {
+            return response()->json([
+                'message' => __('Input volume!'),
+                'errors' => []
+            ], 422);
+        }
+
         if (!$r->post('store')) {
             return response()->json([
                 'message' => __('Choose store!'),
