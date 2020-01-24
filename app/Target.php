@@ -35,9 +35,11 @@ class Target extends Model
     public function getRestofAttribute()
     {
 
-        $auctionIds = DB::select('select auction_id, can_bet from contragent_auction where contragent_id = ?', [User::find(Auth::user()->id)->contragents[0]->id]);
+        $auctionIds = DB::select('select auction_id, can_bet from contragent_auction where can_bet = 1 and contragent_id = ?', [User::find(Auth::user()->id)->contragents[0]->id]);
         $auctionIdsArray = [];
         foreach ($auctionIds as $auctionId) $auctionIdsArray[] = $auctionId->auction_id;
+
+        return [$auctionIdsArray];
 
         $auctions = Auction::whereIn('id', $auctionIdsArray)
             ->where('multiplicity_id', $this->multiplicity->id)
