@@ -111812,25 +111812,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(vue_star_rating__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var vue_inputmask__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue-inputmask */ "./node_modules/vue-inputmask/dist/vue-inputmask.js");
-/* harmony import */ var vue_inputmask__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(vue_inputmask__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/contragents/contragentIndex.vue */ "./resources/js/components/contragents/contragentIndex.vue");
-/* harmony import */ var _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/contragents/contragentCreate.vue */ "./resources/js/components/contragents/contragentCreate.vue");
-/* harmony import */ var _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/contragents/contragentEdit.vue */ "./resources/js/components/contragents/contragentEdit.vue");
-/* harmony import */ var _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/contragents/company.vue */ "./resources/js/components/contragents/company.vue");
-/* harmony import */ var _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/contragents/contragentShow.vue */ "./resources/js/components/contragents/contragentShow.vue");
-/* harmony import */ var _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/auctions/auctionIndex.vue */ "./resources/js/components/auctions/auctionIndex.vue");
-/* harmony import */ var _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/auctions/auctionMy.vue */ "./resources/js/components/auctions/auctionMy.vue");
-/* harmony import */ var _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/auctions/auctionBid.vue */ "./resources/js/components/auctions/auctionBid.vue");
-/* harmony import */ var _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/auctions/auctionCreate.vue */ "./resources/js/components/auctions/auctionCreate.vue");
-/* harmony import */ var _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/auctions/auctionEdit.vue */ "./resources/js/components/auctions/auctionEdit.vue");
-/* harmony import */ var _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/auctions/auctionShow.vue */ "./resources/js/components/auctions/auctionShow.vue");
-/* harmony import */ var _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/targets/targetCreate.vue */ "./resources/js/components/targets/targetCreate.vue");
-/* harmony import */ var _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/targets/targetEdit.vue */ "./resources/js/components/targets/targetEdit.vue");
-/* harmony import */ var _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./components/targets/targetIndex.vue */ "./resources/js/components/targets/targetIndex.vue");
-/* harmony import */ var _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./components/contragents/reviewsIndex.vue */ "./resources/js/components/contragents/reviewsIndex.vue");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/contragents/contragentIndex.vue */ "./resources/js/components/contragents/contragentIndex.vue");
+/* harmony import */ var _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/contragents/contragentCreate.vue */ "./resources/js/components/contragents/contragentCreate.vue");
+/* harmony import */ var _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/contragents/contragentEdit.vue */ "./resources/js/components/contragents/contragentEdit.vue");
+/* harmony import */ var _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/contragents/company.vue */ "./resources/js/components/contragents/company.vue");
+/* harmony import */ var _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/contragents/contragentShow.vue */ "./resources/js/components/contragents/contragentShow.vue");
+/* harmony import */ var _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/auctions/auctionIndex.vue */ "./resources/js/components/auctions/auctionIndex.vue");
+/* harmony import */ var _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/auctions/auctionMy.vue */ "./resources/js/components/auctions/auctionMy.vue");
+/* harmony import */ var _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/auctions/auctionBid.vue */ "./resources/js/components/auctions/auctionBid.vue");
+/* harmony import */ var _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/auctions/auctionCreate.vue */ "./resources/js/components/auctions/auctionCreate.vue");
+/* harmony import */ var _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/auctions/auctionEdit.vue */ "./resources/js/components/auctions/auctionEdit.vue");
+/* harmony import */ var _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/auctions/auctionShow.vue */ "./resources/js/components/auctions/auctionShow.vue");
+/* harmony import */ var _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/targets/targetCreate.vue */ "./resources/js/components/targets/targetCreate.vue");
+/* harmony import */ var _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/targets/targetEdit.vue */ "./resources/js/components/targets/targetEdit.vue");
+/* harmony import */ var _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/targets/targetIndex.vue */ "./resources/js/components/targets/targetIndex.vue");
+/* harmony import */ var _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./components/contragents/reviewsIndex.vue */ "./resources/js/components/contragents/reviewsIndex.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -111867,9 +111865,11 @@ vue__WEBPACK_IMPORTED_MODULE_13___default.a.component("v-select", vue_select__WE
 vue__WEBPACK_IMPORTED_MODULE_13___default.a.component("StarRating", vue_star_rating__WEBPACK_IMPORTED_MODULE_12___default.a, {});
 
 
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.use(vue_inputmask__WEBPACK_IMPORTED_MODULE_14___default.a);
+var VueInputMask = __webpack_require__(/*! vue-inputmask */ "./node_modules/vue-inputmask/dist/vue-inputmask.js")["default"];
 
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.use(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_15___default.a, {
+vue__WEBPACK_IMPORTED_MODULE_13___default.a.use(VueInputMask);
+
+vue__WEBPACK_IMPORTED_MODULE_13___default.a.use(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_14___default.a, {
   // props
   color: "red"
 }, {// slots
@@ -111901,63 +111901,63 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_13___default.a({
       redirect: "/personal/auctions"
     }, {
       path: "/personal/contragents",
-      component: _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+      component: _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
       name: "contragentIndex"
     }, {
       path: "/personal/contragents/reviews",
-      component: _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_30__["default"],
+      component: _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_29__["default"],
       name: "reviews"
     }, {
       path: "/personal/contragents/create",
-      component: _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+      component: _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
       name: "createContragent"
     }, {
       path: "/personal/contragents/show/:id",
-      component: _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
+      component: _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
       name: "showContragent"
     }, {
       path: "/personal/contragents/edit/:id",
-      component: _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
+      component: _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
       name: "editContragent"
     }, {
       path: "/personal/auctions",
-      component: _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
+      component: _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
       name: "auctionIndex"
     }, {
       path: "/personal/auctions/my",
-      component: _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_22__["default"],
+      component: _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
       name: "auctionMy"
     }, {
       path: "/personal/auctions/bid",
-      component: _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_23__["default"],
+      component: _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_22__["default"],
       name: "auctionBid"
     }, {
       path: "/personal/auctions/create",
-      component: _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_24__["default"],
+      component: _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_23__["default"],
       name: "createAuction"
     }, {
       path: "/personal/auctions/show/:id",
-      component: _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_26__["default"],
+      component: _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_25__["default"],
       name: "showAuction"
     }, {
       path: "/personal/auctions/edit/:id",
-      component: _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_25__["default"],
+      component: _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_24__["default"],
       name: "editAuction"
     }, {
       path: "/personal/targets",
-      component: _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_29__["default"],
+      component: _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_28__["default"],
       name: "indexTarget"
     }, {
       path: "/personal/company",
-      component: _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
+      component: _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
       name: "company"
     }, {
       path: "/personal/targets/create",
-      component: _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_27__["default"],
+      component: _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_26__["default"],
       name: "createTarget"
     }, {
       path: "/personal/targets/edit/:id",
-      component: _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_28__["default"],
+      component: _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_27__["default"],
       name: "editTarget"
     }]
   }),

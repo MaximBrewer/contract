@@ -33,7 +33,7 @@ import StarRating from "vue-star-rating";
 Vue.component("StarRating", StarRating, {});
 
 import Vue from 'vue'
-import VueInputMask from "vue-inputmask";
+const VueInputMask = require('vue-inputmask').default
 Vue.use(VueInputMask)
 
 
