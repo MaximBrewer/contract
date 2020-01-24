@@ -43,7 +43,6 @@ class Target extends Model
         $auctions = Auction::whereIn('id', $auctionIdsArray)
             ->where('multiplicity_id', $this->multiplicity->id)
             ->where('product_id', $this->product->id)
-            ->where('contragent_id', $this->product->id)
             ->get();
         $ids = [];
 
