@@ -32,6 +32,11 @@ Vue.component("v-select", vSelect, {});
 import StarRating from "vue-star-rating";
 Vue.component("StarRating", StarRating, {});
 
+import Vue from 'vue'
+import VueInputMask from "vue-inputmask";
+Vue.use(VueInputMask)
+
+
 import Loading from "vue-loading-overlay";
 Vue.use(
     Loading,
