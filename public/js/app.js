@@ -2610,7 +2610,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var loader = Vue.$loading.show();
@@ -89237,6 +89236,12 @@ var render = function() {
                 _c("input", {
                   directives: [
                     {
+                      name: "mask",
+                      rawName: "v-mask",
+                      value: "9[99999].99",
+                      expression: "'9[99999].99'"
+                    },
+                    {
                       name: "model",
                       rawName: "v-model",
                       value: _vm.auction.start_price,
@@ -89245,7 +89250,6 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   class: { "is-invalid": _vm.errors.start_price },
-                  attrs: { type: "number" },
                   domProps: { value: _vm.auction.start_price },
                   on: {
                     input: function($event) {
@@ -89284,8 +89288,8 @@ var render = function() {
                     {
                       name: "mask",
                       rawName: "v-mask",
-                      value: "9[99].99",
-                      expression: "'9[99].99'"
+                      value: "[999].99",
+                      expression: "'[999].99'"
                     },
                     {
                       name: "model",
@@ -89296,7 +89300,6 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   class: { "is-invalid": _vm.errors.step },
-                  attrs: { type: "decimal" },
                   domProps: { value: _vm.auction.step },
                   on: {
                     input: function($event) {
