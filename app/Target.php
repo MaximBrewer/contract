@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Bet;
 
 class Target extends Model
@@ -32,31 +34,43 @@ class Target extends Model
 
     public function getRestofAttribute()
     {
-        $auctions = Auction::where('multiplicity_id', $this->multiplicity->id)->where('product_id', $this->product->id)->get();
+
+        $auctionIds = DB::select('select auction_id, can_bet from contragent_auction where contragent_id = ?', [User::find(Auth::user()->id)->contragents[0]->id]);
+        $auctionIdsArray = [];
+        foreach ($auctionIds as $auctionId) $auctionIdsArray[] = $auctionId->auction_id;
+
+        $auctions = Auction::whereIn('id', $auctionIdsArray)
+            ->where('multiplicity_id', $this->multiplicity->id)
+            ->where('product_id', $this->product->id)
+            ->where('contragent_id', $this->product->id)
+            ->get();
         $ids = [];
-        foreach($auctions as $auction) $ids[] = $auction->id;
+
+        foreach ($auctions as $auction) {
+
+            $ids[] = $auction->id;
+        }
         return Bet::whereIn('auction_id', $ids)->sum('volume');
     }
 
-    
+
     public function product()
     {
         return $this->belongsTo('App\Product');
     }
-    
+
     public function store()
     {
         return $this->belongsTo('App\Store');
     }
-    
+
     public function contragent()
     {
         return $this->belongsTo('App\Contragent');
     }
-    
+
     public function multiplicity()
     {
         return $this->belongsTo('App\Multiplicity');
     }
-    
 }
