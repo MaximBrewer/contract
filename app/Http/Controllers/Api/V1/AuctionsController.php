@@ -429,6 +429,13 @@ class AuctionsController extends Controller
     {
 
 
+        if (!$r->post('store')) {
+            return response()->json([
+                'message' => __('Choose store!'),
+                'errors' => []
+            ], 422);
+        }
+
         $auction = DB::select('select id, contragent_id, can_bet from contragent_auction where auction_id = ? && contragent_id = ?', [$r->post('auction'), $r->post('bidder')]);
 
         if (empty($auction) || $r->post('bidder') != Auth::user()->contragents[0]->id) {
@@ -471,6 +478,7 @@ class AuctionsController extends Controller
             'price' => (float) $r->post('price'),
             'volume' => $r->post('volume'),
             'took_part' => Carbon::now(),
+            'strore_id' => $r->post('store'),
             'can_bet' => 1
         ]);
 
