@@ -89285,7 +89285,7 @@ var render = function() {
                       name: "mask",
                       rawName: "v-mask",
                       value: "999.99",
-                      expression: "'999.99'"
+                      expression: "'999\\.99'"
                     },
                     {
                       name: "model",
