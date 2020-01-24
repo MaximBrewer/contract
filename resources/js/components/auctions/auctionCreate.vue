@@ -70,7 +70,7 @@
               <label class="control-label">{{ __('Auction Step') }}</label>
               <input
                 type="decimal"
-                v-mask="'999\.99'"
+                v-mask="'9[99].99'"
                 v-model="auction.step"
                 class="form-control"
                 v-bind:class="{ 'is-invalid': errors.step }"
