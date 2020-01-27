@@ -38,7 +38,7 @@ class ContragentsController extends Controller
             "fio" => "required|min:3",
             "phone" => "required|min:6",
             "legal_address" => "required|min:3",
-            "inn" => "required|regex:/^[0-9]{10,12}$/i",
+            "inn" => "required|regex:/^[0-9]{10,12}$/i|unique:contragents",
             "federal_district.id" => "required|exists:federal_districts,id",
             "region.id" => "required|exists:regions,id",
         ]);
