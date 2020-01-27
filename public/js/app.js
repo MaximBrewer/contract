@@ -3227,6 +3227,7 @@ __webpack_require__.r(__webpack_exports__);
       var app = this;
       var loader = Vue.$loading.show();
       axios.post("/api/v1/auction/edit/" + app.auction.id + "?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, app.auction).then(function (resp) {
+        loader.hide();
         app.$router.replace("/personal/auctions/show/" + app.auction.id);
       })["catch"](function (errors) {
         app.errors = errors.response.data.errors;

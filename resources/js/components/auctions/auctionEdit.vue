@@ -241,6 +241,7 @@ export default {
           app.auction
         )
         .then(function(resp) {
+          loader.hide()
           app.$router.replace(
             "/personal/auctions/show/" +
               app.auction.id
