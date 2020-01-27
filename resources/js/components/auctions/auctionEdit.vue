@@ -61,7 +61,7 @@
               <label class="control-label">{{ __('Auction Start Price') }}</label>
               <input
                 type="number"
-                :disabled="auction.started"
+                :disabled="!!auction.confirmed"
                 v-model="auction.start_price"
                 class="form-control"
                 v-bind:class="{ 'is-invalid': errors.start_price }"
@@ -74,7 +74,7 @@
               <label class="control-label">{{ __('Auction Step') }}</label>
               <input
                 type="decimal"
-                :disabled="auction.started"
+                :disabled="!!auction.confirmed"
                 v-model="auction.step"
                 class="form-control"
                 v-bind:class="{ 'is-invalid': errors.step }"
@@ -88,7 +88,7 @@
               <datetime
                 type="datetime"
                 class="theme-primary"
-                :disabled="auction.started"
+                :disabled="!!auction.confirmed"
                 input-class="form-control"
                 v-model="auction.start_at"
                 v-bind:class="{ 'is-invalid': errors.start_at }"

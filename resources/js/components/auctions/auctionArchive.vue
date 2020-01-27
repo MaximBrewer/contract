@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="container-fluid" v-if="auctions.length">
-      <div class="h2 text-center">{{ __('My auctions') }}</div>
+      <div class="h2 text-center">{{ __('Archive') }}</div>
       <div class="row">
         <div class="col-sm-6 col-md-5th">
           <div class="form-group">
@@ -74,7 +74,6 @@
               <th>{{ __('Time') }}</th>
               <th>{{ __('Store') }}</th>
               <th>{{ __('Description') }}</th>
-              <th>{{ __('Confirmed') }}</th>
               <th></th>
             </tr>
           </thead>
@@ -82,6 +81,10 @@
             <tr v-for="auction in _auctions" :key="'auction.' + auction.id">
               <th>{{ auction.id }}</th>
               <td>
+                <div v-if="auction.contragent" class="text-nowrap">
+                  <strong v-if="false">{{ __('Contragent') }}:</strong>
+                  <div class="h6">{{ auction.contragent.title }}</div>
+                </div>
                 <div v-if="auction.product" class="text-nowrap">
                   <strong>{{ __('Product') }}:</strong>
                   <span>{{ auction.product.title }}</span>
@@ -93,6 +96,10 @@
                 <div class="text-nowrap">
                   <strong>{{ __('Volume') }}:</strong>
                   <span>{{ auction.volume }}</span>
+                </div>
+                <div class="text-nowrap" v-if="auction.range">
+                  <strong>{{ __('Range') }}:</strong>
+                  <span>{{ auction.range }}</span>
                 </div>
               </td>
               <td>
@@ -136,13 +143,6 @@
                 <span>{{ auction.comment }}</span>
               </td>
               <td>
-                <span
-                  v-tooltip="auction.confirmed ? __('Confirmed') : __('Not confirmed')"
-                  class="online"
-                  v-bind:class="{ 'is-online': auction.confirmed, 'is-offline': !auction.confirmed }"
-                ></span>
-              </td>
-              <td>
                 <div class="btn-group btn-group-sm" role="group">
                   <a
                     v-tooltip="__('Copy the auction')"
@@ -159,13 +159,6 @@
                     class="btn btn-secondary"
                   >
                     <i class="mdi mdi-eye" aria-hidden="true"></i>
-                  </router-link>
-                  <router-link
-                    v-tooltip="__('Edit auction')"
-                    :to="{name: 'editAuction', 'params': {'id': auction.id}}"
-                    class="btn btn-primary"
-                  >
-                    <i class="mdi mdi-pencil" aria-hidden="true"></i>
                   </router-link>
                 </div>
               </td>
@@ -200,8 +193,8 @@ export default {
   },
   mounted() {
     let app = this,
-    contragent_id = app.user.contragents[0].id,
-    action = "my";
+      contragent_id = app.user.contragents[0].id,
+      action = "archive";
     let loader = Vue.$loading.show();
     axios
       .get(
@@ -216,10 +209,11 @@ export default {
         app.filterAuctions(resp.data);
         app.auctions = resp.data;
         loader.hide();
-        app.getMultiplicities();
-        app.getProducts();
-        app.getStores();
-        app.getFederalDistricts();
+
+        app.$root.getFederalDistricts(app);
+        app.$root.getMultiplicities(app);
+        app.$root.getProducts(app);
+        app.$root.getMyStores(app);
       })
       .catch(function(resp) {
         console.log(resp);
@@ -248,34 +242,6 @@ export default {
     },
     sorByDistanceAuctions() {
       this.sorByDistance(this._auctions);
-    },
-    copyAuction(id) {
-      var app = this;
-      let loader = Vue.$loading.show();
-      axios
-        .post(
-          "/api/v1/auction/copy?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token,
-          {
-            id: id
-          }
-        )
-        .then(function(resp) {
-          loader.hide();
-          app.$router.push("/personal/auctions/edit/" + resp.data.id);
-        })
-        .catch(function(errors) {
-          console.log(errors);
-          app.$fire({
-            title: app.__("Error!"),
-            text: errors.response ? errors.response.data.message : "",
-            type: "error",
-            timer: 2000
-          });
-          loader.hide();
-        });
     },
     sorByDistance(auctions) {
       let app = this;
@@ -332,72 +298,77 @@ export default {
       }
       if (auctions.length == cnt) app.sorByDistance(app._auctions);
     },
-    getFederalDistricts() {
-      let app = this;
+    bidAuction(id) {
+      var app = this;
+      let loader = Vue.$loading.show();
       axios
         .get(
-          "/api/v1/federalDistricts?csrf_token=" +
+          "/api/v1/auctions/all/bid/" +
+            id +
+            "?csrf_token=" +
             window.csrf_token +
             "&api_token=" +
             window.api_token
         )
         .then(function(resp) {
-          app.federalDistricts = resp.data;
+          app.filterAuctions(resp.data);
+          app.auctions = resp.data;
+          loader.hide();
+        })
+        .catch(function(resp) {
+          alert(app.__("Failed to bid auction"));
+          loader.hide();
         });
     },
-    getRegions() {
-      let app = this;
-      if (!app.filter.federal_district) return [];
+    unbidAuction(id) {
+      var app = this;
+      let loader = Vue.$loading.show();
       axios
         .get(
-          "/api/v1/regions?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token +
-            "&federal_district_id=" +
-            app.filter.federal_district.id
-        )
-        .then(function(resp) {
-          app.regions = resp.data;
-        });
-    },
-    getMultiplicities() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/multiplicities?csrf_token=" +
+          "/api/v1/auctions/all/unbid/" +
+            id +
+            "?csrf_token=" +
             window.csrf_token +
             "&api_token=" +
             window.api_token
         )
         .then(function(resp) {
-          app.multiplicities = resp.data;
+          app.filterAuctions(resp.data);
+          app.auctions = resp.data;
+          loader.hide();
+        })
+        .catch(function(resp) {
+          alert(app.__("Failed to bid auction"));
+          loader.hide();
         });
     },
-    getStores() {
-      let app = this;
+    copyAuction(id) {
+      var app = this;
+      let loader = Vue.$loading.show();
       axios
-        .get(
-          "/api/v1/stores?csrf_token=" +
+        .post(
+          "/api/v1/auction/copy?csrf_token=" +
             window.csrf_token +
             "&api_token=" +
-            window.api_token
+            window.api_token,
+          {
+            id: id
+          }
         )
         .then(function(resp) {
-          app.stores = resp.data;
-        });
-    },
-    getProducts() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/products?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.products = resp.data;
+          loader.hide();
+          app.$router.push("/personal/auctions/edit/" + resp.data.id);
+        })
+        .catch(function(errors) {
+
+          console.log(errors);
+          app.$fire({
+            title: app.__("Error!"),
+            text: errors.response ? errors.response.data.message : "",
+            type: "error",
+            timer: 2000
+          });
+          loader.hide();
         });
     },
     formatDate(indate) {

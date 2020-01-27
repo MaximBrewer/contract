@@ -43,6 +43,7 @@ Route::group([
     Route::get('auctions/bet/volume/{id}', 'AuctionsController@approveVolume');
     Route::get('auctions/{action}', 'AuctionsController@index');
     Route::get('auction/{id}', 'AuctionsController@show');
+    Route::post('auction/copy', 'AuctionsController@copy');
     Route::get('auction/delete/{id}', 'AuctionsController@destroy');
     Route::get('auction/confirm/{id}', 'AuctionsController@confirm');
     Route::get('auctions/{action}/bid/{id}', 'AuctionsController@bid');

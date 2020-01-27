@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Product;
 use App\Store;
 use App\Multiplicity;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Contragent;
 use Illuminate\Support\Facades\Auth;
@@ -47,13 +48,13 @@ class Auction extends Model
 
     public function getStartAtAttribute($value)
     {
-        return date(DATE_ATOM, strtotime($value));
+        return $value ? date(DATE_ATOM, strtotime($value)) : null;
     }
 
 
     public function getFinishAtAttribute($value)
     {
-        return date(DATE_ATOM, strtotime($value));
+        return $value ? date(DATE_ATOM, strtotime($value)) : null;
     }
 
     public function getFilledAttribute()
@@ -102,12 +103,12 @@ class Auction extends Model
         $cAgents = [];
         foreach ($contragents as $contragent) {
             $can_bet = 0;
-            foreach ($bidderIds as $bidderId) if($bidderId->contragent_id == $contragent->id) $can_bet = $bidderId->can_bet;
+            foreach ($bidderIds as $bidderId) if ($bidderId->contragent_id == $contragent->id) $can_bet = $bidderId->can_bet;
             $cAgents[$contragent->id] = [
                 'id' => $contragent->id,
-                'title' => $contragent->title, 
-                'fio' => $contragent->fio, 
-                'phone' => $contragent->phone, 
+                'title' => $contragent->title,
+                'fio' => $contragent->fio,
+                'phone' => $contragent->phone,
                 'can_bet' => $can_bet
             ];
         }

@@ -31,15 +31,29 @@ class AuctionsController extends Controller
 
         switch ($action) {
             case "all":
-                return Auction::all();
+                return Auction::where('finished', '<>', 1)->orderBy('id', 'desc')->get();
+                break;
+            case "archive":
+                return Auction::where('finished', 1)->orderBy('id', 'desc')->get();
                 break;
             case "my":
-                return Auction::where('contragent_id', Auth::user()->contragents[0]->id)->get();
+                return Auction::orderBy('id', 'desc')->where('finished', '<>', 1)->where('contragent_id', Auth::user()->contragents[0]->id)->get();
                 break;
             case "bid":
                 return Auth::user()->contragents[0]->auctions;
                 break;
         }
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function archive()
+    {
+
+        return Auction::where('finished', 1)->orderBy('id', 'desc')->get();
     }
     /**
      * Display a listing of the resource.
@@ -156,6 +170,45 @@ class AuctionsController extends Controller
             'took_part' => Carbon::now()
         ]);
         return Auction::findOrFail($id);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function copy(Request $r)
+    {
+        $auction = Auction::findOrFail($r->post('id'));
+
+        if ($auction->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+
+        $bidders = $auction->bidders;
+        $auction = $auction->toArray();
+
+        unset($auction['id']);
+        unset($auction['created_at']);
+        unset($auction['updated_at']);
+        unset($auction['finish_at']);
+        unset($auction['start_at']);
+        unset($auction['started']);
+        unset($auction['finished']);
+        unset($auction['confirmed']);
+
+        $new_auction = Auction::create($auction);
+
+        foreach($bidders as $bidder){
+
+            Contragent::find($bidder['id'])->auctions()->attach($new_auction->id);
+        }
+
+        return $new_auction;
     }
 
     /**

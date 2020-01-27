@@ -7,7 +7,7 @@
             <div
               class="card-header"
               v-if="auction.contragent && auction.contragent.title"
-            >{{ auction.contragent.title }}</div>
+            >#{{ auction.id }} {{ auction.contragent.title }}</div>
             <ul class="list-group list-group-flush">
               <li
                 class="list-group-item"
@@ -21,10 +21,8 @@
                 class="list-group-item"
                 v-if="auction.store && auction.store.address"
               >{{ auction.store.address }}</li>
-              <li
-                class="list-group-item"
-                v-if="auction.store && auction.store.coords"
-              >{{ auction.store.coords }}</li>
+              <li class="list-group-item" v-if="auction.contragent">{{ auction.contragent.fio }}</li>
+              <li class="list-group-item" v-if="auction.contragent">{{ auction.contragent.phone }}</li>
             </ul>
           </div>
           <br />
@@ -57,7 +55,7 @@
           <div class="card text-center">
             <div class="card-header">{{ __('Auction start') }}</div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">{{ auction.start_at | formatDateTime }}</li>
+              <li class="list-group-item" v-if="!!auction.start_at">{{ auction.start_at | formatDateTime }}</li>
             </ul>
           </div>
           <br />
@@ -66,7 +64,7 @@
           <div class="card text-center">
             <div class="card-header">{{ __('During time') }}</div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">{{ $root.time | formatDateTime}}</li>
+              <li class="list-group-item" v-if="$root.time">{{ $root.time | formatDateTime}}</li>
             </ul>
           </div>
           <br />
@@ -75,14 +73,14 @@
           <div class="card text-center">
             <div class="card-header">{{ __('Auction finish') }}</div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">{{ auction.finish_at | formatDateTime }}</li>
+              <li class="list-group-item" v-if="!!auction.finish_at">{{ auction.finish_at | formatDateTime }}</li>
             </ul>
           </div>
           <br />
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4" v-if="(mine && !auction.confirmed) || (!auction.finished)">
           <div class="card text-center">
             <div class="btn-group" role="group" aria-label="Basic example">
               <a
@@ -124,7 +122,12 @@
           </div>
           <br />
         </div>
-        <div class="col-md-8">
+        <div
+          class="col-md-8"
+          v-bind:class="{ 'col-md-8': (mine && !auction.confirmed) || (!auction.finished) ,
+                    'col-md-12': !(mine && !auction.confirmed) && auction.finished
+                    }"
+        >
           <div class="card">
             <div class="card-header">{{ __('Auction comment') }}</div>
             <ul class="list-group list-group-flush">
@@ -291,7 +294,7 @@
                             v-tooltip="__('Approve volume')"
                             href="javascript:void(0)"
                             class="btn btn-sm"
-                            :disabled="bet.approved_volume"
+                            :disabled="!!bet.approved_volume"
                             v-bind:class="{ 'btn-success': !bet.approved_volume, 'btn-secondary': bet.approved_volume }"
                             @click="bet.approved_volume ? function(){ return false; } : approveVolume(bet)"
                           >
@@ -306,7 +309,7 @@
                             size="10"
                             type="text"
                             v-model="bet.correct"
-                            :disabled="bet.approved_contract"
+                            :disabled="!!bet.approved_contract"
                           />
                         </div>
                       </td>
@@ -316,7 +319,7 @@
                             v-tooltip="__('Approve contract')"
                             href="javascript:void(0)"
                             class="btn btn-sm"
-                            :disabled="bet.approved_contract"
+                            :disabled="!!bet.approved_contract"
                             v-bind:class="{ 'btn-success': !bet.approved_contract, 'btn-secondary': bet.approved_contract }"
                             @click="bet.approved_contract ? function(){ return false; } : approveContract(bet)"
                           >
@@ -384,7 +387,7 @@
                     </td>
                     <td>
                       <div class="text-nowrap">
-                        <span>{{ bet.created_at | formatDateTime }}</span>
+                        <span v-if="bet.created_at ">{{ bet.created_at | formatDateTime }}</span>
                       </div>
                     </td>
                   </tr>
@@ -405,6 +408,7 @@
               <li class="list-group-item" v-for="(bidder, index) in auction.bidders" :key="index">
                 {{ bidder.title }} ({{ bidder.fio }}, {{ __('Phone') }}: {{ bidder.phone }})
                 <switch-checkbox
+                v-if="!auction.finished"
                   v-model="bidder.can_bet"
                   :value="bidder.can_bet"
                   :auction="auction"
