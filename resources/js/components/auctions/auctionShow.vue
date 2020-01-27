@@ -55,7 +55,10 @@
           <div class="card text-center">
             <div class="card-header">{{ __('Auction start') }}</div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item" v-if="!!auction.start_at">{{ auction.start_at | formatDateTime }}</li>
+              <li
+                class="list-group-item"
+                v-if="!!auction.start_at"
+              >{{ auction.start_at | formatDateTime }}</li>
             </ul>
           </div>
           <br />
@@ -73,7 +76,10 @@
           <div class="card text-center">
             <div class="card-header">{{ __('Auction finish') }}</div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item" v-if="!!auction.finish_at">{{ auction.finish_at | formatDateTime }}</li>
+              <li
+                class="list-group-item"
+                v-if="!!auction.finish_at"
+              >{{ auction.finish_at | formatDateTime }}</li>
             </ul>
           </div>
           <br />
@@ -407,13 +413,20 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item" v-for="(bidder, index) in auction.bidders" :key="index">
                 {{ bidder.title }} ({{ bidder.fio }}, {{ __('Phone') }}: {{ bidder.phone }})
-                <switch-checkbox
-                v-if="!auction.finished"
+                <switch-checkbox-observe
+                  v-if="!auction.finished"
+                  v-model="bidder.observer"
+                  :value="bidder.observer"
+                  :auction="auction"
+                  :bidder="bidder"
+                ></switch-checkbox-observe>
+                <switch-checkbox-canbet
+                  v-if="!auction.finished"
                   v-model="bidder.can_bet"
                   :value="bidder.can_bet"
                   :auction="auction"
                   :bidder="bidder"
-                ></switch-checkbox>
+                ></switch-checkbox-canbet>
               </li>
             </ul>
           </div>

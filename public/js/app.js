@@ -4453,6 +4453,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var app = this;
@@ -5488,6 +5501,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _storeMap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../storeMap */ "./resources/js/components/storeMap.vue");
 //
 //
 //
@@ -5744,7 +5758,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    storeMap: _storeMap__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   mounted: function mounted() {
     var app = this;
     var loader = Vue.$loading.show();
@@ -6212,10 +6233,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckbox.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/swicthCheckbox.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckboxCanbet.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/swicthCheckboxCanbet.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -6280,6 +6301,99 @@ __webpack_require__.r(__webpack_exports__);
       var app = this;
       this.toggleBidder({
         can_bet: app.toggled,
+        observer: app.bidder.observer,
+        contragent_id: app.bidder.id,
+        auction_id: app.auction.id
+      });
+    }
+  },
+  props: {
+    auction: {
+      type: Object,
+      "default": {}
+    },
+    bidder: {
+      type: Object,
+      "default": {}
+    },
+    value: {
+      type: Number,
+      "default": 0
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckboxObserve.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/swicthCheckboxObserve.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  watch: {
+    value: function value(val) {
+      this.toggled = !!val;
+    }
+  },
+  computed: {
+    classes: function classes() {
+      return {
+        checked: this.toggled,
+        unchecked: !this.toggled,
+        disabled: this.disabled
+      };
+    }
+  },
+  data: function data() {
+    return {
+      toggled: !!this.value
+    };
+  },
+  methods: {
+    toggleBidder: function toggleBidder(req) {
+      var app = this;
+      axios.post("/api/v1/auctions/bidder/toggle?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, req).then(function (resp) {// bet.delete();
+      })["catch"](function (errors) {
+        app.toggled = !app.toggled;
+        app.$emit("input", app.toggled * 1);
+        app.$fire({
+          title: app.__("Error!"),
+          text: errors.response.data.message,
+          type: "error",
+          timer: 5000
+        });
+      });
+    },
+    toggle: function toggle(e) {
+      if (this.disabled || e.keyCode === 9) {
+        // not if disabled or tab is pressed
+        e.stop();
+      }
+
+      this.toggled = !this.toggled;
+      this.$emit("input", this.toggled * 1);
+      var app = this;
+      this.toggleBidder({
+        can_bet: app.bidder.can_bet,
+        observer: app.toggled,
         contragent_id: app.bidder.id,
         auction_id: app.auction.id
       });
@@ -93114,7 +93228,24 @@ var render = function() {
                                   ")\n              "
                               ),
                               !_vm.auction.finished
-                                ? _c("switch-checkbox", {
+                                ? _c("switch-checkbox-observe", {
+                                    attrs: {
+                                      value: bidder.observer,
+                                      auction: _vm.auction,
+                                      bidder: bidder
+                                    },
+                                    model: {
+                                      value: bidder.observer,
+                                      callback: function($$v) {
+                                        _vm.$set(bidder, "observer", $$v)
+                                      },
+                                      expression: "bidder.observer"
+                                    }
+                                  })
+                                : _vm._e(),
+                              _vm._v(" "),
+                              !_vm.auction.finished
+                                ? _c("switch-checkbox-canbet", {
                                     attrs: {
                                       value: bidder.can_bet,
                                       auction: _vm.auction,
@@ -95401,6 +95532,15 @@ var render = function() {
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-md-6" }, [
+                            _c(
+                              "div",
+                              { staticClass: "form-group" },
+                              [_c("store-map", { attrs: { store: store } })],
+                              1
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-6" }, [
                             _c("div", { staticClass: "form-group" }, [
                               _c("label", { staticClass: "control-label" }, [
                                 _vm._v(
@@ -95431,7 +95571,7 @@ var render = function() {
                                     _vm.errors.stores[index] &&
                                     _vm.errors.stores[index].coords
                                 },
-                                attrs: { type: "text" },
+                                attrs: { readonly: "", type: "text" },
                                 domProps: {
                                   value: _vm.contragent.stores[index].coords
                                 },
@@ -95468,10 +95608,8 @@ var render = function() {
                                     ),
                                     0
                                   )
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "form-group" }, [
+                                : _vm._e(),
+                              _vm._v(" "),
                               _c("label", { staticClass: "control-label" }, [
                                 _vm._v(
                                   _vm._s(
@@ -95539,10 +95677,8 @@ var render = function() {
                                     0
                                   )
                                 : _vm._e()
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-md-6" }, [
+                            ]),
+                            _vm._v(" "),
                             _c(
                               "div",
                               { staticClass: "form-group" },
@@ -95667,9 +95803,11 @@ var render = function() {
                                       _vm._l(
                                         _vm.errors.stores[index]["region.id"],
                                         function(error, index) {
-                                          return _c("span", { key: index }, [
-                                            _vm._v(_vm._s(error))
-                                          ])
+                                          return _c(
+                                            "span",
+                                            { key: index, attrs: { Í: "" } },
+                                            [_vm._v(_vm._s(error))]
+                                          )
                                         }
                                       ),
                                       0
@@ -96171,10 +96309,51 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckbox.vue?vue&type=template&id=a1ef3840&":
-/*!*****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/swicthCheckbox.vue?vue&type=template&id=a1ef3840& ***!
-  \*****************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckboxCanbet.vue?vue&type=template&id=8e71e77e&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/swicthCheckboxCanbet.vue?vue&type=template&id=8e71e77e& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "checkbox-toggle",
+      attrs: { role: "checkbox", tabindex: "0", "aria-checked": _vm.toggled },
+      on: {
+        click: function($event) {
+          $event.stopPropagation()
+          return _vm.toggle($event)
+        }
+      }
+    },
+    [
+      _c("div", { staticClass: "checkbox-slide", class: _vm.classes }, [
+        _c("div", { staticClass: "checkbox-switch", class: _vm.classes })
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckboxObserve.vue?vue&type=template&id=22170b4c&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/swicthCheckboxObserve.vue?vue&type=template&id=22170b4c& ***!
+  \************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -112721,31 +112900,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_simple_alert__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-simple-alert */ "./node_modules/vue-simple-alert/lib/index.js");
 /* harmony import */ var vue_js_modal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue-js-modal */ "./node_modules/vue-js-modal/dist/index.js");
 /* harmony import */ var vue_js_modal__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(vue_js_modal__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _components_swicthCheckbox_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/swicthCheckbox.vue */ "./resources/js/components/swicthCheckbox.vue");
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
-/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue-star-rating */ "./node_modules/vue-star-rating/dist/star-rating.min.js");
-/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(vue_star_rating__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/contragents/contragentIndex.vue */ "./resources/js/components/contragents/contragentIndex.vue");
-/* harmony import */ var _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/contragents/contragentCreate.vue */ "./resources/js/components/contragents/contragentCreate.vue");
-/* harmony import */ var _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/contragents/contragentEdit.vue */ "./resources/js/components/contragents/contragentEdit.vue");
-/* harmony import */ var _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/contragents/company.vue */ "./resources/js/components/contragents/company.vue");
-/* harmony import */ var _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/contragents/contragentShow.vue */ "./resources/js/components/contragents/contragentShow.vue");
-/* harmony import */ var _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/auctions/auctionIndex.vue */ "./resources/js/components/auctions/auctionIndex.vue");
-/* harmony import */ var _components_auctions_auctionArchive_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/auctions/auctionArchive.vue */ "./resources/js/components/auctions/auctionArchive.vue");
-/* harmony import */ var _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/auctions/auctionMy.vue */ "./resources/js/components/auctions/auctionMy.vue");
-/* harmony import */ var _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/auctions/auctionBid.vue */ "./resources/js/components/auctions/auctionBid.vue");
-/* harmony import */ var _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/auctions/auctionCreate.vue */ "./resources/js/components/auctions/auctionCreate.vue");
-/* harmony import */ var _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/auctions/auctionEdit.vue */ "./resources/js/components/auctions/auctionEdit.vue");
-/* harmony import */ var _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/auctions/auctionShow.vue */ "./resources/js/components/auctions/auctionShow.vue");
-/* harmony import */ var _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/targets/targetCreate.vue */ "./resources/js/components/targets/targetCreate.vue");
-/* harmony import */ var _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/targets/targetEdit.vue */ "./resources/js/components/targets/targetEdit.vue");
-/* harmony import */ var _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./components/targets/targetIndex.vue */ "./resources/js/components/targets/targetIndex.vue");
-/* harmony import */ var _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./components/contragents/reviewsIndex.vue */ "./resources/js/components/contragents/reviewsIndex.vue");
+/* harmony import */ var _components_swicthCheckboxCanbet_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/swicthCheckboxCanbet.vue */ "./resources/js/components/swicthCheckboxCanbet.vue");
+/* harmony import */ var _components_swicthCheckboxObserve_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/swicthCheckboxObserve.vue */ "./resources/js/components/swicthCheckboxObserve.vue");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue-star-rating */ "./node_modules/vue-star-rating/dist/star-rating.min.js");
+/* harmony import */ var vue_star_rating__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(vue_star_rating__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/contragents/contragentIndex.vue */ "./resources/js/components/contragents/contragentIndex.vue");
+/* harmony import */ var _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/contragents/contragentCreate.vue */ "./resources/js/components/contragents/contragentCreate.vue");
+/* harmony import */ var _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/contragents/contragentEdit.vue */ "./resources/js/components/contragents/contragentEdit.vue");
+/* harmony import */ var _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/contragents/company.vue */ "./resources/js/components/contragents/company.vue");
+/* harmony import */ var _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/contragents/contragentShow.vue */ "./resources/js/components/contragents/contragentShow.vue");
+/* harmony import */ var _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/auctions/auctionIndex.vue */ "./resources/js/components/auctions/auctionIndex.vue");
+/* harmony import */ var _components_auctions_auctionArchive_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/auctions/auctionArchive.vue */ "./resources/js/components/auctions/auctionArchive.vue");
+/* harmony import */ var _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/auctions/auctionMy.vue */ "./resources/js/components/auctions/auctionMy.vue");
+/* harmony import */ var _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/auctions/auctionBid.vue */ "./resources/js/components/auctions/auctionBid.vue");
+/* harmony import */ var _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/auctions/auctionCreate.vue */ "./resources/js/components/auctions/auctionCreate.vue");
+/* harmony import */ var _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/auctions/auctionEdit.vue */ "./resources/js/components/auctions/auctionEdit.vue");
+/* harmony import */ var _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/auctions/auctionShow.vue */ "./resources/js/components/auctions/auctionShow.vue");
+/* harmony import */ var _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/targets/targetCreate.vue */ "./resources/js/components/targets/targetCreate.vue");
+/* harmony import */ var _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./components/targets/targetEdit.vue */ "./resources/js/components/targets/targetEdit.vue");
+/* harmony import */ var _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./components/targets/targetIndex.vue */ "./resources/js/components/targets/targetIndex.vue");
+/* harmony import */ var _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./components/contragents/reviewsIndex.vue */ "./resources/js/components/contragents/reviewsIndex.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -112763,30 +112943,32 @@ window.Vue.mixin(__webpack_require__(/*! ./trans */ "./resources/js/trans.js"));
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.directive("tooltip", v_tooltip__WEBPACK_IMPORTED_MODULE_6__["VTooltip"]);
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.directive("close-popover", v_tooltip__WEBPACK_IMPORTED_MODULE_6__["VClosePopover"]);
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.component("v-popover", v_tooltip__WEBPACK_IMPORTED_MODULE_6__["VPopover"]);
+vue__WEBPACK_IMPORTED_MODULE_14___default.a.directive("tooltip", v_tooltip__WEBPACK_IMPORTED_MODULE_6__["VTooltip"]);
+vue__WEBPACK_IMPORTED_MODULE_14___default.a.directive("close-popover", v_tooltip__WEBPACK_IMPORTED_MODULE_6__["VClosePopover"]);
+vue__WEBPACK_IMPORTED_MODULE_14___default.a.component("v-popover", v_tooltip__WEBPACK_IMPORTED_MODULE_6__["VPopover"]);
 
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.component("datetime", vue_datetime__WEBPACK_IMPORTED_MODULE_7__["Datetime"]);
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.use(vue_flash_message__WEBPACK_IMPORTED_MODULE_5___default.a);
+vue__WEBPACK_IMPORTED_MODULE_14___default.a.component("datetime", vue_datetime__WEBPACK_IMPORTED_MODULE_7__["Datetime"]);
+vue__WEBPACK_IMPORTED_MODULE_14___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_14___default.a.use(vue_flash_message__WEBPACK_IMPORTED_MODULE_5___default.a);
 
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.use(vue_simple_alert__WEBPACK_IMPORTED_MODULE_8__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_14___default.a.use(vue_simple_alert__WEBPACK_IMPORTED_MODULE_8__["default"]);
 
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.use(vue_js_modal__WEBPACK_IMPORTED_MODULE_9___default.a);
+vue__WEBPACK_IMPORTED_MODULE_14___default.a.use(vue_js_modal__WEBPACK_IMPORTED_MODULE_9___default.a);
 
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.component("switch-checkbox", _components_swicthCheckbox_vue__WEBPACK_IMPORTED_MODULE_10__["default"], {});
 
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.component("v-select", vue_select__WEBPACK_IMPORTED_MODULE_11___default.a, {});
+vue__WEBPACK_IMPORTED_MODULE_14___default.a.component("switch-checkbox-canbet", _components_swicthCheckboxCanbet_vue__WEBPACK_IMPORTED_MODULE_10__["default"], {});
+vue__WEBPACK_IMPORTED_MODULE_14___default.a.component("switch-checkbox-observe", _components_swicthCheckboxObserve_vue__WEBPACK_IMPORTED_MODULE_11__["default"], {});
 
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.component("StarRating", vue_star_rating__WEBPACK_IMPORTED_MODULE_12___default.a, {});
+vue__WEBPACK_IMPORTED_MODULE_14___default.a.component("v-select", vue_select__WEBPACK_IMPORTED_MODULE_12___default.a, {});
+
+vue__WEBPACK_IMPORTED_MODULE_14___default.a.component("StarRating", vue_star_rating__WEBPACK_IMPORTED_MODULE_13___default.a, {});
 
 
 var VueInputMask = __webpack_require__(/*! vue-inputmask */ "./node_modules/vue-inputmask/dist/vue-inputmask.js")["default"];
 
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.use(VueInputMask);
+vue__WEBPACK_IMPORTED_MODULE_14___default.a.use(VueInputMask);
 
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.use(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_14___default.a, {
+vue__WEBPACK_IMPORTED_MODULE_14___default.a.use(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_15___default.a, {
   // props
   color: "red"
 }, {// slots
@@ -112807,8 +112989,8 @@ vue__WEBPACK_IMPORTED_MODULE_13___default.a.use(vue_loading_overlay__WEBPACK_IMP
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_13___default.a.prototype.user = window.user;
-var app = new vue__WEBPACK_IMPORTED_MODULE_13___default.a({
+vue__WEBPACK_IMPORTED_MODULE_14___default.a.prototype.user = window.user;
+var app = new vue__WEBPACK_IMPORTED_MODULE_14___default.a({
   router: new vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]({
     mode: "history",
     beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {// react to route changes...
@@ -112819,67 +113001,67 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_13___default.a({
       redirect: "/personal/auctions"
     }, {
       path: "/personal/contragents",
-      component: _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+      component: _components_contragents_contragentIndex_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
       name: "contragentIndex"
     }, {
       path: "/personal/contragents/reviews",
-      component: _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_30__["default"],
+      component: _components_contragents_reviewsIndex_vue__WEBPACK_IMPORTED_MODULE_31__["default"],
       name: "reviews"
     }, {
       path: "/personal/contragents/create",
-      component: _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+      component: _components_contragents_contragentCreate_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
       name: "createContragent"
     }, {
       path: "/personal/contragents/show/:id",
-      component: _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
+      component: _components_contragents_contragentShow_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
       name: "showContragent"
     }, {
       path: "/personal/contragents/edit/:id",
-      component: _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+      component: _components_contragents_contragentEdit_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
       name: "editContragent"
     }, {
       path: "/personal/auctions",
-      component: _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
+      component: _components_auctions_auctionIndex_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
       name: "auctionIndex"
     }, {
       path: "/personal/auctions/archive",
-      component: _components_auctions_auctionArchive_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
+      component: _components_auctions_auctionArchive_vue__WEBPACK_IMPORTED_MODULE_22__["default"],
       name: "auctionArchive"
     }, {
       path: "/personal/auctions/my",
-      component: _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_22__["default"],
+      component: _components_auctions_auctionMy_vue__WEBPACK_IMPORTED_MODULE_23__["default"],
       name: "auctionMy"
     }, {
       path: "/personal/auctions/bid",
-      component: _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_23__["default"],
+      component: _components_auctions_auctionBid_vue__WEBPACK_IMPORTED_MODULE_24__["default"],
       name: "auctionBid"
     }, {
       path: "/personal/auctions/create",
-      component: _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_24__["default"],
+      component: _components_auctions_auctionCreate_vue__WEBPACK_IMPORTED_MODULE_25__["default"],
       name: "createAuction"
     }, {
       path: "/personal/auctions/show/:id",
-      component: _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_26__["default"],
+      component: _components_auctions_auctionShow_vue__WEBPACK_IMPORTED_MODULE_27__["default"],
       name: "showAuction"
     }, {
       path: "/personal/auctions/edit/:id",
-      component: _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_25__["default"],
+      component: _components_auctions_auctionEdit_vue__WEBPACK_IMPORTED_MODULE_26__["default"],
       name: "editAuction"
     }, {
       path: "/personal/targets",
-      component: _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_29__["default"],
+      component: _components_targets_targetIndex_vue__WEBPACK_IMPORTED_MODULE_30__["default"],
       name: "indexTarget"
     }, {
       path: "/personal/company",
-      component: _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
+      component: _components_contragents_company_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
       name: "company"
     }, {
       path: "/personal/targets/create",
-      component: _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_27__["default"],
+      component: _components_targets_targetCreate_vue__WEBPACK_IMPORTED_MODULE_28__["default"],
       name: "createTarget"
     }, {
       path: "/personal/targets/edit/:id",
-      component: _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_28__["default"],
+      component: _components_targets_targetEdit_vue__WEBPACK_IMPORTED_MODULE_29__["default"],
       name: "editTarget"
     }]
   }),
@@ -114074,17 +114256,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/swicthCheckbox.vue":
-/*!****************************************************!*\
-  !*** ./resources/js/components/swicthCheckbox.vue ***!
-  \****************************************************/
+/***/ "./resources/js/components/swicthCheckboxCanbet.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/swicthCheckboxCanbet.vue ***!
+  \**********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _swicthCheckbox_vue_vue_type_template_id_a1ef3840___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./swicthCheckbox.vue?vue&type=template&id=a1ef3840& */ "./resources/js/components/swicthCheckbox.vue?vue&type=template&id=a1ef3840&");
-/* harmony import */ var _swicthCheckbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./swicthCheckbox.vue?vue&type=script&lang=js& */ "./resources/js/components/swicthCheckbox.vue?vue&type=script&lang=js&");
+/* harmony import */ var _swicthCheckboxCanbet_vue_vue_type_template_id_8e71e77e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./swicthCheckboxCanbet.vue?vue&type=template&id=8e71e77e& */ "./resources/js/components/swicthCheckboxCanbet.vue?vue&type=template&id=8e71e77e&");
+/* harmony import */ var _swicthCheckboxCanbet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./swicthCheckboxCanbet.vue?vue&type=script&lang=js& */ "./resources/js/components/swicthCheckboxCanbet.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -114094,9 +114276,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _swicthCheckbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _swicthCheckbox_vue_vue_type_template_id_a1ef3840___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _swicthCheckbox_vue_vue_type_template_id_a1ef3840___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _swicthCheckboxCanbet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _swicthCheckboxCanbet_vue_vue_type_template_id_8e71e77e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _swicthCheckboxCanbet_vue_vue_type_template_id_8e71e77e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -114106,38 +114288,107 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/swicthCheckbox.vue"
+component.options.__file = "resources/js/components/swicthCheckboxCanbet.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/swicthCheckbox.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/components/swicthCheckbox.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************/
+/***/ "./resources/js/components/swicthCheckboxCanbet.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/swicthCheckboxCanbet.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./swicthCheckbox.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckbox.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckbox_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckboxCanbet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./swicthCheckboxCanbet.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckboxCanbet.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckboxCanbet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/swicthCheckbox.vue?vue&type=template&id=a1ef3840&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/swicthCheckbox.vue?vue&type=template&id=a1ef3840& ***!
-  \***********************************************************************************/
+/***/ "./resources/js/components/swicthCheckboxCanbet.vue?vue&type=template&id=8e71e77e&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/swicthCheckboxCanbet.vue?vue&type=template&id=8e71e77e& ***!
+  \*****************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckbox_vue_vue_type_template_id_a1ef3840___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./swicthCheckbox.vue?vue&type=template&id=a1ef3840& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckbox.vue?vue&type=template&id=a1ef3840&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckbox_vue_vue_type_template_id_a1ef3840___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckboxCanbet_vue_vue_type_template_id_8e71e77e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./swicthCheckboxCanbet.vue?vue&type=template&id=8e71e77e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckboxCanbet.vue?vue&type=template&id=8e71e77e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckboxCanbet_vue_vue_type_template_id_8e71e77e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckbox_vue_vue_type_template_id_a1ef3840___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckboxCanbet_vue_vue_type_template_id_8e71e77e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/swicthCheckboxObserve.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/swicthCheckboxObserve.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _swicthCheckboxObserve_vue_vue_type_template_id_22170b4c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./swicthCheckboxObserve.vue?vue&type=template&id=22170b4c& */ "./resources/js/components/swicthCheckboxObserve.vue?vue&type=template&id=22170b4c&");
+/* harmony import */ var _swicthCheckboxObserve_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./swicthCheckboxObserve.vue?vue&type=script&lang=js& */ "./resources/js/components/swicthCheckboxObserve.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _swicthCheckboxObserve_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _swicthCheckboxObserve_vue_vue_type_template_id_22170b4c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _swicthCheckboxObserve_vue_vue_type_template_id_22170b4c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/swicthCheckboxObserve.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/swicthCheckboxObserve.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/swicthCheckboxObserve.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckboxObserve_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./swicthCheckboxObserve.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckboxObserve.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckboxObserve_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/swicthCheckboxObserve.vue?vue&type=template&id=22170b4c&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/swicthCheckboxObserve.vue?vue&type=template&id=22170b4c& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckboxObserve_vue_vue_type_template_id_22170b4c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./swicthCheckboxObserve.vue?vue&type=template&id=22170b4c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/swicthCheckboxObserve.vue?vue&type=template&id=22170b4c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckboxObserve_vue_vue_type_template_id_22170b4c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_swicthCheckboxObserve_vue_vue_type_template_id_22170b4c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

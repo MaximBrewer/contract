@@ -66,7 +66,8 @@ export default {
       this.$emit("input", this.toggled * 1);
       var app = this;
       this.toggleBidder({
-        can_bet: app.toggled,
+        can_bet: app.bidder.can_bet,
+        observer: app.toggled,
         contragent_id: app.bidder.id,
         auction_id: app.auction.id
       });

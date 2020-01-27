@@ -136,10 +136,16 @@
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
+                          <store-map :store="store" />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
                           <label
                             class="control-label"
                           >{{ __('Store coords #', {store: index + 1}) }}</label>
                           <input
+                            readonly
                             type="text"
                             v-bind:class="{ 'is-invalid': errors.stores && errors.stores[index] && errors.stores[index].coords }"
                             v-model="contragent.stores[index].coords"
@@ -156,8 +162,6 @@
                               :key="index"
                             >{{ error }}</span>
                           </div>
-                        </div>
-                        <div class="form-group">
                           <label
                             class="control-label"
                           >{{ __('Store address #', {store: index + 1}) }}</label>
@@ -179,8 +183,6 @@
                             >{{ error }}</span>
                           </div>
                         </div>
-                      </div>
-                      <div class="col-md-6">
                         <div class="form-group">
                           <label
                             class="control-label"
@@ -222,6 +224,7 @@
                             <span
                               v-for="(error, index) in errors.stores[index]['region.id']"
                               :key="index"
+                              Í
                             >{{ error }}</span>
                           </div>
                         </div>
@@ -255,7 +258,11 @@
   </section>
 </template>
 <script>
+import storeMap from "../storeMap";
 export default {
+  components: {
+    storeMap: storeMap
+  },
   mounted() {
     let app = this;
     let loader = Vue.$loading.show();

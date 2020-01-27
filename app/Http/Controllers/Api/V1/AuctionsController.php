@@ -64,7 +64,7 @@ class AuctionsController extends Controller
     public function toggleBidder(Request $r)
     {
 
-        \App\ContragentAuction::where('auction_id', $r->post('auction_id'))->where('contragent_id', $r->post('contragent_id'))->update(['can_bet' => $r->post('can_bet')]);
+        \App\ContragentAuction::where('auction_id', $r->post('auction_id'))->where('contragent_id', $r->post('contragent_id'))->update(['can_bet' => $r->post('can_bet'), 'observer' => $r->post('observer')]);
 
         $auction = Auction::findOrFail($r->post('auction_id'));
 
