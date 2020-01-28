@@ -203,7 +203,7 @@ class AuctionsController extends Controller
 
         $new_auction = Auction::create($auction);
 
-        foreach($bidders as $bidder){
+        foreach ($bidders as $bidder) {
 
             Contragent::find($bidder['id'])->auctions()->attach($new_auction->id);
         }
@@ -567,7 +567,7 @@ class AuctionsController extends Controller
         }
         // DB::connection()->enableQueryLog();
 
-        $auctionBets = Bet::where('auction_id', $r->post('auction'))->where(function ($query) {
+        $auctionBets = Bet::where('auction_id', $r->post('auction'))->whereNot('contragent_id', $r->post('bidder'))->where(function ($query) {
             $query
                 ->whereNull('approved_volume')
                 ->orWhere('approved_volume', '<', 1);
@@ -576,6 +576,16 @@ class AuctionsController extends Controller
             ->orderBy('volume', 'desc')
             ->orderBy('created_at', 'asc')
             ->get();
+
+        $myBetsSum = Bet::where('auction_id', $r->post('auction'))->where('contragent_id', $r->post('bidder'))->where(function ($query) {
+            $query
+                ->whereNull('approved_volume')
+                ->orWhere('approved_volume', '<', 1);
+        })
+            ->sum('volume');
+
+
+        $freeVolume -= $myBetsSum;
 
 
         // $queries = DB::getQueryLog();

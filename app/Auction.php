@@ -96,20 +96,26 @@ class Auction extends Model
     public function getBiddersAttribute()
     {
 
-        $bidderIds = DB::select('select contragent_id, can_bet from contragent_auction where auction_id = ?', [$this->id]);
+        $bidderIds = DB::select('select contragent_id, can_bet, observer from contragent_auction where auction_id = ?', [$this->id]);
         $bidderIdsArray = [];
         foreach ($bidderIds as $bidderId) $bidderIdsArray[] = $bidderId->contragent_id;
         $contragents = Contragent::whereIn('id', $bidderIdsArray)->select('id', 'title', 'fio', 'phone')->get();
         $cAgents = [];
         foreach ($contragents as $contragent) {
             $can_bet = 0;
-            foreach ($bidderIds as $bidderId) if ($bidderId->contragent_id == $contragent->id) $can_bet = $bidderId->can_bet;
+            foreach ($bidderIds as $bidderId) {
+                if ($bidderId->contragent_id == $contragent->id) {
+                    $can_bet = $bidderId->can_bet;
+                    $observer = $bidderId->observer;
+                }
+            }
             $cAgents[$contragent->id] = [
                 'id' => $contragent->id,
                 'title' => $contragent->title,
                 'fio' => $contragent->fio,
                 'phone' => $contragent->phone,
-                'can_bet' => $can_bet
+                'can_bet' => $can_bet,
+                'observer' => $observer
             ];
         }
         return $cAgents;

@@ -6296,11 +6296,11 @@ __webpack_require__.r(__webpack_exports__);
         e.stop();
       }
 
+      var app = this;
       this.toggled = !this.toggled;
       this.$emit("input", this.toggled * 1);
-      var app = this;
       this.toggleBidder({
-        can_bet: app.toggled,
+        can_bet: !!app.toggled,
         observer: app.bidder.observer,
         contragent_id: app.bidder.id,
         auction_id: app.auction.id
