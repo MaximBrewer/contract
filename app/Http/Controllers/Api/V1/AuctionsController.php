@@ -567,7 +567,7 @@ class AuctionsController extends Controller
         }
         // DB::connection()->enableQueryLog();
 
-        $auctionBets = Bet::where('auction_id', $r->post('auction'))->whereNot('contragent_id', $r->post('bidder'))->where(function ($query) {
+        $auctionBets = Bet::where('auction_id', $r->post('auction'))->where('contragent_id', '<>', $r->post('bidder'))->where(function ($query) {
             $query
                 ->whereNull('approved_volume')
                 ->orWhere('approved_volume', '<', 1);
