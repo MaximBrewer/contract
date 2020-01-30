@@ -4435,6 +4435,7 @@ __webpack_require__.r(__webpack_exports__);
       loader.hide();
       app.bid.price = app.auction.price;
       app.bid.volume = 1;
+      app.renew();
     }); // .catch(function() {
     //   app.$fire({
     //     title: app.__("Error!"),
