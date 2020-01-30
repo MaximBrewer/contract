@@ -413,7 +413,7 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item" v-for="(bidder, index) in auction.bidders" :key="index">
                 {{ bidder.title }} ({{ bidder.fio }}, {{ __('Phone') }}: {{ bidder.phone }})
-                <h5>{{ __('Can bet') }}</h5>
+                <h6>{{ __('Can observe') }}</h6>
                 <switch-checkbox-observe
                   v-if="!auction.finished"
                   v-model="bidder.observer"
@@ -421,7 +421,7 @@
                   :auction="auction"
                   :bidder="bidder"
                 ></switch-checkbox-observe>
-                <h5>{{ __('Can observe') }}</h5>
+                <h6>{{ __('Can bet') }}</h6>
                 <switch-checkbox-canbet
                   v-if="!auction.finished"
                   v-model="bidder.can_bet"

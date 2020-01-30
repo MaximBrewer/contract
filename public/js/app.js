@@ -93173,7 +93173,7 @@ var render = function() {
                                   _vm._s(bidder.phone) +
                                   ")\n              "
                               ),
-                              _c("h5", [_vm._v(_vm._s(_vm.__("Can bet")))]),
+                              _c("h6", [_vm._v(_vm._s(_vm.__("Can observe")))]),
                               _vm._v(" "),
                               !_vm.auction.finished
                                 ? _c("switch-checkbox-observe", {
@@ -93192,7 +93192,7 @@ var render = function() {
                                   })
                                 : _vm._e(),
                               _vm._v(" "),
-                              _c("h5", [_vm._v(_vm._s(_vm.__("Can observe")))]),
+                              _c("h6", [_vm._v(_vm._s(_vm.__("Can bet")))]),
                               _vm._v(" "),
                               !_vm.auction.finished
                                 ? _c("switch-checkbox-canbet", {
