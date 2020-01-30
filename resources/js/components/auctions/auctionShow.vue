@@ -487,6 +487,7 @@ export default {
     app.auctionId = id;
     app.$root.$on("gotAuction", function(auction) {
       if (auction.id == app.auction.id) app.auction = auction;
+      app.renew();
     });
     axios
       .get(
@@ -512,7 +513,6 @@ export default {
         loader.hide();
         app.bid.price = app.auction.price;
         app.bid.volume = 1;
-        app.renew = !app.renew;
       });
     // .catch(function() {
     //   app.$fire({
@@ -543,13 +543,12 @@ export default {
       maxModalWidth: 600,
       auction: {},
       bid: {},
-      errors: {},
-      renew: 0
+      errors: {}
     };
   },
   created() {},
-  watch: {
-    renew: function(value) {
+  methods: {
+    renew() {
       let app = this;
       if (app.user && app.user.contragents && app.user.contragents[0]) {
         let contr = app.user.contragents[0].id;
@@ -562,9 +561,7 @@ export default {
         }
         if (app.auction.contragent.id == contr) app.mine = 1;
       }
-    }
-  },
-  methods: {
+    },
     removeBet(bet) {
       var app = this;
       app.$confirm(app.__("Are you sure?")).then(() => {

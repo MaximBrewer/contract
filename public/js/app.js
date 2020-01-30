@@ -4425,6 +4425,7 @@ __webpack_require__.r(__webpack_exports__);
     app.auctionId = id;
     app.$root.$on("gotAuction", function (auction) {
       if (auction.id == app.auction.id) app.auction = auction;
+      app.renew();
     });
     axios.get("/api/v1/contragents?search=csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
       app.bidders = resp.data;
@@ -4434,7 +4435,6 @@ __webpack_require__.r(__webpack_exports__);
       loader.hide();
       app.bid.price = app.auction.price;
       app.bid.volume = 1;
-      app.renew = !app.renew;
     }); // .catch(function() {
     //   app.$fire({
     //     title: app.__("Error!"),
@@ -4464,13 +4464,12 @@ __webpack_require__.r(__webpack_exports__);
       maxModalWidth: 600,
       auction: {},
       bid: {},
-      errors: {},
-      renew: 0
+      errors: {}
     };
   },
   created: function created() {},
-  watch: {
-    renew: function renew(value) {
+  methods: {
+    renew: function renew() {
       var app = this;
 
       if (app.user && app.user.contragents && app.user.contragents[0]) {
@@ -4486,9 +4485,7 @@ __webpack_require__.r(__webpack_exports__);
 
         if (app.auction.contragent.id == contr) app.mine = 1;
       }
-    }
-  },
-  methods: {
+    },
     removeBet: function removeBet(bet) {
       var app = this;
       app.$confirm(app.__("Are you sure?")).then(function () {
