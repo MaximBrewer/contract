@@ -13,11 +13,17 @@ window.Vue.mixin(require("./trans"));
 import VueRouter from "vue-router";
 import moment from "moment";
 import VueFlashMessage from "vue-flash-message";
-import { VTooltip, VPopover, VClosePopover } from "v-tooltip";
+import {
+    VTooltip,
+    VPopover,
+    VClosePopover
+} from "v-tooltip";
 Vue.directive("tooltip", VTooltip);
 Vue.directive("close-popover", VClosePopover);
 Vue.component("v-popover", VPopover);
-import { Datetime } from 'vue-datetime'
+import {
+    Datetime
+} from 'vue-datetime'
 Vue.component("datetime", Datetime);
 Vue.use(VueRouter);
 Vue.use(VueFlashMessage);
@@ -41,12 +47,10 @@ Vue.use(VueInputMask)
 
 import Loading from "vue-loading-overlay";
 Vue.use(
-    Loading,
-    {
+    Loading, {
         // props
         color: "red"
-    },
-    {
+    }, {
         // slots
     }
 );
@@ -78,8 +82,10 @@ const app = new Vue({
             // react to route changes...
             // don't forget to call next()
         },
-        routes: [
-            { path: "/personal", redirect: "/personal/auctions" },
+        routes: [{
+                path: "/personal",
+                redirect: "/personal/auctions"
+            },
             {
                 path: "/personal/contragents",
                 component: ContragentIndex,
@@ -174,11 +180,11 @@ const app = new Vue({
             axios
                 .get(
                     "/api/v1/federalDistricts?csrf_token=" +
-                        window.csrf_token +
-                        "&api_token=" +
-                        window.api_token
+                    window.csrf_token +
+                    "&api_token=" +
+                    window.api_token
                 )
-                .then(function(resp) {
+                .then(function (resp) {
                     app.federalDistricts = resp.data;
                 });
         },
@@ -186,12 +192,13 @@ const app = new Vue({
             axios
                 .get(
                     "/api/v1/regions?csrf_token=" +
-                        window.csrf_token +
-                        "&api_token=" +
-                        window.api_token,
+                    window.csrf_token +
+                    "&api_token=" +
+                    window.api_token +
+                    "&federal_district_id=" +
                     fd
                 )
-                .then(function(resp) {
+                .then(function (resp) {
                     app.regions = resp.data;
                 });
         },
@@ -199,11 +206,11 @@ const app = new Vue({
             axios
                 .get(
                     "/api/v1/types?csrf_token=" +
-                        window.csrf_token +
-                        "&api_token=" +
-                        window.api_token
+                    window.csrf_token +
+                    "&api_token=" +
+                    window.api_token
                 )
-                .then(function(resp) {
+                .then(function (resp) {
                     app.types = resp.data;
                 });
         },
@@ -211,11 +218,11 @@ const app = new Vue({
             axios
                 .get(
                     "/api/v1/stores?csrf_token=" +
-                        window.csrf_token +
-                        "&api_token=" +
-                        window.api_token
+                    window.csrf_token +
+                    "&api_token=" +
+                    window.api_token
                 )
-                .then(function(resp) {
+                .then(function (resp) {
                     app.stores = resp.data;
                 });
         },
@@ -223,11 +230,11 @@ const app = new Vue({
             axios
                 .get(
                     "/api/v1/multiplicities?csrf_token=" +
-                        window.csrf_token +
-                        "&api_token=" +
-                        window.api_token
+                    window.csrf_token +
+                    "&api_token=" +
+                    window.api_token
                 )
-                .then(function(resp) {
+                .then(function (resp) {
                     app.multiplicities = resp.data;
                 });
         },
@@ -235,11 +242,11 @@ const app = new Vue({
             axios
                 .get(
                     "/api/v1/products?csrf_token=" +
-                        window.csrf_token +
-                        "&api_token=" +
-                        window.api_token
+                    window.csrf_token +
+                    "&api_token=" +
+                    window.api_token
                 )
-                .then(function(resp) {
+                .then(function (resp) {
                     app.products = resp.data;
                 });
         },
@@ -266,7 +273,7 @@ const app = new Vue({
             // ).listen("MessagePushed", function(e) {
             //     console.log(e);
             // });
-            Echo.channel("every-minute").listen("PerMinute", function(e) {
+            Echo.channel("every-minute").listen("PerMinute", function (e) {
                 console.log(e);
                 app.time = e.time;
                 e.started.forEach(auction =>
@@ -278,13 +285,13 @@ const app = new Vue({
                 e.finished.forEach(auction =>
                     that.flash(
                         that.__("Auction #") +
-                            auction.id +
-                            that.__(" finished"),
+                        auction.id +
+                        that.__(" finished"),
                         "primary"
                     )
                 );
             });
-            Echo.channel("message-pushed").listen("MessagePushed", function(e) {
+            Echo.channel("message-pushed").listen("MessagePushed", function (e) {
                 console.log(e);
                 that.$emit("gotAuction", e.auction);
             });
@@ -292,7 +299,7 @@ const app = new Vue({
     }
 }).$mount("#app");
 
-window.Vue.filter("formatDate", function(value) {
+window.Vue.filter("formatDate", function (value) {
     if (value) {
         return moment(String(value))
             .utcOffset("+03:00")
@@ -301,7 +308,7 @@ window.Vue.filter("formatDate", function(value) {
     return "";
 });
 
-window.Vue.filter("formatDateTime", function(value) {
+window.Vue.filter("formatDateTime", function (value) {
     if (value) {
         return moment(String(value))
             .utcOffset("+03:00")

@@ -113023,7 +113023,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_14___default.a({
       });
     },
     getRegions: function getRegions(app, fd) {
-      axios.get("/api/v1/regions?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token, fd).then(function (resp) {
+      axios.get("/api/v1/regions?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token + "&federal_district_id=" + fd).then(function (resp) {
         app.regions = resp.data;
       });
     },
