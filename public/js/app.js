@@ -92434,27 +92434,42 @@ var render = function() {
                                           index
                                         ) {
                                           return _c("tr", { key: index }, [
-                                            _c("td", [
-                                              bet.contragent
-                                                ? _c(
-                                                    "div",
-                                                    {
-                                                      staticClass: "text-nowrap"
-                                                    },
-                                                    [
-                                                      _c(
-                                                        "div",
-                                                        { staticClass: "h6" },
-                                                        [
-                                                          _vm._v(
-                                                            _vm._s(bet.volume)
-                                                          )
-                                                        ]
-                                                      )
-                                                    ]
-                                                  )
-                                                : _vm._e()
-                                            ]),
+                                            _c(
+                                              "td",
+                                              {
+                                                class: {
+                                                  "table-success":
+                                                    _vm.app.user.contragents &&
+                                                    _vm.app.user
+                                                      .contragents[0] &&
+                                                    bet.contragent_id ==
+                                                      _vm.app.user
+                                                        .contragents[0].id
+                                                }
+                                              },
+                                              [
+                                                bet.contragent
+                                                  ? _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "text-nowrap"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "div",
+                                                          { staticClass: "h6" },
+                                                          [
+                                                            _vm._v(
+                                                              _vm._s(bet.volume)
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    )
+                                                  : _vm._e()
+                                              ]
+                                            ),
                                             _vm._v(" "),
                                             _c("td", [
                                               bet.contragent
