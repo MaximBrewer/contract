@@ -4416,6 +4416,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var app = this;
@@ -92433,19 +92437,20 @@ var render = function() {
                                           bet,
                                           index
                                         ) {
-                                          return _c("tr", { key: index }, [
-                                            _c(
-                                              "td",
-                                              {
-                                                class: {
-                                                  "table-success":
-                                                    _vm.user.contragents &&
-                                                    _vm.user.contragents[0] &&
-                                                    bet.contragent_id ==
-                                                      _vm.user.contragents[0].id
-                                                }
-                                              },
-                                              [
+                                          return _c(
+                                            "tr",
+                                            {
+                                              key: index,
+                                              class: {
+                                                "table-success":
+                                                  _vm.user.contragents &&
+                                                  _vm.user.contragents[0] &&
+                                                  bet.contragent_id ==
+                                                    _vm.user.contragents[0].id
+                                              }
+                                            },
+                                            [
+                                              _c("td", [
                                                 bet.contragent
                                                   ? _c(
                                                       "div",
@@ -92466,32 +92471,34 @@ var render = function() {
                                                       ]
                                                     )
                                                   : _vm._e()
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              bet.contragent
-                                                ? _c(
-                                                    "div",
-                                                    {
-                                                      staticClass: "text-nowrap"
-                                                    },
-                                                    [
-                                                      _c(
-                                                        "div",
-                                                        { staticClass: "h6" },
-                                                        [
-                                                          _vm._v(
-                                                            _vm._s(bet.price) +
-                                                              "₽"
-                                                          )
-                                                        ]
-                                                      )
-                                                    ]
-                                                  )
-                                                : _vm._e()
-                                            ])
-                                          ])
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                bet.contragent
+                                                  ? _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "text-nowrap"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "div",
+                                                          { staticClass: "h6" },
+                                                          [
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                bet.price
+                                                              ) + "₽"
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    )
+                                                  : _vm._e()
+                                              ])
+                                            ]
+                                          )
                                         }),
                                         0
                                       )
