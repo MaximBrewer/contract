@@ -135,8 +135,8 @@ class AuctionsController extends Controller
             "start_at" => "required",
             "finish_at" => "required|after:start_at",
             "comment" => "",
-            "start_price" => "required",
-            "volume" => "required",
+            "start_price" => "required|regex:~[0-9\.\,]*~",
+            "volume" => "required|regex:~[0-9\.\,]*~",
             "step" => "required",
         ]);
 

@@ -93,6 +93,16 @@ class Auction extends Model
         return $this->belongsTo('App\Contragent');
     }
 
+    public function setStepAttribute($value)
+    {
+        $this->attributes['step'] = str_replace(',', '.', $value);
+    }
+
+    public function setStartPriceAttribute($value)
+    {
+        $this->attributes['start_price'] = str_replace(',', '.', $value);
+    }
+
     public function getBiddersAttribute()
     {
 

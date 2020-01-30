@@ -216,6 +216,7 @@ export default {
         )
         .then(function(resp) {
           app.$router.replace("/personal/auctions/show/" + resp.data.id);
+          loader.hide();
         })
         .catch(function(errors) {
           app.errors = errors.response.data.errors;
