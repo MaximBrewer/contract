@@ -3472,10 +3472,11 @@ __webpack_require__.r(__webpack_exports__);
       app.filterAuctions(resp.data);
       app.auctions = resp.data;
       loader.hide();
-      app.getMultiplicities();
-      app.getProducts();
-      app.getStores();
-      app.getFederalDistricts();
+      app.$root.getFederalDistricts(app);
+      app.$root.getRegions(app, app.filter.federal_district ? app.filter.federal_district.id : false);
+      app.$root.getProducts(app);
+      app.$root.getMultiplicities(app);
+      app.$root.getMyStores(app);
     })["catch"](function (resp) {
       console.log(resp);
       loader.hide();
@@ -3525,7 +3526,8 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     filterGetRegions: function filterGetRegions() {
-      this.getRegions();
+      var app = this;
+      app.$root.getRegions(app, app.filter.federal_district ? app.filter.federal_district.id : false);
       this.filterAuctionsAuctions();
     },
     filterAuctionsAuctions: function filterAuctionsAuctions() {
@@ -3545,37 +3547,6 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (auctions.length == cnt) app.sorByDistance(app._auctions);
-    },
-    getFederalDistricts: function getFederalDistricts() {
-      var app = this;
-      axios.get("/api/v1/federalDistricts?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.federalDistricts = resp.data;
-      });
-    },
-    getRegions: function getRegions() {
-      var app = this;
-      if (!app.filter.federal_district) return [];
-      axios.get("/api/v1/regions?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token + "&federal_district_id=" + app.filter.federal_district.id).then(function (resp) {
-        app.regions = resp.data;
-      });
-    },
-    getMultiplicities: function getMultiplicities() {
-      var app = this;
-      axios.get("/api/v1/multiplicities?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.multiplicities = resp.data;
-      });
-    },
-    getStores: function getStores() {
-      var app = this;
-      axios.get("/api/v1/stores?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.stores = resp.data;
-      });
-    },
-    getProducts: function getProducts() {
-      var app = this;
-      axios.get("/api/v1/products?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.products = resp.data;
-      });
     },
     bidAuction: function bidAuction(id) {
       var app = this;
@@ -3840,10 +3811,11 @@ __webpack_require__.r(__webpack_exports__);
       app.filterAuctions(resp.data);
       app.auctions = resp.data;
       loader.hide();
-      app.getMultiplicities();
-      app.getProducts();
-      app.getStores();
-      app.getFederalDistricts();
+      app.$root.getFederalDistricts(app);
+      app.$root.getRegions(app, app.filter.federal_district ? app.filter.federal_district.id : false);
+      app.$root.getProducts(app);
+      app.$root.getMultiplicities(app);
+      app.$root.getMyStores(app);
     })["catch"](function (resp) {
       console.log(resp);
       loader.hide();
@@ -3912,7 +3884,8 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     filterGetRegions: function filterGetRegions() {
-      this.getRegions();
+      var app = this;
+      app.$root.getRegions(app, app.filter.federal_district ? app.filter.federal_district.id : false);
       this.filterAuctionsAuctions();
     },
     filterAuctionsAuctions: function filterAuctionsAuctions() {
@@ -3932,37 +3905,6 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (auctions.length == cnt) app.sorByDistance(app._auctions);
-    },
-    getFederalDistricts: function getFederalDistricts() {
-      var app = this;
-      axios.get("/api/v1/federalDistricts?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.federalDistricts = resp.data;
-      });
-    },
-    getRegions: function getRegions() {
-      var app = this;
-      if (!app.filter.federal_district) return [];
-      axios.get("/api/v1/regions?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token + "&federal_district_id=" + app.filter.federal_district.id).then(function (resp) {
-        app.regions = resp.data;
-      });
-    },
-    getMultiplicities: function getMultiplicities() {
-      var app = this;
-      axios.get("/api/v1/multiplicities?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.multiplicities = resp.data;
-      });
-    },
-    getStores: function getStores() {
-      var app = this;
-      axios.get("/api/v1/stores?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.stores = resp.data;
-      });
-    },
-    getProducts: function getProducts() {
-      var app = this;
-      axios.get("/api/v1/products?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
-        app.products = resp.data;
-      });
     },
     formatDate: function formatDate(indate) {
       var date = new Date(indate);
@@ -113101,7 +113043,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_14___default.a({
       });
     },
     getProducts: function getProducts(app) {
-      axios.get("/api/v1/types?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
+      axios.get("/api/v1/products?csrf_token=" + window.csrf_token + "&api_token=" + window.api_token).then(function (resp) {
         app.products = resp.data;
       });
     },

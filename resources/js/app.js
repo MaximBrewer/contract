@@ -234,7 +234,7 @@ const app = new Vue({
         getProducts(app) {
             axios
                 .get(
-                    "/api/v1/types?csrf_token=" +
+                    "/api/v1/products?csrf_token=" +
                         window.csrf_token +
                         "&api_token=" +
                         window.api_token
