@@ -92439,12 +92439,10 @@ var render = function() {
                                               {
                                                 class: {
                                                   "table-success":
-                                                    _vm.app.user.contragents &&
-                                                    _vm.app.user
-                                                      .contragents[0] &&
+                                                    _vm.user.contragents &&
+                                                    _vm.user.contragents[0] &&
                                                     bet.contragent_id ==
-                                                      _vm.app.user
-                                                        .contragents[0].id
+                                                      _vm.user.contragents[0].id
                                                 }
                                               },
                                               [

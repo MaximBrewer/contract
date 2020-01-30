@@ -215,7 +215,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="(bet, index) in auction.bets" v-bind:key="index">
-                    <td v-bind:class="{ 'table-success': app.user.contragents && app.user.contragents[0] && bet.contragent_id == app.user.contragents[0].id}">
+                    <td v-bind:class="{ 'table-success': user.contragents && user.contragents[0] && bet.contragent_id == user.contragents[0].id}">
                       <div v-if="bet.contragent" class="text-nowrap">
                         <div class="h6">{{ bet.volume }}</div>
                       </div>
