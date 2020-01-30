@@ -62,7 +62,7 @@
               <input
                 step=".01"
                 type="number"
-                :disabled="!!auction.confirmed"
+                :disabled="auction.bets && auction.bets.length"
                 v-model="auction.start_price"
                 class="form-control"
                 v-bind:class="{ 'is-invalid': errors.start_price }"
@@ -76,7 +76,7 @@
               <input
                 step=".01"
                 type="number"
-                :disabled="!!auction.confirmed"
+                :disabled="auction.bets && auction.bets.length"
                 v-model="auction.step"
                 class="form-control"
                 v-bind:class="{ 'is-invalid': errors.step }"
