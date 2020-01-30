@@ -60,6 +60,7 @@
             <div class="form-group">
               <label class="control-label">{{ __('Auction Start Price') }}</label>
               <input
+                step=".01"
                 type="number"
                 :disabled="!!auction.confirmed"
                 v-model="auction.start_price"
@@ -73,7 +74,8 @@
             <div class="form-group">
               <label class="control-label">{{ __('Auction Step') }}</label>
               <input
-                type="decimal"
+                step=".01"
+                type="number"
                 :disabled="!!auction.confirmed"
                 v-model="auction.step"
                 class="form-control"
