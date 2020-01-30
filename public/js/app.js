@@ -4457,6 +4457,7 @@ __webpack_require__.r(__webpack_exports__);
       auctionId: null,
       bidding: 0,
       can_bet: 0,
+      observer: 0,
       bidders: [],
       add_bidders: [],
       mine: 0,
@@ -4478,6 +4479,7 @@ __webpack_require__.r(__webpack_exports__);
         for (var r in app.auction.bidders) {
           if (app.auction.bidders[r].id == contr) {
             app.can_bet = app.auction.bidders[r].can_bet;
+            app.observer = app.auction.bidders[r].observer;
             app.bidding = 1;
           }
         }
@@ -92207,7 +92209,7 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _vm.can_bet
+                          !!_vm.can_bet
                             ? _c("div", { staticClass: "row" }, [
                                 _c("div", { staticClass: "col-md-3" }, [
                                   _c("div", { staticClass: "form-group" }, [
@@ -92397,7 +92399,9 @@ var render = function() {
                               ])
                             : _vm._e(),
                           _vm._v(" "),
-                          _vm.auction.bets && _vm.auction.bets.length
+                          _vm.auction.bets &&
+                          _vm.auction.bets.length &&
+                          !!_vm.observer
                             ? _c(
                                 "div",
                                 {

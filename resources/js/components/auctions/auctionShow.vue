@@ -149,7 +149,7 @@
         <div class="row" v-if="bidding">
           <div class="col-md-12">
             <div class="h4">{{ __("You are an auction participant") }}</div>
-            <div class="row" v-if="can_bet">
+            <div class="row" v-if="!!can_bet">
               <div class="col-md-3">
                 <div class="form-group">
                   <label class="control-label">{{ __('Auction Volume') }}</label>
@@ -204,7 +204,7 @@
             <div
               class="table-responsive"
               id="auction_activity"
-              v-if="auction.bets && auction.bets.length"
+              v-if="auction.bets && auction.bets.length && !!observer"
             >
               <table class="table table-bordered">
                 <thead>
@@ -536,6 +536,7 @@ export default {
       auctionId: null,
       bidding: 0,
       can_bet: 0,
+      observer: 0,
       bidders: [],
       add_bidders: [],
       mine: 0,
@@ -555,6 +556,7 @@ export default {
         for (let r in app.auction.bidders) {
           if (app.auction.bidders[r].id == contr) {
             app.can_bet = app.auction.bidders[r].can_bet;
+            app.observer = app.auction.bidders[r].observer;
             app.bidding = 1;
           }
         }
