@@ -59,10 +59,11 @@
           <div class="col-md-6">
             <div class="form-group">
               <label class="control-label">{{ __('Auction Start Price') }}</label>
+              {{auction.bets.length}}
               <input
                 step=".01"
                 type="number"
-                :disabled="auction.bets && auction.bets.length"
+                :disabled="auction.bets && !!auction.bets.length"
                 v-model="auction.start_price"
                 class="form-control"
                 v-bind:class="{ 'is-invalid': errors.start_price }"
@@ -76,7 +77,7 @@
               <input
                 step=".01"
                 type="number"
-                :disabled="auction.bets && auction.bets.length"
+                :disabled="auction.bets && !!auction.bets.length"
                 v-model="auction.step"
                 class="form-control"
                 v-bind:class="{ 'is-invalid': errors.step }"
@@ -150,11 +151,11 @@ export default {
       )
       .then(function(resp) {
         app.auction = resp.data;
-        loader.hide()
+        loader.hide();
       })
       .catch(function() {
         alert(app.__("Failed to load auction"));
-        loader.hide()
+        loader.hide();
       });
     app.getMultiplicities();
     app.getProducts();
@@ -243,15 +244,12 @@ export default {
           app.auction
         )
         .then(function(resp) {
-          loader.hide()
-          app.$router.replace(
-            "/personal/auctions/show/" +
-              app.auction.id
-          );
+          loader.hide();
+          app.$router.replace("/personal/auctions/show/" + app.auction.id);
         })
         .catch(function(errors) {
           app.errors = errors.response.data.errors;
-          loader.hide()
+          loader.hide();
         });
     }
   }

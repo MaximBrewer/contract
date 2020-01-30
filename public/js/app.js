@@ -3172,6 +3172,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var app = this;
@@ -90643,7 +90644,11 @@ var render = function() {
                     _c("label", { staticClass: "control-label" }, [
                       _vm._v(_vm._s(_vm.__("Auction Start Price")))
                     ]),
-                    _vm._v(" "),
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(_vm.auction.bets.length) +
+                        "\n            "
+                    ),
                     _c("input", {
                       directives: [
                         {
@@ -90658,7 +90663,7 @@ var render = function() {
                       attrs: {
                         step: ".01",
                         type: "number",
-                        disabled: _vm.auction.bets && _vm.auction.bets.length
+                        disabled: _vm.auction.bets && !!_vm.auction.bets.length
                       },
                       domProps: { value: _vm.auction.start_price },
                       on: {
@@ -90714,7 +90719,7 @@ var render = function() {
                       attrs: {
                         step: ".01",
                         type: "number",
-                        disabled: _vm.auction.bets && _vm.auction.bets.length
+                        disabled: _vm.auction.bets && !!_vm.auction.bets.length
                       },
                       domProps: { value: _vm.auction.step },
                       on: {
