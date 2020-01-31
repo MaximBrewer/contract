@@ -211,6 +211,7 @@
                   <tr>
                     <th>{{ __('Active volume') }}</th>
                     <th>{{ __('Active price') }}</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -227,6 +228,14 @@
                     <td>
                       <div v-if="bet.contragent" class="text-nowrap">
                         <div class="h6">{{ bet.price }}₽</div>
+                      </div>
+                    </td>
+                    <td>
+                      <div v-if="!!bet.approved_volume" class="text-nowrap">
+                        <div class="h6">{{ __('The volume of bet has approved') }}₽</div>
+                      </div>
+                      <div v-if="!!bet.approved_contract" class="text-nowrap">
+                        <div class="h6">{{ __('The contract has approved') }}₽</div>
                       </div>
                     </td>
                   </tr>

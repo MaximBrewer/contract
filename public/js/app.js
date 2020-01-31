@@ -4420,6 +4420,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var app = this;
@@ -92427,7 +92436,9 @@ var render = function() {
                                             _vm._v(
                                               _vm._s(_vm.__("Active price"))
                                             )
-                                          ])
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("th")
                                         ])
                                       ]),
                                       _vm._v(" "),
@@ -92489,6 +92500,58 @@ var render = function() {
                                                             _vm._v(
                                                               _vm._s(
                                                                 bet.price
+                                                              ) + "₽"
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    )
+                                                  : _vm._e()
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                !!bet.approved_volume
+                                                  ? _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "text-nowrap"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "div",
+                                                          { staticClass: "h6" },
+                                                          [
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                _vm.__(
+                                                                  "The volume of bet has approved"
+                                                                )
+                                                              ) + "₽"
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    )
+                                                  : _vm._e(),
+                                                _vm._v(" "),
+                                                !!bet.approved_contract
+                                                  ? _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "text-nowrap"
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "div",
+                                                          { staticClass: "h6" },
+                                                          [
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                _vm.__(
+                                                                  "The contract has approved"
+                                                                )
                                                               ) + "₽"
                                                             )
                                                           ]
