@@ -231,10 +231,10 @@
                       </div>
                     </td>
                     <td>
-                      <div v-if="!!bet.approved_volume" class="text-nowrap">
+                      <div v-if="!!bet.approved_volume && user.contragents && user.contragents[0] && bet.contragent_id == user.contragents[0].id" class="text-nowrap">
                         <div class="h6">{{ __('The volume of bet has approved') }}₽</div>
                       </div>
-                      <div v-if="!!bet.approved_contract" class="text-nowrap">
+                      <div v-if="!!bet.approved_contract && user.contragents && user.contragents[0] && bet.contragent_id == user.contragents[0].id" class="text-nowrap">
                         <div class="h6">{{ __('The contract has approved') }}₽</div>
                       </div>
                     </td>

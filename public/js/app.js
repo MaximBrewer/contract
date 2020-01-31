@@ -92510,7 +92510,11 @@ var render = function() {
                                               ]),
                                               _vm._v(" "),
                                               _c("td", [
-                                                !!bet.approved_volume
+                                                !!bet.approved_volume &&
+                                                _vm.user.contragents &&
+                                                _vm.user.contragents[0] &&
+                                                bet.contragent_id ==
+                                                  _vm.user.contragents[0].id
                                                   ? _c(
                                                       "div",
                                                       {
@@ -92535,7 +92539,11 @@ var render = function() {
                                                     )
                                                   : _vm._e(),
                                                 _vm._v(" "),
-                                                !!bet.approved_contract
+                                                !!bet.approved_contract &&
+                                                _vm.user.contragents &&
+                                                _vm.user.contragents[0] &&
+                                                bet.contragent_id ==
+                                                  _vm.user.contragents[0].id
                                                   ? _c(
                                                       "div",
                                                       {
