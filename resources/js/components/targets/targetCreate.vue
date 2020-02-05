@@ -72,9 +72,9 @@
 export default {
   mounted() {
     let app = this;
-    app.getMultiplicities();
-    app.getProducts();
-    app.getStores();
+    app.$root.getProducts(app);
+    app.$root.getMultiplicities(app);
+    app.$root.getMyStores(app);
     loader.hide();
   },
   data: function() {
@@ -95,45 +95,6 @@ export default {
     };
   },
   methods: {
-    getMultiplicities() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/multiplicities?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.multiplicities = resp.data;
-        });
-    },
-    getProducts() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/products?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.products = resp.data;
-        });
-    },
-    getStores() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/stores?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.stores = resp.data;
-        });
-    },
     saveForm() {
       event.preventDefault();
       var app = this;

@@ -271,6 +271,12 @@ export default {
     app.getFederalDistricts(app);
     app.getRegions(app);
     app.getTypes(app);
+    app.$root.getFederalDistricts(app);
+    app.$root.getRegions(
+      app,
+      app.filter.federal_district ? app.filter.federal_district.id : false
+    );
+    app.$root.getMyStores(app);
     app.contragentId = id;
     let loader = Vue.$loading.show();
     axios
@@ -314,46 +320,6 @@ export default {
     deleteStore(index) {
       let app = this;
       app.contragent.stores.splice(index, 1);
-    },
-    getFederalDistricts() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/federalDistricts?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.federalDistricts = resp.data;
-        });
-    },
-    getRegions() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/regions?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token,
-          this.contragent.federal_district
-        )
-        .then(function(resp) {
-          app.regions = resp.data;
-        });
-    },
-    getTypes() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/types?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.types = resp.data;
-        });
     },
     saveForm() {
       event.preventDefault();

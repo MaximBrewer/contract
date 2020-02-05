@@ -3,9 +3,7 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-import "vue-loading-overlay/dist/vue-loading.css";
-import "vue-datetime/dist/vue-datetime.css";
-import "vue-flash-message/dist/vue-flash-message.min.css";
+
 
 require("./bootstrap");
 window.Vue = require("vue");
@@ -41,8 +39,8 @@ import StarRating from "vue-star-rating";
 Vue.component("StarRating", StarRating, {});
 
 import Vue from 'vue'
-const VueInputMask = require('vue-inputmask').default
-Vue.use(VueInputMask)
+// const VueInputMask = require('vue-inputmask').default
+// Vue.use(VueInputMask)
 
 
 import Loading from "vue-loading-overlay";
@@ -72,6 +70,10 @@ import TargetCreate from "./components/targets/targetCreate.vue";
 import TargetEdit from "./components/targets/targetEdit.vue";
 import TargetIndex from "./components/targets/targetIndex.vue";
 import ReviewsIndex from "./components/contragents/reviewsIndex.vue";
+
+
+import AllAuctions from "./components/allAuctions.vue";
+Vue.component("AllAuctions", AllAuctions, {});
 
 Vue.prototype.user = window.user;
 
@@ -179,10 +181,8 @@ const app = new Vue({
         getFederalDistricts(app) {
             axios
                 .get(
-                    "/api/v1/federalDistricts?csrf_token=" +
-                    window.csrf_token +
-                    "&api_token=" +
-                    window.api_token
+                    "/federalDistricts?csrf_token=" +
+                    window.csrf_token
                 )
                 .then(function (resp) {
                     app.federalDistricts = resp.data;
@@ -191,10 +191,8 @@ const app = new Vue({
         getRegions(app, fd) {
             axios
                 .get(
-                    "/api/v1/regions?csrf_token=" +
+                    "/regions?csrf_token=" +
                     window.csrf_token +
-                    "&api_token=" +
-                    window.api_token +
                     "&federal_district_id=" +
                     fd
                 )
@@ -205,10 +203,8 @@ const app = new Vue({
         getTypes(app) {
             axios
                 .get(
-                    "/api/v1/types?csrf_token=" +
-                    window.csrf_token +
-                    "&api_token=" +
-                    window.api_token
+                    "/types?csrf_token=" +
+                    window.csrf_token
                 )
                 .then(function (resp) {
                     app.types = resp.data;
@@ -217,7 +213,7 @@ const app = new Vue({
         getMyStores(app) {
             axios
                 .get(
-                    "/api/v1/stores?csrf_token=" +
+                    "/stores?csrf_token=" +
                     window.csrf_token +
                     "&api_token=" +
                     window.api_token
@@ -229,10 +225,8 @@ const app = new Vue({
         getMultiplicities(app) {
             axios
                 .get(
-                    "/api/v1/multiplicities?csrf_token=" +
-                    window.csrf_token +
-                    "&api_token=" +
-                    window.api_token
+                    "/multiplicities?csrf_token=" +
+                    window.csrf_token
                 )
                 .then(function (resp) {
                     app.multiplicities = resp.data;
@@ -241,10 +235,8 @@ const app = new Vue({
         getProducts(app) {
             axios
                 .get(
-                    "/api/v1/products?csrf_token=" +
-                    window.csrf_token +
-                    "&api_token=" +
-                    window.api_token
+                    "/products?csrf_token=" +
+                    window.csrf_token
                 )
                 .then(function (resp) {
                     app.products = resp.data;
@@ -252,27 +244,6 @@ const app = new Vue({
         },
         listenForBroadcast() {
             var that = this;
-            // Echo.join("survey." + survey_id)
-            //     .here(users => {
-            //         console.log(users);
-            //         this.users_viewing = users;
-            //         this.$forceUpdate();
-            //     })
-            //     .joining(user => {
-            //         //   if (this.checkIfUserAlreadyViewingSurvey(user)) {
-            //         //     this.users_viewing.push(user);
-            //         //     this.$forceUpdate();
-            //         //   }
-            //     })
-            //     .leaving(user => {
-            //         //this.removeViewingUser(user);
-            //         this.$forceUpdate();
-            //     });
-            // Echo.channel(
-            //     "cross_contractru_database_presence-survey." + survey_id
-            // ).listen("MessagePushed", function(e) {
-            //     console.log(e);
-            // });
             Echo.channel("every-minute").listen("PerMinute", function (e) {
                 console.log(e);
                 app.time = e.time;

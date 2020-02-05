@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="container-fluid" v-if="auctions.length">
-      <div class="h2 text-center">{{ __('Archive') }}</div>
+      <div class="h2 text-center">{{ __('Upcoming auctions') }}</div>
       <div class="row">
         <div class="col-sm-6 col-md-5th">
           <div class="form-group">
@@ -57,7 +57,7 @@
             <v-select
               label="address"
               :searchable="false"
-              @input="sorByDistanceAuctions"
+              @input="loginDropdown"
               :options="stores"
               v-model="store"
             ></v-select>
@@ -74,6 +74,7 @@
               <th>{{ __('Time') }}</th>
               <th>{{ __('Store') }}</th>
               <th>{{ __('Description') }}</th>
+              <th>{{ __('Confirmed') }}</th>
               <th></th>
             </tr>
           </thead>
@@ -143,23 +144,38 @@
                 <span>{{ auction.comment }}</span>
               </td>
               <td>
+                <span
+                  v-tooltip="auction.confirmed ? __('Confirmed') : __('Not confirmed')"
+                  class="online"
+                  v-bind:class="{ 'is-online': auction.confirmed, 'is-offline': !auction.confirmed }"
+                ></span>
+              </td>
+              <td>
                 <div class="btn-group btn-group-sm" role="group">
                   <a
-                    v-tooltip="__('Copy the auction')"
-                    v-if="user.contragents[0].id == auction.contragent.id"
+                    v-tooltip="__('Take part in the auction')"
                     href="javascript:void(0)"
-                    class="btn btn-primary"
-                    @click="copyAuction(auction.id)"
+                    class="btn btn-success"
+                    @click="loginDropdown"
                   >
-                    <i class="mdi mdi-content-copy" aria-hidden="true"></i>
+                    <i class="mdi mdi-account-plus" aria-hidden="true"></i>
                   </a>
-                  <router-link
+                  <a
+                    v-tooltip="__('Unsubscribe from the auction')"
+                    href="javascript:void(0)"
+                    class="btn btn-danger"
+                    @click="loginDropdown"
+                  >
+                    <i class="mdi mdi-account-remove" aria-hidden="true"></i>
+                  </a>
+                  <a
                     v-tooltip="__('Go to auction page')"
-                    :to="{name: 'showAuction', 'params': {'id': auction.id}}"
+                    href="javascript:void(0)"
                     class="btn btn-secondary"
+                    @click="loginDropdown"
                   >
                     <i class="mdi mdi-eye" aria-hidden="true"></i>
-                  </router-link>
+                  </a>
                 </div>
               </td>
             </tr>
@@ -175,9 +191,6 @@ export default {
     return {
       auctions: [],
       _auctions: [],
-      isLoading: false,
-      fullPage: true,
-      store: null,
       filter: {
         federal_district: null,
         product: null,
@@ -193,26 +206,21 @@ export default {
   },
   mounted() {
     let app = this,
-      contragent_id = app.user.contragents[0].id,
-      action = "archive";
+      action = "all";
     let loader = Vue.$loading.show();
     axios
-      .get(
-        "/api/v1/auctions/" +
-          action +
-          "?csrf_token=" +
-          window.csrf_token +
-          "&api_token=" +
-          window.api_token
-      )
+      .get("/auctions/all?csrf_token=" + document.getElementsByName('csrf-token')[0].getAttribute('content'))
       .then(function(resp) {
         app.filterAuctions(resp.data);
         app.auctions = resp.data;
         loader.hide();
         app.$root.getFederalDistricts(app);
-        app.$root.getMultiplicities(app);
+        app.$root.getRegions(
+          app,
+          app.filter.federal_district ? app.filter.federal_district.id : false
+        );
         app.$root.getProducts(app);
-        app.$root.getMyStores(app);
+        app.$root.getMultiplicities(app)
       })
       .catch(function(resp) {
         console.log(resp);
@@ -221,57 +229,19 @@ export default {
       });
   },
   methods: {
-    getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-      let app = this;
-      var R = 6371; // Radius of the earth in km
-      var dLat = app.deg2rad(lat2 - lat1); // deg2rad below
-      var dLon = app.deg2rad(lon2 - lon1);
-      var a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(app.deg2rad(lat1)) *
-          Math.cos(app.deg2rad(lat2)) *
-          Math.sin(dLon / 2) *
-          Math.sin(dLon / 2);
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      var d = R * c; // Distance in km
-      return d;
-    },
-    deg2rad(deg) {
-      return deg * (Math.PI / 180);
-    },
-    sorByDistanceAuctions() {
-      this.sorByDistance(this._auctions);
-    },
-    sorByDistance(auctions) {
-      let app = this;
-      if (!app.store || !app.store.coords) return false;
-      let coords = app.store.coords.split(",");
-      if (coords.length < 2) return true;
-      let cnt = 0;
-      for (let i in auctions) {
-        let as = auctions[i].store.coords.split(",");
-        if (as.length < 2) continue;
-        auctions[i].range =
-          Math.round(
-            app.getDistanceFromLatLonInKm(
-              coords[0].trim(),
-              coords[1].trim(),
-              as[0].trim(),
-              as[1].trim()
-            ) * 100
-          ) / 100;
-        ++cnt;
-      }
-      if (cnt == auctions.length) {
-        console.log(cnt);
-        console.log(auctions);
-        auctions.sort(function(a, b) {
-          return a.range - b.range;
-        });
-      }
-    },
+      loginDropdown(e){
+          $("#loginDropdown").attr('aria-expanded', true)
+          $("#loginDropdown").parent().addClass('show')
+          $("#loginDropdownMenu").addClass('show')
+          e.stopPropagation()
+          window.scrollTo(0, 0)
+      },
     filterGetRegions() {
-      this.getRegions();
+      var app = this;
+      app.$root.getRegions(
+        app,
+        app.filter.federal_district ? app.filter.federal_district.id : false
+      );
       this.filterAuctionsAuctions();
     },
     filterAuctionsAuctions() {
@@ -295,98 +265,12 @@ export default {
           app._auctions.push(a);
         ++cnt;
       }
-      if (auctions.length == cnt) app.sorByDistance(app._auctions);
-    },
-    bidAuction(id) {
-      var app = this;
-      let loader = Vue.$loading.show();
-      axios
-        .get(
-          "/api/v1/auctions/all/bid/" +
-            id +
-            "?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.filterAuctions(resp.data);
-          app.auctions = resp.data;
-          loader.hide();
-        })
-        .catch(function(resp) {
-          alert(app.__("Failed to bid auction"));
-          loader.hide();
-        });
-    },
-    unbidAuction(id) {
-      var app = this;
-      let loader = Vue.$loading.show();
-      axios
-        .get(
-          "/api/v1/auctions/all/unbid/" +
-            id +
-            "?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.filterAuctions(resp.data);
-          app.auctions = resp.data;
-          loader.hide();
-        })
-        .catch(function(resp) {
-          alert(app.__("Failed to bid auction"));
-          loader.hide();
-        });
-    },
-    copyAuction(id) {
-      var app = this;
-      let loader = Vue.$loading.show();
-      axios
-        .post(
-          "/api/v1/auction/copy?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token,
-          {
-            id: id
-          }
-        )
-        .then(function(resp) {
-          loader.hide();
-          app.$router.push("/personal/auctions/edit/" + resp.data.id);
-        })
-        .catch(function(errors) {
-
-          console.log(errors);
-          app.$fire({
-            title: app.__("Error!"),
-            text: errors.response ? errors.response.data.message : "",
-            type: "error",
-            timer: 2000
-          });
-          loader.hide();
-        });
+    //   if (auctions.length == cnt) app.sorByDistance(app._auctions);
     },
     formatDate(indate) {
       let date = new Date(indate);
       return date.toLocaleString();
     }
-    // deleteEntry(id, index) {
-    //   var app = this;
-    //   if (confirm(app.__("Are you sure you want to delete the auction?"))) {
-    //     axios
-    //       .delete("/api/v1/auctions/" + id)
-    //       .then(function(resp) {
-    //         app.auctions.splice(index, 1);
-    //       })
-    //       .catch(function(resp) {
-    //         alert(app.__("Failed to delete auction"));
-    //       });
-    //   }
-    // }
   }
 };
 </script>

@@ -78,9 +78,9 @@ export default {
     let app = this;
     let loader = Vue.$loading.show();
     let id = app.$route.params.id;
-    app.getMultiplicities();
-    app.getProducts();
-    app.getStores();
+    app.$root.getProducts(app);
+    app.$root.getMultiplicities(app);
+    app.$root.getMyStores(app);
     axios
       .get(
         "/api/v1/targets/" +
@@ -123,45 +123,6 @@ export default {
   methods: {
     resetForm() {
       this.target = JSON.parse(JSON.stringify(this.target_clone));
-    },
-    getMultiplicities() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/multiplicities?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.multiplicities = resp.data;
-        });
-    },
-    getProducts() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/products?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.products = resp.data;
-        });
-    },
-    getStores() {
-      let app = this;
-      axios
-        .get(
-          "/api/v1/stores?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.stores = resp.data;
-        });
     },
     saveForm() {
       event.preventDefault();

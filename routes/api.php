@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -24,18 +27,11 @@ Route::group([
     'namespace' => 'Api\V1', 'as' => 'api.'
 ], function () {
     Route::resource('contragents', 'ContragentsController', ['except' => ['edit', 'create']]);
-    Route::resource('federalDistricts', 'FederalDistrictsController', ['except' => ['create', 'edit', 'update', 'delete']]);
-    Route::resource('regions', 'RegionsController', ['except' => ['create', 'edit', 'update', 'delete']]);
-    Route::resource('stores', 'StoresController', ['except' => ['create', 'edit', 'update', 'delete']]);
-    Route::resource('products', 'ProductsController', ['except' => ['create', 'edit', 'update', 'delete']]);
-    Route::resource('multiplicities', 'MultiplicitiesController', ['except' => ['create', 'edit', 'update', 'delete']]);
-    Route::resource('types', 'TypesController', ['except' => ['create', 'edit', 'update', 'delete']]);
 
     Route::get('company', 'ContragentsController@my');
     Route::patch('company', 'ContragentsController@updateCompany');
 
     Route::post('address', 'RegionsController@address');
-
 
     Route::post('auctions/bet', 'AuctionsController@bet');
     Route::get('auctions/bet/remove/{id}', 'AuctionsController@betRemove');
@@ -52,8 +48,6 @@ Route::group([
     Route::post('auction/edit/{id}', 'AuctionsController@update');
     Route::post('auctions/add_bidder', 'AuctionsController@addBidder');
     Route::post('auctions/bidder/toggle', 'AuctionsController@toggleBidder');
-
-    
 
 
     Route::get('targets/all', 'TargetsController@all');

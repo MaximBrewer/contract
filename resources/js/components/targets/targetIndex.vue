@@ -11,35 +11,15 @@
               <th>{{ __('Contragent') }}</th>
               <th>{{ __('Product') }}</th>
               <th>{{ __('Volume') }}</th>
-              <!-- <th>{{ __('Remain') }}</th>
-              <th>{{ __('Multiplicity') }}</th>
-              <th>{{ __('Federal district') }}</th>
-              <th>{{ __('Region') }}</th>
-              <th>{{ __('Address') }}</th>-->
             </tr>
           </thead>
           <tbody>
-            <tr v-for="target, index in targets">
+            <tr v-for="(target, index) in targets" :key="index">
               <td>{{ index + 1 }}</td>
               <td v-if="target.contragent && target.contragent.title">{{ target.contragent.title }}</td>
               <td v-else></td>
               <td>{{ target.product.title }}</td>
               <td>{{ target.volume }}</td>
-              <!-- <td>{{ target.renain }}</td>
-              <td
-                v-if="target.multiplicity && target.multiplicity.title"
-              >{{ target.multiplicity.title }}</td>
-              <td v-else></td>
-              <td
-                v-if="target.store && target.store.federal_district && target.store.federal_district.title"
-              >{{ target.store.federal_district.title }}</td>
-              <td v-else></td>
-              <td
-                v-if="target.store && target.store.region && target.store.region.title"
-              >{{ target.store.region.title }}</td>
-              <td v-else></td>
-              <td v-if="target.store && target.store.address">{{ target.store.address }}</td>
-              <td v-else></td>-->
             </tr>
           </tbody>
         </table>
