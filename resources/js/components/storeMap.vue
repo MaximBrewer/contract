@@ -21,7 +21,7 @@ export default {
   props: ["store"],
   data() {
     return {
-      controls: [],
+      controls: ['searchControl'],
       settings: {
         apiKey: "a5c4997f-eb1b-4fee-bea6-fb5c83005b5a",
         lang: "ru_RU",

@@ -140,7 +140,7 @@
                           <store-map :store="store" />
                         </div>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-6" v-tooltip="__('Choose place on map!')">
                         <div class="form-group">
                           <label
                             class="control-label"
@@ -167,6 +167,7 @@
                             class="control-label"
                           >{{ __('Store address #', {store: index + 1}) }}</label>
                           <input
+                            readonly
                             v-bind:class="{ 'is-invalid': errors.stores && errors.stores[index] && errors.stores[index].address }"
                             type="text"
                             v-model="contragent.stores[index].address"
@@ -189,6 +190,7 @@
                             class="control-label"
                           >{{ __('Store federal district #', {store: index + 1}) }}</label>
                           <v-select
+                            :disabled="true"
                             v-bind:class="{ 'is-invalid': errors.stores && errors.stores[index] && errors.stores[index]['federal_district.id'] }"
                             label="title"
                             :options="federalDistricts"
@@ -211,6 +213,7 @@
                             class="control-label"
                           >{{ __('Store region #', {store: index + 1}) }}</label>
                           <v-select
+                            :disabled="true"
                             v-bind:class="{ 'is-invalid': errors.stores && errors.stores[index] && errors.stores[index]['region.id'] }"
                             label="title"
                             :options="federalDistricts"
@@ -299,7 +302,7 @@ export default {
       fullPage: true,
       federalDistricts: [],
       types: [],
-      filter:{},
+      filter: {},
       regions: [],
       contragentId: null,
       contragent: {},
