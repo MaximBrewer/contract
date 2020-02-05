@@ -5266,9 +5266,7 @@ __webpack_require__.r(__webpack_exports__);
     var app = this;
     var id = app.user.contragents[0].id;
     if (!!app.$route.params.id) id = app.$route.params.id;
-    app.getFederalDistricts(app);
-    app.getRegions(app);
-    app.getTypes(app);
+    app.$root.getTypes(app);
     app.$root.getFederalDistricts(app);
     app.$root.getRegions(app, app.filter.federal_district ? app.filter.federal_district.id : false);
     app.$root.getMyStores(app);
@@ -5288,6 +5286,7 @@ __webpack_require__.r(__webpack_exports__);
       fullPage: true,
       federalDistricts: [],
       types: [],
+      filter: {},
       regions: [],
       contragentId: null,
       contragent: {},
