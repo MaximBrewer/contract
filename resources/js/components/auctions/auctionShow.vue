@@ -518,7 +518,7 @@
       >
         <template v-slot:header>&nbsp;</template>
         <template v-slot:text-message-body="{ message, me }">
-           <div>{{message.data.text}}</div><i><small>{{message.author == 'me' ? auction.contragent.title : message.author }} - {{ message.created_at | formatChatTime}}</small></i></slot>
+           <div>{{message.data.text}}</div><i><small>{{message.author == 'me' ? user.contragents[0].title : message.author }} - {{ message.created_at | formatChatTime}}</small></i></slot>
         </template>
         <template v-slot:user-avatar>&nbsp;</template>
 
@@ -549,7 +549,7 @@ export default {
       for(let j in this.auction.messages) 
       ar.push({
         id: this.auction.messages[j].id,
-        author: this.auction.id == this.auction.messages[j].auction_id ? 'me' : this.auction.messages[j].author,
+        author: window.user.id == this.auction.messages[j].user_id ? 'me' : this.auction.messages[j].author,
         auction_id: this.auction.messages[j].auction_id,
         type: this.auction.messages[j].type,
         data: this.auction.messages[j].data,
