@@ -3,6 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class Message extends JsonResource
 {
@@ -16,6 +18,7 @@ class Message extends JsonResource
     {
         return [
             'id' => $this->id,
+            'auction_id' => $this->auction_id,
             'author' => $this->username,
             'type' => 'text',
             'data' => [

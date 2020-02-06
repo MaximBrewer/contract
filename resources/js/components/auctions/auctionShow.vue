@@ -499,7 +499,7 @@
         :participants="participants"
         :titleImageUrl="titleImageUrl"
         :onMessageWasSent="onMessageWasSent"
-        :messageList="auction.messages"
+        :messageList="auctionMessages"
         :newMessagesCount="newMessagesCount"
         :isOpen="isChatOpen"
         :close="closeChat"
@@ -517,10 +517,12 @@
         @remove="deleteMessage"
       >
         <template v-slot:header>&nbsp;</template>
-        <template v-slot:text-message-body="{ message }">
-           <div>{{message.data.text}}</div><i><small>{{message.author == 'me' ? auction.contragent.title : message.author }} - {{ message.created_at | formatChatTime}}</small></i>
+        <template v-slot:text-message-body="{ message, me }">
+           <div>{{message.data.text}}</div><i><small>{{message.author == 'me' ? auction.contragent.title : message.author }} - {{ message.created_at | formatChatTime}}</small></i></slot>
         </template>
         <template v-slot:user-avatar>&nbsp;</template>
+
+        
         <!-- <template v-slot:user-avatar="scopedProps">
         <slot name="user-avatar" :user="scopedProps.user" :message="scopedProps.message">
         </slot>
@@ -539,6 +541,24 @@ import OpenIcon from "vue-beautiful-chat/src/assets/logo-no-bg.svg";
 import FileIcon from "vue-beautiful-chat/src/assets/file.svg";
 import CloseIconSvg from "vue-beautiful-chat/src/assets/close.svg";
 export default {
+  computed: {
+    // геттер вычисляемого значения
+    auctionMessages: function () {
+      // `this` указывает на экземпляр vm
+      let ar = [];
+      for(let j in this.auction.messages) 
+      ar.push({
+        id: this.auction.messages[j].id,
+        author: this.auction.id == this.auction.messages[j].auction_id ? 'me' : this.auction.messages[j].author,
+        auction_id: this.auction.messages[j].auction_id,
+        type: this.auction.messages[j].type,
+        data: this.auction.messages[j].data,
+        created_at: this.auction.messages[j].created_at,
+        updated_at: this.auction.messages[j].updated_at
+      });
+      return ar;
+    }
+  },
   mounted() {
     let app = this;
     let loader = Vue.$loading.show();
