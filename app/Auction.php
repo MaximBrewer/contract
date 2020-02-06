@@ -5,11 +5,13 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Product;
 use App\Store;
+use App\Message;
 use App\Multiplicity;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Contragent;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Message as MessageResource;
 
 
 class Auction extends Model
@@ -36,7 +38,8 @@ class Auction extends Model
         'filled',
         'bidder',
         'bidders',
-        'free_volume'
+        'free_volume',
+        'messages'
     ];
 
 
@@ -81,6 +84,11 @@ class Auction extends Model
     public function bets()
     {
         return $this->hasMany('App\Bet')->orderBy('created_at', 'desc');
+    }
+
+    public function getMessagesAttribute()
+    {
+        return MessageResource::collection(Message::where('auction_id', $this->id)->get());
     }
 
     public function multiplicity()

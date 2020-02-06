@@ -42,6 +42,8 @@ import Vue from 'vue'
 // const VueInputMask = require('vue-inputmask').default
 // Vue.use(VueInputMask)
 
+import Chat from "vue-beautiful-chat";
+Vue.use(Chat);
 
 import Loading from "vue-loading-overlay";
 Vue.use(

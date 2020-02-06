@@ -231,10 +231,16 @@
                       </div>
                     </td>
                     <td>
-                      <div v-if="!!bet.approved_volume && user.contragents && user.contragents[0] && bet.contragent_id == user.contragents[0].id" class="text-nowrap">
+                      <div
+                        v-if="!!bet.approved_volume && user.contragents && user.contragents[0] && bet.contragent_id == user.contragents[0].id"
+                        class="text-nowrap"
+                      >
                         <div class="h6">{{ __('The volume of bet has approved') }}₽</div>
                       </div>
-                      <div v-if="!!bet.approved_contract && user.contragents && user.contragents[0] && bet.contragent_id == user.contragents[0].id" class="text-nowrap">
+                      <div
+                        v-if="!!bet.approved_contract && user.contragents && user.contragents[0] && bet.contragent_id == user.contragents[0].id"
+                        class="text-nowrap"
+                      >
                         <div class="h6">{{ __('The contract has approved') }}₽</div>
                       </div>
                     </td>
@@ -488,9 +494,38 @@
         >{{ __('Add bidder') }}</button>
       </div>
     </modal>
+    <div>
+      <beautiful-chat
+        :participants="participants"
+        :titleImageUrl="titleImageUrl"
+        :onMessageWasSent="onMessageWasSent"
+        :messageList="auction.messages"
+        :newMessagesCount="newMessagesCount"
+        :isOpen="isChatOpen"
+        :close="closeChat"
+        :icons="icons"
+        :open="openChat"
+        :showEmoji="true"
+        :placeholder="placeholderMessage"
+        :showFile="false"
+        :showTypingIndicator="showTypingIndicator"
+        :colors="colors"
+        :alwaysScrollToBottom="alwaysScrollToBottom"
+        :messageStyling="messageStyling"
+        @onType="handleOnType"
+        @edit="editMessage"
+      >
+        <template v-slot:header>&nbsp;</template>
+        <template v-slot:system-message-body="{ message }">[System]: {{message.text}}</template>
+      </beautiful-chat>
+    </div>
   </section>
 </template>
 <script>
+import CloseIcon from "vue-beautiful-chat/src/assets/close-icon.png";
+import OpenIcon from "vue-beautiful-chat/src/assets/logo-no-bg.svg";
+import FileIcon from "vue-beautiful-chat/src/assets/file.svg";
+import CloseIconSvg from "vue-beautiful-chat/src/assets/close.svg";
 export default {
   mounted() {
     let app = this;
@@ -554,14 +589,114 @@ export default {
       bidders: [],
       add_bidders: [],
       mine: 0,
+      placeholderMessage: this.__("Write a message..."),
       maxModalWidth: 600,
       auction: {},
       bid: {},
-      errors: {}
+      errors: {},
+      icons: {
+        open: {
+          img: OpenIcon,
+          name: "default"
+        },
+        close: {
+          img: CloseIcon,
+          name: "default"
+        },
+        file: {
+          img: FileIcon,
+          name: "default"
+        },
+        closeSvg: {
+          img: CloseIconSvg,
+          name: "default"
+        }
+      },
+      participants: [], // the list of all the participant of the conversation. `name` is the user name, `id` is used to establish the author of a message, `imageUrl` is supposed to be the user avatar.
+      titleImageUrl: "",
+      messageList: [], // the list of the messages to show, can be paginated and adjusted dynamically
+      newMessagesCount: 0,
+      isChatOpen: true, // to determine whether the chat window should be open or closed
+      showTypingIndicator: "", // when set to a value matching the participant.id it shows the typing indicator for the specific user
+      colors: {
+        header: {
+          bg: "#343a40",
+          text: "#ffffff"
+        },
+        launcher: {
+          bg: "#343a40"
+        },
+        messageList: {
+          bg: "#ffffff"
+        },
+        sentMessage: {
+          bg: "#343a40",
+          text: "#ffffff"
+        },
+        receivedMessage: {
+          bg: "#eaeaea",
+          text: "#222222"
+        },
+        userInput: {
+          bg: "#f4f7f9",
+          text: "#565867"
+        }
+      }, // specifies the color scheme for the component
+      alwaysScrollToBottom: false, // when set to true always scrolls the chat to the bottom when new events are in (new message, user starts typing...)
+      messageStyling: true // enables *bold* /emph/ _underline_ and such (more info at github.com/mattezza/msgdown)
     };
   },
   created() {},
   methods: {
+    onMessageWasSent(message) {
+      this.sendMessage(message)
+      // called when the user sends a message
+      //this.messageList = [...this.messageList, message];
+    },
+    sendMessage(body) {
+      let app = this;
+      let message = {
+        auction_id: app.auction.id,
+        user_id: app.user.id,
+        message: body.data.text
+      };
+      axios
+        .post(
+          "/api/v1/messages?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token,
+          message
+        )
+        .then(function(resp) {})
+        .catch(function(errors) {
+          app.$fire({
+            title: app.__("Error!"),
+            text: errors.response.data.message,
+            type: "error",
+            timer: 5000
+          });
+        });
+    },
+    openChat() {
+      // called when the user clicks on the fab button to open the chat
+      this.isChatOpen = true;
+      this.newMessagesCount = 0;
+    },
+    closeChat() {
+      // called when the user clicks on the botton to close the chat
+      this.isChatOpen = false;
+    },
+    handleScrollToTop() {
+      // called when the user scrolls message list to top
+      // leverage pagination for loading another page of messages
+    },
+    handleOnType() {},
+    editMessage(message) {
+      const m = this.messageList.find(m => m.id === message.id);
+      m.isEdited = true;
+      m.data.text = message.data.text;
+    },
     renew() {
       let app = this;
       if (app.user && app.user.contragents && app.user.contragents[0]) {

@@ -27,6 +27,7 @@ Route::group([
     'namespace' => 'Api\V1', 'as' => 'api.'
 ], function () {
     Route::resource('contragents', 'ContragentsController', ['except' => ['edit', 'create']]);
+    Route::resource('messages', 'MessagesController', ['except' => ['edit', 'create']]);
 
     Route::get('company', 'ContragentsController@my');
     Route::patch('company', 'ContragentsController@updateCompany');
