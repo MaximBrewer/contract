@@ -20,6 +20,7 @@ class Message extends JsonResource
             'id' => $this->id,
             'auction_id' => $this->auction_id,
             'contragent_id' => $this->contragent_id,
+            'user_id' => $this->user_id,
             'author' => $this->username,
             'type' => 'text',
             'data' => [

@@ -518,7 +518,7 @@
       >
         <template v-slot:header>&nbsp;</template>
         <template v-slot:text-message-body="{ message, me }">
-           <div>{{message.data.text}}</div><i><small>{{message.author == 'me' ? user.contragents[0].title : message.author }} - {{ message.created_at | formatChatTime}}</small></i></slot>
+           <div>{{message.data.text}}</div><i><small>{{me ? user.contragents[0].title : message.author }} - {{ message.created_at | formatChatTime}}</small></i>
         </template>
         <template v-slot:user-avatar>&nbsp;</template>
 
