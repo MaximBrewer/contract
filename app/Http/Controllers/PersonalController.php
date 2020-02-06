@@ -26,21 +26,9 @@ class PersonalController extends Controller
 
     public function index()
     {
-        //\DB::connection()->enableQueryLog();
-        $carbon = new Carbon();
-        //$queries = \DB::getQueryLog();
-        //info($queries);
-
-        $token = Str::random(80);
-
-        User::find(Auth::user()->id)->forceFill([
-            'api_token' => hash('sha256', $token),
-        ])->save();
 
         $user = JavaScript::put([
-            'user' => Auth::user(),
-            'csrf_token' => csrf_token(),
-            'api_token' => $token
+            'csrf_token' => csrf_token()
         ]);
 
         return view('personal.index', ['user' => $user]);

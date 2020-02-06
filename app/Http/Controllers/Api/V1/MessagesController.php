@@ -21,9 +21,9 @@ class MessagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($auction_id)
+    public function index()
     {
-        return new MessagesCollection(Message::where('auction_id', $auction_id)->get());
+        return false;
     }
 
     /**
@@ -36,7 +36,7 @@ class MessagesController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            "message" => "required|min:10",
+            "message" => "required",
             "auction_id" => "exists:auctions,id"
         ]);
 

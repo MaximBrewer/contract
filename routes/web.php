@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use TCG\Voyager\Facades\Voyager;
+use Illuminate\Support\Facades\Session;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,8 +38,12 @@ Route::resource('/products', 'Api\V1\ProductsController', ['except' => ['create'
 Route::resource('/multiplicities', 'Api\V1\MultiplicitiesController', ['except' => ['create', 'edit', 'update', 'delete']]);
 Route::resource('/types', 'Api\V1\TypesController', ['except' => ['create', 'edit', 'update', 'delete']]);
 
-Route::get('/home', function () {return redirect('/personal');});
-Route::get('/', function () {return redirect('/personal');});
+Route::get('/home', function () {
+    return redirect('/personal');
+});
+Route::get('/', function () {
+    return redirect('/personal');
+});
 
 Route::get('/personal', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
 Route::get('/personal/contragents', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
@@ -71,6 +77,16 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 
+Route::get('auth', function () {
+
+    if (Auth::user()) {
+
+        return [
+            'user' => Auth::user(),
+            'api_token' => Session::get('_api_token')
+        ];
+    }
+});
 
 //Переключение языков
 // Route::get('setlocale/{lang}', function ($lang) {

@@ -505,7 +505,7 @@
         :close="closeChat"
         :icons="icons"
         :open="openChat"
-        :showEmoji="true"
+        :showEmoji="false"
         :placeholder="placeholderMessage"
         :showFile="false"
         :showTypingIndicator="showTypingIndicator"
@@ -514,9 +514,21 @@
         :messageStyling="messageStyling"
         @onType="handleOnType"
         @edit="editMessage"
+        @remove="deleteMessage"
       >
         <template v-slot:header>&nbsp;</template>
-        <template v-slot:system-message-body="{ message }">[System]: {{message.text}}</template>
+        <template v-slot:text-message-body="{ message }">
+           <div>{{message.data.text}}</div><i><small>{{message.author == 'me' ? auction.contragent.title : message.author }} - {{ message.created_at | formatChatTime}}</small></i>
+        </template>
+        <template v-slot:user-avatar>&nbsp;</template>
+        <!-- <template v-slot:user-avatar="scopedProps">
+        <slot name="user-avatar" :user="scopedProps.user" :message="scopedProps.message">
+        </slot>
+      </template>
+      <template v-slot:text-message-body="scopedProps">
+        <slot name="text-message-body" :message="scopedProps.message" :messageText="scopedProps.messageText" :messageColors="scopedProps.messageColors" :me="scopedProps.me">
+        </slot>
+        </template>-->
       </beautiful-chat>
     </div>
   </section>
@@ -649,9 +661,25 @@ export default {
   created() {},
   methods: {
     onMessageWasSent(message) {
-      this.sendMessage(message)
+      this.sendMessage(message);
       // called when the user sends a message
       //this.messageList = [...this.messageList, message];
+    },
+    editMessage(message) {
+      console.log(message);
+      // called when the user sends a message
+      //this.messageList = [...this.messageList, message];
+      return message;
+    },
+    deleteMessage(message) {
+      axios.delete(
+        "/api/v1/messages/" +
+          message.id +
+          "?csrf_token=" +
+          window.csrf_token +
+          "&api_token=" +
+          window.api_token
+      );
     },
     sendMessage(body) {
       let app = this;

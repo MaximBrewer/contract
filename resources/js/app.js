@@ -48,13 +48,12 @@ Vue.use(Chat);
 import Loading from "vue-loading-overlay";
 Vue.use(
     Loading, {
-        // props
-        color: "red"
-    }, {
-        // slots
-    }
+    // props
+    color: "red"
+}, {
+    // slots
+}
 );
-
 
 import ContragentIndex from "./components/contragents/contragentIndex.vue";
 import ContragentCreate from "./components/contragents/contragentCreate.vue";
@@ -77,8 +76,6 @@ import ReviewsIndex from "./components/contragents/reviewsIndex.vue";
 import AllAuctions from "./components/allAuctions.vue";
 Vue.component("AllAuctions", AllAuctions, {});
 
-Vue.prototype.user = window.user;
-
 const app = new Vue({
     router: new VueRouter({
         mode: "history",
@@ -87,89 +84,89 @@ const app = new Vue({
             // don't forget to call next()
         },
         routes: [{
-                path: "/personal",
-                redirect: "/personal/auctions"
-            },
-            {
-                path: "/personal/contragents",
-                component: ContragentIndex,
-                name: "contragentIndex"
-            },
-            {
-                path: "/personal/contragents/reviews",
-                component: ReviewsIndex,
-                name: "reviews"
-            },
-            {
-                path: "/personal/contragents/create",
-                component: ContragentCreate,
-                name: "createContragent"
-            },
-            {
-                path: "/personal/contragents/show/:id",
-                component: contragentShow,
-                name: "showContragent"
-            },
-            {
-                path: "/personal/contragents/edit/:id",
-                component: ContragentEdit,
-                name: "editContragent"
-            },
-            {
-                path: "/personal/auctions",
-                component: AuctionIndex,
-                name: "auctionIndex"
-            },
-            {
-                path: "/personal/auctions/archive",
-                component: AuctionArchive,
-                name: "auctionArchive"
-            },
-            {
-                path: "/personal/auctions/my",
-                component: AuctionMy,
-                name: "auctionMy"
-            },
-            {
-                path: "/personal/auctions/bid",
-                component: AuctionBid,
-                name: "auctionBid"
-            },
-            {
-                path: "/personal/auctions/create",
-                component: AuctionCreate,
-                name: "createAuction"
-            },
-            {
-                path: "/personal/auctions/show/:id",
-                component: AuctionShow,
-                name: "showAuction"
-            },
-            {
-                path: "/personal/auctions/edit/:id",
-                component: AuctionEdit,
-                name: "editAuction"
-            },
-            {
-                path: "/personal/targets",
-                component: TargetIndex,
-                name: "indexTarget"
-            },
-            {
-                path: "/personal/company",
-                component: Company,
-                name: "company"
-            },
-            {
-                path: "/personal/targets/create",
-                component: TargetCreate,
-                name: "createTarget"
-            },
-            {
-                path: "/personal/targets/edit/:id",
-                component: TargetEdit,
-                name: "editTarget"
-            }
+            path: "/personal",
+            redirect: "/personal/auctions"
+        },
+        {
+            path: "/personal/contragents",
+            component: ContragentIndex,
+            name: "contragentIndex"
+        },
+        {
+            path: "/personal/contragents/reviews",
+            component: ReviewsIndex,
+            name: "reviews"
+        },
+        {
+            path: "/personal/contragents/create",
+            component: ContragentCreate,
+            name: "createContragent"
+        },
+        {
+            path: "/personal/contragents/show/:id",
+            component: contragentShow,
+            name: "showContragent"
+        },
+        {
+            path: "/personal/contragents/edit/:id",
+            component: ContragentEdit,
+            name: "editContragent"
+        },
+        {
+            path: "/personal/auctions",
+            component: AuctionIndex,
+            name: "auctionIndex"
+        },
+        {
+            path: "/personal/auctions/archive",
+            component: AuctionArchive,
+            name: "auctionArchive"
+        },
+        {
+            path: "/personal/auctions/my",
+            component: AuctionMy,
+            name: "auctionMy"
+        },
+        {
+            path: "/personal/auctions/bid",
+            component: AuctionBid,
+            name: "auctionBid"
+        },
+        {
+            path: "/personal/auctions/create",
+            component: AuctionCreate,
+            name: "createAuction"
+        },
+        {
+            path: "/personal/auctions/show/:id",
+            component: AuctionShow,
+            name: "showAuction"
+        },
+        {
+            path: "/personal/auctions/edit/:id",
+            component: AuctionEdit,
+            name: "editAuction"
+        },
+        {
+            path: "/personal/targets",
+            component: TargetIndex,
+            name: "indexTarget"
+        },
+        {
+            path: "/personal/company",
+            component: Company,
+            name: "company"
+        },
+        {
+            path: "/personal/targets/create",
+            component: TargetCreate,
+            name: "createTarget"
+        },
+        {
+            path: "/personal/targets/edit/:id",
+            component: TargetEdit,
+            name: "editTarget"
+        }
         ]
     }),
     created() {
@@ -270,7 +267,26 @@ const app = new Vue({
             });
         }
     }
-}).$mount("#app");
+})
+
+
+axios
+    .get(
+        "/auth"
+    )
+    .then(res => {
+        if (!!res.data.user) {
+            window.user = res.data.user;
+            window.api_token = res.data.api_token;
+            Vue.prototype.user = window.user;
+        }
+        app.$mount("#app");
+    })
+    .catch(err => {
+        if (err.response && err.response.data && err.response.data.errors) { }
+    });
+
+
 
 window.Vue.filter("formatDate", function (value) {
     if (value) {
@@ -286,6 +302,15 @@ window.Vue.filter("formatDateTime", function (value) {
         return moment(String(value))
             .utcOffset("+03:00")
             .format("DD.MM.YYYY HH:mm");
+    }
+    return "";
+});
+
+window.Vue.filter("formatChatTime", function (value) {
+    if (value) {
+        return moment(String(value))
+            .utcOffset("+03:00")
+            .format("HH:mm:ss");
     }
     return "";
 });

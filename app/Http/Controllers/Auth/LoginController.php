@@ -7,6 +7,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -43,6 +45,15 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+
+        $token = Str::random(80);
+
+        User::find(Auth::user()->id)->forceFill([
+            'api_token' => hash('sha256', $token),
+        ])->save();
+
+        $request->session()->put('_api_token', $token);
+
     }
 
 
