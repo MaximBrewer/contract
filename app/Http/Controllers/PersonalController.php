@@ -24,13 +24,17 @@ class PersonalController extends Controller
         $this->middleware(['auth', 'verified']);
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        if (!$request->session()->get('_api_token')) {
+            $token = Str::random(80);
 
-        $user = JavaScript::put([
-            'csrf_token' => csrf_token()
-        ]);
+            User::find(Auth::user()->id)->forceFill([
+                'api_token' => hash('sha256', $token),
+            ])->save();
 
-        return view('personal.index', ['user' => $user]);
+            $request->session()->put('_api_token', $token);
+        }
+        return view('personal.index');
     }
 }

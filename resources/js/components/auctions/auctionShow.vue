@@ -518,11 +518,13 @@
       >
         <template v-slot:header>&nbsp;</template>
         <template v-slot:text-message-body="{ message, me }">
-           <div style="font-weight:bold;">{{message.data.text}}</div><i><small>{{me ? user.contragents[0].title : message.author }} - {{ message.created_at | formatChatTime}}</small></i>
+          <div style="font-weight:bold;">{{message.data.text}}</div>
+          <i>
+            <small>{{me ? user.contragents[0].title : message.author }} - {{ message.created_at | formatChatTime}}</small>
+          </i>
         </template>
         <template v-slot:user-avatar>&nbsp;</template>
 
-        
         <!-- <template v-slot:user-avatar="scopedProps">
         <slot name="user-avatar" :user="scopedProps.user" :message="scopedProps.message">
         </slot>
@@ -543,19 +545,22 @@ import CloseIconSvg from "vue-beautiful-chat/src/assets/close.svg";
 export default {
   computed: {
     // геттер вычисляемого значения
-    auctionMessages: function () {
+    auctionMessages: function() {
       // `this` указывает на экземпляр vm
       let ar = [];
-      for(let j in this.auction.messages) 
-      ar.push({
-        id: this.auction.messages[j].id,
-        author: this.user.id == this.auction.messages[j].user_id ? 'me' : this.auction.messages[j].author,
-        auction_id: this.auction.messages[j].auction_id,
-        type: this.auction.messages[j].type,
-        data: this.auction.messages[j].data,
-        created_at: this.auction.messages[j].created_at,
-        updated_at: this.auction.messages[j].updated_at
-      });
+      for (let j in this.auction.messages)
+        ar.push({
+          id: this.auction.messages[j].id,
+          author:
+            this.user.id == this.auction.messages[j].user_id
+              ? "me"
+              : this.auction.messages[j].author,
+          auction_id: this.auction.messages[j].auction_id,
+          type: this.auction.messages[j].type,
+          data: this.auction.messages[j].data,
+          created_at: this.auction.messages[j].created_at,
+          updated_at: this.auction.messages[j].updated_at
+        });
       return ar;
     }
   },
@@ -569,32 +574,16 @@ export default {
       if (auction.id == app.auction.id) app.auction = auction;
       app.renew();
     });
-    axios
-      .get(
-        "/api/v1/contragents?search=csrf_token=" +
-          window.csrf_token +
-          "&api_token=" +
-          window.api_token
-      )
-      .then(function(resp) {
-        app.bidders = resp.data;
-      });
-    axios
-      .get(
-        "/api/v1/auction/" +
-          id +
-          "?csrf_token=" +
-          window.csrf_token +
-          "&api_token=" +
-          window.api_token
-      )
-      .then(function(resp) {
-        app.auction = resp.data;
-        loader.hide();
-        app.bid.price = app.auction.price;
-        app.bid.volume = 1;
-        app.renew();
-      });
+    axios.get("/api/v1/contragents").then(function(resp) {
+      app.bidders = resp.data;
+    });
+    axios.get("/api/v1/auction/" + id).then(function(resp) {
+      app.auction = resp.data;
+      loader.hide();
+      app.bid.price = app.auction.price;
+      app.bid.volume = 1;
+      app.renew();
+    });
     // .catch(function() {
     //   app.$fire({
     //     title: app.__("Error!"),
@@ -693,12 +682,7 @@ export default {
     },
     deleteMessage(message) {
       axios.delete(
-        "/api/v1/messages/" +
-          message.id +
-          "?csrf_token=" +
-          window.csrf_token +
-          "&api_token=" +
-          window.api_token
+        "/api/v1/messages/" + message.id + "?api_token=" + window.api_token
       );
     },
     sendMessage(body) {
@@ -709,13 +693,7 @@ export default {
         message: body.data.text
       };
       axios
-        .post(
-          "/api/v1/messages?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token,
-          message
-        )
+        .post("/api/v1/messages?api_token=" + window.api_token, message)
         .then(function(resp) {})
         .catch(function(errors) {
           app.$fire({
@@ -766,9 +744,7 @@ export default {
           .get(
             "/api/v1/auctions/bet/remove/" +
               bet.id +
-              "?csrf_token=" +
-              window.csrf_token +
-              "&api_token=" +
+              "?api_token=" +
               window.api_token
           )
           .then(function(resp) {
@@ -788,16 +764,10 @@ export default {
       var app = this;
       app.$confirm(app.__("Are you sure?")).then(() => {
         axios
-          .post(
-            "/api/v1/auctions/bet/contract?csrf_token=" +
-              window.csrf_token +
-              "&api_token=" +
-              window.api_token,
-            {
-              id: bet.id,
-              correct: bet.correct
-            }
-          )
+          .post("/api/v1/auctions/bet/contract?api_token=" + window.api_token, {
+            id: bet.id,
+            correct: bet.correct
+          })
           .then(function(resp) {
             bet.approved_contract = 1;
           })
@@ -818,9 +788,7 @@ export default {
           .get(
             "/api/v1/auctions/bet/volume/" +
               bet.id +
-              "?csrf_token=" +
-              window.csrf_token +
-              "&api_token=" +
+              "?api_token=" +
               window.api_token
           )
           .then(function(resp) {
@@ -840,19 +808,13 @@ export default {
       var app = this;
       if (app.auction)
         axios
-          .post(
-            "/api/v1/auctions/bet?csrf_token=" +
-              window.csrf_token +
-              "&api_token=" +
-              window.api_token,
-            {
-              auction: app.auction.id,
-              bidder: app.user.contragents[0].id,
-              volume: app.bid.volume,
-              price: app.bid.price,
-              store: app.bid.store ? app.bid.store.id : false
-            }
-          )
+          .post("/api/v1/auctions/bet?api_token=" + window.api_token, {
+            auction: app.auction.id,
+            bidder: app.user.contragents[0].id,
+            volume: app.bid.volume,
+            price: app.bid.price,
+            store: app.bid.store ? app.bid.store.id : false
+          })
           .then(function(resp) {
             console.log(app.bid);
             app.$modal.hide("add_bidder");
@@ -870,16 +832,10 @@ export default {
       var app = this;
       if (app.auction && app.add_bidders.length)
         axios
-          .post(
-            "/api/v1/auctions/add_bidder?csrf_token=" +
-              window.csrf_token +
-              "&api_token=" +
-              window.api_token,
-            {
-              auction: app.auction.id,
-              bidders: app.add_bidders
-            }
-          )
+          .post("/api/v1/auctions/add_bidder?api_token=" + window.api_token, {
+            auction: app.auction.id,
+            bidders: app.add_bidders
+          })
           .then(function(resp) {
             app.auction = resp.data;
             app.$modal.hide("add_bidder");
@@ -893,9 +849,7 @@ export default {
             .get(
               "/api/v1/auction/delete/" +
                 app.auction.id +
-                "?csrf_token=" +
-                window.csrf_token +
-                "&api_token=" +
+                "?api_token=" +
                 window.api_token
             )
             .then(function(resp) {
@@ -911,9 +865,7 @@ export default {
             .get(
               "/api/v1/auction/confirm/" +
                 app.auction.id +
-                "?csrf_token=" +
-                window.csrf_token +
-                "&api_token=" +
+                "?api_token=" +
                 window.api_token
             )
             .then(function(resp) {
@@ -928,8 +880,6 @@ export default {
         .get(
           "/api/v1/contragents?search=" +
             search +
-            "csrf_token=" +
-            window.csrf_token +
             "&api_token=" +
             window.api_token
         )

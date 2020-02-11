@@ -53,8 +53,5 @@ class LoginController extends Controller
         ])->save();
 
         $request->session()->put('_api_token', $token);
-
     }
-
-
 }

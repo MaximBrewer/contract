@@ -270,6 +270,11 @@ const app = new Vue({
 })
 
 
+window.axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+};
+
 axios
     .get(
         "/auth"
@@ -279,6 +284,7 @@ axios
             window.user = res.data.user;
             window.api_token = res.data.api_token;
             Vue.prototype.user = window.user;
+            window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.api_token;
         }
         app.$mount("#app");
     })

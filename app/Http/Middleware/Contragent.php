@@ -19,26 +19,24 @@ class Contragent
         if (!Auth::user()) return redirect('/login');
         if (Auth::user()->role_id == 1 || Auth::user()->role_id == 3) return $next($request);
 
-        if (empty(Auth::user()->contragents->toArray())){
+        if (empty(Auth::user()->contragents->toArray())) {
 
             $contragent = \App\Contragent::where('inn', Auth::user()->inn)->first();
 
-            if(!$contragent){
+            if (!$contragent) {
                 $contragent = \App\Contragent::create([
                     "inn" => Auth::user()->inn
                 ]);
             }
 
             Auth::user()->contragents()->sync([$contragent->id]);
-
         } else {
 
             $contragent = Auth::user()->contragents[0];
-
         }
 
-        if($request->path() != 'personal/company')
-            if(
+        if ($request->path() != 'personal/company')
+            if (
                 !$contragent->title
                 || !$contragent->federal_district_id
                 || !$contragent->region
@@ -47,7 +45,5 @@ class Contragent
             ) return redirect('/personal/company');
 
         return $next($request);
-
     }
-    
 }
