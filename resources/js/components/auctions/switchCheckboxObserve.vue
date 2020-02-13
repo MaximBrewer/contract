@@ -14,8 +14,8 @@
 <script>
 export default {
   watch: {
-    value: function(val){
-      this.toggled = !!val
+    value: function(val) {
+      this.toggled = !!val;
     }
   },
   computed: {
@@ -36,13 +36,7 @@ export default {
     toggleBidder(req) {
       let app = this;
       axios
-        .post(
-          "/api/v1/auctions/bidder/toggle?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token,
-          req
-        )
+        .post("/api/v1/auctions/bidder/toggle", req)
         .then(function(resp) {
           // bet.delete();
         })
@@ -88,5 +82,4 @@ export default {
     }
   }
 };
-
 </script>

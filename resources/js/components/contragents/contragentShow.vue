@@ -1,43 +1,40 @@
 <template>
   <section class="contragent-edit-wrapper">
-    <div class="container">
+    <div class="container" v-if="$root.contragent">
       <div class="row">
         <div class="col-md-12">
           <div class="card">
-            <div class="card-header" v-if="contragent.title">
-              <strong>{{ contragent.title }}</strong>
+            <div class="card-header">
+              <strong>{{ $root.contragent.title }}</strong>
             </div>
             <ul class="list-group list-group-flush">
-              <li
-                class="list-group-item"
-                v-if="contragent.federal_district && contragent.federal_district.title"
-              >
+              <li class="list-group-item" v-if="$root.contragent.federal_district">
                 <strong>{{ __('Contragent region') }}:</strong>
-                {{ contragent.federal_district.title }}
+                {{ $root.contragent.federal_district.title }}
               </li>
-              <li class="list-group-item" v-if="contragent.region && contragent.region.title">
+              <li class="list-group-item" v-if="$root.contragent.region">
                 <strong>{{ __('Contragent federal district') }}:</strong>
-                {{ contragent.region.title }}
+                {{ $root.contragent.region.title }}
               </li>
-              <li class="list-group-item" v-if="contragent.types">
+              <li class="list-group-item">
                 <strong>{{ __('Contragent type') }}:</strong>
-                <span v-for="(type, index) in contragent.types" :key="index">{{ type.title }}</span>
+                <span v-for="(type, index) in $root.contragent.types" :key="index">{{ type.title }}</span>
               </li>
-              <li class="list-group-item" v-if="contragent.legal_address">
+              <li class="list-group-item">
                 <strong>{{ __('Contragent Legal address') }}:</strong>
-                {{ contragent.legal_address }}
+                {{ $root.contragent.legal_address }}
               </li>
-              <li class="list-group-item" v-if="contragent.fio">
+              <li class="list-group-item">
                 <strong>{{ __('Contragent contact') }}:</strong>
-                {{ contragent.fio }}
+                {{ $root.contragent.fio }}
               </li>
-              <li class="list-group-item" v-if="contragent.phone">
+              <li class="list-group-item">
                 <strong>{{ __('Contragent phone') }}:</strong>
-                {{ contragent.phone }}
+                {{ $root.contragent.phone }}
               </li>
-              <li class="list-group-item" v-if="contragent.inn">
+              <li class="list-group-item">
                 <strong>{{ __('Contragent TIN') }}:</strong>
-                {{ contragent.inn }}
+                {{ $root.contragent.inn }}
               </li>
             </ul>
           </div>
@@ -46,19 +43,19 @@
       </div>
       <div class="h4">{{ __('Contragent stores') }}</div>
       <div class="row">
-        <div class="col-md-6" v-for="(store, index) in contragent.stores" :key="index">
+        <div class="col-md-6" v-for="(store, index) in $root.contragent.stores" :key="index">
           <div class="card">
-            <div class="card-header">{{ contragent.stores[index].address }}</div>
+            <div class="card-header">{{ store.address }}</div>
             <ul class="list-group list-group-flush">
               <li
                 class="list-group-item"
-              >{{ __('Store federal district #', {store: index + 1}) }}: {{ contragent.stores[index].federal_district.title }}</li>
+              >{{ __('Store federal district #', {store: index + 1}) }}: {{ store.federal_district.title }}</li>
               <li
                 class="list-group-item"
-              >{{ __('Store region #', {store: index + 1}) }}: {{ contragent.stores[index].region.title }}</li>
+              >{{ __('Store region #', {store: index + 1}) }}: {{ store.region.title }}</li>
               <li
                 class="list-group-item"
-              >{{ __('Store coords #', {store: index + 1}) }}: {{ contragent.stores[index].coords }}</li>
+              >{{ __('Store coords #', {store: index + 1}) }}: {{ store.coords }}</li>
             </ul>
           </div>
         </div>
@@ -77,79 +74,16 @@ export default {
     let app = this;
     let loader = Vue.$loading.show();
     let id = app.$route.params.id;
-    app.contragentId = id;
     axios
-      .get(
-        "/api/v1/contragents/" +
-          id +
-          "?csrf_token=" +
-          window.csrf_token +
-          "&api_token=" +
-          window.api_token
-      )
+      .get("/api/v1/contragents/" + id)
       .then(function(resp) {
-        app.contragent = resp.data;
+        app.$root.contragent = resp.data;
         loader.hide();
       })
-      .catch(function() {
-        // alert(app.__("Failed to load contragent"));
+      .catch(function(err) {
+        cconsole.log(err);
         loader.hide();
       });
-  },
-  data: function() {
-    return {
-      isLoading: true,
-      onCancel: false,
-      fullPage: true,
-      federalDistricts: [],
-      types: [],
-      regions: [],
-      contragent: {
-        title: "",
-        federal_district: {
-          title: ""
-        },
-        region: {
-          title: ""
-        }
-      }
-    };
-  },
-  // methods: {
-  //   saveForm() {
-  //     event.preventDefault();
-  //     var app = this;
-  //     var newContragent = app.contragent;
-  //     let loader = Vue.$loading.show();
-  //     if (newContragent.federal_district)
-  //       newContragent.federal_district_id = newContragent.federal_district.id;
-  //     if (newContragent.region)
-  //       newContragent.region_id = newContragent.region.id;
-  //     newContragent.typeIds = [];
-  //     for (let t in newContragent.types)
-  //       newContragent.typeIds.push(newContragent.types[t].id);
-  //     axios
-  //       .patch(
-  //         "/api/v1/contragents/" +
-  //           app.contragentId +
-  //           "?csrf_token=" +
-  //           window.csrf_token +
-  //           "&api_token=" +
-  //           window.api_tokens,
-  //         newContragent
-  //       )
-  //       .then(function(resp) {
-  //         app.contragent = resp.data;
-  //         loader.hide();
-  //         //app.$router.replace("/");
-  //         return true;
-  //       })
-  //       .catch(function(resp) {
-  //         console.log(resp);
-  //         alert(app.__("Failed to edit contragent"));
-  //         loader.hide();
-  //       });
-  //   }
-  // }
+  }
 };
 </script>

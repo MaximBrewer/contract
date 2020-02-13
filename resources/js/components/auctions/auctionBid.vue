@@ -13,11 +13,6 @@
                   <th>{{ __('Volume') }}</th>
                   <th>{{ __('Remain') }}</th>
                   <th></th>
-                  <!-- <th>{{ __('Remain') }}</th>
-              <th>{{ __('Multiplicity') }}</th>
-              <th>{{ __('Federal district') }}</th>
-              <th>{{ __('Region') }}</th>
-                  <th>{{ __('Address') }}</th>-->
                 </tr>
               </thead>
               <tbody>
@@ -26,21 +21,6 @@
                   <td>{{ target.product.title }}</td>
                   <td>{{ target.volume }}</td>
                   <td>{{ target.volume - target.restof }}</td>
-                  <!-- <td>{{ target.renain }}</td>
-              <td
-                v-if="target.multiplicity && target.multiplicity.title"
-              >{{ target.multiplicity.title }}</td>
-              <td v-else></td>
-              <td
-                v-if="target.store && target.store.federal_district && target.store.federal_district.title"
-              >{{ target.store.federal_district.title }}</td>
-              <td v-else></td>
-              <td
-                v-if="target.store && target.store.region && target.store.region.title"
-              >{{ target.store.region.title }}</td>
-              <td v-else></td>
-              <td v-if="target.store && target.store.address">{{ target.store.address }}</td>
-                  <td v-else></td>-->
                   <td width="1">
                     <div class="btn-group btn-group-sm" role="group">
                       <a
@@ -71,176 +51,9 @@
           </div>
         </div>
       </div>
-      <div class="row" v-if="auctions.length">
+      <div class="row">
         <div class="col-lg-12">
-          <div class="row">
-            <div class="col-sm-6 col-md-5th">
-              <div class="form-group">
-                <label class="control-label">{{ __('Federal district') }}</label>
-                <v-select
-                  label="title"
-                  :searchable="false"
-                  @input="filterGetRegions"
-                  :options="federalDistricts"
-                  v-model="filter.federal_district"
-                ></v-select>
-              </div>
-            </div>
-            <div class="col-md-5th col-sm-6">
-              <div class="form-group">
-                <label class="control-label">{{ __('Region') }}</label>
-                <v-select
-                  label="title"
-                  :searchable="false"
-                  @input="filterAuctionsAuctions"
-                  :options="regions"
-                  v-model="filter.region"
-                ></v-select>
-              </div>
-            </div>
-            <div class="col-md-5th col-sm-6">
-              <div class="form-group">
-                <label class="control-label">{{ __('Product') }}</label>
-                <v-select
-                  label="title"
-                  :searchable="false"
-                  @input="filterAuctionsAuctions"
-                  :options="products"
-                  v-model="filter.product"
-                ></v-select>
-              </div>
-            </div>
-            <div class="col-md-5th col-sm-6">
-              <div class="form-group">
-                <label class="control-label">{{ __('Multiplicity') }}</label>
-                <v-select
-                  label="title"
-                  :searchable="false"
-                  @input="filterAuctionsAuctions"
-                  :options="multiplicities"
-                  v-model="filter.multiplicity"
-                ></v-select>
-              </div>
-            </div>
-            <div class="col-md-5th col-sm-6">
-              <div class="form-group">
-                <label class="control-label">{{ __('Sort by distance from store') }}</label>
-                <v-select
-                  label="address"
-                  :searchable="false"
-                  @input="sorByDistanceAuctions"
-                  :options="stores"
-                  v-model="store"
-                ></v-select>
-              </div>
-            </div>
-          </div>
-          <br />
-          <div class="table-responsive" id="auctions">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>{{ __('Auction') }}</th>
-                  <th>{{ __('Time') }}</th>
-                  <th>{{ __('Store') }}</th>
-                  <th>{{ __('Description') }}</th>
-                  <th>{{ __('Confirmed') }}</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="auction in _auctions" :key="'auction.' + auction.id">
-                  <th>{{ auction.id }}</th>
-                  <td>
-                    <div v-if="auction.contragent" class="text-nowrap">
-                      <strong v-if="false">{{ __('Contragent') }}:</strong>
-                      <div class="h6">{{ auction.contragent.title }}</div>
-                    </div>
-                    <div v-if="auction.product" class="text-nowrap">
-                      <strong>{{ __('Product') }}:</strong>
-                      <span>{{ auction.product.title }}</span>
-                    </div>
-                    <div v-if="auction.multiplicity" class="text-nowrap">
-                      <strong>{{ __('Multiplicity') }}:</strong>
-                      <span>{{ auction.multiplicity.title }}</span>
-                    </div>
-                    <div class="text-nowrap">
-                      <strong>{{ __('Volume') }}:</strong>
-                      <span>{{ auction.volume }}</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="text-nowrap">
-                      <strong>{{ __('Auction start price') }}:</strong>
-                      <span>{{ auction.start_price }}₽</span>
-                    </div>
-                    <div class="text-nowrap">
-                      <strong>{{ __('Auction step') }}:</strong>
-                      <span>{{ auction.step }}₽</span>
-                    </div>
-                    <div class="text-nowrap">
-                      <strong>{{ __('Auction start') }}:</strong>
-                      <span>{{ auction.start_at | formatDateTime }}</span>
-                    </div>
-                    <div class="text-nowrap">
-                      <strong>{{ __('Auction finish') }}:</strong>
-                      <span>{{ auction.finish_at | formatDateTime }}</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div v-if="auction.store && auction.store.federal_district" class="text-nowrap">
-                      <strong>{{ __('Auction store federal district') }}:</strong>
-                      <span>{{ auction.store.federal_district.title }}</span>
-                    </div>
-                    <div v-if="auction.store && auction.store.region" class="text-nowrap">
-                      <strong>{{ __('Auction store region') }}:</strong>
-                      <span>{{ auction.store.region.title }}</span>
-                    </div>
-                    <div v-if="auction.store">
-                      <strong>{{ __('Auction store address') }}:</strong>
-                      <span>{{ auction.store.address }}</span>
-                    </div>
-                    <div v-if="auction.store && false" class="text-nowrap">
-                      <strong>{{ __('Auction store coords') }}:</strong>
-                      <br />
-                      <span>{{ auction.store.coords }}</span>
-                    </div>
-                  </td>
-                  <td>
-                    <span>{{ auction.comment }}</span>
-                  </td>
-                  <td>
-                    <span
-                      v-tooltip="auction.confirmed ? __('Confirmed') : __('Not confirmed')"
-                      class="online"
-                      v-bind:class="{ 'is-online': auction.confirmed, 'is-offline': !auction.confirmed }"
-                    ></span>
-                  </td>
-                  <td>
-                    <div class="btn-group btn-group-sm" role="group">
-                      <a
-                        v-tooltip="__('Unsubscribe from the auction')"
-                        v-if="auction.bidder"
-                        href="javascript:void(0)"
-                        class="btn btn-danger"
-                        @click="unbidAuction(auction.id)"
-                      >
-                        <i class="mdi mdi-account-remove" aria-hidden="true"></i>
-                      </a>
-                      <router-link
-                        v-tooltip="__('Go to auction page')"
-                        :to="{name: 'showAuction', 'params': {'id': auction.id}}"
-                        class="btn btn-secondary"
-                      >
-                        <i class="mdi mdi-eye" aria-hidden="true"></i>
-                      </router-link>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <auctions-list :action="'bid'"></auctions-list>
         </div>
       </div>
     </div>
@@ -298,226 +111,58 @@
   </section>
 </template>
 <script>
+import auctionsList from "./auctionsList";
 export default {
+  components: {
+    auctionsList: auctionsList
+  },
   data: function() {
     return {
-      auctions: [],
-      _auctions: [],
       targets: [],
       modal_target: null,
       modal_auction: null,
-      maxModalWidth: 600,
-      fullPage: true,
-      store: null,
-      filter: {
-        federal_district: null,
-        product: null,
-        multiplicity: null,
-        region: null
-      },
-      federalDistricts: [],
-      products: [],
-      multiplicities: [],
-      regions: [],
-      stores: []
+      maxModalWidth: 600
     };
   },
   mounted() {
-    let app = this,
-      contragent_id = app.user.contragents[0].id;
-    let loader = Vue.$loading.show();
-    app.$root.$on("gotAuction", function(auction) {
-      app.checkTargets();
+    this.$root.$on("gotAuction", function(auction) {
+      this.checkTargets();
     });
-    app.$root.getFederalDistricts(app);
-    app.$root.getRegions(
-      app,
-      app.filter.federal_district ? app.filter.federal_district.id : false
-    );
-    app.$root.getProducts(app);
-    app.$root.getMultiplicities(app);
-    app.$root.getMyStores(app);
-    axios
-      .get(
-        "/api/v1/auctions/bid?csrf_token=" +
-          window.csrf_token +
-          "&api_token=" +
-          window.api_token
-      )
-      .then(function(resp) {
-        app.filterAuctions(resp.data);
-        app.auctions = resp.data;
-        loader.hide();
-      })
-      .catch(function(resp) {
-        console.log(resp);
-        loader.hide();
-      });
-    app.checkTargets();
+    this.checkTargets();
   },
   methods: {
     checkTargets() {
       let app = this;
       axios
-        .get(
-          "/api/v1/targets/?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.targets = resp.data;
+        .get("/api/v1/targets/")
+        .then(function(res) {
+          app.targets = res.data;
         })
-        .catch(function(resp) {
-          console.log(resp);
+        .catch(function(err) {
+          console.log(err);
         });
     },
     showPopup(controller, id, template, index) {
       var app = this;
-      axios
-        .get(
-          "/api/v1/" +
-            controller +
-            "/" +
-            id +
-            "?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.modal_target = resp.data;
-          app.modal_target.index = index;
-          app.$modal.show("target");
-        });
+      axios.get("/api/v1/" + controller + "/" + id).then(function(resp) {
+        app.modal_target = resp.data;
+        app.modal_target.index = index;
+        app.$modal.show("target");
+      });
     },
     deleteTarget(id, index) {
       var app = this;
       this.$confirm(this.__("Are you sure?")).then(() => {
-        axios
-          .delete(
-            "/api/v1/targets/" +
-              id +
-              "?csrf_token=" +
-              window.csrf_token +
-              "&api_token=" +
-              window.api_token
-          )
-          .then(function(resp) {
-            if (resp.data) app.targets.splice(index, 1);
-            else
-              app.$fire({
-                title: app.__("Failed to delete target"),
-                type: "error",
-                timer: 3000
-              });
-          });
+        axios.delete("/api/v1/targets/" + id).then(function(resp) {
+          if (resp.data) app.targets.splice(index, 1);
+          else
+            app.$fire({
+              title: app.__("Failed to delete target"),
+              type: "error",
+              timer: 3000
+            });
+        });
       });
-    },
-    getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-      let app = this;
-      var R = 6371; // Radius of the earth in km
-      var dLat = app.deg2rad(lat2 - lat1); // deg2rad below
-      var dLon = app.deg2rad(lon2 - lon1);
-      var a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(app.deg2rad(lat1)) *
-          Math.cos(app.deg2rad(lat2)) *
-          Math.sin(dLon / 2) *
-          Math.sin(dLon / 2);
-      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      var d = R * c; // Distance in km
-      return d;
-    },
-    deg2rad(deg) {
-      return deg * (Math.PI / 180);
-    },
-    sorByDistanceAuctions() {
-      this.sorByDistance(this._auctions);
-    },
-    sorByDistance(auctions) {
-      let app = this;
-      if (!app.store || !app.store.coords) return false;
-      let coords = app.store.coords.split(",");
-      if (coords.length < 2) return true;
-      let cnt = 0;
-      for (let i in auctions) {
-        let as = auctions[i].store.coords.split(",");
-        if (as.length < 2) continue;
-        auctions[i].range =
-          Math.round(
-            app.getDistanceFromLatLonInKm(
-              coords[0].trim(),
-              coords[1].trim(),
-              as[0].trim(),
-              as[1].trim()
-            ) * 100
-          ) / 100;
-        ++cnt;
-      }
-      if (cnt == auctions.length) {
-        console.log(cnt);
-        console.log(auctions);
-        auctions.sort(function(a, b) {
-          return a.range - b.range;
-        });
-      }
-    },
-    filterGetRegions() {
-      this.$root.getRegions(
-        app,
-        app.filter.federal_district ? app.filter.federal_district.id : false
-      );
-      this.filterAuctionsAuctions();
-    },
-    filterAuctionsAuctions() {
-      this.filterAuctions(this.auctions);
-    },
-    filterAuctions(auctions) {
-      var app = this;
-      app._auctions = [];
-      let cnt = 0;
-      for (let v in auctions) {
-        let a = auctions[v];
-        let f = app.filter;
-        let s = a.store;
-        if (
-          (!f.federal_district ||
-            f.federal_district.id == s.federal_district.id) &&
-          (!f.region || f.region.id == s.region.id) &&
-          (!f.product || f.product.id == a.product.id) &&
-          (!f.multiplicity || f.multiplicity.id == a.multiplicity.id)
-        )
-          app._auctions.push(a);
-        ++cnt;
-      }
-      if (auctions.length == cnt) app.sorByDistance(app._auctions);
-    },
-    unbidAuction(id) {
-      var app = this;
-      let loader = Vue.$loading.show();
-      axios
-        .get(
-          "/api/v1/auctions/bid/unbid/" +
-            id +
-            "?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.filterAuctions(resp.data);
-          app.auctions = resp.data;
-          loader.hide();
-        })
-        .catch(function(resp) {
-          alert(app.__("Failed to bid auction"));
-          loader.hide();
-        });
-    },
-    formatDate(indate) {
-      let date = new Date(indate);
-      return date.toLocaleString();
     }
   }
 };

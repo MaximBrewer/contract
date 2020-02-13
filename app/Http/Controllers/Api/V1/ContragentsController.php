@@ -99,10 +99,21 @@ class ContragentsController extends Controller
     public function update(Request $request, $id)
     {
 
+        $validator = Validator::make($request->all(), [
+            "title" => "required|min:3",
+            "fio" => "required|min:3",
+            "phone" => "required|min:6",
+            "legal_address" => "required|min:3",
+            "federal_district.id" => "required|exists:federal_districts,id",
+            "region.id" => "required|exists:regions,id",
+        ]);
+
+        $validator->validate();
+
         $contragent = Contragent::findOrFail($id);
         $contragent->types()->sync($request->all()['typeIds']);
         $storesIds = [];
-        $contragent->update($request->all());
+        $contragent->update($request->except(['inn']));
         if (count($request->all()['stores'])) {
             foreach ($request->all()['stores'] as $store) {
                 if ($store['coords'] && $store['address']) {

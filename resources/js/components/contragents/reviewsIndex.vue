@@ -37,20 +37,15 @@
   </section>
 </template>
 <script>
-var _ = require("lodash");
 import StarRating from "vue-star-rating";
 export default {
-  components: {
-    StarRating: StarRating
-  },
+  components: { StarRating: StarRating },
   mounted() {
-    let app = this;
-    app.fetchComments();
+    this.fetchComments();
   },
   data() {
     return {
       comments: [],
-      user: window.user,
       starSize: 20
     };
   },
@@ -59,12 +54,7 @@ export default {
       let app = this;
       let loader = Vue.$loading.show();
       axios
-        .get(
-          "/api/v1/comments?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
+        .get("/api/v1/comments")
         .then(function(resp) {
           app.comments = resp.data[0];
           loader.hide();
@@ -76,25 +66,35 @@ export default {
     },
     saveComment(comment) {
       var app = this;
+      let loader = Vue.$loading.show();
       if (comment.comment != null && comment.comment != " ") {
         app.errorComment = null;
         axios
-          .post(
-            "/api/v1/commentsmy?csrf_token=" +
-              window.csrf_token +
-              "&api_token=" +
-              window.api_token,
-            {
-              contragent_id: comment.contragent_id,
-              comment: comment.comment,
-              rate: comment.votes
-            }
-          )
+          .post("/api/v1/commentsmy", {
+            contragent_id: comment.contragent_id,
+            comment: comment.comment,
+            rate: comment.votes
+          })
           .then(function(resp) {
+            loader.hide();
+            app.$fire({
+              title: app.__("Review is successfully updated!"),
+              type: "success",
+              timer: 5000
+            });
             app.comments = resp.data[0];
+          })
+          .catch(function(err) {
+            loader.hide();
+            app.$fire({
+              title: app.__("Error!"),
+              text: err.response.data.message,
+              type: "error",
+              timer: 5000
+            });
           });
       } else {
-        app.errorComment = "Please enter a comment to save";
+        app.errorComment = __("Please enter a comment to save");
       }
     }
   }

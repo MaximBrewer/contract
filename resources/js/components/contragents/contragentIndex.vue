@@ -11,7 +11,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="contragent, index in contragents">
+            <tr v-for="(contragent, index) in $root.contragents" :key="index">
               <td>{{ contragent.title }}</td>
               <td>{{ contragent.inn }}</td>
               <td>
@@ -32,25 +32,22 @@
 <script>
 export default {
   data: function() {
-    return {
-      contragents: []
-    };
+    return {};
   },
   mounted() {
     var app = this;
     axios
-      .get(
-        "/api/v1/contragents?csrf_token=" +
-          window.csrf_token +
-          "&api_token=" +
-          window.api_token
-      )
+      .get("/api/v1/contragents")
       .then(function(resp) {
-        app.contragents = resp.data;
+        app.$root.contragents = resp.data;
       })
-      .catch(function(resp) {
-        console.log(resp);
-        alert(app.__("Failed to load contragents"));
+      .catch(function(err) {
+        app.$fire({
+          title: app.__("Error!"),
+          text: app.__("Failed to load contragents"),
+          type: "error",
+          timer: 5000
+        });
       });
   }
 };

@@ -77,6 +77,12 @@ class TargetsController extends Controller
             ], 422);
         }
 
+        $request->validate([
+            "multiplicity.id" => "required|exists:multiplicities,id",
+            "product.id" => "required|exists:products,id",
+            "store.id" => "required|exists:stores,id",
+            "volume" => "required|numeric|min:1",
+        ]);
 
         $target->update([
             'contragent_id' => Auth::user()->contragents[0]->id,

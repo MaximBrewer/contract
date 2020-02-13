@@ -29,10 +29,6 @@ import VueSimpleAlert from "vue-simple-alert";
 Vue.use(VueSimpleAlert);
 import VModal from "vue-js-modal";
 Vue.use(VModal);
-import swicthCheckboxCanbet from "./components/swicthCheckboxCanbet.vue";
-import swicthCheckboxObserve from "./components/swicthCheckboxObserve.vue";
-Vue.component("switch-checkbox-canbet", swicthCheckboxCanbet, {});
-Vue.component("switch-checkbox-observe", swicthCheckboxObserve, {});
 import vSelect from "vue-select";
 Vue.component("v-select", vSelect, {});
 import StarRating from "vue-star-rating";
@@ -48,7 +44,6 @@ Vue.use(Chat);
 import Loading from "vue-loading-overlay";
 Vue.use(
     Loading, {
-    // props
     color: "red"
 }, {
     // slots
@@ -71,8 +66,6 @@ import TargetCreate from "./components/targets/targetCreate.vue";
 import TargetEdit from "./components/targets/targetEdit.vue";
 import TargetIndex from "./components/targets/targetIndex.vue";
 import ReviewsIndex from "./components/contragents/reviewsIndex.vue";
-
-
 import AllAuctions from "./components/allAuctions.vue";
 Vue.component("AllAuctions", AllAuctions, {});
 
@@ -133,6 +126,11 @@ const app = new Vue({
             name: "auctionBid"
         },
         {
+            path: "/personal/company",
+            component: Company,
+            name: "company"
+        },
+        {
             path: "/personal/auctions/create",
             component: AuctionCreate,
             name: "createAuction"
@@ -153,11 +151,6 @@ const app = new Vue({
             name: "indexTarget"
         },
         {
-            path: "/personal/company",
-            component: Company,
-            name: "company"
-        },
-        {
             path: "/personal/targets/create",
             component: TargetCreate,
             name: "createTarget"
@@ -170,75 +163,97 @@ const app = new Vue({
         ]
     }),
     created() {
-        this.listenForBroadcast();
+        let app = this;
+        app.listenForBroadcast();
+        app.getFederalDistricts();
+        app.getMultiplicities();
+        app.getProducts();
+        app.getRegions(app.fd);
+        app.getTypes();
+        axios
+            .get(
+                "/auth"
+            )
+            .then(res => {
+                if (!!res.data.user) {
+                    Vue.prototype.user = res.data.user;
+                    Vue.prototype.company = res.data.user.contragents[0];
+                    window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.api_token;
+                    app.getMyStores();
+                }
+                app.$mount("#app");
+            })
+            .catch(err => {
+                if (err.response && err.response.data && err.response.data.errors) { }
+            });
     },
     data: {
         time: window.document.querySelector('meta[name="server-time"]').content,
-        auction: {}
+        auction: {},
+        contragents: [],
+        contragent: {},
+        errors: {},
+        fd: false,
+        federalDistricts: [],
+        types: [],
+        regions: [],
+        products: [],
+        miltiplicities: [],
+        stores: [],
+        target: {},
+        filter: {
+            federal_district: null,
+            product: null,
+            multiplicity: null,
+            region: null
+        }
     },
     methods: {
-        getFederalDistricts(app) {
+        getFederalDistricts() {
+            let app = this;
             axios
-                .get(
-                    "/federalDistricts?csrf_token=" +
-                    window.csrf_token
-                )
-                .then(function (resp) {
-                    app.federalDistricts = resp.data;
+                .get("/federalDistricts")
+                .then(function (res) {
+                    app.federalDistricts = res.data;
                 });
         },
-        getRegions(app, fd) {
+        getRegions(fd) {
             axios
-                .get(
-                    "/regions?csrf_token=" +
-                    window.csrf_token +
-                    "&federal_district_id=" +
-                    fd
-                )
-                .then(function (resp) {
-                    app.regions = resp.data;
+                .get("/regions?federal_district_id=" + fd)
+                .then(function (res) {
+                    app.regions = res.data;
                 });
         },
-        getTypes(app) {
+        getProducts() {
+            let app = this;
             axios
-                .get(
-                    "/types?csrf_token=" +
-                    window.csrf_token
-                )
-                .then(function (resp) {
-                    app.types = resp.data;
+                .get("/products")
+                .then(function (res) {
+                    app.products = res.data;
                 });
         },
-        getMyStores(app) {
+        getTypes() {
+            let app = this;
             axios
-                .get(
-                    "/stores?csrf_token=" +
-                    window.csrf_token +
-                    "&api_token=" +
-                    window.api_token
-                )
-                .then(function (resp) {
-                    app.stores = resp.data;
+                .get("/types")
+                .then(function (res) {
+                    app.types = res.data;
                 });
         },
-        getMultiplicities(app) {
+        getMyStores() {
+            let app = this;
             axios
-                .get(
-                    "/multiplicities?csrf_token=" +
-                    window.csrf_token
-                )
-                .then(function (resp) {
-                    app.multiplicities = resp.data;
+                .get("/stores")
+                .then(function (res) {
+                    app.stores = res.data;
                 });
         },
-        getProducts(app) {
+        getMultiplicities() {
+            let app = this;
             axios
-                .get(
-                    "/products?csrf_token=" +
-                    window.csrf_token
-                )
-                .then(function (resp) {
-                    app.products = resp.data;
+                .get("/multiplicities")
+                .then(function (res) {
+                    app.multiplicities = res.data;
                 });
         },
         listenForBroadcast() {
@@ -272,27 +287,8 @@ const app = new Vue({
 
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 };
-
-axios
-    .get(
-        "/auth"
-    )
-    .then(res => {
-        if (!!res.data.user) {
-            window.user = res.data.user;
-            window.api_token = res.data.api_token;
-            Vue.prototype.user = window.user;
-            window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.api_token;
-        }
-        app.$mount("#app");
-    })
-    .catch(err => {
-        if (err.response && err.response.data && err.response.data.errors) { }
-    });
-
-
 
 window.Vue.filter("formatDate", function (value) {
     if (value) {

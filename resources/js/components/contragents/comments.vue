@@ -68,7 +68,6 @@ export default {
       comments: [],
       rating: 0,
       message: null,
-      user: window.user,
       errorComment: null,
       starSize: 20,
       starSizeSmall: 15
@@ -79,18 +78,11 @@ export default {
       let app = this;
       let loader = Vue.$loading.show();
       axios
-        .get(
-          "/api/v1/comments/" +
-            app.contragent +
-            "?csrf_token=" +
-            window.csrf_token +
-            "&api_token=" +
-            window.api_token
-        )
-        .then(function(resp) {
-          app.comments = resp.data[0];
-          app.rating = resp.data[1];
-          app.message = resp.data[2].comment;
+        .get("/api/v1/comments/" + app.contragent)
+        .then(function(res) {
+          app.comments = res.data[0];
+          app.rating = res.data[1];
+          app.message = res.data[2].comment;
           loader.hide();
         })
         .catch(function(e) {
@@ -104,25 +96,18 @@ export default {
         let loader = Vue.$loading.show();
         app.errorComment = null;
         axios
-          .post(
-            "/api/v1/comments?csrf_token=" +
-              window.csrf_token +
-              "&api_token=" +
-              window.api_token,
-            {
-              contragent_id: app.contragent,
-              comment: app.message,
-              rate: app.rating
-            }
-          )
-          .then(function(resp) {
-            app.comments = resp.data[0];
-            app.rating = resp.data[1];
-            app.message = resp.data[2].comment;
+          .post("/api/v1/comments", {
+            contragent_id: app.contragent,
+            comment: app.message,
+            rate: app.rating
+          })
+          .then(function(res) {
+            app.comments = res.data[0];
+            app.rating = res.data[1];
+            app.message = res.data[2].comment;
             loader.hide();
           });
       }
-      s;
     }
   }
 };

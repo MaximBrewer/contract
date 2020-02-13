@@ -36,21 +36,17 @@ export default {
   },
   mounted() {
     var app = this;
-    let contragent_id = app.user.contragents[0].id;
-    let action = "bid";
     axios
-      .get(
-        "/api/v1/targets/all/?csrf_token=" +
-          window.csrf_token +
-          "&api_token=" +
-          window.api_token
-      )
-      .then(function(resp) {
-        app.targets = resp.data;
+      .get("/api/v1/targets/all/")
+      .then(function(res) {
+        app.targets = res.data;
       })
-      .catch(function(resp) {
-        console.log(resp);
-        alert(app.__("Failed to load targets"));
+      .catch(function(err) {
+        app.$fire({
+          title: app.__("Failed to load targets!"),
+          type: "error",
+          timer: 5000
+        });
       });
   },
   methods: {}

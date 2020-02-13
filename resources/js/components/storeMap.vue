@@ -54,10 +54,7 @@ export default {
           if (address.length) {
             axios
               .post(
-                "/api/v1/address?csrf_token=" +
-                  window.csrf_token +
-                  "&api_token=" +
-                  window.api_token,
+                "/api/v1/address",
                 { address: address }
               )
               .then(function(resp) {
