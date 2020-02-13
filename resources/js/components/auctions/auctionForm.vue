@@ -139,23 +139,35 @@ export default {
     let loader = Vue.$loading.show();
     loader.hide();
   },
-  props: ['auction'],
+  props: ["auction"],
   methods: {
     saveForm() {
       event.preventDefault();
       var app = this;
       let loader = Vue.$loading.show();
-      var newAuction = app.auction;
-      axios
-        .post("/api/v1/auctions", newAuction)
-        .then(function(res) {
-          app.$router.replace("/personal/auctions/show/" + res.data.id);
-          loader.hide();
-        })
-        .catch(function(err) {
-          app.$root.errors = err.response.data.errors;
-          loader.hide();
-        });
+      if (!!app.auction.id) {
+        axios
+          .patch("/api/v1/auctions/" + app.auction.id, app.auction)
+          .then(function(res) {
+            app.$router.replace("/personal/auctions/show/" + res.data.id);
+            loader.hide();
+          })
+          .catch(function(err) {
+            app.$root.errors = err.response.data.errors;
+            loader.hide();
+          });
+      } else {
+        axios
+          .post("/api/v1/auctions", app.auction)
+          .then(function(res) {
+            app.$router.replace("/personal/auctions/show/" + res.data.id);
+            loader.hide();
+          })
+          .catch(function(err) {
+            app.$root.errors = err.response.data.errors;
+            loader.hide();
+          });
+      }
     }
   }
 };

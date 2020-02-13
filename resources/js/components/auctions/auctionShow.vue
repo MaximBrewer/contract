@@ -1,5 +1,5 @@
 <template>
-  <section class="auction-edit-wrapper" v-if="auction">
+  <section class="auction-edit-wrapper" v-if="!!auction.id">
     <div class="container">
       <auction-info :auction="auction"></auction-info>
       <auction-actions :auction="auction"></auction-actions>
@@ -57,7 +57,8 @@ export default {
         app.bid.volume = 1;
         app.renew();
       })
-      .catch(function() {
+      .catch(function(err) {
+        console.log(err)
         app.$fire({
           title: app.__("Error!"),
           text: app.__("Failed to load auction"),
@@ -79,7 +80,7 @@ export default {
   methods: {
     renew() {
       for (let r in this.auction.bidders) {
-        if (this.auction.bidders[r].id == company.id) {
+        if (this.auction.bidders[r].id == this.company.id) {
           this.can_bet = this.auction.bidders[r].can_bet;
           this.observer = this.auction.bidders[r].observer;
           this.bidding = 1;

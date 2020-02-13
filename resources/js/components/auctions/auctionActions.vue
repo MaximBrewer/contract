@@ -1,9 +1,6 @@
 <template>
   <div class="row">
-    <div
-      class="col-md-4"
-      v-if="(auction.contragent.id == company.id && !auction.confirmed) || (!auction.finished)"
-    >
+    <div class="col-md-4" v-if="!auction.finished">
       <div class="card text-center">
         <div class="btn-group" role="group" aria-label="Basic example">
           <a
@@ -19,7 +16,6 @@
             v-tooltip="__('Add bidder')"
             href="javascript:void(0)"
             class="btn btn-success"
-            v-if="!auction.finished"
             @click="showPopupAddBidder(auction.id)"
           >
             <i class="mdi mdi-account-plus" aria-hidden="true"></i>
@@ -27,7 +23,7 @@
           <router-link
             v-tooltip="__('Edit auction')"
             :to="{name: 'editAuction', 'params': {'id': auction.id}}"
-            v-if="auction.contragent.id == company.id && !auction.finished"
+            v-if="auction.contragent.id == company.id"
             class="btn btn-dark"
           >
             <i class="mdi mdi-pencil" aria-hidden="true"></i>
@@ -89,9 +85,7 @@
         </div>
       </div>
     </div>
-    <div
-      v-bind:class="{'col-md-8': !auction.finished || mine && !auction.confirmed, 'col-md-12': (auction.finished && auction.contragent.id != company.id && !auction.confirmed)}"
-    >
+    <div v-bind:class="{'col-md-8': !auction.finished, 'col-md-12': auction.finished}">
       <div class="card">
         <div class="card-header">{{ __('Auction comment') }}</div>
         <ul class="list-group list-group-flush">
@@ -104,7 +98,12 @@
 </template>
 <script>
 export default {
-  props: ["auction"],
+  props: {
+    auction: {
+      type: Object,
+      default: {}
+    }
+  },
   data: function() {
     return {
       bidders: [],
@@ -132,7 +131,7 @@ export default {
         app.$confirm(app.__("Are you sure?")).then(() => {
           axios
             .get("/api/v1/auction/delete/" + app.auction.id)
-            .then(function(resp) {
+            .then(function(res) {
               app.$router.replace("/personal/auctions");
             });
         });
@@ -143,22 +142,21 @@ export default {
         app.$confirm(app.__("Are you sure?")).then(() => {
           axios
             .get("/api/v1/auction/confirm/" + app.auction.id)
-            .then(function(resp) {
-              // app.auction = resp.data;
+            .then(function(res) {
+              // app.auction = res.data;
             });
         });
     },
     fetchBidders(search, loading) {
       var app = this;
       loading(true);
-      axios.get("/api/v1/contragents?search=" + search).then(function(resp) {
-        app.bidders = resp.data;
+      axios.get("/api/v1/contragents?search=" + search).then(function(res) {
+        app.bidders = res.data;
         loading(false);
       });
     },
     showPopupAddBidder() {
-      var app = this;
-      app.$modal.show("add_bidder");
+      this.$modal.show("add_bidder");
     }
   }
 };

@@ -70,6 +70,11 @@
 </template>
 <script>
 export default {
-  props: ["auction"]
+  props: {
+    auction: {
+      type: Object,
+      default: {}
+    }
+  }
 };
 </script>
