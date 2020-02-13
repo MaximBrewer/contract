@@ -14,7 +14,7 @@
       </div>
       <br />
       <!--Bidders-->
-      <auction-bidders :auction="auction"></auction-bidders>
+      <auction-bidders :auction="auction" v-if="auction.contragent.id == company.id"></auction-bidders>
     </div>
     <auction-chat :auction="auction"></auction-chat>
   </section>
