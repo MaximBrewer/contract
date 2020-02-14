@@ -45,9 +45,6 @@ export default {
       if (auction.id == app.auction.id) app.auction = auction;
       app.renew();
     });
-    axios.get("/api/v1/contragents").then(function(resp) {
-      app.bidders = resp.data;
-    });
     axios
       .get("/api/v1/auction/" + id)
       .then(function(resp) {

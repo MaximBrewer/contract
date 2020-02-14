@@ -111,6 +111,11 @@ export default {
       maxModalWidth: 600
     };
   },
+  mounted() {
+    axios.get("/api/v1/contragents").then(function(resp) {
+      app.bidders = resp.data;
+    });
+  },
   methods: {
     addBidder() {
       var app = this;
