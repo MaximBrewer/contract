@@ -65,7 +65,6 @@
                   :options="bidders"
                   label="title"
                   :multiple="true"
-                  @search="fetchBidders"
                   v-model="add_bidders"
                 ></v-select>
                 <br />
@@ -112,8 +111,9 @@ export default {
     };
   },
   mounted() {
-    axios.get("/api/v1/contragents").then(function(resp) {
-      app.bidders = resp.data;
+    var app = this;
+    axios.get("/api/v1/contragents").then(function(res) {
+      app.bidders = res.data;
     });
   },
   methods: {
