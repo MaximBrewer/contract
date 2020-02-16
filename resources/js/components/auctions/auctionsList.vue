@@ -1,7 +1,7 @@
 <template>
-  <section>
+  <section class="container-fluid">
     <div class="row">
-      <div class="col-sm-6 col-md-5th">
+      <div class="col-md-4 col-sm-6 col-xs-1">
         <div class="form-group">
           <label class="control-label">{{ __('Federal district') }}</label>
           <v-select
@@ -13,7 +13,7 @@
           ></v-select>
         </div>
       </div>
-      <div class="col-md-5th col-sm-6">
+      <div class="col-md-4 col-sm-6 col-xs-1">
         <div class="form-group">
           <label class="control-label">{{ __('Region') }}</label>
           <v-select
@@ -25,7 +25,7 @@
           ></v-select>
         </div>
       </div>
-      <div class="col-md-5th col-sm-6">
+      <div class="col-md-4 col-sm-6 col-xs-1">
         <div class="form-group">
           <label class="control-label">{{ __('Product') }}</label>
           <v-select
@@ -37,7 +37,7 @@
           ></v-select>
         </div>
       </div>
-      <div class="col-md-5th col-sm-6">
+      <div class="col-md-4 col-sm-6 col-xs-1">
         <div class="form-group">
           <label class="control-label">{{ __('Multiplicity') }}</label>
           <v-select
@@ -49,7 +49,19 @@
           ></v-select>
         </div>
       </div>
-      <div class="col-md-5th col-sm-6">
+      <div class="col-md-4 col-sm-6 col-xs-1">
+        <div class="form-group">
+          <label class="control-label">{{ __('Confirmed') }}</label>
+          <v-select
+            label="title"
+            :searchable="false"
+            @input="filterAuctions"
+            :options="$root.confirmedOptions"
+            v-model="$root.filter.confirmed"
+          ></v-select>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-xs-1">
         <div class="form-group">
           <label class="control-label">{{ __('Sort by distance from store') }}</label>
           <v-select
@@ -63,6 +75,7 @@
       </div>
     </div>
     <div class="table-responsive" id="auctions">
+      <div class="h2 text-center">{{ title }}</div>
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -83,6 +96,9 @@
                 <strong v-if="false">{{ __('Contragent') }}:</strong>
                 <div class="h6">{{ auction.contragent.title }}</div>
               </div>
+              <div v-if="auction.contragent.rating" class="text-nowrap">
+                <strong>{{ __('Rating') }}:</strong> {{ auction.contragent.rating }}
+              </div>
               <div v-if="auction.product" class="text-nowrap">
                 <strong>{{ __('Product') }}:</strong>
                 <span>{{ auction.product.title }}</span>
@@ -95,9 +111,9 @@
                 <strong>{{ __('Volume') }}:</strong>
                 <span>{{ auction.volume }}</span>
               </div>
-              <div class="text-nowrap" v-if="auction.range && auction.range != 10000 && store">
+              <div class="text-nowrap" v-if="auction.range != undefined && auction.range != 10000 && store">
                 <strong>{{ __('Range') }}:</strong>
-                <span>{{ auction.range }}</span>
+                <span>{{ auction.range * 1 }} {{ __('km') }}</span>
               </div>
             </td>
             <td>
@@ -206,11 +222,23 @@ export default {
     return {
       auctions: [],
       auctionsList: [],
-      store: null
+      store: null,
+      title: ''
     };
   },
   mounted() {
     this.getAuctions();
+    switch(this.action){
+      case "my":
+        this.title = this.__('My auctions')
+        break;
+      case "all":
+        this.title = this.__('All auctions')
+        break;
+      case "bid":
+        this.title = this.__('Bidder')
+        break;
+    }
   },
   methods: {
     getAuctions() {
@@ -235,7 +263,7 @@ export default {
         });
     },
     filterGetRegions() {
-      this.$root.getRegions(this.$root.fd);
+      this.$root.getRegions(this.$root.filter.federal_district.id);
       this.filterAuctions();
     },
     filterAuctions() {
@@ -246,12 +274,14 @@ export default {
       for (let v in app.auctions) {
         ++cnt;
         let a = app.auctions[v];
+        console.log(f);
         if (
           (!f.federal_district ||
             f.federal_district.id == a.store.federal_district.id) &&
           (!f.region || f.region.id == a.store.region.id) &&
           (!f.product || f.product.id == a.product.id) &&
-          (!f.multiplicity || f.multiplicity.id == a.multiplicity.id)
+          (!f.multiplicity || f.multiplicity.id == a.multiplicity.id) &&
+          (!f.confirmed || f.confirmed.id - 1 == a.confirmed)
         )
           app.auctionsList.push(a);
       }
@@ -306,7 +336,7 @@ export default {
       var app = this;
       let loader = Vue.$loading.show();
       axios
-        .get("/api/v1/auctions/"+app.action+"/bid/" + id)
+        .get("/api/v1/auctions/" + app.action + "/bid/" + id)
         .then(function(res) {
           app.auctions = res.data;
           app.filterAuctions();
@@ -325,7 +355,7 @@ export default {
       var app = this;
       let loader = Vue.$loading.show();
       axios
-        .get("/api/v1/auctions/"+app.action+"/unbid/" + id)
+        .get("/api/v1/auctions/" + app.action + "/unbid/" + id)
         .then(function(res) {
           app.auctions = res.data;
           app.filterAuctions();

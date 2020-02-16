@@ -62,6 +62,13 @@
               <strong v-for="(error, index) in $root.errors.volume" :key="index">{{ error }}</strong>
             </span>
           </div>
+          <div class="form-group">
+            <textarea
+              :placeholder="__('Target description')"
+              v-model="$root.target.description"
+              class="form-control"
+            ></textarea>
+          </div>
           <div class="form-group text-right">
             <button class="btn btn-primary">{{ __('Save') }}</button>
           </div>

@@ -7,6 +7,7 @@
             <tr>
               <th>{{ __('Title') }}</th>
               <th>{{ __('TIN') }}</th>
+              <th>{{ __('Rating') }}</th>
               <th width="100">&nbsp;</th>
             </tr>
           </thead>
@@ -14,6 +15,7 @@
             <tr v-for="(contragent, index) in $root.contragents" :key="index">
               <td>{{ contragent.title }}</td>
               <td>{{ contragent.inn }}</td>
+              <td>{{ contragent.rating }}</td>
               <td>
                 <div class="btn-group" role="group">
                   <router-link

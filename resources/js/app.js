@@ -164,6 +164,7 @@ const app = new Vue({
     }),
     created() {
         let app = this;
+        app.confirmedOptions = [{ id: 2, title: app.__("Yes") }, { id: 1, title: app.__("No") }];
         app.listenForBroadcast();
         app.getFederalDistricts();
         app.getMultiplicities();
@@ -205,8 +206,10 @@ const app = new Vue({
             federal_district: null,
             product: null,
             multiplicity: null,
-            region: null
-        }
+            region: null,
+            confirmed: 0
+        },
+        confirmedOptions: []
     },
     methods: {
         getFederalDistricts() {

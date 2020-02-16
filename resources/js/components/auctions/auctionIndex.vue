@@ -1,10 +1,5 @@
 <template>
-  <section>
-    <div class="container-fluid">
-      <div class="h2 text-center">{{ __('My auctions') }}</div>
-      <auctions-list :action="'all'"></auctions-list>
-    </div>
-  </section>
+  <auctions-list :action="'all'"></auctions-list>
 </template>
 <script>
 import auctionsList from "./auctionsList";
