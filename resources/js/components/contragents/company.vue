@@ -29,7 +29,7 @@ export default {
     let app = this;
     let loader = Vue.$loading.show();
     axios
-      .get("/api/v1/company/")
+      .get("/api/v1/company")
       .then(function(res) {
         app.$root.contragent = res.data;
         loader.hide();
@@ -41,6 +41,7 @@ export default {
           type: "error",
           timer: 5000
         });
+        loader.hide();
       });
   }
 };
