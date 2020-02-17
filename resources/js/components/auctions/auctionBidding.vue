@@ -112,6 +112,9 @@ export default {
       bid: {}
     };
   },
+  mounted(){
+    console.log(9)
+  },
   methods: {
     betIt() {
       var app = this;
