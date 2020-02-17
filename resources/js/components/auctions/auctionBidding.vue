@@ -36,7 +36,7 @@
             <label class="control-label">{{ __('Target store') }}</label>
             <v-select
               label="address"
-              :options="stores"
+              :options="$root.stores"
               v-model="bid.store"
               v-bind:class="{ 'is-invalid': errors['store.id'] }"
             ></v-select>
