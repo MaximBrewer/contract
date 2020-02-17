@@ -66,7 +66,7 @@ export default {
   },
   data: function() {
     return {
-      bidding: 0,
+      bidding: 1,
       can_bet: 0,
       observer: 0,
       auction: {},
