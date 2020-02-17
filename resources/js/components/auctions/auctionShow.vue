@@ -55,7 +55,6 @@ export default {
         app.renew();
       })
       .catch(function(err) {
-        console.log(err)
         app.$fire({
           title: app.__("Error!"),
           text: app.__("Failed to load auction"),

@@ -86,7 +86,6 @@ export default {
           loader.hide();
         })
         .catch(function(e) {
-          console.log(e);
           loader.hide();
         });
     },

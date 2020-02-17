@@ -262,7 +262,6 @@ const app = new Vue({
         listenForBroadcast() {
             var that = this;
             Echo.channel("every-minute").listen("PerMinute", function (e) {
-                console.log(e);
                 app.time = e.time;
                 e.started.forEach(auction =>
                     that.flash(
@@ -280,7 +279,6 @@ const app = new Vue({
                 );
             });
             Echo.channel("message-pushed").listen("MessagePushed", function (e) {
-                console.log(e);
                 that.$emit("gotAuction", e.auction);
             });
         }

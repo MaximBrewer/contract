@@ -81,7 +81,6 @@ export default {
         loader.hide();
       })
       .catch(function(err) {
-        cconsole.log(err);
         loader.hide();
       });
   }

@@ -294,7 +294,6 @@ export default {
           app.targetsList = res.data;
         })
         .catch(function(err) {
-          console.log(err);
         });
     },
     showPopup(controller, id, template, index) {

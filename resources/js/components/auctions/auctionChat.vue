@@ -129,7 +129,6 @@ export default {
       //this.messageList = [...this.messageList, message];
     },
     editMessage(message) {
-      console.log(message);
       // called when the user sends a message
       //this.messageList = [...this.messageList, message];
       return message;

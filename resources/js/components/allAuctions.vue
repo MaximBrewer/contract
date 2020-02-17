@@ -222,8 +222,7 @@ export default {
         app.$root.getProducts(app);
         app.$root.getMultiplicities(app)
       })
-      .catch(function(resp) {
-        console.log(resp);
+      .catch(function(res) {
         loader.hide();
         alert(app.__("Failed to load auctions"));
       });

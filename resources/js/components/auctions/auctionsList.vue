@@ -252,7 +252,6 @@ export default {
           loader.hide();
         })
         .catch(function(res) {
-          console.log(res);
           loader.hide();
           app.$fire({
             title: app.__("Error!"),
@@ -274,7 +273,6 @@ export default {
       for (let v in app.auctions) {
         ++cnt;
         let a = app.auctions[v];
-        console.log(f);
         if (
           (!f.federal_district ||
             f.federal_district.id == a.store.federal_district.id) &&
@@ -380,7 +378,6 @@ export default {
           app.$router.push("/personal/auctions/edit/" + res.data.id);
         })
         .catch(function(err) {
-          console.log(err);
           app.$fire({
             title: app.__("Error!"),
             text: err.response ? err.response.data.message : "",
