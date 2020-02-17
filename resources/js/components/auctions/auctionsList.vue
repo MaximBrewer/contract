@@ -96,7 +96,7 @@
                 <strong v-if="false">{{ __('Contragent') }}:</strong>
                 <div class="h6">{{ auction.contragent.title }}</div>
               </div>
-              <div v-if="auction.contragent.rating" class="text-nowrap">
+              <div v-if="auction.contragent" class="text-nowrap">
                 <strong>{{ __('Rating') }}:</strong> {{ auction.contragent.rating }}
               </div>
               <div v-if="auction.product" class="text-nowrap">
@@ -247,7 +247,7 @@ export default {
       axios
         .get("/api/v1/auctions/" + app.action)
         .then(function(res) {
-          app.auctions = res.data;
+          app.auctions = res.data.data;
           app.filterAuctions();
           loader.hide();
         })
@@ -338,7 +338,7 @@ export default {
       axios
         .get("/api/v1/auctions/" + app.action + "/bid/" + id)
         .then(function(res) {
-          app.auctions = res.data;
+          app.auctions = res.data.data;
           app.filterAuctions();
           loader.hide();
         })
@@ -357,7 +357,7 @@ export default {
       axios
         .get("/api/v1/auctions/" + app.action + "/unbid/" + id)
         .then(function(res) {
-          app.auctions = res.data;
+          app.auctions = res.data.data;
           app.filterAuctions();
           loader.hide();
         })

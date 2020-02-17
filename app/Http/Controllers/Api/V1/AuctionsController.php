@@ -31,16 +31,16 @@ class AuctionsController extends Controller
 
         switch ($action) {
             case "all":
-                return Auction::where('finished', '<>', 1)->orderBy('id', 'desc')->get();
+                return AuctionResource::collection(Auction::where('finished', '<>', 1)->orderBy('id', 'desc')->get());
                 break;
             case "archive":
-                return Auction::where('finished', 1)->orderBy('id', 'desc')->get();
+                return AuctionResource::collection(Auction::where('finished', 1)->orderBy('id', 'desc')->get());
                 break;
             case "my":
-                return Auction::orderBy('id', 'desc')->where('finished', '<>', 1)->where('contragent_id', Auth::user()->contragents[0]->id)->get();
+                return AuctionResource::collection(Auction::orderBy('id', 'desc')->where('finished', '<>', 1)->where('contragent_id', Auth::user()->contragents[0]->id)->get());
                 break;
             case "bid":
-                return Auth::user()->contragents[0]->auctions;
+                return AuctionResource::collection(Auth::user()->contragents[0]->auctions);
                 break;
         }
     }
