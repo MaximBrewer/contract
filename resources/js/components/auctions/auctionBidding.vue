@@ -109,7 +109,8 @@ export default {
   props: ["auction", "can_bet", "observer"],
   data: function() {
     return {
-      bid: {}
+      bid: {},
+      errors: {}
     };
   },
   mounted(){
@@ -130,10 +131,10 @@ export default {
           .then(function(resp) {
             app.$modal.hide("add_bidder");
           })
-          .catch(function(errors) {
+          .catch(function(err) {
             app.$fire({
               title: app.__("Error!"),
-              text: errors.response.data.message,
+              text: err.response.data.message,
               type: "error",
               timer: 5000
             });
