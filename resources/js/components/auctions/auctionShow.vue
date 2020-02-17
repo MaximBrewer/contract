@@ -5,7 +5,7 @@
       <auction-actions :auction="auction"></auction-actions>
       <!--Started-->
       <div v-if="auction.started && !auction.finished">
-        <auction-bidding :auction="auction" :can_bet="can_bet" :observe="observe" v-if="bidding"></auction-bidding>
+        <auction-bidding :auction="auction" :can_bet="can_bet" :observer="observer" v-if="bidding"></auction-bidding>
         <auction-mine :auction="auction" v-if="auction.bets && auction.contragent.id == company.id"></auction-mine>
       </div>
       <!--Finished-->
@@ -68,7 +68,7 @@ export default {
     return {
       bidding: 1,
       can_bet: 0,
-      observe: 0,
+      observer: 0,
       auction: {},
       bid: {}
     };
@@ -78,7 +78,7 @@ export default {
       for (let r in this.auction.bidders) {
         if (this.auction.bidders[r].id == this.company.id) {
           this.can_bet = this.auction.bidders[r].can_bet;
-          this.observe = this.auction.bidders[r].observe;
+          this.observer = this.auction.bidders[r].observer;
           this.bidding = 1;
         }
       }

@@ -106,7 +106,7 @@
 </template>
 <script>
 export default {
-  props: ["auction", "can_bet", "observe"],
+  props: ["auction", "can_bet", "observer"],
   data: function() {
     return {
       bid: {}
