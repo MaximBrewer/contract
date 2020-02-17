@@ -74,8 +74,8 @@
                         @endif
                         @else
                         <li class="nav-item">
-                            <a href="#" class="nav-link" :to="{name: 'showAuction', props: {id: 226}}">{{ __('Test auction & chat') }}
-                            </a>
+                            <router-link href="#" class="nav-link" :to="{name: 'showAuction', props: {id: 226}}">{{ __('Test auction & chat') }}
+                            </router-link>
                         </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
