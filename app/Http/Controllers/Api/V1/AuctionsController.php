@@ -289,6 +289,7 @@ class AuctionsController extends Controller
             'comment' => $request->post('comment'),
             'start_price' => $request->post('start_price'),
             'volume' => $request->post('volume'),
+            'step' => $request->post('step'),
         ]);
 
         if ($auction) event(new \App\Events\MessagePushed($auction));
