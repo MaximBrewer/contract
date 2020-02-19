@@ -43,10 +43,9 @@ class PerMinute implements ShouldBroadcast
             DB::table('auctions')->where('id', $auction->id)->update(array(
                 'finished' => 1,
             ));
-            Bet::where('auction_id', $auction->id)->whereNull('approved_volume')
-                ->orWhere('approved_volume', '<', 1)->update([
-                    'approved_volume' => 1
-                ]);
+            Bet::where('auction_id', $auction->id)->whereNull('approved_volume')->update([
+                'approved_volume' => Carbon::now()
+            ]);
             event(new MessagePushed(Auction::find($auction->id)));
         }
 
@@ -61,10 +60,10 @@ class PerMinute implements ShouldBroadcast
             DB::table('auctions')->where('id', $auction->id)->update(array(
                 'approved' => 1,
             ));
-            $bets = Bet::where('auction_id', $auction->id)->whereNull('approved_contract')->orWhere('approved_contract', '<', 1)->get();
-            foreach($bets as $bet){
+            $bets = Bet::where('auction_id', $auction->id)->whereNull('approved_contract')->get();
+            foreach ($bets as $bet) {
                 $bet->update([
-                    'approved_contract' => 1,
+                    'approved_contract' => Carbon::now(),
                     'correct' => $bet->price
                 ]);
             }
