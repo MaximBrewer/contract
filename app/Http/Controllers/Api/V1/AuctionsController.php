@@ -633,9 +633,13 @@ class AuctionsController extends Controller
             ], 422);
         }
 
-        if ($auction = Auction::find($r->post('auction')))
+        if ($auction = Auction::find($r->post('auction'))) {
+            if($auction->finish_at < Carbon::now() + 600)
+            $auction->update([
+                'finish_at' => $auction->finish_at + 600
+            ]);
             event(new \App\Events\MessagePushed($auction));
-
+        }
         return ['ok'];
     }
     /**
