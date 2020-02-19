@@ -12,6 +12,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
+use App\Bet;
 
 class PerMinute implements ShouldBroadcast
 {
@@ -31,9 +32,6 @@ class PerMinute implements ShouldBroadcast
     {
         $carbon = new Carbon();
 
-
-        DB::connection()->enableQueryLog();
-        
         $finished = DB::select(
             'select id from auctions where timestamp(finish_at) < timestamp(?) and confirmed = 1 and started = 1 and finished = 0',
             [
@@ -41,13 +39,36 @@ class PerMinute implements ShouldBroadcast
             ]
         );
 
-        $queries = DB::getQueryLog();
-        info($queries);
-
-        foreach($finished as $auction){
+        foreach ($finished as $auction) {
             DB::table('auctions')->where('id', $auction->id)->update(array(
                 'finished' => 1,
             ));
+            Bet::where('auction_id', $auction->id)->whereNull('approved_volume')
+                ->orWhere('approved_volume', '<', 1)->update([
+                    'approved_volume' => 1
+                ]);
+            event(new MessagePushed(Auction::find($auction->id)));
+        }
+
+        $olds = DB::select(
+            'select id from auctions where timestamp(finish_at) < timestamp(?) and confirmed = 1 and started = 1 and finished = 1 and approved = 0',
+            [
+                Carbon::now()->subHour()->timestamp
+            ]
+        );
+
+        foreach ($olds as $auction) {
+            DB::table('auctions')->where('id', $auction->id)->update(array(
+                'approved' => 1,
+            ));
+            $bets = Bet::where('auction_id', $auction->id)->whereNull('approved_contract')->orWhere('approved_contract', '<', 1)->get();
+            foreach($bets as $bet){
+                $bet->update([
+                    'approved_contract' => 1,
+                    'correct' => $bet->price
+                ]);
+            }
+
             event(new MessagePushed(Auction::find($auction->id)));
         }
 
@@ -58,18 +79,16 @@ class PerMinute implements ShouldBroadcast
             ]
         );
 
-        foreach($started as $auction){
+        foreach ($started as $auction) {
             DB::table('auctions')->where('id', $auction->id)->update(array(
                 'started' => 1,
             ));
             event(new MessagePushed(Auction::find($auction->id)));
         }
 
-
         $this->started = $started;
         $this->finished = $finished;
         $this->time = $carbon->format(DATE_ATOM);
-
     }
 
     /**
