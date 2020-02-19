@@ -26,9 +26,14 @@ class RegionsController extends Controller
      */
     public function address(Request $r)
     {
-        $region = Region::where('title', 'like', "%" . $r->post('address')[1] . "%")->first();
+        $region = Region::where('city', 'like', $r->post('address')[1])->first();
         if (!$region)
-            $region = Region::where('city', 'like', "%" . $r->post('address')[1] . "%")->first();
+            $region = Region::where('title', 'like', $r->post('address')[1])->first();
+        if (!$region)
+            $region = Region::where('title', 'like', $r->post('address')[1] . "%")->first();
+        if (!$region)
+            $region = Region::where('title', 'like', "%" . $r->post('address')[1] . "%")->first();
+            
         if ($region) {
             return [
                 $region,
