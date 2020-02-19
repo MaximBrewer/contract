@@ -52,7 +52,7 @@ class PerMinute implements ShouldBroadcast
         $olds = DB::select(
             'select id from auctions where timestamp(finish_at) < timestamp(?) and confirmed = 1 and started = 1 and finished = 1 and approved = 0',
             [
-                Carbon::now()->subHour()->timestamp
+                Carbon::now()->subHour()->toDateTimeString()
             ]
         );
 
