@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="h4">{{ __("You are an auction participant") }}</div>
-      <div class="row" v-if="!!can_bet">
+      <div class="row" v-if="!!can_bet && !auction.finished">
         <div class="col-md-3">
           <div class="form-group">
             <label class="control-label">{{ __('Auction Volume') }}</label>
@@ -88,13 +88,13 @@
                   v-if="!!bet.approved_volume && user.contragents && user.contragents[0] && bet.contragent_id == user.contragents[0].id"
                   class="text-nowrap"
                 >
-                  <div class="h6">{{ __('The volume of bet has approved') }}₽</div>
+                  <div class="h6">{{ __('The volume of bet has approved') }}</div>
                 </div>
                 <div
                   v-if="!!bet.approved_contract && user.contragents && user.contragents[0] && bet.contragent_id == user.contragents[0].id"
                   class="text-nowrap"
                 >
-                  <div class="h6">{{ __('The contract has approved') }}₽</div>
+                  <div class="h6">{{ __('The contract has approved') }}</div>
                 </div>
               </td>
             </tr>
