@@ -10,7 +10,8 @@
       </div>
       <!--Finished-->
       <div class="row" v-if="auction.finished">
-        <auction-finished-mine :auction="auction" v-if="auction.contragent.id == company.id"></auction-finished-mine>
+        <auction-mine :auction="auction" v-if="auction.bets && auction.contragent.id == company.id"></auction-mine>
+        <!-- <auction-finished-mine :auction="auction" v-if="auction.contragent.id == company.id"></auction-finished-mine> -->
       </div>
       <br />
       <!--Bidders-->
