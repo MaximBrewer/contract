@@ -4,16 +4,10 @@
       <auction-info :auction="auction"></auction-info>
       <auction-actions :auction="auction"></auction-actions>
       <!--Started-->
-      <div v-if="auction.started && !auction.finished">
+      <div v-if="auction.started">
         <auction-bidding :auction="auction" :can_bet="can_bet" :observer="observer" v-if="bidding"></auction-bidding>
         <auction-mine :auction="auction" v-if="auction.bets && auction.contragent.id == company.id"></auction-mine>
       </div>
-      <!--Finished-->
-      <div class="row" v-if="auction.finished">
-        <auction-mine :auction="auction" v-if="auction.bets && auction.contragent.id == company.id"></auction-mine>
-        <!-- <auction-finished-mine :auction="auction" v-if="auction.contragent.id == company.id"></auction-finished-mine> -->
-      </div>
-      <br />
       <!--Bidders-->
       <auction-bidders :auction="auction" v-if="auction.contragent.id == company.id"></auction-bidders>
     </div>
