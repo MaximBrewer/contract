@@ -633,8 +633,8 @@ class AuctionsController extends Controller
         }
 
         if ($auction = Auction::find($r->post('auction'))) {
-            return [$auction->finish_at, Carbon::now()->addMinutes(10)];
-            if ($auction->finish_at < Carbon::now()->addMinutes(10)) {
+            return [strtotime($auction->finish_at), Carbon::now()->addMinutes(10)->timestamp];
+            if (strtotime($auction->finish_at) < Carbon::now()->addMinutes(10)) {
                 $auction->update([
                     'finish_at' => $auction->finish_at + 600
                 ]);
