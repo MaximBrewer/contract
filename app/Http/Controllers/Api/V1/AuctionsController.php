@@ -633,10 +633,10 @@ class AuctionsController extends Controller
         }
 
         if ($auction = Auction::find($r->post('auction'))) {
-            if($auction->finish_at < Carbon::now()->addMinutes(10))
-            $auction->update([
-                'finish_at' => $auction->finish_at + 600
-            ]);
+            if ($auction->finish_at < Carbon::now()->addMinutes(10))
+                $auction->update([
+                    'finish_at' => $auction->finish_at + 600
+                ]);
             event(new \App\Events\MessagePushed($auction));
         }
         return ['ok'];
