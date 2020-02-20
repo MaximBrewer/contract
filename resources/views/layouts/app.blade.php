@@ -129,7 +129,7 @@
                                 </router-link>
 
                                 <a class="dropdown-item" href="javascript:void(0)"
-                                    onclick="document.getElementById('logout-form')submit();">
+                                    onclick="document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
 
