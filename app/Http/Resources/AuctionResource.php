@@ -16,13 +16,15 @@ class AuctionResource extends JsonResource
     public function toArray($request)
     {
         $bidder = 0;
-        foreach (Auth::user()->contragents[0]->auctions as $auction) {
-            if ($auction->id == $this->id) {
-                $bidder = 1;
-                break;
+
+        if (Auth::user()) {
+            foreach (Auth::user()->contragents[0]->auctions as $auction) {
+                if ($auction->id == $this->id) {
+                    $bidder = 1;
+                    break;
+                }
             }
         }
-
         return [
             'id' => $this->id,
             'volume' => $this->volume,

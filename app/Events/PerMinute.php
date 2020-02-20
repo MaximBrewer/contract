@@ -60,6 +60,7 @@ class PerMinute implements ShouldBroadcast
             DB::table('auctions')->where('id', $auction->id)->update(array(
                 'approved' => 1,
             ));
+            
             $bets = Bet::where('auction_id', $auction->id)->whereNull('approved_contract')->get();
             foreach ($bets as $bet) {
                 $bet->update([

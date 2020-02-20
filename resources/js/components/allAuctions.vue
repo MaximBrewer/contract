@@ -3,7 +3,7 @@
     <div class="container-fluid" v-if="auctions.length">
       <div class="h2 text-center">{{ __('Upcoming auctions') }}</div>
       <div class="row">
-        <div class="col-sm-6 col-md-5th">
+        <div class="col-md-3 col-sm-6">
           <div class="form-group">
             <label class="control-label">{{ __('Federal district') }}</label>
             <v-select
@@ -15,7 +15,7 @@
             ></v-select>
           </div>
         </div>
-        <div class="col-md-5th col-sm-6">
+        <div class="col-md-3 col-sm-6">
           <div class="form-group">
             <label class="control-label">{{ __('Region') }}</label>
             <v-select
@@ -27,7 +27,7 @@
             ></v-select>
           </div>
         </div>
-        <div class="col-md-5th col-sm-6">
+        <div class="col-md-3 col-sm-6">
           <div class="form-group">
             <label class="control-label">{{ __('Product') }}</label>
             <v-select
@@ -39,7 +39,7 @@
             ></v-select>
           </div>
         </div>
-        <div class="col-md-5th col-sm-6">
+        <div class="col-md-3 col-sm-6">
           <div class="form-group">
             <label class="control-label">{{ __('Multiplicity') }}</label>
             <v-select
@@ -48,18 +48,6 @@
               @input="filterAuctionsAuctions"
               :options="multiplicities"
               v-model="filter.multiplicity"
-            ></v-select>
-          </div>
-        </div>
-        <div class="col-md-5th col-sm-6">
-          <div class="form-group">
-            <label class="control-label">{{ __('Sort by distance from store') }}</label>
-            <v-select
-              label="address"
-              :searchable="false"
-              @input="loginDropdown"
-              :options="stores"
-              v-model="store"
             ></v-select>
           </div>
         </div>
@@ -209,10 +197,10 @@ export default {
       action = "all";
     let loader = Vue.$loading.show();
     axios
-      .get("/auctions/all?csrf_token=" + document.getElementsByName('csrf-token')[0].getAttribute('content'))
+      .get("/auctions/all")
       .then(function(resp) {
-        app.filterAuctions(resp.data);
-        app.auctions = resp.data;
+        app.filterAuctions(resp.data.data);
+        app.auctions = resp.data.data;
         loader.hide();
         app.$root.getFederalDistricts(app);
         app.$root.getRegions(

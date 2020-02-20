@@ -74,7 +74,8 @@
                         @endif
                         @else
                         <li class="nav-item">
-                            <a href="/personal/auctions/show/226" class="nav-link" :to="{name: 'showAuction', props: {id: 226}}">{{ __('Test auction & chat') }}
+                            <a href="/personal/auctions/show/226" class="nav-link"
+                                :to="{name: 'showAuction', props: {id: 226}}">{{ __('Test auction & chat') }}
                             </a>
                         </li>
                         <li class="nav-item dropdown">
@@ -127,8 +128,8 @@
                                 <router-link :to="{name: 'company'}" class="dropdown-item">{{ __('Settings') }}
                                 </router-link>
 
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                     document.getElementById('logout-form').submit();">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();document.getElementById('logout-form')submit();">
                                     {{ __('Logout') }}
                                 </a>
 
@@ -158,7 +159,7 @@
     <!-- Footer -->
     @include ('footer')
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}?ver=2.1" defer></script>
+    <script src="{{ asset('js/app.js') }}?ver=2.3" defer></script>
     <script src="//code.jivosite.com/widget/SgKrZgYDyo" async></script>
 </body>
 

@@ -50,6 +50,13 @@ Vue.use(
 }
 );
 
+
+window.axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+};
+
+
 import ContragentIndex from "./components/contragents/contragentIndex.vue";
 import ContragentCreate from "./components/contragents/contragentCreate.vue";
 import ContragentEdit from "./components/contragents/contragentEdit.vue";
@@ -67,6 +74,8 @@ import TargetEdit from "./components/targets/targetEdit.vue";
 import TargetIndex from "./components/targets/targetIndex.vue";
 import ReviewsIndex from "./components/contragents/reviewsIndex.vue";
 import AllAuctions from "./components/allAuctions.vue";
+
+
 Vue.component("AllAuctions", AllAuctions, {});
 
 const app = new Vue({
@@ -285,11 +294,6 @@ const app = new Vue({
     }
 })
 
-
-window.axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-};
 
 window.Vue.filter("formatDate", function (value) {
     if (value) {
