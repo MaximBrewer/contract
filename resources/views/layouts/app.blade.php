@@ -128,7 +128,7 @@
                                 <router-link :to="{name: 'company'}" class="dropdown-item">{{ __('Settings') }}
                                 </router-link>
 
-                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                <a class="dropdown-item" href="javascript.void(0)"
                                     onclick="event.preventDefault();document.getElementById('logout-form')submit();">
                                     {{ __('Logout') }}
                                 </a>
