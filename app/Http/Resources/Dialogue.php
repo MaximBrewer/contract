@@ -19,13 +19,13 @@ class Dialogue extends JsonResource
     public function toArray($request)
     {
         $k = $this->contragent_1 == User::find(Auth::user()->id)->contragents[0]->id;
-        $company = $k ? Contragent::find($this->contragent_2) : Contragent::find($this->contragent_1);
-        $contragent = $k ? Contragent::find($this->contragent_1) : Contragent::find($this->contragent_2);
+        $contragent = $k ? Contragent::find($this->contragent_2) : Contragent::find($this->contragent_1);
+        $company = $k ? Contragent::find($this->contragent_1) : Contragent::find($this->contragent_2);
         return [
             'id' => $this->id,
             'count' => $this->count,
-            'contragent' => new ContragentResource($contragent),
             'company' => new ContragentResource($company),
+            'contragent' => new ContragentResource($contragent),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
