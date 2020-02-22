@@ -84,18 +84,12 @@ export default {
       let id = app.$route.params.id;
       axios
         .post("/api/v1/dialogues", { id: id, text: app.text })
-        .then(function(res) {
-        })
+        .then(function(res) {})
         .catch(function(err) {});
     },
     listenForDialog() {
       let app = this;
-      Echo.channel(
-        "dialog." +
-          app.dialogue.contragents[0].contragent_id +
-          "." +
-          app.dialogue.contragents[1].contragent_id
-      ).listen("Dialog", function(e) {
+      Echo.channel("dialog." + app.dialogue.id).listen("Dialog", function(e) {
         console.log(e);
       });
     }
