@@ -1,5 +1,7 @@
 <?php
 use App\User;
+use App\Dialogue;
+use App\DialogueContragent;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -22,7 +24,12 @@ Broadcast::channel('survey.{survey_id}', function ($user, $survey_id) {
     ];
 });
 
-Broadcast::channel('dialog.{contragents}', function ($user, $contragents) {
-    $contragents = explode(".", $contragents);
-    return in_array(User::find($user->id)->contragents[0]->id, $contragents);
+Broadcast::channel('dialog.{dialog}', function ($user, $dialog) {
+    $dialog = Dialogue::find($dialog);
+    $dialogContragents = DialogueContragent::where('dialogue_id', $dialog->id)->orderBy('id', 'asc')->get();
+    $contragent_ids = [
+        $dialogContragents[0]->contragent_id,
+        $dialogContragents[1]->contragent_id,
+    ];
+    return in_array(User::find($user->id)->contragents[0]->id, $contragent_ids);
 });
