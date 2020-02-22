@@ -59,7 +59,7 @@ class DialoguesController extends Controller
                 'contragent_2' => $contragent_id
             ]);
         } else {
-            $dialogue = Dialogue::find($dialogue->id);
+            $dialogue = Dialogue::find($dialogue[0]->id);
         }
 
         return $dialogue;
