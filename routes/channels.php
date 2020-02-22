@@ -25,6 +25,9 @@ Broadcast::channel('survey.{survey_id}', function ($user, $survey_id) {
 });
 
 Broadcast::channel('dialog.{dialog}', function ($user, $dialog) {
+
+    file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/1.txt', print_r([$dialog->id, $user], true));
+
     $dialog = Dialogue::find($dialog);
     $dialogContragents = DialogueContragent::where('dialogue_id', $dialog->id)->orderBy('id', 'asc')->get();
     $contragent_ids = [
