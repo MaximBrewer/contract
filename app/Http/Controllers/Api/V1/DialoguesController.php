@@ -50,7 +50,7 @@ class DialoguesController extends Controller
             'sent' => 1
         ]);
 
-        return event(new Dialog($contragent_ids, $phrase));
+        return event(new Dialog($dialog->id, $phrase));
 
     }
 

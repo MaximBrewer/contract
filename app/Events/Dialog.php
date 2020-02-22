@@ -16,7 +16,7 @@ class Dialog implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $contragents;
+    public $dialog;
     public $phrase;
 
     /**
@@ -24,9 +24,9 @@ class Dialog implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($contragents, $phrase)
+    public function __construct($dialog, $phrase)
     {
-        $this->contragents = $contragents;
+        $this->dialog = $dialog;
         $this->phrase = $phrase;
     }
 
@@ -37,6 +37,6 @@ class Dialog implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('dialog.' . implode('.', $this->contragents));
+        return new PrivateChannel('dialog.' .  $this->dialog->id);
     }
 }
