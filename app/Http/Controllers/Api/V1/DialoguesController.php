@@ -51,8 +51,8 @@ class DialoguesController extends Controller
         ]);
         
         event(new Dialog($dialog, $phrase));
-        
-        return $phrase;
+
+        return [$dialog, $phrase];
 
 
     }
