@@ -17,7 +17,7 @@ class CreateDialoguesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('contragent_1');
             $table->bigInteger('contragent_2');
-            $table->integer('count');
+            $table->integer('count')->default(0);
             $table->timestamps();
         });
     }
