@@ -46,7 +46,7 @@ class DialoguesController extends Controller
 
     public function storeDialog($contragent_id)
     {
-        $dialogue = DB::select("select id from dialogue where (contragent_1 = ? and contragent_2 = ?) or (contragent_1 = ? and contragent_2 = ?)", [
+        $dialogue = DB::select("select id from dialogues where (contragent_1 = ? and contragent_2 = ?) or (contragent_1 = ? and contragent_2 = ?)", [
             $contragent_id,
             User::find(Auth::user()->id)->contragents[0]->id,
             User::find(Auth::user()->id)->contragents[0]->id,
