@@ -18,7 +18,7 @@ class CreatePhrasesTable extends Migration
             $table->bigInteger('dialogue_id');
             $table->bigInteger('contragent_id');
             $table->text('text');
-            $table->boolean('shown');
+            $table->boolean('shown')->default(0);
             $table->timestamps();
         });
     }
