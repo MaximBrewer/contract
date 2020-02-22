@@ -238,7 +238,7 @@ const app = new Vue({
             axios
                 .get("/api/v1/dialogues/check/" + contragent_id)
                 .then(function (res) {
-                    app.$router.push("/personal/dialogue/show/" + res.data.data)
+                    app.$router.push("/personal/dialogue/show/" + res.data.data.id)
                 });
         },
         getFederalDistricts() {
