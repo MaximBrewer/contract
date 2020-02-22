@@ -51,6 +51,10 @@ Route::group([
     Route::post('auctions/bidder/toggle', 'AuctionsController@toggleBidder');
 
 
+    Route::get('dialogues', 'DialoguesController@index');
+
+    Route::get('dialogue/{id}', 'DialoguesController@show');
+    Route::post('dialogues', 'DialoguesController@store');
     Route::get('targets/all', 'TargetsController@all');
     Route::resource('targets', 'TargetsController', ['except' => ['edit', 'create']]);
 

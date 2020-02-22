@@ -124,6 +124,8 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
+                                <router-link :to="{name: 'dialoguesIndex'}" class="dropdown-item">{{ __('Messages') }}
+                                </router-link>
 
                                 <router-link :to="{name: 'company'}" class="dropdown-item">{{ __('Settings') }}
                                 </router-link>

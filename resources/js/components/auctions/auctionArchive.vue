@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="container-fluid">
-      <div class="h2 text-center">{{ __('My auctions') }}</div>
+      <div class="h2 text-center">{{ __('Archive') }}</div>
       <auctions-list :action="'archive'"></auctions-list>
     </div>
   </section>

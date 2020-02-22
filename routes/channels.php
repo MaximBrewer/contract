@@ -1,4 +1,6 @@
 <?php
+use App\User;
+use Illuminate\Support\Facades\Broadcast;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +21,8 @@ Broadcast::channel('survey.{survey_id}', function ($user, $survey_id) {
         'id' => $user->id
     ];
 });
+
+// Broadcast::channel('dialog.{contragents}', function ($user, $contragents) {
+//     $contragents = explode(".", $contragents);
+//     return in_array(User::find($user->id)->contragents[0]->id, $contragents);
+// });

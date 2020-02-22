@@ -61,7 +61,7 @@ import ContragentIndex from "./components/contragents/contragentIndex.vue";
 import ContragentCreate from "./components/contragents/contragentCreate.vue";
 import ContragentEdit from "./components/contragents/contragentEdit.vue";
 import Company from "./components/contragents/company.vue";
-import contragentShow from "./components/contragents/contragentShow.vue";
+import ContragentShow from "./components/contragents/contragentShow.vue";
 import AuctionIndex from "./components/auctions/auctionIndex.vue";
 import AuctionArchive from "./components/auctions/auctionArchive.vue";
 import AuctionMy from "./components/auctions/auctionMy.vue";
@@ -74,6 +74,8 @@ import TargetEdit from "./components/targets/targetEdit.vue";
 import TargetIndex from "./components/targets/targetIndex.vue";
 import ReviewsIndex from "./components/contragents/reviewsIndex.vue";
 import AllAuctions from "./components/allAuctions.vue";
+import DialoguesIndex from "./components/dialogues/dialoguesIndex.vue";
+import DialoguesShow from "./components/dialogues/dialogueShow.vue";
 
 
 Vue.component("AllAuctions", AllAuctions, {});
@@ -106,7 +108,7 @@ const app = new Vue({
         },
         {
             path: "/personal/contragents/show/:id",
-            component: contragentShow,
+            component: ContragentShow,
             name: "showContragent"
         },
         {
@@ -133,6 +135,16 @@ const app = new Vue({
             path: "/personal/auctions/bid",
             component: AuctionBid,
             name: "auctionBid"
+        },
+        {
+            path: "/personal/dialogues",
+            component: DialoguesIndex,
+            name: "dialoguesIndex"
+        },
+        {
+            path: "/personal/dialogue/show/:id",
+            component: DialoguesShow,
+            name: "showDialogue"
         },
         {
             path: "/personal/company",
