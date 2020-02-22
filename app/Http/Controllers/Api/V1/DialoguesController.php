@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Dialogue as DialogueResource;
 use App\Http\Resources\DialogueWithPrases as DialogueWithPrasesResource;
+use App\Http\Resources\Phrase as PhraseResource;
 use App\Dialogue;
 use App\Events\Dialog;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +40,7 @@ class DialoguesController extends Controller
             'text' => $r->post('text')
         ]);
 
-        event(new Dialog($dialog, $phrase));
+        event(new Dialog($dialog->id, new PhraseResource($phrase)));
 
         return [];
     }
