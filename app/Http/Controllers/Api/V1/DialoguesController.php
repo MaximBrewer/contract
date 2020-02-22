@@ -49,8 +49,11 @@ class DialoguesController extends Controller
             'text' => $r->post('text'),
             'sent' => 1
         ]);
+        
+        event(new Dialog($dialog, $phrase));
+        
+        return $phrase;
 
-        return event(new Dialog($dialog, $phrase));
 
     }
 
