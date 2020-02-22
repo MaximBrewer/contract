@@ -15,8 +15,10 @@ class CreatePhrasesTable extends Migration
     {
         Schema::create('phrases', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('dialogue_contragent_id');
+            $table->bigInteger('dialogue_id');
+            $table->bigInteger('contragent_id');
             $table->text('text');
+            $table->boolean('shown');
             $table->timestamps();
         });
     }

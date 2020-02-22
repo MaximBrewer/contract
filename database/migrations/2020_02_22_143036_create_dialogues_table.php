@@ -15,6 +15,9 @@ class CreateDialoguesTable extends Migration
     {
         Schema::create('dialogues', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('contragent_1');
+            $table->bigInteger('contragent_2');
+            $table->integer('count');
             $table->timestamps();
         });
     }
