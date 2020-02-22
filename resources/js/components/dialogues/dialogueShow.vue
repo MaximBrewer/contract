@@ -92,7 +92,7 @@ export default {
       Echo.channel("private-dialog." + app.dialogue.id).listen("Dialog", function(e) {
         console.log(e);
         app.text = '';
-        app.dialogue.phrases.unshift(e);
+        app.dialogue.phrases.unshift(e.phrase);
       });
     }
   }
