@@ -10,8 +10,6 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-
-
 class Dialog implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
@@ -37,6 +35,6 @@ class Dialog implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('dialog.' .  $this->dialog->id);
+        return new Channel('dialog.' . $this->dialog->id);
     }
 }
