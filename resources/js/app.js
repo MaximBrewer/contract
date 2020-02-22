@@ -233,6 +233,14 @@ const app = new Vue({
         confirmedOptions: []
     },
     methods: {
+        writeTo(contragent_id){
+            let app = this;
+            axios
+                .get("/api/v1/dialogues/check/" + contragent_id)
+                .then(function (res) {
+                    app.$router.push("/personal/dialogue/show/" + res.data.data)
+                });
+        },
         getFederalDistricts() {
             let app = this;
             axios
@@ -241,6 +249,7 @@ const app = new Vue({
                     app.federalDistricts = res.data;
                 });
         },
+
         getRegions(fd) {
             axios
                 .get("/regions?federal_district_id=" + fd)

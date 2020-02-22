@@ -8,9 +8,10 @@ class Phrase extends Model
 {
     //
     protected $fillable = [
-        'dialogue_contragent_id',
+        'dialogue_id',
+        'contragent_id',
         'text',
-        'sent'
+        'shown'
     ];
 
 }

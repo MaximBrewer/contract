@@ -22,6 +22,7 @@
                     :to="{name: 'showContragent', params: {id: contragent.id}}"
                     class="btn btn-sm btn-primary"
                   >{{ __('Show') }}</router-link>
+                  <button class="btn btn-sm btn-success" @click="$root.writeTo(contragent.id)"><i aria-hidden="true" class="mdi mdi-pencil"></i></button>
                 </div>
               </td>
             </tr>

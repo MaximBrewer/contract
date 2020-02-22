@@ -52,6 +52,7 @@ Route::group([
 
 
     Route::get('dialogues', 'DialoguesController@index');
+    Route::get('dialogues/check/{contragent_id}', 'DialoguesController@storeDialog');
 
     Route::get('dialogue/{id}', 'DialoguesController@show');
     Route::post('dialogues', 'DialoguesController@store');

@@ -5,27 +5,30 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Resources\Phrase as PhraseResource;
 use App\Phrase;
-use App\DialogueContragent;
 
 class Dialogue extends Model
 {
+    protected $fillable = [
+        'contragent_1',
+        'contragent_2'
+    ];
+
     protected $appends = [
-        'phrases'
+        'contragents'
     ];
     
-    public function getPhrasesAttribute()
-    {
-        return PhraseResource::collection(Phrase::whereIn('dialogue_contragent_id', function ($query) {
-            $query->select('id')
-                ->from(with(new DialogueContragent())->getTable())
-                ->where('dialogue_id', $this->id);
-        })->orderBy('created_at', 'desc')->get());
-    }
-
-    public function contragents()
+    public function phrases()
     {
         return $this->hasMany(
-            'App\DialogueContragent'
+            'App\Phrase'
         );
+    }
+    
+    public function getContragentsAttribute()
+    {
+        return [
+            Contragent::find($this->contragent_1),
+            Contragent::find($this->contragent_2),
+        ];
     }
 }
