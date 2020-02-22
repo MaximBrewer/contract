@@ -89,7 +89,7 @@ export default {
     },
     listenForDialog() {
       let app = this;
-      Echo.channel("dialog." + app.dialogue.id).listen("Dialog", function(e) {
+      Echo.channel("private-dialog." + app.dialogue.id).listen("Dialog", function(e) {
         console.log(e);
       });
     }
