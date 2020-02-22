@@ -35,6 +35,6 @@ class Dialog implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('dialog.' . $this->dialog->id);
+        return new PrivateChannel('dialog.' . $this->dialog);
     }
 }
