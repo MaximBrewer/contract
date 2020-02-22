@@ -37,6 +37,6 @@ class Dialog implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('dialog.' . implode('.', $this->contragents));
+        return new PrivateChannel('dialog.' . implode('.', $this->contragents));
     }
 }
