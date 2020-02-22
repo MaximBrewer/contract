@@ -21,7 +21,7 @@ class Dialogue extends Model
     {
         return $this->hasMany(
             'App\Phrase'
-        );
+        )->limit(50);
     }
     
     public function getContragentsAttribute()

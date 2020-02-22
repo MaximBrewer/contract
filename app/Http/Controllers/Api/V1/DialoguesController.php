@@ -41,7 +41,7 @@ class DialoguesController extends Controller
 
         event(new Dialog($dialog, $phrase));
 
-        return [$dialog, $phrase];
+        return [];
     }
 
     public function storeDialog($contragent_id)
@@ -62,7 +62,7 @@ class DialoguesController extends Controller
             $dialogue = Dialogue::find($dialogue[0]->id);
         }
 
-        return $dialogue;
+        return new DialogueResource($dialogue);
     }
 
     public function show(Request $r, $id)
