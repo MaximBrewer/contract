@@ -42,7 +42,7 @@ class DialoguesController extends Controller
 
         event(new Dialog($cid == $dialog->contragent_1 ? $dialog->contragent_2 : $dialog->contragent_1, new PhraseResource($phrase)));
 
-        return [];
+        return $phrase;
     }
 
     public function storeDialog($contragent_id)
