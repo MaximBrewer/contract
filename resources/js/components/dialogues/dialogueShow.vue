@@ -88,7 +88,7 @@ export default {
         .post("/api/v1/dialogues", { id: id, text: app.text })
         .then(function(res) {
           app.text = "";
-          app.dialogue.phrases.unshift(res.data);
+          app.dialogue.phrases.unshift(res.data.data);
         })
         .catch(function(err) {});
     }
