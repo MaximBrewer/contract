@@ -23,8 +23,6 @@ Broadcast::channel('survey.{survey_id}', function ($user, $survey_id) {
     ];
 });
 
-Broadcast::channel('dialog.{dialog}', function ($user, $dialog) {
-    $d = Dialogue::find($dialog);
-    $k = User::find($user->id)->contragents[0]->id;
-    return $k == $d->contragent_1 || $k == $d->contragent_2;
+Broadcast::channel('dialog.{contragent}', function ($user, $contragent) {
+    return $contragent == User::find($user->id)->contragents[0]->id;
 });

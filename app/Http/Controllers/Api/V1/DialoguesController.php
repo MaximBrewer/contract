@@ -40,7 +40,7 @@ class DialoguesController extends Controller
             'text' => $r->post('text')
         ]);
 
-        event(new Dialog($dialog->id, new PhraseResource($phrase)));
+        event(new Dialog($cid == $dialog->contragent_1 ? $dialog->contragent_2 : $dialog->contragent_1, new PhraseResource($phrase)));
 
         return [];
     }

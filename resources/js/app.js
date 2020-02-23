@@ -186,7 +186,6 @@ const app = new Vue({
     created() {
         let app = this;
         app.confirmedOptions = [{ id: 2, title: app.__("Yes") }, { id: 1, title: app.__("No") }];
-        app.listenForBroadcast();
         app.getFederalDistricts();
         app.getMultiplicities();
         app.getProducts();
@@ -202,6 +201,7 @@ const app = new Vue({
                     Vue.prototype.company = res.data.user.contragents[0];
                     window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.api_token;
                     app.getMyStores();
+                    app.listenForBroadcast();
                 }
                 app.$mount("#app");
             })
@@ -233,7 +233,7 @@ const app = new Vue({
         confirmedOptions: []
     },
     methods: {
-        writeTo(contragent_id){
+        writeTo(contragent_id) {
             let app = this;
             axios
                 .get("/api/v1/dialogues/check/" + contragent_id)
@@ -291,6 +291,9 @@ const app = new Vue({
         },
         listenForBroadcast() {
             var that = this;
+            Echo.channel("private-dialog." + app.company.id).listen("Dialog", function (e) {
+                that.$emit("gotDialog", e.phrase);
+            });
             Echo.channel("every-minute").listen("PerMinute", function (e) {
                 app.time = e.time;
                 e.started.forEach(auction =>

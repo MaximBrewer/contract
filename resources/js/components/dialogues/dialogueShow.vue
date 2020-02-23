@@ -74,9 +74,11 @@ export default {
       .get("/api/v1/dialogue/" + id)
       .then(function(res) {
         app.dialogue = res.data.data;
-        app.listenForDialog();
       })
       .catch(function(err) {});
+    this.$root.$on("gotDialog", function(phrase) {
+      app.dialogue.phrases.unshift(e.phrase);
+    });
   },
   methods: {
     sendMessage: function() {
@@ -84,16 +86,10 @@ export default {
       let id = app.$route.params.id;
       axios
         .post("/api/v1/dialogues", { id: id, text: app.text })
-        .then(function(res) {})
+        .then(function(res) {
+          app.text = "";
+        })
         .catch(function(err) {});
-    },
-    listenForDialog() {
-      let app = this;
-      Echo.channel("private-dialog." + app.dialogue.id).listen("Dialog", function(e) {
-        console.log(e);
-        app.text = '';
-        app.dialogue.phrases.unshift(e.phrase);
-      });
     }
   }
 };
