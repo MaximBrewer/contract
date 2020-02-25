@@ -9,16 +9,16 @@
           <table class="table table-bordered line-height-22">
             <thead>
               <tr>
-                <th>#</th>
-                <th>{{ __('Price') }}</th>
-                <th>{{ __('Volume') }}</th>
-                <th>{{ __('Contragent') }}</th>
-                <th>{{ __('Time') }}</th>
+                <th class="text-center">#</th>
+                <th class="text-center">{{ __('Price') }}</th>
+                <th class="text-center">{{ __('Volume') }}</th>
+                <th class="text-center">{{ __('Contragent') }}</th>
+                <th class="text-center">{{ __('Time') }}</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(unit, index) in auction.histories" :key="index">
-                <td>{{ unit.id }}</td>
+                <td class="text-center">{{ unit.id }}</td>
                 <td class="text-center">{{ unit.price }}</td>
                 <td class="text-center">{{ unit.volume }}</td>
                 <td class="text-center">{{ unit.contragent }}</td>
