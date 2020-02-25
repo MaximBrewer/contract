@@ -25,7 +25,10 @@ class DialoguesController extends Controller
     {
         $cid = User::find(Auth::user()->id)->contragents[0]->id;
 
-        $dialog = Dialogue::findOrFail($r->post('id'));
+        if ($r->post('id'))
+            $dialog = Dialogue::findOrFail($r->post('id'));
+        elseif ($r->post('contragent_id'))
+            $dialog = $this->findOrCreateDialogie($r->post('contragent_id'));
 
         $k = $dialog->contragent_1 == $cid || $dialog->contragent_2 == $cid;
 
@@ -45,7 +48,7 @@ class DialoguesController extends Controller
         return new PhraseResource($phrase);
     }
 
-    public function storeDialog($contragent_id)
+    private function findOrCreateDialogie($contragent_id)
     {
         $dialogue = DB::select("select id from dialogues where (contragent_1 = ? and contragent_2 = ?) or (contragent_1 = ? and contragent_2 = ?)", [
             $contragent_id,
@@ -62,7 +65,12 @@ class DialoguesController extends Controller
         } else {
             $dialogue = Dialogue::find($dialogue[0]->id);
         }
+        return $dialogue;
+    }
 
+    public function storeDialog($contragent_id)
+    {
+        $dialogue = $this->findOrCreateDialogie($contragent_id);
         return new DialogueResource($dialogue);
     }
 

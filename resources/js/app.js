@@ -76,8 +76,10 @@ import ReviewsIndex from "./components/contragents/reviewsIndex.vue";
 import AllAuctions from "./components/allAuctions.vue";
 import DialoguesIndex from "./components/dialogues/dialoguesIndex.vue";
 import DialoguesShow from "./components/dialogues/dialogueShow.vue";
+import SendMessage from "./components/sendMessage.vue";
 
 
+Vue.component("SendMessage", SendMessage, {});
 Vue.component("AllAuctions", AllAuctions, {});
 
 const app = new Vue({

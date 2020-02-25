@@ -14502,3 +14502,9 @@ span.online.is-offline {
   background: #e0e0e0;
 }
 
+@media (min-width: 992px) {
+  .dropdown-send-message {
+    min-width: 18rem;
+  }
+}
+

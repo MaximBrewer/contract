@@ -78,6 +78,18 @@
                                 :to="{name: 'showAuction', props: {id: 226}}">{{ __('Test auction & chat') }}
                             </a>
                         </li>
+
+                        <li class="nav-item dropdown">
+                            <a id="sendmessageDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ __('Send Message') }} <span class="caret"></span>
+                            </a>
+                            <div id="sendmessageDropdownMenu" class="dropdown-menu dropdown-menu-right"
+                                aria-labelledby="sendmessageDropdown" onclick="event.stopPropagation();">
+                                <send-message></send-message>
+                            </div>
+                        </li>
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
