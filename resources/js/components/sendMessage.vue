@@ -22,6 +22,22 @@ export default {
       text: ""
     };
   },
+  mounted() {
+    var app = this;
+    axios
+      .get("/api/v1/contragents")
+      .then(function(res) {
+        app.$root.contragents = res.data;
+      })
+      .catch(function(err) {
+        app.$fire({
+          title: app.__("Error!"),
+          text: app.__("Failed to load contragents"),
+          type: "error",
+          timer: 5000
+        });
+      });
+  },
   methods: {
     sendMessage: function() {
       let app = this;
