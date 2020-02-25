@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use App\Contragent;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Message as MessageResource;
+use App\Http\Resources\History as HistoryResource;
 
 
 class Auction extends Model
@@ -79,6 +80,11 @@ class Auction extends Model
     public function store()
     {
         return $this->belongsTo('App\Store');
+    }
+
+    public function histories()
+    {
+        return HistoryResource::collection(History::where('auction_id', $this->id)->orderBy('created_at', 'asc')->get());
     }
 
     public function bets()

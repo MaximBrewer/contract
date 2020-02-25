@@ -9,7 +9,12 @@
         <auction-mine :auction="auction" v-if="auction.bets && auction.contragent.id == company.id"></auction-mine>
       </div>
       <!--Bidders-->
-      <auction-bidders :auction="auction" v-if="auction.contragent.id == company.id"></auction-bidders>
+      <div v-if="auction.started" class="pb-4">
+        <auction-bidders :auction="auction" v-if="auction.contragent.id == company.id"></auction-bidders>
+      </div>
+      <div v-if="auction.started" class="pb-4">
+        <auction-history :auction="auction" v-if="auction.contragent.id == company.id"></auction-history>
+      </div>
     </div>
     <auction-chat :auction="auction"></auction-chat>
   </section>
@@ -21,6 +26,7 @@ import auctionBidding from "./auctionBidding";
 import auctionMine from "./auctionMine";
 import auctionFinishedMine from "./auctionFinishedMine";
 import auctionBidders from "./auctionBidders";
+import auctionHistory from "./auctionHistory";
 import auctionChat from "./auctionChat";
 export default {
   components: {
@@ -30,7 +36,8 @@ export default {
     auctionMine: auctionMine,
     auctionFinishedMine: auctionFinishedMine,
     auctionBidders: auctionBidders,
-    auctionChat: auctionChat
+    auctionChat: auctionChat,
+    auctionHistory: auctionHistory
   },
   mounted() {
     let app = this;
