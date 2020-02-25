@@ -4,7 +4,7 @@
       <auction-info :auction="auction"></auction-info>
       <auction-actions :auction="auction"></auction-actions>
       <!--Started-->
-      <div v-if="auction.started">
+      <div v-if="auction.started" class="pb-5">
         <auction-bidding :auction="auction" :can_bet="can_bet" :observer="observer" v-if="bidding"></auction-bidding>
         <auction-mine :auction="auction" v-if="auction.bets && auction.contragent.id == company.id"></auction-mine>
       </div>
