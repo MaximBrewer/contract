@@ -9,7 +9,7 @@ use \App\Bet;
 use \App\User;
 use Illuminate\Support\Facades\Auth;
 use \App\Contragent;
-use \App\Target;
+use \App\History;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -615,8 +615,16 @@ class AuctionsController extends Controller
             }
             if ($freeVolume >= $bet->volume) {
                 $freeVolume -= $bet->volume;
-                if (!$bet->id)
+                if (!$bet->id) {
                     $newBet->save();
+
+                    History::create([
+                        'auction_id' => $newBet->auction_id,
+                        'volume' => $newBet->volume,
+                        'price' => $newBet->price,
+                        'contragent_id' => $newBet->contragent_id,
+                    ]);
+                }
             } elseif ($bet->id) {
                 Bet::find($bet->id)->update(['volume' => $freeVolume]);
                 $freeVolume = 0;
@@ -638,6 +646,7 @@ class AuctionsController extends Controller
                     'finish_at' => date('Y-m-d H:i:s', Carbon::now()->addMinutes(10)->timestamp)
                 ]);
             }
+
             event(new \App\Events\MessagePushed($auction));
         }
         return ['ok'];
