@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-md-12" v-if="auction.bets.length">
+    <div class="col-md-12" v-if="auction.histories.length">
       <div class="card">
         <div class="card-header">
           {{ __("Auction history") }}
