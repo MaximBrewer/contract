@@ -69,6 +69,7 @@ class Auction extends Model
         $this->multiplicity;
         $this->contragent;
         $this->bets;
+        $this->histories;
         return true;
     }
 
@@ -84,7 +85,7 @@ class Auction extends Model
 
     public function histories()
     {
-        return HistoryResource::collection($this->hasMany('App\History')->orderBy('created_at', 'asc')->get());
+        return $this->hasMany('App\History')->orderBy('created_at', 'asc');
     }
 
     public function bets()
