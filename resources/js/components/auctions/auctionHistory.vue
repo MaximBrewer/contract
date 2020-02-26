@@ -21,7 +21,7 @@
                 <td class="text-center">{{ unit.id }}</td>
                 <td class="text-center">{{ unit.price }}</td>
                 <td class="text-center">{{ unit.volume }}</td>
-                <td class="text-center">{{ unit.contragent }}</td>
+                <td class="text-center">{{ unit.contragent.title }}</td>
                 <td class="text-center">{{ unit.created_at }}</td>
               </tr>
             </tbody>
