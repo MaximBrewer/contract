@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Contragent;
+use App\Http\Resources\Contragent as ContragentResource;
 
 class History extends JsonResource
 {
