@@ -17,7 +17,8 @@
             class="form-control sixe-200"
             :placeholder="__('Add comment...')"
             required
-            v-model="message"
+            v-model="message" 
+            
           ></textarea>
           <span class="input" v-if="errorComment" style="color:red">{{errorComment}}</span>
         </div>
