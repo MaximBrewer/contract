@@ -9,7 +9,7 @@
         <auction-mine :auction="auction" v-if="auction.bets && auction.contragent.id == company.id"></auction-mine>
       </div>
       <!--Bidders-->
-      <div v-if="auction.started" class="pb-4">
+      <div v-if="!auction.finished" class="pb-4">
         <auction-bidders :auction="auction" v-if="auction.contragent.id == company.id"></auction-bidders>
       </div>
       <div v-if="auction.started" class="pb-4">
