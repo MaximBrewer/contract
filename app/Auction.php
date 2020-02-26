@@ -84,7 +84,7 @@ class Auction extends Model
 
     public function histories()
     {
-        return HistoryResource::collection(History::where('auction_id', $this->id)->orderBy('created_at', 'asc')->get());
+        return HistoryResource::collection($this->hasMany('App\History')->orderBy('created_at', 'asc')->get());
     }
 
     public function bets()
