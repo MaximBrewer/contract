@@ -295,6 +295,11 @@ const app = new Vue({
             var that = this;
             Echo.channel("private-dialog." + app.company.id).listen("Dialog", function (e) {
                 that.$emit("gotDialog", e.phrase);
+                console.log(e)
+                that.flash(
+                    e.phrase.contragent.title + '<br>' + e.phrase.text,
+                    "success"
+                )
             });
             Echo.channel("every-minute").listen("PerMinute", function (e) {
                 app.time = e.time;
