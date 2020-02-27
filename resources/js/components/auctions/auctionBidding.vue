@@ -54,52 +54,58 @@
           </div>
         </div>
       </div>
-      <div
-        class="table-responsive"
-        id="auction_activity"
-        v-if="auction.bets && auction.bets.length && !!observer"
-      >
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>{{ __('Active volume') }}</th>
-              <th>{{ __('Active price') }}</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="(bet, index) in betsList"
-              v-bind:key="index"
-              v-bind:class="{ 'table-success': bet.contragent_id == company.id}"
-            >
-              <td>
-                <div v-if="bet.contragent" class="text-nowrap">
-                  <div class="h6">{{ bet.volume }}</div>
-                </div>
-              </td>
-              <td>
-                <div v-if="bet.contragent" class="text-nowrap">
-                  <div class="h6">{{ bet.price }}₽</div>
-                </div>
-              </td>
-              <td>
-                <div
-                  v-if="!!bet.approved_volume && bet.contragent_id == company.id"
-                  class="text-nowrap"
-                >
-                  <div class="h6">{{ __('The volume of bet has approved') }}</div>
-                </div>
-                <div
-                  v-if="!!bet.approved_contract && bet.contragent_id == company.id"
-                  class="text-nowrap"
-                >
-                  <div class="h6">{{ __('The contract has approved') }}</div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="card">
+        <div class="card-header">
+          {{ __("Auction activity") }}
+          <strong>{{ auction.free_volume }}/{{ auction.volume }}</strong>
+        </div>
+        <div
+          class="table-responsive"
+          id="auction_activity"
+          v-if="auction.bets && auction.bets.length && !!observer"
+        >
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>{{ __('Active volume') }}</th>
+                <th>{{ __('Active price') }}</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(bet, index) in betsList"
+                v-bind:key="index"
+                v-bind:class="{ 'table-success': bet.contragent_id == company.id}"
+              >
+                <td>
+                  <div v-if="bet.contragent" class="text-nowrap">
+                    <div class="h6">{{ bet.volume }}</div>
+                  </div>
+                </td>
+                <td>
+                  <div v-if="bet.contragent" class="text-nowrap">
+                    <div class="h6">{{ bet.price }}₽</div>
+                  </div>
+                </td>
+                <td>
+                  <div
+                    v-if="!!bet.approved_volume && bet.contragent_id == company.id"
+                    class="text-nowrap"
+                  >
+                    <div class="h6">{{ __('The volume of bet has approved') }}</div>
+                  </div>
+                  <div
+                    v-if="!!bet.approved_contract && bet.contragent_id == company.id"
+                    class="text-nowrap"
+                  >
+                    <div class="h6">{{ __('The contract has approved') }}</div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
