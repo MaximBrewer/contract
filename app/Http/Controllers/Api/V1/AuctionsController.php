@@ -241,7 +241,9 @@ class AuctionsController extends Controller
      */
     public function unbid(Request $request, $action, $id)
     {
-        if (count(Auth::user()->contragents)) Auth::user()->contragents[0]->auctions()->detach($id);
+        if (count(User::find(Auth::user()->id)->contragents)) User::find(Auth::user()->id)->contragents[0]->auctions()->detach($id);
+
+        Bet::where('auction_id', $id)->where('contragent_id', User::find(Auth::user()->id)->contragents[0]->id)->delete();
 
         $auction = Auction::findOrFail($id);
         if ($auction) event(new \App\Events\MessagePushed($auction));
@@ -433,8 +435,9 @@ class AuctionsController extends Controller
 
         $bet->update([
             'approved_contract' => Carbon::now(),
-            'correct' => (float) $r->correct
+            'correct' => (float) $r->correct ? (float) $r->correct : $bet->price
         ]);
+
 
         $auction = Auction::findOrFail($auction->id);
 

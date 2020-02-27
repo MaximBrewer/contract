@@ -69,9 +69,9 @@
           </thead>
           <tbody>
             <tr
-              v-for="(bet, index) in auction.bets"
+              v-for="(bet, index) in betsList"
               v-bind:key="index"
-              v-bind:class="{ 'table-success': user.contragents && user.contragents[0] && bet.contragent_id == user.contragents[0].id}"
+              v-bind:class="{ 'table-success': bet.contragent_id == company.id}"
             >
               <td>
                 <div v-if="bet.contragent" class="text-nowrap">
@@ -85,13 +85,13 @@
               </td>
               <td>
                 <div
-                  v-if="!!bet.approved_volume && user.contragents && user.contragents[0] && bet.contragent_id == user.contragents[0].id"
+                  v-if="!!bet.approved_volume && bet.contragent_id == company.id"
                   class="text-nowrap"
                 >
                   <div class="h6">{{ __('The volume of bet has approved') }}</div>
                 </div>
                 <div
-                  v-if="!!bet.approved_contract && user.contragents && user.contragents[0] && bet.contragent_id == user.contragents[0].id"
+                  v-if="!!bet.approved_contract && bet.contragent_id == company.id"
                   class="text-nowrap"
                 >
                   <div class="h6">{{ __('The contract has approved') }}</div>
@@ -110,11 +110,16 @@ export default {
   data: function() {
     return {
       bid: {},
-      errors: {}
+      errors: {},
+      betsList: []
     };
   },
-  mounted(){
-    console.log(9)
+  mounted() {
+    var app = thies;
+    auction.bets.forEach(bet => {
+      if(bet.contragent_id == company.id || !bet.approved_contract)
+      app.betsList.push(bet);
+    });
   },
   methods: {
     betIt() {
