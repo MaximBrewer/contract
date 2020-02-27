@@ -292,6 +292,7 @@ export default {
           )
           .then(function(res) {
             app.$root.contragent = res.data;
+            app.$root.getMyStores();
             app.$fire({
               title: app.__("Company is successfully updated!"),
               type: "success",

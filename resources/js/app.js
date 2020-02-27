@@ -86,8 +86,6 @@ const app = new Vue({
     router: new VueRouter({
         mode: "history",
         beforeRouteUpdate(to, from, next) {
-            // react to route changes...
-            // don't forget to call next()
         },
         routes: [{
             path: "/personal",

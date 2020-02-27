@@ -1,5 +1,15 @@
 <template>
   <section class="container-fluid">
+    <div class="row" v-if="action == 'my'">
+      <div class="col-md-12 text-right">
+        <div class="form-group">
+          <router-link
+            :to="{name: 'createAuction'}"
+            class="btn btn-primary btn-lg"
+          >{{ __('Create new auction') }}</router-link>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-4 col-sm-6 col-xs-1">
         <div class="form-group">
@@ -97,7 +107,8 @@
                 <div class="h6">{{ auction.contragent.title }}</div>
               </div>
               <div v-if="auction.contragent" class="text-nowrap">
-                <strong>{{ __('Rating') }}:</strong> {{ auction.contragent.rating }}
+                <strong>{{ __('Rating') }}:</strong>
+                {{ auction.contragent.rating }}
               </div>
               <div v-if="auction.product" class="text-nowrap">
                 <strong>{{ __('Product') }}:</strong>
@@ -111,7 +122,10 @@
                 <strong>{{ __('Volume') }}:</strong>
                 <span>{{ auction.volume }}</span>
               </div>
-              <div class="text-nowrap" v-if="auction.range != undefined && auction.range != 10000 && store">
+              <div
+                class="text-nowrap"
+                v-if="auction.range != undefined && auction.range != 10000 && store"
+              >
                 <strong>{{ __('Range') }}:</strong>
                 <span>{{ auction.range * 1 }} {{ __('km') }}</span>
               </div>
@@ -223,20 +237,20 @@ export default {
       auctions: [],
       auctionsList: [],
       store: null,
-      title: ''
+      title: ""
     };
   },
   mounted() {
     this.getAuctions();
-    switch(this.action){
+    switch (this.action) {
       case "my":
-        this.title = this.__('My auctions')
+        this.title = this.__("My auctions");
         break;
       case "all":
-        this.title = this.__('All auctions')
+        this.title = this.__("All auctions");
         break;
       case "bid":
-        this.title = this.__('Bidder')
+        this.title = this.__("Bidder");
         break;
     }
   },
