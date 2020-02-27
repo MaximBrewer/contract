@@ -117,8 +117,9 @@ export default {
   mounted() {
     var app = thies;
     auction.bets.forEach(bet => {
-      if(bet.contragent_id == company.id || !bet.approved_contract)
-      app.betsList.push(bet);
+      console.log(bet)
+      if (bet.contragent_id == company.id || !bet.approved_contract)
+        app.betsList.push(bet);
     });
   },
   methods: {
