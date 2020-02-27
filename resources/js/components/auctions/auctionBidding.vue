@@ -117,7 +117,7 @@ export default {
   mounted() {
     var app = this;
     app.auction.bets.forEach(bet => {
-      if (bet.contragent_id == company.id || !bet.approved_contract)
+      if (bet.contragent_id == app.company.id || !bet.approved_contract)
         app.betsList.push(bet);
     });
   },
