@@ -260,7 +260,7 @@ export default {
             ) * 100
           ) / 100;
       }
-      if (cnt == app.targets.length) {
+      if (cnt == app.targetsList.length) {
         app.targetsList.sort(function(a, b) {
           return a.range - b.range;
         });
