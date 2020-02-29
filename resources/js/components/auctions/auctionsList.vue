@@ -21,7 +21,7 @@
             @input="filterGetRegions"
             :options="$root.federalDistricts"
             v-model="filter.federal_district"
-          ></v-select>
+          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
         </div>
       </div>
       <div class="col-md-2 col-sm-3 col-xs-1">
@@ -33,7 +33,7 @@
             @input="filterAuctions"
             :options="$root.regions"
             v-model="filter.region"
-          ></v-select>
+          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-1">
@@ -45,7 +45,7 @@
             @input="filterAuctions"
             :options="$root.contragents"
             v-model="filter.contragent"
-          ></v-select>
+          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-1">
@@ -57,7 +57,7 @@
             @input="filterAuctions"
             :options="$root.products"
             v-model="filter.product"
-          ></v-select>
+          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-1">
@@ -69,7 +69,7 @@
             @input="filterAuctions"
             :options="$root.multiplicities"
             v-model="filter.multiplicity"
-          ></v-select>
+          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
         </div>
       </div>
       <div class="col-md-2 col-sm-3 col-xs-1">
@@ -81,7 +81,7 @@
             @input="filterAuctions"
             :options="$root.confirmedOptions"
             v-model="filter.confirmed"
-          ></v-select>
+          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
         </div>
       </div>
       <div class="col-md-2 col-sm-3 col-xs-1">
@@ -94,7 +94,7 @@
             :options="$root.tags"
             :multiple="true"
             v-model="filter.tags"
-          ></v-select>
+          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-xs-1">
@@ -106,7 +106,7 @@
             @input="sorByDistance"
             :options="$root.stores"
             v-model="store"
-          ></v-select>
+          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
         </div>
       </div>
     </div>

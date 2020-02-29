@@ -66,7 +66,7 @@
                   label="title"
                   :multiple="true"
                   v-model="add_bidders"
-                ></v-select>
+                ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
                 <br />
                 <br />
                 <br />

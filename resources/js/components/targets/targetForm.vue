@@ -16,7 +16,7 @@
               :options="$root.products"
               v-model="$root.target.product"
               v-bind:class="{ 'is-invalid': $root.errors['product.id'] }"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
             <span role="alert" class="invalid-feedback" v-if="$root.errors['product.id']">
               <strong v-for="(error, index) in $root.errors['product.id']" :key="index">{{ error }}</strong>
             </span>
@@ -29,7 +29,7 @@
               :options="$root.multiplicities"
               v-model="$root.target.multiplicity"
               v-bind:class="{ 'is-invalid': $root.errors['multiplicity.id'] }"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
             <span role="alert" class="invalid-feedback" v-if="$root.errors['multiplicity.id']">
               <strong
                 v-for="(error, index) in $root.errors['multiplicity.id']"
@@ -45,7 +45,7 @@
               :options="$root.stores"
               v-model="$root.target.store"
               v-bind:class="{ 'is-invalid': $root.errors['store.id'] }"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
             <span role="alert" class="invalid-feedback" v-if="$root.errors['store.id']">
               <strong v-for="(error, index) in $root.errors['store.id']" :key="index">{{ error }}</strong>
             </span>

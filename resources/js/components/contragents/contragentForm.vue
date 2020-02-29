@@ -25,7 +25,7 @@
               label="title"
               :options="$root.federalDistricts"
               v-model="$root.contragent.federal_district"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
             <div role="alert" class="invalid-feedback" v-if="$root.errors['federal_district.id']">
               <span
                 v-for="(error, index) in $root.errors['federal_district.id']"
@@ -43,7 +43,7 @@
               :options="$root.regions"
               v-model="$root.contragent.region"
               ref="region"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
             <div role="alert" class="invalid-feedback" v-if="$root.errors['region.id']">
               <span v-for="(error, index) in $root.errors['region.id']" :key="index">{{ error }}</span>
             </div>
@@ -59,7 +59,7 @@
               v-model="$root.contragent.types"
               :multiple="true"
               ref="types"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
             <div role="alert" class="invalid-feedback" v-if="$root.errors['types.id']">
               <span v-for="(error, index) in $root.errors['types.id']" :key="index">{{ error }}</span>
             </div>
@@ -191,7 +191,7 @@
                           :options="$root.federalDistricts"
                           v-model="store.federal_district"
                           :ref="'stores_'+index+'_federal_district'"
-                        ></v-select>
+                        ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
                         <div
                           role="alert"
                           class="invalid-feedback"
@@ -212,7 +212,7 @@
                           :options="$root.federalDistricts"
                           v-model="store.region"
                           :ref="'stores_'+index+'_region'"
-                        ></v-select>
+                        ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
                         <div
                           role="alert"
                           class="invalid-feedback"

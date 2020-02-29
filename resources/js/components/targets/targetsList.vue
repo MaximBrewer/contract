@@ -11,7 +11,7 @@
               @input="filterRegionsTargets"
               :options="$root.federalDistricts"
               v-model="filter.federal_district"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
           </div>
         </div>
         <div class="col-12 col-sm-6 col-md-4">
@@ -23,7 +23,7 @@
               @input="filterTargets"
               :options="$root.regions"
               v-model="filter.region"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
           </div>
         </div>
         <div class="col-12 col-sm-6 col-md-4">
@@ -35,7 +35,7 @@
               @input="filterTargets"
               :options="$root.products"
               v-model="filter.product"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
           </div>
         </div>
         <div class="col-12 col-sm-6 col-md-4">
@@ -47,7 +47,7 @@
               @input="filterTargets"
               :options="$root.contragents"
               v-model="filter.contragent"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
           </div>
         </div>
         <div class="col-12 col-sm-6 col-md-4">
@@ -59,7 +59,7 @@
               @input="filterTargets"
               :options="$root.multiplicities"
               v-model="filter.multiplicity"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
           </div>
         </div>
         <div class="col-12 col-sm-6 col-md-4">
@@ -71,7 +71,7 @@
               @input="sorByDistance"
               :options="$root.stores"
               v-model="store"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
           </div>
         </div>
         <div class="col-lg-12">

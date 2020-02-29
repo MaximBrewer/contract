@@ -39,7 +39,7 @@
               :options="$root.stores"
               v-model="bid.store"
               v-bind:class="{ 'is-invalid': errors['store.id'] }"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
             <span role="alert" class="invalid-feedback" v-if="errors['store.id']">
               <strong v-for="(error, index) in errors['store.id']" :key="index">{{ error }}</strong>
             </span>

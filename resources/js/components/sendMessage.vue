@@ -6,7 +6,7 @@
         label="title"
         :options="$root.contragents"
         v-model="contragent"
-      ></v-select>
+      ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
     </div>
     <div class="form-group">
       <textarea v-model="text" class="form-control"></textarea>

@@ -12,7 +12,7 @@
               @input="filterGetRegions"
               :options="federalDistricts"
               v-model="filter.federal_district"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
           </div>
         </div>
         <div class="col-md-3 col-sm-6">
@@ -24,7 +24,7 @@
               @input="filterAuctionsAuctions"
               :options="regions"
               v-model="filter.region"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
           </div>
         </div>
         <div class="col-md-3 col-sm-6">
@@ -36,7 +36,7 @@
               @input="filterAuctionsAuctions"
               :options="products"
               v-model="filter.product"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
           </div>
         </div>
         <div class="col-md-3 col-sm-6">
@@ -48,7 +48,7 @@
               @input="filterAuctionsAuctions"
               :options="multiplicities"
               v-model="filter.multiplicity"
-            ></v-select>
+            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
           </div>
         </div>
       </div>
