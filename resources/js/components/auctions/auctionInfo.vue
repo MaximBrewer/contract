@@ -29,6 +29,11 @@
           >{{ __('Auction volume') }}: {{ auction.volume }} {{ __('un') }}.</li>
           <li class="list-group-item">{{ __('Auction start price') }}: {{ auction.start_price }}₽</li>
           <li class="list-group-item">{{ __('Auction step') }}: {{ auction.step }}₽</li>
+          <li v-if="auction.tags.length" class="list-group-item">{{ __('Auction tags') }}:
+            <ul>
+              <li v-for="(tag, index) in auction.tags" :key="index">{{ tag.title }}</li>
+            </ul>
+          </li>
         </ul>
       </div>
       <br />

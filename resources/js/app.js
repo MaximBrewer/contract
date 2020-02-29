@@ -191,6 +191,7 @@ const app = new Vue({
         app.getProducts();
         app.getRegions(app.fd);
         app.getTypes();
+        app.getTags();
         axios
             .get(
                 "/auth"
@@ -255,6 +256,14 @@ const app = new Vue({
                 .get("/regions?federal_district_id=" + fd)
                 .then(function (res) {
                     app.regions = res.data;
+                });
+        },
+        getTags() {
+            let app = this;
+            axios
+                .get("/tags")
+                .then(function (res) {
+                    app.tags = res.data;
                 });
         },
         getProducts() {

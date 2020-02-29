@@ -146,8 +146,8 @@
     "You can`t bet!": "Вы не можете ставить!",
     "Ai Ai!": "Ай ай",
     "You request more than auction total volume!": "Ваш объем ставки больше объема аукциона!",
-    "Is online": "Онлайн",
-    "Is online": "Онлайн",
+    "Auction tags": "Теги",
+    "Tags": "Теги",
     "Is online": "Онлайн",
     "Is online": "Онлайн",
     "Is online": "Онлайн",
@@ -227,5 +227,7 @@
     "Send Message": "Отправить сообщение",
     "Send": "Отправить",
     "Auction history": "История аукциона",
-    "Auction activity": "Активность аукциона"
+    "Auction activity": "Активность аукциона",
+    "You have a low rating, contact the administration or ask other Russian companies to write reviews about your company.": "У вас низкий ретинг, обратитесь к администрации или попросите другие фирмы России написать о вашей фирме отзывы.",
+    "Error!": "Ошибка!"
 }

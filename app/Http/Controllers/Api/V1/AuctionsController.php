@@ -14,6 +14,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use \App\Store;
+use \App\Tag;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\AuctionResource;
 
@@ -128,6 +129,7 @@ class AuctionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
 
@@ -155,6 +157,13 @@ class AuctionsController extends Controller
             'volume' => $request->post('volume'),
             'step' => $request->post('step'),
         ]);
+
+        if ($request->post('tags')) {
+            $tags = [];
+
+            foreach ($request->post('tags') as $t) $tags[] = $t['id'];
+            $auction->tags()->sync($tags);
+        }
 
         $auction = Auction::findOrFail($auction->id);
         return $auction;
@@ -193,6 +202,7 @@ class AuctionsController extends Controller
         }
 
         $bidders = $auction->bidders;
+        $tags = $auction->tags;
         $auction = $auction->toArray();
 
         unset($auction['id']);
@@ -206,10 +216,11 @@ class AuctionsController extends Controller
 
         $new_auction = Auction::create($auction);
 
-        foreach ($bidders as $bidder) {
-
+        foreach ($bidders as $bidder)
             Contragent::find($bidder['id'])->auctions()->attach($new_auction->id);
-        }
+
+        foreach ($tags as $tag)
+            Tag::find($tag['id'])->auctions()->attach($new_auction->id);
 
         return $new_auction;
     }
@@ -294,6 +305,13 @@ class AuctionsController extends Controller
             'step' => $request->post('step'),
         ]);
 
+
+        if ($request->post('tags')) {
+            $tags = [];
+            foreach ($request->post('tags') as $t) $tags[] = $t['id'];
+            $auction->tags()->sync($tags);
+        }
+
         if ($auction) event(new \App\Events\MessagePushed($auction));
 
         return $auction;
@@ -320,6 +338,13 @@ class AuctionsController extends Controller
             'start_price' => $request->post('start_price'),
             'volume' => $request->post('volume'),
         ]);
+
+        if ($request->post('tags')) {
+            $tags = [];
+            foreach ($request->post('tags') as $t) $tags[] = $t['id'];
+            $auction->tags()->sync($tags);
+        }
+        
         $auction = Auction::findOrFail($id);
         return $auction;
     }

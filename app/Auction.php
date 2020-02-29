@@ -68,6 +68,7 @@ class Auction extends Model
         $this->product;
         $this->multiplicity;
         $this->contragent;
+        $this->tags;
         $this->bets;
         $this->histories;
         return true;
@@ -87,6 +88,11 @@ class Auction extends Model
     {
         // return HistoryResource::collection(History::where('auction_id', $this->id)->orderBy('created_at', 'desc')->get());
         return $this->hasMany('App\History')->orderBy('created_at', 'desc');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag');
     }
 
     public function bets()

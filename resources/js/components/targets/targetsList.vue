@@ -80,7 +80,8 @@
                 <tr v-for="(target, index) in targetsList" :key="index">
                   <td width="1">{{ index + 1 }}</td>
                   <td>
-                    <div>{{ target.contragent.title }}</div>
+                    <div>
+                  <router-link :to="'/personal/contragents/show/' + target.contragent.id">{{ target.contragent.title }}</router-link></div>
                     <div class="text-nowrap">
                       <strong>{{ __('Rating') }}:</strong>
                       {{ target.contragent.rating }}
@@ -285,6 +286,7 @@ export default {
     },
     checkTargets() {
       let app = this;
+      let loader = Vue.$loading.show();
       let url = "/api/v1/targets";
       if (app.action == "all") url = "/api/v1/targets/all";
       axios
@@ -292,8 +294,10 @@ export default {
         .then(function(res) {
           app.targets = res.data;
           app.targetsList = res.data;
+          loader.hide();
         })
         .catch(function(err) {
+          loader.hide();
         });
     },
     showPopup(controller, id, template, index) {

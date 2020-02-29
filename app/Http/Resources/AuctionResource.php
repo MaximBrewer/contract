@@ -59,7 +59,8 @@ class AuctionResource extends JsonResource
                 'coords' => $this->store->coords,
                 'address' => $this->store->address
             ],
-            'bidder' => $bidder
+            'bidder' => $bidder,
+            'tags' => $this->tags
         ];
     }
 }
