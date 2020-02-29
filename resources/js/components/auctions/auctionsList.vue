@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4 col-sm-6 col-xs-1">
+      <div class="col-md-2 col-sm-3 col-xs-1">
         <div class="form-group">
           <label class="control-label">{{ __('Federal district') }}</label>
           <v-select
@@ -24,7 +24,7 @@
           ></v-select>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 col-xs-1">
+      <div class="col-md-2 col-sm-3 col-xs-1">
         <div class="form-group">
           <label class="control-label">{{ __('Region') }}</label>
           <v-select
@@ -33,6 +33,18 @@
             @input="filterAuctions"
             :options="$root.regions"
             v-model="filter.region"
+          ></v-select>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-xs-1">
+        <div class="form-group">
+          <label class="control-label">{{ __('Contragent') }}</label>
+          <v-select
+            label="title"
+            :searchable="false"
+            @input="filterAuctions"
+            :options="$root.contragents"
+            v-model="filter.contragent"
           ></v-select>
         </div>
       </div>
@@ -187,6 +199,7 @@ export default {
           (!f.product || f.product.id == a.product.id) &&
           (!f.multiplicity || f.multiplicity.id == a.multiplicity.id) &&
           (!f.confirmed || f.confirmed.id - 1 == a.confirmed) &&
+          (!f.contragent || f.contragent.id == a.contragent.id) &&
           (!f.tags.length || intags)
         )
           app.auctionsList.push(a);
