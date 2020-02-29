@@ -10,6 +10,7 @@
 @import "~vue-loading-overlay/dist/vue-loading.css";
 @import "~vue-datetime/dist/vue-datetime.css";
 @import "~vue-flash-message/dist/vue-flash-message.min.css";
+@import "~vue-pure-lightbox/dist/VuePureLightbox.css";
 
 html,
 body {
@@ -22,6 +23,15 @@ body {
 
 #sticky-footer {
     flex-shrink: none;
+}
+.lightbox {
+    z-index: 10;
+}
+.lightbox__element {
+    max-width: 100%;
+    max-height: 100%;
+    width:auto;
+    height:auto;
 }
 
 .contragent-edit-wrapper .stores {

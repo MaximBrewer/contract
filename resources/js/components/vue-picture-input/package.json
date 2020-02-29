@@ -1,0 +1,85 @@
+{
+  "_from": "vue-picture-input",
+  "_id": "vue-picture-input@2.1.6",
+  "_inBundle": false,
+  "_integrity": "sha512-aM5Pyjz3Kup35/6OCjpgA0BEpLTW9YuN7Ds44XLibXZcxnYYLQezmXpb6IXg/orVTMwMLWNpsHCT3wPhLfjdeA==",
+  "_location": "/vue-picture-input",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "vue-picture-input",
+    "name": "vue-picture-input",
+    "escapedName": "vue-picture-input",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/vue-picture-input/-/vue-picture-input-2.1.6.tgz",
+  "_shasum": "6a47af68d19c9122cdd20de980d3b113b0a614be",
+  "_spec": "vue-picture-input",
+  "_where": "/Users/maxim/Projects/contract",
+  "author": {
+    "name": "alessio@maffe.is"
+  },
+  "bugs": {
+    "url": "https://github.com/alessiomaffeis/vue-picture-input/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Mobile-friendly picture file input component with image preview and drag and drop.",
+  "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.12",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "jest": "^22.4.0",
+    "jest-serializer-vue": "^0.3.0",
+    "vue": "^2.5.13",
+    "vue-jest": "^2.1.0",
+    "vue-server-renderer": "^2.5.13",
+    "vue-template-compiler": "^2.5.13"
+  },
+  "homepage": "https://github.com/alessiomaffeis/vue-picture-input",
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    },
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/jest-serializer-vue"
+    ]
+  },
+  "jsdelivr": "umd/vue-picture-input.js",
+  "keywords": [
+    "VueJs",
+    "picture",
+    "image",
+    "input",
+    "preview",
+    "form",
+    "upload"
+  ],
+  "license": "MIT",
+  "main": "PictureInput.vue",
+  "name": "vue-picture-input",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alessiomaffeis/vue-picture-input.git"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "unpkg": "umd/vue-picture-input.js",
+  "version": "2.1.6"
+}

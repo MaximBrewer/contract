@@ -10,7 +10,9 @@
               :options="$root.products"
               v-model="auction.product"
               v-bind:class="{ 'is-invalid': errors['product.id'] }"
-            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+            >
+              <div slot="no-options">{{ __('No Options Here!') }}</div>
+            </v-select>
             <span role="alert" class="invalid-feedback" v-if="errors['product.id']">
               <strong v-for="(error, index) in errors['product.id']" :key="index">{{ error }}</strong>
             </span>
@@ -22,7 +24,9 @@
               :options="$root.multiplicities"
               v-model="auction.multiplicity"
               v-bind:class="{ 'is-invalid': errors['multiplicity.id'] }"
-            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+            >
+              <div slot="no-options">{{ __('No Options Here!') }}</div>
+            </v-select>
             <span role="alert" class="invalid-feedback" v-if="errors['multiplicity.id']">
               <strong v-for="(error, index) in errors['multiplicity.id']" :key="index">{{ error }}</strong>
             </span>
@@ -34,7 +38,9 @@
               :options="$root.stores"
               v-model="auction.store"
               v-bind:class="{ 'is-invalid': errors['store.id'] }"
-            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+            >
+              <div slot="no-options">{{ __('No Options Here!') }}</div>
+            </v-select>
             <span role="alert" class="invalid-feedback" v-if="errors['store.id']">
               <strong v-for="(error, index) in errors['store.id']" :key="index">{{ error }}</strong>
             </span>
@@ -53,16 +59,9 @@
           </div>
           <div class="form-group">
             <label class="control-label">{{ __('Auction tags') }}</label>
-            <v-select
-              label="title"
-              :multiple="true"
-              :options="$root.tags"
-              v-model="auction.tags"
-              v-bind:class="{ 'is-invalid': errors['product.id'] }"
-            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
-            <span role="alert" class="invalid-feedback" v-if="errors['product.id']">
-              <strong v-for="(error, index) in errors['product.id']" :key="index">{{ error }}</strong>
-            </span>
+            <v-select label="title" :multiple="true" :options="$root.tags" v-model="auction.tags">
+              <div slot="no-options">{{ __('No Options Here!') }}</div>
+            </v-select>
           </div>
         </div>
         <div class="col-md-6">
@@ -134,17 +133,51 @@
             </span>
           </div>
         </div>
-      </div>
-      <div class="col-xs-12">
-        <div class="form-group text-right">
-          <button class="btn btn-primary">{{ __('Save') }}</button>
+        <div class="col-12 col-md-6">
+          <div class="form-group">
+            <picture-input
+              ref="pictureInput"
+              width="300"
+              height="200"
+              margin="0"
+              @change="onPhotoChange" 
+              @remove="onPhotoRemove" 
+              :removable="true"
+              accept="image/jpeg, image/png, image/webp"
+              size="10"
+              :prefill="!!auction.picture ? '/storage/' + auction.picture : null"
+              buttonClass="btn btn-primary"
+              :zIndex="1"
+              :customStrings="{
+                change:__('Change Photo'),
+                remove:__('Remove Photo'),
+                select:__('Select a Photo'),
+                upload:__('<p>Your device does not support file uploading.</p>'),
+                drag:__('Drag an image or <br>click here to select a file'),
+                tap:__('Tap here to select a photo <br>from your gallery'),
+                selected:__('<p>Photo successfully selected!</p>'),
+                fileSize:__('The file size exceeds the limit'),
+                fileType:__('This file type is not supported.'),
+                aspect:__('Landscape/Portrait')
+              }"
+            ></picture-input>
+          </div>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="form-group text-right">
+            <button class="btn btn-primary">{{ __('Save') }}</button>
+          </div>
         </div>
       </div>
     </form>
   </div>
 </template>
 <script>
+import PictureInput from "../vue-picture-input";
 export default {
+  components: {
+    PictureInput
+  },
   mounted() {
     let loader = Vue.$loading.show();
     loader.hide();
@@ -154,13 +187,42 @@ export default {
   },
   props: ["auction"],
   methods: {
+    onPhotoChange(){
+      this.auction.picture = '';
+    },
+    onPhotoRemove(){
+      this.auction.picture = '';
+    },
     saveForm() {
       event.preventDefault();
       var app = this;
       let loader = Vue.$loading.show();
+
+      const data = new FormData();
+      data.append("multiplicity_id", app.auction.multiplicity.id);
+      data.append("product_id", app.auction.product.id);
+      data.append("store_id", app.auction.store.id);
+      data.append("start_at", app.auction.start_at);
+      data.append("finish_at", app.auction.finish_at);
+      data.append("comment", !!app.auction.comment ? app.auction.comment : '');
+      data.append("volume", !!app.auction.volume ? app.auction.volume : '');
+      data.append("start_price", !!app.auction.start_price ? app.auction.start_price : '');
+      data.append("step", !!app.auction.step ? app.auction.step : '');
+
+      let tags = [];
+      for (let i in app.auction.tags) {
+        tags.push(app.auction.tags[i].id);
+      }
+      data.append("tags", tags);
+
+      if (!!app.$refs.pictureInput.$refs.fileInput.files[0])
+        data.append("picture", app.$refs.pictureInput.$refs.fileInput.files[0]);
+      else
+        data.append("picture", app.auction.picture);
+
       if (!!app.auction.id) {
         axios
-          .patch("/api/v1/auctions/" + app.auction.id, app.auction)
+          .post("/api/v1/auctions/" + app.auction.id, data)
           .then(function(res) {
             app.$router.replace("/personal/auctions/show/" + res.data.id);
             app.errors = {};
@@ -174,7 +236,7 @@ export default {
           });
       } else {
         axios
-          .post("/api/v1/auctions", app.auction)
+          .post("/api/v1/auctions", data)
           .then(function(res) {
             app.$router.replace("/personal/auctions/show/" + res.data.id);
             loader.hide();

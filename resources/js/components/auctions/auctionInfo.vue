@@ -15,6 +15,13 @@
           <li class="list-group-item" v-if="auction.store.address">{{ auction.store.address }}</li>
           <li class="list-group-item" v-if="auction.contragent">{{ auction.contragent.fio }}</li>
           <li class="list-group-item" v-if="auction.contragent">{{ auction.contragent.phone }}</li>
+          <li class="list-group-item" v-if="auction.picture">
+            <vue-pure-lightbox
+              style="width: 20em"
+              :thumbnail="'/storage/' + auction.picture"
+              :images="['/storage/' + auction.picture]"
+            ></vue-pure-lightbox>
+          </li>
         </ul>
       </div>
       <br />
@@ -29,7 +36,8 @@
           >{{ __('Auction volume') }}: {{ auction.volume }} {{ __('un') }}.</li>
           <li class="list-group-item">{{ __('Auction start price') }}: {{ auction.start_price }}₽</li>
           <li class="list-group-item">{{ __('Auction step') }}: {{ auction.step }}₽</li>
-          <li v-if="auction.tags.length" class="list-group-item">{{ __('Auction tags') }}:
+          <li v-if="auction.tags.length" class="list-group-item">
+            {{ __('Auction tags') }}:
             <ul>
               <li v-for="(tag, index) in auction.tags" :key="index">{{ tag.title }}</li>
             </ul>
@@ -74,7 +82,11 @@
   </div>
 </template>
 <script>
+import VuePureLightbox from "vue-pure-lightbox";
 export default {
+  components: {
+    VuePureLightbox
+  },
   props: {
     auction: {
       type: Object,

@@ -20,6 +20,7 @@ class Auction extends Model
 
 
     protected $fillable = [
+        'picture',
         'contragent_id',
         'store_id',
         'comment',

@@ -34,7 +34,7 @@ Route::group([
     Route::post('address', 'RegionsController@address');
 
     Route::post('auctions', 'AuctionsController@store');
-    Route::patch('auctions/{id}', 'AuctionsController@update');
+    Route::post('auctions/{id}', 'AuctionsController@update');
     Route::get('auction/{id}', 'AuctionsController@show');
     Route::get('auctions/{action}', 'AuctionsController@index');
 

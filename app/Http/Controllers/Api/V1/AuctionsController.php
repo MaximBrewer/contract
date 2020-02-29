@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use \App\Contragent;
 use \App\History;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use \App\Store;
@@ -90,12 +91,12 @@ class AuctionsController extends Controller
      */
     public function storeManager(Request $request)
     {
-
+        $attributes = $request->all();
 
         $request->validate([
-            "multiplicity.id" => "required|exists:multiplicities,id",
-            "product.id" => "required|exists:products,id",
-            "store.id" => "required|exists:stores,id",
+            "multiplicity_id" => "required|exists:multiplicities,id",
+            "product_id" => "required|exists:products,id",
+            "store_id" => "required|exists:stores,id",
             "start_at" => "required",
             "finish_at" => "required|after:start_at",
             "comment" => "",
@@ -105,23 +106,27 @@ class AuctionsController extends Controller
         ]);
 
 
-        $auction = Auction::create([
-            'contragent_id' => $request->post('contragent')['id'],
-            'multiplicity_id' => $request->post('multiplicity')['id'],
-            'product_id' => $request->post('product')['id'],
-            'store_id' => $request->post('store')['id'],
-            'start_at' => date('Y-m-d H:i:s', strtotime($request->post('start_at'))),
-            'finish_at' => date('Y-m-d H:i:s', strtotime($request->post('finish_at'))),
-            'comment' => $request->post('comment'),
-            'start_price' => $request->post('start_price'),
-            'volume' => $request->post('volume'),
-            'step' => $request->post('step'),
-        ]);
+        if ($request->hasfile('picture')) {
+            $file = $request->file('picture');
+            $extension = $file->getClientOriginalExtension();
+            $path = 'auctions' . DIRECTORY_SEPARATOR . date('FY') . DIRECTORY_SEPARATOR;
+            $fullpath = storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path;
+            @mkdir($fullpath, 0777, true);
+            do {
+                $filename = Str::random(20);
+            } while (is_file($fullpath . $filename . '.' . $file->getClientOriginalExtension()));
+            $file->move($fullpath, $filename . '.' . $extension);
+            $attributes['picture'] = $path . $filename . '.' . $extension;
+        } else {
+            $attributes['picture'] = '';
+        }
+
+
+        $auction = Auction::create($attributes);
 
         $auction = Auction::findOrFail($auction->id);
         return $auction;
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -132,42 +137,122 @@ class AuctionsController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
-            "multiplicity.id" => "required|exists:multiplicities,id",
-            "product.id" => "required|exists:products,id",
-            "store.id" => "required|exists:stores,id",
+            "multiplicity_id" => "required|exists:multiplicities,id",
+            "product_id" => "required|exists:products,id",
+            "store_id" => "required|exists:stores,id",
             "start_at" => "required",
             "finish_at" => "required|after:start_at",
             "comment" => "",
-            "start_price" => "required|regex:~[0-9\.\,]*~",
-            "volume" => "required|regex:~[0-9\.\,]*~",
+            "start_price" => "required",
+            "volume" => "required",
             "step" => "required",
         ]);
 
-        $auction = Auction::create([
-            'contragent_id' => Auth::user()->contragents[0]->id,
-            'multiplicity_id' => $request->post('multiplicity')['id'],
-            'product_id' => $request->post('product')['id'],
-            'store_id' => $request->post('store')['id'],
-            'start_at' => date('Y-m-d H:i:s', strtotime($request->post('start_at'))),
-            'finish_at' => date('Y-m-d H:i:s', strtotime($request->post('finish_at'))),
-            'comment' => $request->post('comment'),
-            'start_price' => $request->post('start_price'),
-            'volume' => $request->post('volume'),
-            'step' => $request->post('step'),
-        ]);
+        $attributes = $request->all();
 
-        if ($request->post('tags')) {
-            $tags = [];
-
-            foreach ($request->post('tags') as $t) $tags[] = $t['id'];
-            $auction->tags()->sync($tags);
+        if ($request->hasfile('picture')) {
+            $file = $request->file('picture');
+            $extension = $file->getClientOriginalExtension();
+            $path = 'auctions' . DIRECTORY_SEPARATOR . date('FY') . DIRECTORY_SEPARATOR;
+            $fullpath = storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path;
+            @mkdir($fullpath, 0777, true);
+            do {
+                $filename = Str::random(20);
+            } while (is_file($fullpath . $filename . '.' . $file->getClientOriginalExtension()));
+            $file->move($fullpath, $filename . '.' . $extension);
+            $attributes['picture'] = $path . $filename . '.' . $extension;
+        } else {
+            $attributes['picture'] = '';
         }
+
+
+        $rtags = explode(',', strval($attributes['tags']));
+        
+        unset($attributes['tags']);
+
+
+        $attributes['start_at'] = date('Y-m-d H:i:s', strtotime($attributes['start_at']));
+        $attributes['finish_at'] = date('Y-m-d H:i:s', strtotime($attributes['finish_at']));
+
+        $attributes['contragent_id'] = User::find(Auth::user()->id)->contragents[0]->id;
+        $auction = Auction::create($attributes);
+
+        $auction->tags()->sync($rtags);
 
         $auction = Auction::findOrFail($auction->id);
         return $auction;
     }
+
+
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+
+        $auction = Auction::findOrFail($id);
+
+        if ($auction->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+
+
+        $attributes = $request->all();
+
+        $request->validate([
+            "multiplicity_id" => "required|exists:multiplicities,id",
+            "product_id" => "required|exists:products,id",
+            "store_id" => "required|exists:stores,id",
+            "start_at" => "required",
+            "finish_at" => "required|after:start_at",
+            "comment" => "",
+            "start_price" => "required",
+            "volume" => "required",
+            "step" => "required",
+        ]);
+
+
+        if ($request->hasfile('picture')) {
+            $file = $request->file('picture');
+            $extension = $file->getClientOriginalExtension();
+            $path = 'auctions' . DIRECTORY_SEPARATOR . date('FY') . DIRECTORY_SEPARATOR;
+            $fullpath = storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path;
+            @mkdir($fullpath, 0777, true);
+            do {
+                $filename = Str::random(20);
+            } while (is_file($fullpath . $filename . '.' . $file->getClientOriginalExtension()));
+            $file->move($fullpath, $filename . '.' . $extension);
+            $attributes['picture'] = $path . $filename . '.' . $extension;
+        }
+
+        $rtags = explode(',', strval($attributes['tags']));
+        
+        unset($attributes['tags']);
+
+        $attributes['start_at'] = date('Y-m-d H:i:s', strtotime($attributes['start_at']));
+        $attributes['finish_at'] = date('Y-m-d H:i:s', strtotime($attributes['finish_at']));
+
+        $auction->tags()->sync($rtags);
+        $auction->update($attributes);
+
+        // if ($auction) event(new \App\Events\MessagePushed($auction));
+
+        $auction = Auction::findOrFail($auction->id);
+
+        return $auction;
+    }
+
+
 
     /**
      * Display the specified resource.
@@ -261,62 +346,6 @@ class AuctionsController extends Controller
 
         return $this->index($request, $action);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-
-        $auction = Auction::findOrFail($id);
-
-        if ($auction->contragent_id != Auth::user()->contragents[0]->id) {
-            return response()->json([
-                'message' => __('It`s not yours!'),
-                'errors' => []
-            ], 422);
-        }
-
-        $request->validate([
-            "multiplicity.id" => "required|exists:multiplicities,id",
-            "product.id" => "required|exists:products,id",
-            "store.id" => "required|exists:stores,id",
-            "start_at" => "required",
-            "finish_at" => "required|after:start_at",
-            "comment" => "",
-            "start_price" => "required|regex:~[0-9\.\,]*~",
-            "volume" => "required|regex:~[0-9\.\,]*~",
-            "step" => "required",
-        ]);
-
-        $auction->update([
-            'product_id' => $request->post('product')['id'],
-            'multiplicity_id' => $request->post('multiplicity')['id'],
-            'store_id' => $request->post('store')['id'],
-            'start_at' => date('Y-m-d H:i:s', strtotime($request->post('start_at'))),
-            'finish_at' => date('Y-m-d H:i:s', strtotime($request->post('finish_at'))),
-            'comment' => $request->post('comment'),
-            'start_price' => $request->post('start_price'),
-            'volume' => $request->post('volume'),
-            'step' => $request->post('step'),
-        ]);
-
-
-        if ($request->post('tags')) {
-            $tags = [];
-            foreach ($request->post('tags') as $t) $tags[] = $t['id'];
-            $auction->tags()->sync($tags);
-        }
-
-        if ($auction) event(new \App\Events\MessagePushed($auction));
-
-        return $auction;
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -344,7 +373,7 @@ class AuctionsController extends Controller
             foreach ($request->post('tags') as $t) $tags[] = $t['id'];
             $auction->tags()->sync($tags);
         }
-        
+
         $auction = Auction::findOrFail($id);
         return $auction;
     }

@@ -229,5 +229,17 @@
     "Auction history": "История аукциона",
     "Auction activity": "Активность аукциона",
     "You have a low rating, contact the administration or ask other Russian companies to write reviews about your company.": "У вас низкий ретинг, обратитесь к администрации или попросите другие фирмы России написать о вашей фирме отзывы.",
-    "Error!": "Ошибка!"
+    "Error!": "Ошибка!",
+    "Drug picture": "Перетащите изображение",
+    "<p>Your device does not support file uploading.</p>": "<p>Ваше устройство не поддерживает загрузку файлов.</p>",
+    "Drag an image or <br>click here to select a file": "Перетащите изображение или <br>нажмите здесь, чтобы выбрать файл",
+    "Tap here to select a photo <br>from your gallery": "Нажмите здесь, чтобы выбрать фотографию <br>из вашей галереи",
+    "Change Photo": "Сменить фото",
+    "Remove Photo": "Удалить фото",
+    "Select a Photo": "Выбрать фото",
+    "<p>Photo successfully selected!</p>": "<p>Фото выбрано!</p>",
+    "The file size exceeds the limit": "Размер файла превышает лимит",
+    "This file type is not supported.": "Этот тип файла не поддерживается.",
+    "Save Comment": "Сохранить отзыв",
+    "Review is successfully updated!": "Отзыв сохранен"
 }
