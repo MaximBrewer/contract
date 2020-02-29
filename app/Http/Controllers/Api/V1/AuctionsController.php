@@ -168,6 +168,12 @@ class AuctionsController extends Controller
 
 
         $rtags = explode(',', strval($attributes['tags']));
+
+
+        $rtags = array_filter($rtags, function($element) {
+            return !empty($element);
+        });
+        
         
         unset($attributes['tags']);
 
@@ -236,6 +242,10 @@ class AuctionsController extends Controller
         }
 
         $rtags = explode(',', strval($attributes['tags']));
+
+        $rtags = array_filter($rtags, function($element) {
+            return !empty($element);
+        });
         
         unset($attributes['tags']);
 
