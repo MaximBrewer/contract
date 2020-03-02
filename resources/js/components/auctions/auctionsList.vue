@@ -110,7 +110,7 @@
         </div>
       </div>
     </div>
-    <auctions-table :auctions="auctionsList" :action="action"></auctions-table>
+    <auctions-table :auctions="auctionsList" :action="action" :store="store"></auctions-table>
   </section>
 </template>
 <script>
