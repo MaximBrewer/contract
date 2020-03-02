@@ -147,7 +147,7 @@
 </template>
 <script>
 export default {
-  props: ["action", "auctions"],
+  props: ["action", "auctions", "store"],
   data: function() {
     return {
       title: ""
