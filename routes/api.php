@@ -33,12 +33,12 @@ Route::group([
     Route::patch('company', 'ContragentsController@updateCompany');
     Route::post('address', 'RegionsController@address');
 
+    Route::post('auctions/bet', 'AuctionsController@bet');
     Route::post('auctions', 'AuctionsController@store');
     Route::post('auctions/{id}', 'AuctionsController@update');
     Route::get('auction/{id}', 'AuctionsController@show');
     Route::get('auctions/{action}', 'AuctionsController@index');
 
-    Route::post('auctions/bet', 'AuctionsController@bet');
     Route::get('auctions/bet/remove/{id}', 'AuctionsController@betRemove');
     Route::post('auctions/bet/contract', 'AuctionsController@approveContract');
     Route::get('auctions/bet/volume/{id}', 'AuctionsController@approveVolume');
