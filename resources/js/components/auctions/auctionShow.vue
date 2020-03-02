@@ -45,6 +45,7 @@ export default {
     let loader = Vue.$loading.show();
     app.$root.$on("gotAuction", function(auction) {
       if (auction.id == app.auction.id) app.auction = auction;
+      console.log(auction.id == app.auction.id, auction)
       app.renew();
     });
     axios
