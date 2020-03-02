@@ -112,8 +112,7 @@ export default {
   data: function() {
     return {
       bid: {},
-      errors: {},
-      betsList: []
+      errors: {}
     };
   },
   computed: {
@@ -126,7 +125,7 @@ export default {
             list.push(bet);
         });
       });
-      Promise.all(requests).then(() => {betsList = list});
+      Promise.all(requests).then(() => list);
     }
   },
   methods: {
