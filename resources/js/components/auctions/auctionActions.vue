@@ -121,7 +121,7 @@ export default {
       var app = this;
       if (app.auction && app.add_bidders.length)
         axios
-          .post("/api/v1/auctions/add_bidder", {
+          .post("/api/v1/auction/add_bidder", {
             auction: app.auction.id,
             bidders: app.add_bidders
           })
