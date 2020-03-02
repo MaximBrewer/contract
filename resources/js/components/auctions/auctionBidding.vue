@@ -57,7 +57,7 @@
       <div
         class="table-responsive"
         id="auction_activity"
-        v-if="auction.bets && auction.bets.length && !!observer"
+        v-if="auction.bets && auction.bets.length && (!!observer || true)"
       >
         <table class="table table-bordered">
           <thead>
