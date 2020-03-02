@@ -45,8 +45,8 @@ Route::group([
     Route::post('auction/copy', 'AuctionsController@copy');
     Route::get('auction/delete/{id}', 'AuctionsController@destroy');
     Route::get('auction/confirm/{id}', 'AuctionsController@confirm');
-    Route::get('auctions/{action}/bid/{id}', 'AuctionsController@bid');
-    Route::get('auctions/{action}/unbid/{id}', 'AuctionsController@unbid');
+    Route::get('auctions/bid/{id}', 'AuctionsController@bid');
+    Route::get('auctions/unbid/{id}', 'AuctionsController@unbid');
     Route::post('addbidder', 'AuctionsController@addBidder');
     Route::post('auctions/bidder/toggle', 'AuctionsController@toggleBidder');
 

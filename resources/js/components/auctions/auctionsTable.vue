@@ -110,7 +110,7 @@
                   v-if="!auction.bidder && company.id != auction.contragent.id"
                   href="javascript:void(0)"
                   class="btn btn-success"
-                  @click="bidAuction(auction.id)"
+                  @click="bidAuction(auction)"
                 >
                   <i class="mdi mdi-account-plus" aria-hidden="true"></i>
                 </a>
@@ -119,7 +119,7 @@
                   v-if="auction.bidder"
                   href="javascript:void(0)"
                   class="btn btn-danger"
-                  @click="unbidAuction(auction.id)"
+                  @click="unbidAuction(auction)"
                 >
                   <i class="mdi mdi-account-remove" aria-hidden="true"></i>
                 </a>
@@ -167,17 +167,18 @@ export default {
     }
   },
   methods: {
-    bidAuction(id) {
+    bidAuction(auction) {
       var app = this;
       let loader = Vue.$loading.show();
       axios
-        .get("/api/v1/auctions/" + app.action + "/bid/" + id)
+        .get("/api/v1/auctions/bid/" + auction.id)
         .then(function(res) {
-          app.auctions = res.data.data;
-          app.filterAuctions();
+          let bidder = res.data.data.bidder;
+          auction.bidder = res.data.data.bidder;
           loader.hide();
         })
         .catch(function(err) {
+          console.log(err)
           app.$fire({
             title: app.__("Failed to bid auction"),
             type: "error",
@@ -186,14 +187,14 @@ export default {
           loader.hide();
         });
     },
-    unbidAuction(id) {
+    unbidAuction(auction) {
       var app = this;
       let loader = Vue.$loading.show();
       axios
-        .get("/api/v1/auctions/" + app.action + "/unbid/" + id)
+        .get("/api/v1/auctions/unbid/" + auction.id)
         .then(function(res) {
-          app.auctions = res.data.data;
-          app.filterAuctions();
+          let bidder = res.data.data.bidder;
+          auction.bidder = res.data.data.bidder;
           loader.hide();
         })
         .catch(function(err) {

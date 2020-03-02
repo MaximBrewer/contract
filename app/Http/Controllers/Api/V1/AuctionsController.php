@@ -327,15 +327,15 @@ class AuctionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function bid(Request $request, $action, $id)
+    public function bid($id)
     {
 
         if (count(Auth::user()->contragents)) Auth::user()->contragents[0]->auctions()->attach($id);
 
         $auction = Auction::findOrFail($id);
-        if ($auction) event(new \App\Events\MessagePushed($auction));
+        //if ($auction) event(new \App\Events\MessagePushed($auction));
 
-        return $this->index($request, $action);
+        return new AuctionResource($auction);
     }
 
     /**
@@ -345,16 +345,16 @@ class AuctionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function unbid(Request $request, $action, $id)
+    public function unbid($id)
     {
         if (count(User::find(Auth::user()->id)->contragents)) User::find(Auth::user()->id)->contragents[0]->auctions()->detach($id);
 
         Bet::where('auction_id', $id)->where('contragent_id', User::find(Auth::user()->id)->contragents[0]->id)->delete();
 
         $auction = Auction::findOrFail($id);
-        if ($auction) event(new \App\Events\MessagePushed($auction));
+       // if ($auction) event(new \App\Events\MessagePushed($auction));
 
-        return $this->index($request, $action);
+        return new AuctionResource($auction);
     }
     /**
      * Update the specified resource in storage.
