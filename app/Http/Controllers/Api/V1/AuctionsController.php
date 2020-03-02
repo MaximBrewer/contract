@@ -333,7 +333,7 @@ class AuctionsController extends Controller
         if (count(Auth::user()->contragents)) Auth::user()->contragents[0]->auctions()->attach($id);
 
         $auction = Auction::findOrFail($id);
-        //if ($auction) event(new \App\Events\MessagePushed($auction));
+        if ($auction) event(new \App\Events\MessagePushed($auction));
 
         return new AuctionResource($auction);
     }
@@ -352,7 +352,7 @@ class AuctionsController extends Controller
         Bet::where('auction_id', $id)->where('contragent_id', User::find(Auth::user()->id)->contragents[0]->id)->delete();
 
         $auction = Auction::findOrFail($id);
-       // if ($auction) event(new \App\Events\MessagePushed($auction));
+        if ($auction) event(new \App\Events\MessagePushed($auction));
 
         return new AuctionResource($auction);
     }
