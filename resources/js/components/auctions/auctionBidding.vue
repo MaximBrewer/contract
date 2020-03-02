@@ -39,7 +39,9 @@
               :options="$root.stores"
               v-model="bid.store"
               v-bind:class="{ 'is-invalid': errors['store.id'] }"
-            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+            >
+              <div slot="no-options">{{ __('No Options Here!') }}</div>
+            </v-select>
             <span role="alert" class="invalid-feedback" v-if="errors['store.id']">
               <strong v-for="(error, index) in errors['store.id']" :key="index">{{ error }}</strong>
             </span>
@@ -110,16 +112,14 @@ export default {
   data: function() {
     return {
       bid: {},
-      errors: {},
-      betsList: []
+      errors: {}
     };
   },
-  mounted() {
-    var app = this;
-    app.auction.bets.forEach(bet => {
-      if (bet.contragent_id == app.company.id || !bet.approved_contract)
-        app.betsList.push(bet);
-    });
+  computed: {
+    betsList: function() {
+      var app = this;
+      return app.auction.bets.filter(bet => bet.contragent_id == app.company.id || !bet.approved_contract);
+    }
   },
   methods: {
     betIt() {
