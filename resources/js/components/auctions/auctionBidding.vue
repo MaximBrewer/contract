@@ -66,6 +66,7 @@
             <tr>
               <th>{{ __('Active volume') }}: {{ auction.free_volume }}/{{ auction.volume }}</th>
               <th>{{ __('Active price') }}</th>
+              <th>{{ __('Bet time') }}</th>
               <th></th>
             </tr>
           </thead>
@@ -83,6 +84,11 @@
               <td>
                 <div v-if="bet.contragent" class="text-nowrap">
                   <div class="h6">{{ bet.price }}₽</div>
+                </div>
+              </td>
+              <td>
+                <div v-if="bet.contragent" class="text-nowrap">
+                  <div class="h6">{{ bet.created_at | format_time }}₽</div>
                 </div>
               </td>
               <td>

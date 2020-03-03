@@ -241,5 +241,6 @@
     "The file size exceeds the limit": "Размер файла превышает лимит",
     "This file type is not supported.": "Этот тип файла не поддерживается.",
     "Save Comment": "Сохранить отзыв",
-    "Review is successfully updated!": "Отзыв сохранен"
+    "Review is successfully updated!": "Отзыв сохранен",
+    "Bet time": "Время ставки"
 }
