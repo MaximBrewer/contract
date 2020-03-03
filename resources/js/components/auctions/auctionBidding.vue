@@ -88,7 +88,7 @@
               </td>
               <td>
                 <div v-if="bet.contragent" class="text-nowrap">
-                  <div class="h6">{{ bet.created_at | format_time }}₽</div>
+                  <div class="h6">{{ bet.created_at | format_time }}</div>
                 </div>
               </td>
               <td>
