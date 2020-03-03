@@ -54,6 +54,11 @@ class Contragent extends Model
         return $this->belongsToMany('App\Auction', 'contragent_auction')->orderBy('id', 'desc');
     }
     
+    public function bid_auctions()
+    {
+        return $this->belongsToMany('App\Auction', 'contragent_auction')->where('finished', '<>', 1)->orderBy('id', 'desc');
+    }
+    
     public function archive()
     {
         return $this->belongsToMany('App\Auction', 'contragent_auction')->where('finished', 1)->orderBy('id', 'desc');

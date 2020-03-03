@@ -42,7 +42,7 @@ class AuctionsController extends Controller
                 return AuctionResource::collection(Auction::orderBy('id', 'desc')->where('finished', '<>', 1)->where('contragent_id', Auth::user()->contragents[0]->id)->get());
                 break;
             case "bid":
-                return AuctionResource::collection(Auth::user()->contragents[0]->auctions);
+                return AuctionResource::collection(Auth::user()->contragents[0]->bid_auctions);
                 break;
         }
     }
