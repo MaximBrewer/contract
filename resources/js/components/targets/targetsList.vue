@@ -7,7 +7,7 @@
             <label class="control-label">{{ __('Federal district') }}</label>
             <v-select
               label="title"
-              :searchable="false"
+              :searchable="true"
               @input="filterRegionsTargets"
               :options="$root.federalDistricts"
               v-model="filter.federal_district"
@@ -19,7 +19,7 @@
             <label class="control-label">{{ __('Region') }}</label>
             <v-select
               label="title"
-              :searchable="false"
+              :searchable="true"
               @input="filterTargets"
               :options="$root.regions"
               v-model="filter.region"
@@ -31,7 +31,7 @@
             <label class="control-label">{{ __('Product') }}</label>
             <v-select
               label="title"
-              :searchable="false"
+              :searchable="true"
               @input="filterTargets"
               :options="$root.products"
               v-model="filter.product"
@@ -43,7 +43,7 @@
             <label class="control-label">{{ __('Contragent') }}</label>
             <v-select
               label="title"
-              :searchable="false"
+              :searchable="true"
               @input="filterTargets"
               :options="$root.contragents"
               v-model="filter.contragent"
@@ -55,7 +55,7 @@
             <label class="control-label">{{ __('Multiplicity') }}</label>
             <v-select
               label="title"
-              :searchable="false"
+              :searchable="true"
               @input="filterTargets"
               :options="$root.multiplicities"
               v-model="filter.multiplicity"
