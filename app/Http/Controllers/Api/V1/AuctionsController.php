@@ -170,11 +170,11 @@ class AuctionsController extends Controller
         $rtags = explode(',', strval($attributes['tags']));
 
 
-        $rtags = array_filter($rtags, function($element) {
+        $rtags = array_filter($rtags, function ($element) {
             return !empty($element);
         });
-        
-        
+
+
         unset($attributes['tags']);
 
 
@@ -243,10 +243,10 @@ class AuctionsController extends Controller
 
         $rtags = explode(',', strval($attributes['tags']));
 
-        $rtags = array_filter($rtags, function($element) {
+        $rtags = array_filter($rtags, function ($element) {
             return !empty($element);
         });
-        
+
         unset($attributes['tags']);
 
         $attributes['start_at'] = date('Y-m-d H:i:s', strtotime($attributes['start_at']));
@@ -552,8 +552,6 @@ class AuctionsController extends Controller
      */
     public function bet(Request $r)
     {
-
-
         if (!(float) $r->post('price')) {
             return response()->json([
                 'message' => __('Input price!'),
@@ -637,15 +635,19 @@ class AuctionsController extends Controller
         }
         // DB::connection()->enableQueryLog();
 
-        $auctionBets = Bet::where('auction_id', $r->post('auction'))->where('contragent_id', '<>', $r->post('bidder'))->where(function ($query) {
-            $query
-                ->whereNull('approved_volume')
-                ->orWhere('approved_volume', '<', 1);
-        })
+        $auctionBets = Bet::where('auction_id', $r->post('auction'))
+            ->where('contragent_id', '<>', $r->post('bidder'))
+            ->leftJoin('contragents', 'contragents.id', '=', 'bets.contragent_id')
+            ->select('bets.*', 'contragents.rating')
+            ->whereNull('approved_volume')
             ->orderBy('price', 'desc')
             ->orderBy('volume', 'desc')
+            ->orderBy('rating', 'desc')
             ->orderBy('created_at', 'asc')
             ->get();
+
+        // $queries = DB::getQueryLog();
+        // info($queries);
 
         $myBetsSum = Bet::where('auction_id', $r->post('auction'))->where('contragent_id', $r->post('bidder'))->where(function ($query) {
             $query
@@ -656,10 +658,6 @@ class AuctionsController extends Controller
 
 
         $freeVolume -= $myBetsSum;
-
-
-        // $queries = DB::getQueryLog();
-        // info($queries);
 
         $bets = [];
         $nev = false;

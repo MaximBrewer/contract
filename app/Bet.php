@@ -24,7 +24,8 @@ class Bet extends Model
         'contragent',
     ];
 
-    public function getContragentAttribute(){
+    public function getContragentAttribute()
+    {
 
         $contragent = \App\Contragent::findOrFail($this->contragent_id);
         return [
@@ -44,5 +45,4 @@ class Bet extends Model
     {
         return $this->belongsTo('App\Auction');
     }
-
 }

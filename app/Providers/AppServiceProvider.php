@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Phrase;
+use App\Auction;
 use App\Observers\PhraseObserver;
+use App\Observers\Auction as AuctionObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Phrase::observe(PhraseObserver::class);
+        Auction::observe(AuctionObserver::class);
         //
     }
 }

@@ -242,5 +242,6 @@
     "This file type is not supported.": "Этот тип файла не поддерживается.",
     "Save Comment": "Сохранить отзыв",
     "Review is successfully updated!": "Отзыв сохранен",
-    "Bet time": "Время ставки"
+    "Bet time": "Время ставки",
+    "You can`t set volume less then was approved!": "Вы не можете установить объем меньше чем был утвержден!"
 }

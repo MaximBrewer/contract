@@ -30,7 +30,7 @@
       <div class="card">
         <div class="card-header" v-if="auction.product">{{ auction.product.title }}</div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item" v-if="auction.multiplicity">{{ auction.multiplicity.title }}</li>
+          <li class="list-group-item" v-if="auction.multiplicity">{{ __('Auction multiplicity') }}: {{ auction.multiplicity.title }}</li>
           <li
             class="list-group-item"
           >{{ __('Auction volume') }}: {{ auction.volume }} {{ __('un') }}.</li>
