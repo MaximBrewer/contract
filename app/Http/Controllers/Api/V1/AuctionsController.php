@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use \App\Store;
 use \App\Tag;
 use Illuminate\Support\Facades\Validator;
+use App\ContragentAuction;
 use App\Http\Resources\AuctionResource;
 
 
@@ -296,23 +297,28 @@ class AuctionsController extends Controller
             ], 422);
         }
 
-        $bidders = $auction->bidders;
         $tags = $auction->tags;
-        $auction = $auction->toArray();
+        $auctionArray = $auction->toArray();
 
-        unset($auction['id']);
-        unset($auction['created_at']);
-        unset($auction['updated_at']);
-        unset($auction['finish_at']);
-        unset($auction['start_at']);
-        unset($auction['started']);
-        unset($auction['finished']);
-        unset($auction['confirmed']);
+        unset($auctionArray['id']);
+        unset($auctionArray['created_at']);
+        unset($auctionArray['updated_at']);
+        unset($auctionArray['finish_at']);
+        unset($auctionArray['start_at']);
+        unset($auctionArray['started']);
+        unset($auctionArray['finished']);
+        unset($auctionArray['confirmed']);
 
-        $new_auction = Auction::create($auction);
+        $new_auction = Auction::create($auctionArray);
 
-        foreach ($bidders as $bidder)
-            Contragent::find($bidder['id'])->auctions()->attach($new_auction->id);
+        foreach ($auction->bidders as $bidder) {
+            ContragentAuction::create([
+                'contragent_id' => $bidder->id,
+                'auction_id' => $new_auction->id,
+                'can_bet' => $bidder->can_bet,
+                'observer' => $bidder->observer,
+            ]);
+        }
 
         foreach ($tags as $tag)
             Tag::find($tag['id'])->auctions()->attach($new_auction->id);
