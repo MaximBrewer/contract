@@ -313,10 +313,10 @@ class AuctionsController extends Controller
 
         foreach ($auction->bidders as $bidder) {
             ContragentAuction::create([
-                'contragent_id' => $bidder->id,
+                'contragent_id' => $bidder['id'],
                 'auction_id' => $new_auction->id,
-                'can_bet' => $bidder->can_bet,
-                'observer' => $bidder->observer,
+                'can_bet' => $bidder['can_bet'],
+                'observer' => $bidder['observer'],
             ]);
         }
 
