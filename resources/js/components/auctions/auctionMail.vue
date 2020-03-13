@@ -15,13 +15,13 @@
                 type="radio"
                 name="whom"
                 v-model="whom"
-                id="toObserversAndCanBet"
+                id="toCanBet"
                 value="2"
               />
               <label
                 class="form-check-label"
-                for="toObserversAndCanBet"
-              >{{ __('send to those who observe') }}</label>
+                for="toCanBet"
+              >{{ __('send to those who can bet') }}</label>
             </div>
             <div class="form-check">
               <input
@@ -29,13 +29,13 @@
                 type="radio"
                 name="whom"
                 v-model="whom"
-                id="toCanBet"
+                id="toObservers"
                 value="1"
               />
               <label
                 class="form-check-label"
-                for="toCanBet"
-              >{{ __('send to those who can bet') }}</label>
+                for="toObservers"
+              >{{ __('send to those who observe') }}</label>
             </div>
             <div class="form-check">
               <input
