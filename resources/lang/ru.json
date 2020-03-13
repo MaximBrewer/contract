@@ -252,9 +252,9 @@
     ", will be played volume ": ", будет разыгран объем ",
     " in multiplicity ": ", в кратности ",
     "More detailed description: ": "Более подробное описание: ",
-    "send to those who are allowed to bid and who can watch the auction progress": "отправить тем, кому разрешено делать ставки и кто может смотреть ход аукциона",
-    "send only to those who are allowed to place bets": "отправить только кому разрешено делать ставки",
-    "send to all interested parties": "отправить всем заинтересованным",
+    "send to those who observe": "отправить тем, кто может смотреть ход аукциона",
+    "send to those who can bet": "отправить тем, кому разрешено делать ставки",
+    "send to all": "отправить всем заинтересованным",
     "Send Mail": "Отправить письмо",
     "Something went wrong": "Что-то пошло не так",
     "Your message has been sent!": "ваше сообщение отправлено!"

@@ -21,7 +21,7 @@
               <label
                 class="form-check-label"
                 for="toObserversAndCanBet"
-              >{{ __('send to those who are allowed to bid and who can watch the auction progress') }}</label>
+              >{{ __('send to those who observe') }}</label>
             </div>
             <div class="form-check">
               <input
@@ -35,7 +35,7 @@
               <label
                 class="form-check-label"
                 for="toCanBet"
-              >{{ __('send only to those who are allowed to place bets') }}</label>
+              >{{ __('send to those who can bet') }}</label>
             </div>
             <div class="form-check">
               <input
@@ -49,7 +49,7 @@
               <label
                 class="form-check-label"
                 for="toAll"
-              >{{ __('отправить всем заинтересованным') }}</label>
+              >{{ __('send to all') }}</label>
             </div>
           </div>
           <div class="form-group">
