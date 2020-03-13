@@ -30,6 +30,8 @@ class AuctionMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.auction');
+        return $this->view('mail.auction')->with([
+            'text' => $this->text
+        ]);;
     }
 }
