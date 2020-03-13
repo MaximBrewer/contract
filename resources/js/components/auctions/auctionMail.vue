@@ -101,6 +101,8 @@ export default {
         this.user.name +
         this.__(", a representative of the company ") +
         this.company.title +
+        this.__(", phone ") +
+        this.company.phone +
         this.__(", notify that the allocation (auction) of the ") +
         this.auction.product.title +
         this.__(" will start from ") +

@@ -30,7 +30,7 @@
         <nav class="navbar  navbar-expand-lg navbar-dark flex-column flex-md-row  bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="//cross-contract.ru">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'Laravel') }}<br><small>Свинина <i aria-hidden="true" class="mdi mdi-chevron-down"></i></small>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
