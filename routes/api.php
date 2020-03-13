@@ -64,4 +64,8 @@ Route::group([
     Route::post('commentsmy', 'CommentController@storeMy');
     Route::get('comments', 'CommentController@index');
     Route::post('comments/{commentId}/{type}', 'CommentController@update');
+
+
+    Route::post('sendmail', 'MailController@send');
+
 });

@@ -25,7 +25,6 @@
           </li>
         </ul>
       </div>
-      <br />
     </div>
   </div>
 </template>

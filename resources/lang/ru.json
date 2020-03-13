@@ -243,5 +243,19 @@
     "Save Comment": "Сохранить отзыв",
     "Review is successfully updated!": "Отзыв сохранен",
     "Bet time": "Время ставки",
-    "You can`t set volume less then was approved!": "Вы не можете установить объем меньше чем был утвержден!"
+    "You can`t set volume less then was approved!": "Вы не можете установить объем меньше чем был утвержден!",
+    "Hi, I`m ": "Здравствуйте, я - ",
+    ", a representative of the company ": ", представитель компании ",
+    ", notify that the allocation (auction) of the ": ", уведомляю что распределение (аукцион) по позиции ",
+    " will start from ": " начнется  с ",
+    " and end on ": " и закончится ",
+    ", will be played volume ": ", будет разыгран объем ",
+    " in multiplicity ": ", в кратности ",
+    "More detailed description: ": "Более подробное описание: ",
+    "send to those who are allowed to bid and who can watch the auction progress": "отправить тем, кому разрешено делать ставки и кто может смотреть ход аукциона",
+    "send only to those who are allowed to place bets": "отправить только кому разрешено делать ставки",
+    "send to all interested parties": "отправить всем заинтересованным",
+    "Send Mail": "Отправить письмо",
+    "Something went wrong": "Что-то пошло не так",
+    "Your message has been sent!": "ваше сообщение отправлено!"
 }

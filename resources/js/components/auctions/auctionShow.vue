@@ -15,8 +15,11 @@
       <div v-if="auction.started" class="pb-4">
         <auction-history :auction="auction" v-if="auction.contragent.id == company.id"></auction-history>
       </div>
+      <div v-if="!auction.finished" class="pb-4">
+        <auction-mail :auction="auction" v-if="auction.contragent.id == company.id"></auction-mail>
+      </div>
     </div>
-    <auction-chat :auction="auction"></auction-chat>
+    <!-- <auction-chat :auction="auction"></auction-chat> -->
   </section>
 </template>
 <script>
@@ -24,6 +27,7 @@ import auctionInfo from "./auctionInfo";
 import auctionActions from "./auctionActions";
 import auctionBidding from "./auctionBidding";
 import auctionMine from "./auctionMine";
+import auctionMail from "./auctionMail";
 import auctionFinishedMine from "./auctionFinishedMine";
 import auctionBidders from "./auctionBidders";
 import auctionHistory from "./auctionHistory";
@@ -34,6 +38,7 @@ export default {
     auctionActions: auctionActions,
     auctionBidding: auctionBidding,
     auctionMine: auctionMine,
+    auctionMail: auctionMail,
     auctionFinishedMine: auctionFinishedMine,
     auctionBidders: auctionBidders,
     auctionChat: auctionChat,
@@ -45,7 +50,7 @@ export default {
     let loader = Vue.$loading.show();
     app.$root.$on("gotAuction", function(auction) {
       if (auction.id == app.auction.id) app.auction = auction;
-      console.log(auction.id == app.auction.id, auction)
+      console.log(auction.id == app.auction.id, auction);
       app.renew();
     });
     axios
