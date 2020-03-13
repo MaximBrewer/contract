@@ -19,7 +19,7 @@
         <auction-mail :auction="auction" v-if="auction.contragent.id == company.id"></auction-mail>
       </div>
     </div>
-    <!-- <auction-chat :auction="auction"></auction-chat> -->
+    <auction-chat :auction="auction"></auction-chat>
   </section>
 </template>
 <script>
