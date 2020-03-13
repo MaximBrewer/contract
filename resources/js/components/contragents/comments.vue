@@ -1,178 +1,400 @@
 <template>
   <div class="comments-app">
-    <h3>{{ __('Comments') }}</h3>
+    <h1>{{ __('Comments') }}</h1>
     <!-- From -->
     <div class="comment-form" v-if="user">
+      <!-- Comment Avatar -->
+      <div class="comment-avatar">
+        <img src="/storage/commentbox.png" />
+      </div>
       <form class="form" name="form">
-        <div class="form-group">
-          <div class="clearfix">
-            <star-rating
-              class="float-right"
-              :star-size="starSize"
-              v-model="rating"
-              :show-rating="false"
-            ></star-rating>
-          </div>
+        <div class="form-row">
+          <textarea class="input" :placeholder="__('Add comment...')" required v-model="message"></textarea>
+          <span class="input" v-if="errorComment" style="color:red">{{errorComment}}</span>
         </div>
-        <div class="form-group">
-          <div class="row p-1">
-            <div class="col-sm-8">
-              <textarea
-                class="form-control sixe-200"
-                :placeholder="__('Add comment...')"
-                required
-                v-model="message"
-              ></textarea>
-              <span class="input" v-if="errorComment" style="color:red">{{errorComment}}</span>
-            </div>
-            <div class="col-sm-4">
-              <picture-input
-                class="float-rigth"
-                id="pictureInput"
-                width="300"
-                height="200"
-                margin="30"
-                radius="5"
-                @remove="onPhotoRemove()"
-                :removable="true"
-                accept="image/jpeg, image/png, image/webp"
-                size="10"
-                :prefill="!!picture ? '/storage/' + picture : null"
-                buttonClass="btn btn-primary btn-sm"
-                removeButtonClass="btn btn-secondary btn-sm"
-                :zIndex="1"
-                :customStrings="{
-              change:__('Change Photo'),
-              remove:__('Remove Photo'),
-              select:__('Select a Photo'),
-              upload:__('<p>Your device does not support file uploading.</p>'),
-              drag:__('Drag an image or <br>click here to select a file'),
-              tap:__('Tap here to select a photo <br>from your gallery'),
-              selected:__('<p>Photo successfully selected!</p>'),
-              fileSize:__('The file size exceeds the limit'),
-              fileType:__('This file type is not supported.'),
-              aspect:__('Landscape/Portrait')
-            }"
-              ></picture-input>
-            </div>
-          </div>
+        <div class="form-row">
+          <input class="input" placeholder="Email" type="text" disabled :value="user.email" />
         </div>
-        <div class="form-group text-right">
+        <div class="form-row">
           <input
             type="button"
             class="btn btn-success"
             @click="saveComment"
-            :value="message ? __('Save Comment') :  __('Add Comment')"
+            :value="__('Add Comment')"
           />
         </div>
       </form>
     </div>
     <!-- Comments List -->
-    <div class="comments" v-for="(comment,index) in comments" :key="index">
+    <div class="comments" v-key="index" v-if="comments" v-for="(comment,index) in commentsData">
       <!-- Comment -->
-      <div class="card">
-        <div class="card-header">
-          <star-rating
-            class="float-right"
-            :star-size="starSizeSmall"
-            v-model="comment.votes"
-            :show-rating="false"
-            :read-only="true"
-          ></star-rating>
-          <strong>{{ comment.by }}</strong>
+      <div v-if="!spamComments[index] || !comment.spam" class="comment">
+        <!-- Comment Avatar -->
+        <div class="comment-avatar">
+          <img src="/storage/comment.png" />
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-8">
-                <p>{{comment.comment}}</p>
-                <small>{{ comment.updated_at | formatDateTime }}</small>
+        <!-- Comment Box -->
+        <div class="comment-box">
+          <div class="comment-text">{{comment.comment}}</div>
+          <div class="comment-footer">
+            <div class="comment-info">
+              <span class="comment-author">
+                <em>{{ comment.name}}</em>
+              </span>
+              <span class="comment-date">{{ comment.date}}</span>
+            </div>
+            <div class="comment-actions">
+              <ul class="list">
+                <li>
+                  {{ __('Votes') }}: {{comment.votes}}
+                  <a
+                    v-if="!comment.votedByUser"
+                    v-on:click="voteComment(comment.commentid,'directcomment',index,0,'up')"
+                  >{{ __('Up Votes') }}</a>
+                  <a
+                    v-if="!comment.votedByUser"
+                    v-on:click="voteComment(comment.commentid,'directcomment',index,0,'down')"
+                  >{{ __('Down Votes') }}</a>
+                </li>
+                <li>
+                  <a
+                    v-on:click="spamComment(comment.commentId,'directcomment',index,0)"
+                  >{{ __('Spam') }}</a>
+                </li>
+                <li>
+                  <a v-on:click="openComment(index)">{{ __('Reply') }}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- From -->
+        <div class="comment-form comment-v" v-if="commentBoxs[index]">
+          <!-- Comment Avatar -->
+          <div class="comment-avatar">
+            <img src="/storage/comment.png" />
+          </div>
+          <form class="form" name="form">
+            <div class="form-row">
+              <textarea
+                class="input"
+                :placeholder="__('Add Comment...')"
+                required
+                v-model="message"
+              ></textarea>
+              <span class="input" v-if="errorReply" style="color:red">{{errorReply}}</span>
+            </div>
+            <div class="form-row">
+              <input class="input" placeholder="Email" type="text" :value="user.name" />
+            </div>
+            <div class="form-row">
+              <input
+                type="button"
+                class="btn btn-success"
+                v-on:click="replyComment(comment.commentid,index)"
+                :value="__('Add Comment')"
+              />
+            </div>
+          </form>
+        </div>
+        <!-- Comment - Reply -->
+        <div v-if="comment.replies">
+          <div class="comments" v-for="(replies,index2) in comment.replies">
+            <div v-if="!spamCommentsReply[index2] || !replies.spam" class="comment reply">
+              <!-- Comment Avatar -->
+              <div class="comment-avatar">
+                <img src="/storage/comment.png" />
               </div>
-              <div class="col-sm-4" v-if="comment.picture">
-                <vue-pure-lightbox
-                  style="width: 20em"
-                  :thumbnail="'/storage/' + comment.picture"
-                  :images="['/storage/' + comment.picture]"
-                ></vue-pure-lightbox>
+              <!-- Comment Box -->
+              <div class="comment-box" style="background: grey;">
+                <div class="comment-text" style="color: white">{{replies.comment}}</div>
+                <div class="comment-footer">
+                  <div class="comment-info">
+                    <span class="comment-author">{{replies.name}}</span>
+                    <span class="comment-date">{{replies.date}}</span>
+                  </div>
+                  <div class="comment-actions">
+                    <ul class="list">
+                      <li>
+                        {{ __('Total votes') }}: {{replies.votes}}
+                        <a
+                          v-if="!replies.votedByUser"
+                          v-on:click="voteComment(replies.commentid,'replycomment',index,index2,'up')"
+                        >{{ __('Up Votes') }}</a>
+                        <a
+                          v-if="!replies.votedByUser"
+                          v-on:click="voteComment(comment.commentid,'replycomment',index,index2,'down')"
+                        >{{ __('Down Votes') }}</a>
+                      </li>
+                      <li>
+                        <a
+                          v-on:click="spamComment(replies.commentid,'replycomment',index,index2)"
+                        >{{ __('Spam') }}</a>
+                      </li>
+                      <li>
+                        <a v-on:click="replyCommentBox(index2)">{{ __('Reply') }}</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- From -->
+              <div class="comment-form reply" v-if="replyCommentBoxs[index2]">
+                <!-- Comment Avatar -->
+                <div class="comment-avatar">
+                  <img src="/storage/comment.png" />
+                </div>
+                <form class="form" name="form">
+                  <div class="form-row">
+                    <textarea
+                      class="input"
+                      :placeholder="__('Add comment...')"
+                      required
+                      v-model="message"
+                    ></textarea>
+                    <span class="input" v-if="errorReply" style="color:red">{{errorReply}}</span>
+                  </div>
+                  <div class="form-row">
+                    <input class="input" placeholder="Email" type="text" :value="user.name" />
+                  </div>
+                  <div class="form-row">
+                    <input
+                      type="button"
+                      class="btn btn-success"
+                      v-on:click="replyComment(comment.commentid,index)"
+                      :value="__('Add Comment')"
+                    />
+                  </div>
+                </form>
               </div>
             </div>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
-      <br />
     </div>
   </div>
 </template>
 <script>
-import PictureInput from "../vue-picture-input";
-import VuePureLightbox from 'vue-pure-lightbox';
+var _ = require("lodash");
 export default {
-  components: {
-    PictureInput,
-    VuePureLightbox
-  },
-  mounted() {
-    let app = this;
-    app.fetchComments();
-  },
   data() {
     return {
-      contragent: this.$route.params.id,
       comments: [],
-      rating: 0,
+      commentreplies: [],
+      comments: 0,
+      commentBoxs: [],
       message: null,
+      replyCommentBoxs: [],
+      commentsData: [],
+      viewcomment: [],
+      show: [],
+      spamCommentsReply: [],
+      spamComments: [],
       errorComment: null,
-      picture: null,
-      starSize: 20,
-      starSizeSmall: 15
+      errorReply: null,
+      user: window.user,
+      commentUrl: null
     };
   },
   methods: {
     fetchComments() {
       let app = this;
-      let loader = Vue.$loading.show();
+      app.commentUrl = app.$route.params.id;
       axios
-        .get("/api/v1/comments/" + app.contragent)
-        .then(function(res) {
-          app.comments = res.data[0];
-          app.rating = res.data[1];
-          app.message = res.data[2].comment;
-          app.picture = res.data[2].picture;
-          loader.hide();
+        .get(
+          "/api/v1/comments/" +
+            app.commentUrl +
+            "?csrf_token=" +
+            window.csrf_token +
+            "&api_token=" +
+            window.api_token
+        )
+        .then(function(resp) {
+          app.commentsData = resp.data;
+          app.commentsData = _.orderBy(resp.data, ["votes"], ["desc"]);
+          app.comments = 1;
+          app.isLoading = false;
         })
-        .catch(function(e) {
-          loader.hide();
+        .catch(function() {
+          alert(app.__("Failed to load comments"));
+          app.isLoading = false;
         });
     },
-    onPhotoRemove(comment) {
-      this.picture = "";
+
+    showComments(index) {
+      let app = this;
+      if (!app.viewcomment[index]) {
+        Vue.set(app.show, index, "hide");
+        Vue.set(app.viewcomment, index, 1);
+      } else {
+        Vue.set(app.show, index, "view");
+        Vue.set(app.viewcomment, index, 0);
+      }
+    },
+    openComment(index) {
+      let app = this;
+      if (app.user) {
+        if (app.commentBoxs[index]) {
+          Vue.set(app.commentBoxs, index, 0);
+        } else {
+          Vue.set(app.commentBoxs, index, 1);
+        }
+      }
+    },
+    replyCommentBox(index) {
+      let app = this;
+      if (app.user) {
+        if (app.replyCommentBoxs[index]) {
+          Vue.set(app.replyCommentBoxs, index, 0);
+        } else {
+          Vue.set(app.replyCommentBoxs, index, 1);
+        }
+      }
     },
     saveComment() {
       var app = this;
       if (app.message != null && app.message != " ") {
-        let loader = Vue.$loading.show();
         app.errorComment = null;
-
-        const data = new FormData();
-        data.append("contragent_id", app.contragent);
-        data.append("comment", app.message);
-        data.append("rate", app.rating);
-
-        if (document.getElementById("pictureInput").files[0])
-          data.append(
-            "picture",
-            document.getElementById("pictureInput").files[0]
-          );
-        else data.append("picture", !!app.picture ? app.picture : '');
-
-        axios.post("/api/v1/comments", data).then(function(res) {
-          app.comments = res.data[0];
-          app.rating = res.data[1];
-          app.message = res.data[2].comment;
-          loader.hide();
-        });
+        axios
+          .post(
+            "/api/v1/comments?csrf_token=" +
+              window.csrf_token +
+              "&api_token=" +
+              window.api_token,
+            {
+              contragent_id: app.commentUrl,
+              comment: app.message,
+              user_id: app.user.id
+            }
+          )
+          .then(function(resp) {
+            if (resp.data.status) {
+              app.commentsData.push({
+                commentid: resp.data.commentId,
+                name: app.user.name,
+                comment: app.message,
+                votes: 0,
+                reply: 0,
+                replies: []
+              });
+              app.message = null;
+            }
+          });
+      } else {
+        app.errorComment = "Please enter a comment to save";
+      }
+    },
+    replyComment(commentId, index) {
+      let app = this;
+      if (!!!app.commentsData[index].replies)
+        app.commentsData[index].replies = [];
+      if (app.message != null && app.message != " ") {
+        app.errorReply = null;
+        axios
+          .post(
+            "/api/v1/comments?csrf_token=" +
+              window.csrf_token +
+              "&api_token=" +
+              window.api_token,
+            {
+              comment: app.message,
+              user_id: app.user.id,
+              reply_id: commentId
+            }
+          )
+          .then(function(res) {
+            if (res.data.status) {
+              if (!app.commentsData[index].reply) {
+                app.commentsData[index].replies.push({
+                  commentid: res.data.commentId,
+                  name: app.user.name,
+                  comment: app.message,
+                  votes: 0
+                });
+                app.commentsData[index].reply = 1;
+                Vue.set(app.replyCommentBoxs, index, 0);
+                Vue.set(app.commentBoxs, index, 0);
+              } else {
+                app.commentsData[index].replies.push({
+                  commentid: res.data.commentId,
+                  name: app.user.name,
+                  comment: app.message,
+                  votes: 0
+                });
+                Vue.set(app.replyCommentBoxs, index, 0);
+                Vue.set(app.commentBoxs, index, 0);
+              }
+              app.message = null;
+            }
+          });
+      } else {
+        app.errorReply = "Please enter a comment to save";
+      }
+    },
+    voteComment(commentId, commentType, index, index2, voteType) {
+      let app = this;
+      if (app.user) {
+        axios
+          .post(
+            "/api/v1/comments/" +
+              commentId +
+              "/vote?csrf_token=" +
+              window.csrf_token +
+              "&api_token=" +
+              window.api_token,
+            {
+              user_id: app.user.id,
+              vote: voteType
+            }
+          )
+          .then(function(res) {
+            if (res.data) {
+              if (commentType == "directcomment") {
+                if (voteType == "up") {
+                  app.commentsData[index].votes++;
+                } else if (voteType == "down") {
+                  app.commentsData[index].votes--;
+                }
+              } else if (commentType == "replycomment") {
+                if (voteType == "up") {
+                  app.commentsData[index].replies[index2].votes++;
+                } else if (voteType == "down") {
+                  app.commentsData[index].replies[index2].votes--;
+                }
+              }
+            }
+          });
+      }
+    },
+    spamComment(commentId, commentType, index, index2) {
+      let app = this;
+      console.log("spam here");
+      if (app.user) {
+        axios
+          .post(
+            "/api/v1/comments/" +
+              commentId +
+              "/spam?csrf_token=" +
+              window.csrf_token +
+              "&api_token=" +
+              window.api_token,
+            {
+              user_id: app.user.id
+            }
+          )
+          .then(function(res) {
+            if (commentType == "directcomment") {
+              Vue.set(app.spamComments, index, 1);
+              Vue.set(app.viewcomment, index, 1);
+            } else if (commentType == "replycomment") {
+              Vue.set(app.spamCommentsReply, index2, 1);
+            }
+          });
       }
     }
+  },
+  mounted() {
+    this.fetchComments();
   }
 };
 </script>
