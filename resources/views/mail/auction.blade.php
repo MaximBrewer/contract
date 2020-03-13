@@ -1,3 +1,3 @@
 @php
-    var_dump($message)
+    var_dump($text)
 @endphp
