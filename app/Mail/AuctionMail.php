@@ -35,7 +35,8 @@ class AuctionMail extends Mailable
     {
         return $this->subject('Приглашение от '.$this->auction->contragent->title.' на еженедельное распределение продукции '. $this->auction->product->title)
             ->view('mail.auction')->with([
-                'text' => $this->text
+                'text' => $this->text,
+                'link' => 'http://project.cross-contract.ru//personal/auctions/show/' . $this->auction->id
             ]);;
     }
 }
