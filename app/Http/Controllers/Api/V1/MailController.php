@@ -37,7 +37,7 @@ class MailController extends Controller
                     break;
             }
             foreach($users as $user){
-                Mail::to($user)->send(new AuctionMail((string)$r->post('message')));
+                Mail::to($user)->send(new AuctionMail((string)$r->post('message'), $auction));
             }
             return [$users, $auction->id, (int) $r->post('whom')];
         } else {

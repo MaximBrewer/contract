@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Auction;
 
 class AuctionMail extends Mailable
 {
@@ -17,10 +18,12 @@ class AuctionMail extends Mailable
      * @return void
      */
     protected $text;
+    protected $auction;
 
-    public function __construct($text)
+    public function __construct($text, Auction $auction)
     {
         $this->text = $text;
+        $this->auction = $auction;
     }
 
     /**
@@ -30,8 +33,9 @@ class AuctionMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.auction')->with([
-            'text' => $this->text
-        ]);;
+        return $this->subject('example@example.com')
+            ->view('mail.auction')->with([
+                'text' => $this->text
+            ]);;
     }
 }
