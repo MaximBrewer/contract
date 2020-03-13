@@ -46,9 +46,10 @@ class CommentController extends Controller
 
         $comment = Comment::where('contragent_id', $attributes['contragent_id'])->where('writer', User::findOrFail(Auth::user()->id)->contragents[0]->id)->first();
 
-        if ($comment)
+        if ($comment) {
+            $attributes['votes'] = $attributes['rate'];
             $comment->update($attributes);
-        else
+        } else
             $comment = Comment::create([
                 'contragent_id' => $attributes['contragent_id'],
                 'comment' => $attributes['comment'],
