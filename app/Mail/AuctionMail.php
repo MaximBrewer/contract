@@ -16,11 +16,11 @@ class AuctionMail extends Mailable
      *
      * @return void
      */
-    protected $message;
+    protected $text;
 
     public function __construct(String $message)
     {
-        $this->message = $message;
+        $this->text = $message;
     }
 
     /**
