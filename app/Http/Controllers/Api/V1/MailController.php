@@ -24,7 +24,7 @@ class MailController extends Controller
                 break;
             }
             // foreach(){
-                return(Mail::to('pimax1978@icloud.com')->send(new AuctionMail((string)$r->post('message'))));
+                return [Mail::to('pimax1978@icloud.com')->send(new AuctionMail((string)$r->post('message')))];
             // }
         } else {
             return response()->json([
