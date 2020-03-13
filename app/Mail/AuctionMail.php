@@ -33,7 +33,7 @@ class AuctionMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('example@example.com')
+        return $this->subject('Приглашение от '.$this->auction->contragent->title.' на еженедельное распределение продукции '. $this->auction->product->title)
             ->view('mail.auction')->with([
                 'text' => $this->text
             ]);;
