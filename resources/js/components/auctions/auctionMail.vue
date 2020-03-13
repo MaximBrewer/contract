@@ -68,7 +68,7 @@ export default {
       let app = this;
       let loader = Vue.$loading.show();
       let data = {
-        mesasage: this.mesasage,
+        message: this.message,
         whom: this.whom,
         auction: this.auction.id
       };
