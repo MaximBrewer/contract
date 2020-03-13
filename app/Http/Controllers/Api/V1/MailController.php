@@ -8,7 +8,7 @@ use App\Mail\AuctionMail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
 
 class MailController extends Controller
 {
@@ -17,6 +17,13 @@ class MailController extends Controller
     {
         if ((int) $r->post('auction') && (string) $r->post('message')) {
             $auction = Auction::findOrFail((int) $r->post('auction'));
+
+            if ($auction->contragent_id != Auth::user()->contragents[0]->id) {
+                return response()->json([
+                    'message' => __('It`s not yours!'),
+                    'errors' => []
+                ], 422);
+            }
 
             switch ((int) $r->post('whom')) {
                 case 0:
