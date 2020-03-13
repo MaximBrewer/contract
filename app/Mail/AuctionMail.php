@@ -18,7 +18,7 @@ class AuctionMail extends Mailable
      */
     protected $text;
 
-    public function __construct(String $text)
+    public function __construct($text)
     {
         $this->text = $text;
     }
