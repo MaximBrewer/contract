@@ -36,11 +36,10 @@ class MailController extends Controller
                     $users = DB::table('users')->whereRaw('id in (select user_id from user_contragent where contragent_id in (select contragent_id from `contragent_auction` WHERE `observer`=1 and `can_bet`=1 and `auction_id`=?))', [$auction->id])->get();
                     break;
             }
-
+            foreach($users as $user){
+                Mail::to($user)->send(new AuctionMail((string)$r->post('message')));
+            }
             return [$users, $auction->id, (int) $r->post('whom')];
-            // foreach($users as $user){
-            //     Mail::to($user)->send(new AuctionMail((string)$r->post('message')));
-            // }
         } else {
             return response()->json([
                 'message' => __('It`s not yours!'),
