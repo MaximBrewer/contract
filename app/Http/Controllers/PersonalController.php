@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Laracasts\Utilities\JavaScript\JavaScriptFacade as JavaScript;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Kind;
+use Illuminate\Support\Facades\View;
 
 class PersonalController extends Controller
 {
@@ -36,6 +38,6 @@ class PersonalController extends Controller
 
             $request->session()->put('_api_token', $token);
         }
-        return view('personal.index');
+        return view('personal.index', ['kinds' => Kind::all()]);
     }
 }
