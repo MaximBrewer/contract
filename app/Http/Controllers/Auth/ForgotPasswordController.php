@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use App\Kind;
+use Illuminate\Support\Facades\View;
 
 class ForgotPasswordController extends Controller
 {
@@ -19,4 +21,18 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $kinds = Kind::all();
+        View::share('kinds', $kinds);
+        $this->middleware('guest');
+    }
+
 }
