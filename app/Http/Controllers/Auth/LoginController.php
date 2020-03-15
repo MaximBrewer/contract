@@ -8,7 +8,9 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\User;
+use App\Kind;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
 class LoginController extends Controller
 {
@@ -40,6 +42,8 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+        $kinds = Kind::all();
+        View::share('kinds', $kinds);
     }
 
 
