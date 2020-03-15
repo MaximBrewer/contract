@@ -8,6 +8,8 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Kind;
+use Illuminate\Support\Facades\View;
 
 class RegisterController extends Controller
 {
@@ -38,6 +40,8 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
+        $kinds = Kind::all();
+        View::share('kinds', $kinds);
         $this->middleware('guest');
     }
 

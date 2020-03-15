@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ConfirmsPasswords;
+use Illuminate\Support\Facades\View;
+use App\Kind;
 
 class ConfirmPasswordController extends Controller
 {
@@ -35,6 +37,8 @@ class ConfirmPasswordController extends Controller
      */
     public function __construct()
     {
+        $kinds = Kind::all();
+        View::share('kinds', $kinds);
         $this->middleware('auth');
     }
 }

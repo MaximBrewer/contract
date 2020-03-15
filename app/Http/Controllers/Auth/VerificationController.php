@@ -10,6 +10,8 @@ use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\Request;
+use App\Kind;
+use Illuminate\Support\Facades\View;
 
 class VerificationController extends Controller
 {
@@ -71,6 +73,8 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
+        $kinds = Kind::all();
+        View::share('kinds', $kinds);
         $this->middleware('auth');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
