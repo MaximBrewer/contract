@@ -8,6 +8,7 @@ use App\Http\Resources\Result as ResultResource;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Bet;
+use Illuminate\Support\Facades\DB;
 
 class ResultsController extends Controller
 {
@@ -19,11 +20,12 @@ class ResultsController extends Controller
     public function index()
     {
         return ResultResource::collection(
-            Bet::where([
-                'contragent_id' => User::find(Auth::user()->id)->contragents[0]->id
-            ])
-                ->whereNotNull('approved_contract')
-                ->orderBy('created_at', 'desc')->get()
+            DB::table('bets')
+            ->leftJoin('auctions', 'bets.auction_id', '=', 'auctions.id')
+            ->select('bets.*', 'auctions.contragent_id')
+            ->where('auctions.contragent_id', Auth::user()->contragents[0]->id)
+            ->whereNotNull(['approved_contract'])
+            ->get()
         );
     }
     /**

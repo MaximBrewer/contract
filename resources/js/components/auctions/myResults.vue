@@ -6,35 +6,43 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>{{ __('Contragent name') }}</th>
             <th>{{ __('Auction number') }}</th>
             <th>{{ __('End date') }}</th>
-            <th>{{ __('Contract bid') }}</th>
+            <th>{{ __('Contragent name') }}</th>
             <th>{{ __('Contract volume') }}</th>
             <th>{{ __('Multiplicity') }}</th>
+            <th>{{ __('Contract bid') }}</th>
             <th>{{ __('Platform reward') }}</th>
-            <th
-              colspan="2"
-              width="40%"
-            >{{ __('If you do not agree with the calculations, leave a comment!') }}</th>
+            <th width="40%">{{ __('If you do not agree with the calculations, leave a comment!') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(result, index) in results" :key="index">
             <td>{{ index + 1 }}</td>
-            <td>{{ result.contragent.title }}</td>
-            <td>{{ result.auction.id }}</td>
+            <td>
+              <router-link
+                :to="'/personal/contragents/show/' + result.auction.id"
+              >{{ result.auction.id }}</router-link>
+            </td>
             <td>{{ result.auction.finish_at | formatDateTime }}</td>
-            <td>{{ result.bid }}₽</td>
+            <td>
+              <router-link
+                :to="'/personal/contragents/show/' + result.contragent.id"
+              >{{ result.contragent.title }}</router-link>
+            </td>
             <td>{{ result.volume }}</td>
             <td>{{ result.auction.multiplicity.title }}</td>
+            <td>{{ result.bid }}₽</td>
             <td v-tooltip="result.reward.tooltip">{{ result.reward.sum }}</td>
             <td>
-              <textarea class="form-control" v-model="result.message"></textarea>
+              <div class="form-group">
+                <textarea class="form-control" v-model="result.message"></textarea>
+              </div>
+              <div class="form-group text-right">
+                <button class="btn btn-primary" @click="send(result)">{{ __('Send') }}</button>
+              </div>
             </td>
-            <td>
-              <button class="btn btn-primary" @click="send(result)">{{ __('Send') }}</button>
-            </td>
+            <td></td>
           </tr>
         </tbody>
       </table>

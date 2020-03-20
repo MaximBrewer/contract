@@ -3,6 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Multiplicity;
+use App\Auction;
+use App\Contragent;
 
 class Result extends JsonResource
 {
@@ -14,21 +17,23 @@ class Result extends JsonResource
      */
     public function toArray($request)
     {
-        $volume = $this->auction->multiplicity->coefficient * $this->volume;
+        $auction = Auction::find($this->auction_id);
+        $contragent = Contragent::find($this->contragent_id);
+        $volume = $auction->multiplicity->coefficient * $this->volume;
         $sum = $this->correct * $volume;
-        $rest = ($this->correct - $this->auction->start_price) * $volume;
+        $rest = ($this->correct - $auction->start_price) * $volume;
         $tooltip = "0.05% * " . $sum . " + " . $rest . " * 5%";
         $reward = 0.0005 * $sum + $rest * 0.05;
 
         return [
             'id' => $this->id,
-            'contragent' => $this->contragent,
+            'contragent' => $contragent,
             'auction' => [
-                'id' => $this->auction->id,
-                'finish_at' => $this->auction->finish_at,
+                'id' => $auction->id,
+                'finish_at' => $auction->finish_at,
                 'multiplicity' => [
-                    'title' => $this->auction->multiplicity->title,
-                    'coefficient' => $this->auction->multiplicity->coefficient
+                    'title' => $auction->multiplicity->title,
+                    'coefficient' => $auction->multiplicity->coefficient
                 ]
             ],
             'bid' => $this->correct,
