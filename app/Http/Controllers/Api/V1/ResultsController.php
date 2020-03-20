@@ -22,7 +22,7 @@ class ResultsController extends Controller
         return ResultResource::collection(
             DB::table('bets')
             ->leftJoin('auctions', 'bets.auction_id', '=', 'auctions.id')
-            ->select('bets.*', 'auctions.contragent_id')
+            ->select('bets.*')
             ->where('auctions.contragent_id', Auth::user()->contragents[0]->id)
             ->whereNotNull(['approved_contract'])
             ->orderBy('id', 'DESC')
