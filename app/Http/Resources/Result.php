@@ -36,6 +36,8 @@ class Result extends JsonResource
                     'coefficient' => $auction->multiplicity->coefficient
                 ]
             ],
+            'sum' => $sum,
+            'rest' => $rest,
             'bid' => $this->correct,
             'volume' => $this->volume,
             'message' => $this->message,

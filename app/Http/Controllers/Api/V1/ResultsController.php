@@ -25,6 +25,7 @@ class ResultsController extends Controller
             ->select('bets.*', 'auctions.contragent_id')
             ->where('auctions.contragent_id', Auth::user()->contragents[0]->id)
             ->whereNotNull(['approved_contract'])
+            ->orderBy('id', 'DESC')
             ->get()
         );
     }

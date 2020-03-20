@@ -12,6 +12,8 @@
             <th>{{ __('Contract volume') }}</th>
             <th>{{ __('Multiplicity') }}</th>
             <th>{{ __('Contract bid') }}</th>
+            <th>{{ __('Amount') }}</th>
+            <th>{{ __('Gain') }}</th>
             <th>{{ __('Platform reward') }}</th>
             <th width="40%">{{ __('If you do not agree with the calculations, leave a comment!') }}</th>
           </tr>
@@ -33,6 +35,8 @@
             <td>{{ result.volume }}</td>
             <td>{{ result.auction.multiplicity.title }}</td>
             <td>{{ result.bid }}₽</td>
+            <td>{{ result.sum }}₽</td>
+            <td>{{ result.rest }}₽</td>
             <td v-tooltip="result.reward.tooltip">{{ result.reward.sum }}</td>
             <td>
               <div class="form-group">
