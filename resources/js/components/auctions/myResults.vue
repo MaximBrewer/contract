@@ -37,7 +37,7 @@
             <td>{{ result.bid }}₽</td>
             <td>{{ result.sum }}₽</td>
             <td>{{ result.rest }}₽</td>
-            <td v-tooltip="result.reward.tooltip">{{ result.reward.sum }}</td>
+            <td v-tooltip="result.reward.tooltip">{{ result.reward.sum }}₽</td>
             <td>
               <div class="form-group">
                 <textarea class="form-control" v-model="result.message"></textarea>
