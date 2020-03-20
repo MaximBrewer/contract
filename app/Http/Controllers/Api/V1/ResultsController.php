@@ -37,7 +37,7 @@ class ResultsController extends Controller
     public function update(Request $r)
     {
         $bet = Bet::find($r->id);
-        if ($bet->contragent_id != Auth::user()->contragents[0]->id) {
+        if ($bet->auction->contragent_id != Auth::user()->contragents[0]->id) {
             return response()->json([
                 'message' => __('It`s not yours!'),
                 'errors' => []
