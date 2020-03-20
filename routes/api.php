@@ -65,6 +65,8 @@ Route::group([
     Route::get('comments', 'CommentController@index');
     Route::post('comments/{commentId}/{type}', 'CommentController@update');
 
+    Route::post('results', 'ResultsController@update');
+    Route::get('results', 'ResultsController@index');
 
     Route::post('sendmail', 'MailController@send');
 

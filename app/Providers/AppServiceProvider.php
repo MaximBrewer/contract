@@ -7,6 +7,8 @@ use App\Phrase;
 use App\Auction;
 use App\Observers\PhraseObserver;
 use App\Observers\Auction as AuctionObserver;
+use App\Observers\Bet as BetObserver;
+use App\Bet;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Phrase::observe(PhraseObserver::class);
         Auction::observe(AuctionObserver::class);
+        Bet::observe(BetObserver::class);
         //
     }
 }

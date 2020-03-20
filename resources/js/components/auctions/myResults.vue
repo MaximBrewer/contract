@@ -1,0 +1,97 @@
+<template>
+  <section class="container-fluid">
+    <div class="table-responsive" id="results">
+      <div class="h2 text-center">{{ __('My results') }}</div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>{{ __('Contragent name') }}</th>
+            <th>{{ __('Auction number') }}</th>
+            <th>{{ __('End date') }}</th>
+            <th>{{ __('Contract bid') }}</th>
+            <th>{{ __('Contract volume') }}</th>
+            <th>{{ __('Multiplicity') }}</th>
+            <th>{{ __('Platform reward') }}</th>
+            <th
+              colspan="2"
+              width="40%"
+            >{{ __('If you do not agree with the calculations, leave a comment!') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(result, index) in results" :key="index">
+            <td>{{ index + 1 }}</td>
+            <td>{{ result.contragent.title }}</td>
+            <td>{{ result.auction.id }}</td>
+            <td>{{ result.auction.finish_at | formatDateTime }}</td>
+            <td>{{ result.bid }}₽</td>
+            <td>{{ result.volume }}</td>
+            <td>{{ result.auction.multiplicity.title }}</td>
+            <td v-tooltip="result.reward.tooltip">{{ result.reward.sum }}</td>
+            <td>
+              <textarea class="form-control" v-model="result.message"></textarea>
+            </td>
+            <td>
+              <button class="btn btn-primary" @click="send(result)">{{ __('Send') }}</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</template>
+<script>
+export default {
+  data: function() {
+    return {
+      results: [],
+      message: []
+    };
+  },
+  mounted() {
+    var app = this;
+    let loader = Vue.$loading.show();
+    axios
+      .get("/api/v1/results")
+      .then(function(res) {
+        console.log(res.data.data);
+        app.results = res.data.data;
+        loader.hide();
+      })
+      .catch(function(err) {
+        console.log(err);
+        app.$fire({
+          title: app.__("Failed to load results"),
+          type: "error",
+          timer: 2000
+        });
+        loader.hide();
+      });
+  },
+  methods: {
+    send(result) {
+      var app = this;
+      let loader = Vue.$loading.show();
+      axios
+        .post("/api/v1/results", { message: result.message, id: result.id })
+        .then(function(res) {
+          app.$fire({
+            title: app.__("Thank you , Your message is accepted!"),
+            type: "success",
+            timer: 2000
+          });
+          loader.hide();
+        })
+        .catch(function(err) {
+          app.$fire({
+            title: app.__("Failed to sen message"),
+            type: "error",
+            timer: 2000
+          });
+          loader.hide();
+        });
+    }
+  }
+};
+</script>

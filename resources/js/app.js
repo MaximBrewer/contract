@@ -65,6 +65,7 @@ import ContragentShow from "./components/contragents/contragentShow.vue";
 import AuctionIndex from "./components/auctions/auctionIndex.vue";
 import AuctionArchive from "./components/auctions/auctionArchive.vue";
 import AuctionMy from "./components/auctions/auctionMy.vue";
+import MyResults from "./components/auctions/myResults.vue";
 import AuctionBid from "./components/auctions/auctionBid.vue";
 import AuctionCreate from "./components/auctions/auctionCreate.vue";
 import AuctionEdit from "./components/auctions/auctionEdit.vue";
@@ -155,6 +156,11 @@ const app = new Vue({
             path: "/personal/auctions/create",
             component: AuctionCreate,
             name: "createAuction"
+        },
+        {
+            path: "/personal/auctions/results",
+            component: MyResults,
+            name: "myResults"
         },
         {
             path: "/personal/auctions/show/:id",

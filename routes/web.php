@@ -61,6 +61,9 @@ Route::get('/personal/auctions/edit/{id}', 'PersonalController@index')->middlewa
 Route::get('/personal/auctions/show/{id}', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
 Route::get('/personal/dialogue/show/{id}', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
 Route::get('/personal/dialogues', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
+Route::get('/personal/auctions/results', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
+
+
 
 Route::get('/personal/targets', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
 Route::get('/personal/targets/create', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');

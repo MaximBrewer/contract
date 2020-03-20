@@ -18,6 +18,7 @@ class Bet extends Model
         'can_bet',
         'correct',
         'store_id',
+        'message',
     ];
 
     protected $appends = [

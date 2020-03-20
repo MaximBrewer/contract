@@ -151,6 +151,9 @@
                                 <router-link :to="{name: 'company'}" class="dropdown-item">{{ __('Settings') }}
                                 </router-link>
 
+                                <router-link :to="{name: 'myResults'}" class="dropdown-item">{{ __('My results') }}
+                                </router-link>
+
                                 <a class="dropdown-item" href="javascript:void(0)"
                                     onclick="document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
