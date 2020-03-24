@@ -28,7 +28,7 @@
         }
 
         .navbar-brand small {
-            font-size: .9
+            font-size: .7em
         }
     </style>
 
