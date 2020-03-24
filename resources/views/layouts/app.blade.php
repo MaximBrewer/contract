@@ -22,6 +22,16 @@
     <script>
         window._translations = {!! cache('translations'); !!};
     </script>
+    <style>
+        .navbar-brand {
+            line-height: 1
+        }
+
+        .navbar-brand small {
+            font-size: .9
+        }
+    </style>
+
 </head>
 
 <body class="d-flex flex-column">
@@ -29,7 +39,8 @@
         <flash-message class="flashpool flash__wrapper"></flash-message>
         <nav class="navbar  navbar-expand-lg navbar-dark flex-column flex-md-row  bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="https://www.cross-contract.ru">о Cross-Contract.ru<br><small>8(495)144-53-34</small></a>
+                <a class="navbar-brand" href="https://www.cross-contract.ru">о
+                    Cross-Contract.ru<br><small>8(495)144-53-34</small></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="{{ __('Toggle navigation') }}">
