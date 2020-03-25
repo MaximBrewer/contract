@@ -48,6 +48,7 @@
           <div class="form-group">
             <label class="control-label">{{ __('Auction Volume') }}</label>
             <input
+              step=".01"
               type="number"
               v-model="auction.volume"
               class="form-control"
