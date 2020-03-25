@@ -572,6 +572,13 @@ class AuctionsController extends Controller
             ], 422);
         }
 
+        if ($r->post('volume') <= 0) {
+            return response()->json([
+                'message' => __('Объем должен быть положительным!'),
+                'errors' => []
+            ], 422);
+        }
+
         if (!$r->post('store')) {
             return response()->json([
                 'message' => __('Choose store!'),
