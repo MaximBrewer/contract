@@ -78,6 +78,9 @@ import AllAuctions from "./components/allAuctions.vue";
 import DialoguesIndex from "./components/dialogues/dialoguesIndex.vue";
 import DialoguesShow from "./components/dialogues/dialogueShow.vue";
 import SendMessage from "./components/sendMessage.vue";
+import SettlementsIndex from "./components/settlements/settlementsIndex.vue";
+
+
 
 
 Vue.component("SendMessage", SendMessage, {});
@@ -186,6 +189,11 @@ const app = new Vue({
             path: "/personal/targets/edit/:id",
             component: TargetEdit,
             name: "editTarget"
+        },
+        {
+            path: "/personal/settlements",
+            component: SettlementsIndex,
+            name: "settlementsIndex"
         }
         ]
     }),

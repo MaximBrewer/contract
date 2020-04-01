@@ -1,5 +1,14 @@
 <template>
   <section class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 text-right">
+        <div class="form-group">
+          <router-link class="btn btn-primary btn-lg"
+            :to="'/personal/settlements'"
+          >{{ __('Взаиморасчеты') }}</router-link>
+        </div>
+      </div>
+    </div>
     <div class="table-responsive" id="results">
       <div class="h2 text-center">{{ __('My results') }}</div>
       <table class="table table-bordered">

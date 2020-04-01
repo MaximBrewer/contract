@@ -685,6 +685,8 @@ class AuctionsController extends Controller
         }
         if (!$rft) $bets[] = $newBet;
 
+        return $bets;
+
         foreach ($bets as $bet) {
 
             if ($bet->id && $freeVolume <= 0) {
