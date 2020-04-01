@@ -16,7 +16,8 @@ class CreateSettlementsTable extends Migration
         Schema::create('settlements', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->decimal('balance');
-            $table->transaction('reward');
+            $table->enum('type', ['credit', 'debit']);
+            $table->enum('status', ['processing', 'done']);
             $table->timestamps();
         });
     }

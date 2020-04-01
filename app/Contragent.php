@@ -22,6 +22,7 @@ class Contragent extends Model
 
     protected $appends = [
         'filled',
+        'balance'
     ];
 
     public function getFilledAttribute()
