@@ -256,7 +256,7 @@ class AuctionsController extends Controller
         $auction->tags()->sync($rtags);
         $auction->update($attributes);
 
-        // if ($auction) event(new \App\Events\MessagePushed($auction));
+        if ($auction) event(new \App\Events\MessagePushed($auction));
 
         $auction = Auction::findOrFail($auction->id);
 
