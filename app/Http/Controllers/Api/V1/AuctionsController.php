@@ -403,8 +403,9 @@ class AuctionsController extends Controller
      */
     public function addBidder(Request $request)
     {
+        $auction = Auction::findOrFail($request->post('auction'));
         foreach ($request->post('bidders') as $bidder) {
-            $auction = Auction::findOrFail($request->post('auction'));
+            if (User::find(Auth::user()->id)->contragents[0]->id == $bidder->id) continue;
             $contragent = Contragent::findOrFail($bidder['id']);
             $contragent->auctions()->attach($auction->id);
         }
