@@ -34,6 +34,11 @@ class Contragent extends Model
         // $this->auctions;
         return true;
     }
+
+    public function getBalanceAttribute()
+    {
+        return 10000;
+    }
     
     public function region()
     {
