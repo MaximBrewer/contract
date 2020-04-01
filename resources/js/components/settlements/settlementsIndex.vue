@@ -73,6 +73,7 @@ export default {
           var form = document.createElement("form");
           form.setAttribute("action", res.data.url);
           form.setAttribute("method", "POST");
+          form.setAttribute("target", "_blank");
           for (var f in res.data.hiddens) {
             var input = document.createElement("input");
             input.setAttribute("type", "hidden");
