@@ -689,7 +689,7 @@ class AuctionsController extends Controller
         }
         if (!$rft) $bets[] = $newBet;
 
-        return $rf;
+        // return $rf;
 
         foreach ($bets as $bet) {
 
