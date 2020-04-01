@@ -38,35 +38,36 @@ class Contragent extends Model
 
     public function getBalanceAttribute()
     {
-        $cnt = DB::select("select (SELECT sum(balance) FROM settlements where `contragent_id`=? and type = 'debit' and status='done') - (SELECT sum(balance) FROM settlements where `contragent_id`=? and type = 'credit' and status='done') as itog", [$this->id, $this->id]);
-        return (int) $cnt[0]->itog;
+        $cnt0 = DB::select("SELECT sum(balance) as s FROM settlements where `contragent_id`=? and type = 'debit' and status='done'", [$this->id]);
+        $cnt1 = DB::select("SELECT sum(balance) as s FROM settlements where `contragent_id`=? and type = 'credit' and status='done'", [$this->id]);
+        return (float) ($cnt0[0]->s - $cnt1[0]->s);
     }
-    
+
     public function region()
     {
         return $this->belongsTo('App\Region');
     }
-    
+
     public function federalDistrict()
     {
         return $this->belongsTo('App\FederalDistrict');
     }
-    
+
     public function types()
     {
         return $this->belongsToMany('App\Type', 'contragent_type');
     }
-    
+
     public function auctions()
     {
         return $this->belongsToMany('App\Auction', 'contragent_auction')->orderBy('id', 'desc');
     }
-    
+
     public function bid_auctions()
     {
         return $this->belongsToMany('App\Auction', 'contragent_auction')->where('finished', '<>', 1)->orderBy('id', 'desc');
     }
-    
+
     public function archive()
     {
         return $this->belongsToMany('App\Auction', 'contragent_auction')->where('finished', 1)->orderBy('id', 'desc');
@@ -76,8 +77,8 @@ class Contragent extends Model
     {
         return $this->hasMany('App\Store');
     }
-    public function bets(){
+    public function bets()
+    {
         return $this->hasMany('App\Bet');
     }
-
 }
