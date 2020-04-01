@@ -680,7 +680,7 @@ class AuctionsController extends Controller
 
         foreach ($auctionBets as $auctionBet) {
 
-            $rf[] = [$newBet->price,$auction->step,$auctionBet->price,!$rft, (float)$newBet->price - (float)$auction->step];
+            $rf[] = [$newBet->price,$auction->step,$auctionBet->price,!$rft, round($newBet->price, 2) - round($auction->step, 2)];
             if ($newBet->price - $auction->step >= $auctionBet->price && !$rft) {
                 $bets[] = $newBet;
                 $rft = true;
