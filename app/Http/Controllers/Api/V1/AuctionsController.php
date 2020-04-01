@@ -676,10 +676,12 @@ class AuctionsController extends Controller
         $nev = false;
         $rft = false;
 
+        $rf = [];
+
         foreach ($auctionBets as $auctionBet) {
 
+            $rf[] = [$newBet->price,$auction->step,$auctionBet->price,!$rft, $newBet->price - $auction->step >= $auctionBet->price && !$rft];
             if ($newBet->price - $auction->step >= $auctionBet->price && !$rft) {
-        return [$newBet->price,$auction->step,$auctionBet->price,!$rft];
                 $bets[] = $newBet;
                 $rft = true;
             }
@@ -687,7 +689,7 @@ class AuctionsController extends Controller
         }
         if (!$rft) $bets[] = $newBet;
 
-        return $bets;
+        return $rf;
 
         foreach ($bets as $bet) {
 
