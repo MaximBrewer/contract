@@ -12,7 +12,9 @@ use Laracasts\Utilities\JavaScript\JavaScriptFacade as JavaScript;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Kind;
+use App\Settlement;
 use Illuminate\Support\Facades\View;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class PersonalController extends Controller
 {
@@ -39,5 +41,16 @@ class PersonalController extends Controller
             $request->session()->put('_api_token', $token);
         }
         return view('personal.index', ['kinds' => Kind::all()]);
+    }
+
+    public function invoice(Request $request)
+    {
+        $settlement = Settlement::findOrFail($request->id);
+        $pdf = PDF::loadView('pdf.invoice', ['settlement' => $settlement]);
+        return $pdf->stream();
+
+
+        response()
+        ->view('pdf.invoice', ['settlement' => $settlement], 200);
     }
 }

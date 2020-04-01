@@ -373,3 +373,10 @@ window.Vue.filter("formatChatTime", function (value) {
     }
     return "";
 });
+
+window.Vue.filter("formatMoney", function (value) {
+    if (value) {
+        return new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB' }).format(value);
+    }
+    return "";
+});

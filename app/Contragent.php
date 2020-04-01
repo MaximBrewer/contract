@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Contragent extends Model
 {
@@ -37,7 +38,8 @@ class Contragent extends Model
 
     public function getBalanceAttribute()
     {
-        return 10000;
+        $cnt = DB::select("select (SELECT sum(balance) FROM settlements where `contragent_id`=? and type = 'debit' and status='done') - (SELECT sum(balance) FROM settlements where `contragent_id`=? and type = 'credit' and status='done') as itog", [$this->id, $this->id]);
+        return (int) $cnt[0]->itog;
     }
     
     public function region()

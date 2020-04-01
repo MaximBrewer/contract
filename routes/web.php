@@ -63,6 +63,7 @@ Route::get('/personal/dialogue/show/{id}', 'PersonalController@index')->middlewa
 Route::get('/personal/dialogues', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
 Route::get('/personal/auctions/results', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
 Route::get('/personal/settlements', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
+Route::any('/personal/invoice', 'PersonalController@invoice')->middleware('verified')->middleware('contragent')->name('personal-invoice');
 
 
 

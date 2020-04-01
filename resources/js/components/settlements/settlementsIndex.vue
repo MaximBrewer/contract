@@ -1,21 +1,25 @@
 <template>
   <section id="paymentForm" class="container">
-    <div class="p-3">
+    <div class="py-3">
       <h1>
         Баланс
-        <span class="badge badge-secondary">{{ user.balance }}</span>
+        <span
+          class="badge"
+          v-bind:class="{ 'badge-danger': !user.contragents[0].balance < 0, 'badge-success': user.contragents[0].balance > 0, 'badge-secondary': user.contragents[0].balance ==0 }"
+        >{{ user.contragents[0].balance | formatMoney }}</span>
       </h1>
     </div>
     <form method="POST">
       <div class="form-group">
         <input
+          style="max-width:200px"
           step=".01"
-          name="sum"
+          name="balance"
           type="number"
           data-type="number"
-          v-model="form.sum"
-          class="form-control"
-          v-bind:class="{ 'is-invalid': errors.sum }"
+          v-model="form.balance"
+          class="form-control text-right"
+          v-bind:class="{ 'is-invalid': errors.balance }"
         />
       </div>
       <div class="form-check form-group">
@@ -26,7 +30,7 @@
           type="radio"
           value="yandex"
           v-model="form.method"
-          :disabled="!(form.sum * 1) || form.sum > 15000"
+          :disabled="!(form.balance * 1) || form.balance > 15000"
         />
         <label class="form-check-label" for="yandexForm">Яндекс.Деньги</label>
       </div>
@@ -38,15 +42,10 @@
           type="radio"
           value="invoice"
           v-model="form.method"
-          :disabled="!(form.sum * 1)"
+          :disabled="!(form.balance * 1)"
         />
         <label class="form-check-label" for="invoiceForm">Счет</label>
       </div>
-      <input type="hidden" name="receiver" value="410011406191126" />
-      <input type="hidden" name="label" value="$order_id" />
-      <input type="hidden" name="quickpay-form" value="donate" />
-      <input type="hidden" name="targets" value="транзакция {order_id}" />
-      <input type="hidden" name="paymentType" value="AC" />
       <button
         @click="sendForm"
         class="btn btn-primary"
@@ -64,26 +63,32 @@ export default {
       event.preventDefault();
       var app = this;
       let loader = Vue.$loading.show();
-
-      const data = new FormData();
-      data.append("multiplicity_id", app.auction.multiplicity.id);
-      data.append("product_id", app.auction.product.id);
-      data.append("store_id", app.auction.store.id);
-      data.append("start_at", app.auction.start_at);
-      data.append("finish_at", app.auction.finish_at);
-      data.append("comment", !!app.auction.comment ? app.auction.comment : "");
-      data.append("volume", !!app.auction.volume ? app.auction.volume : "");
-      data.append(
-        "start_price",
-        !!app.auction.start_price ? app.auction.start_price : ""
-      );
-      data.append("step", !!app.auction.step ? app.auction.step : "");
-
       axios
-        .post("/api/v1/auctions/" + app.auction.id, data)
+        .post("/api/v1/settlements", {
+          balance: app.form.balance,
+          method: app.form.method
+        })
         .then(function(res) {
-          app.$router.replace("/personal/auctions/show/" + res.data.id);
           app.errors = {};
+          var form = document.createElement("form");
+          form.setAttribute("action", res.data.url);
+          form.setAttribute("method", "POST");
+          for (var f in res.data.hiddens) {
+            var input = document.createElement("input");
+            input.setAttribute("type", "hidden");
+            input.setAttribute("name", f);
+            input.setAttribute("value", res.data.hiddens[f]);
+            form.appendChild(input);
+          }
+          var input = document.createElement("input");
+          input.setAttribute("type", "hidden");
+          input.setAttribute("name", '_token');
+          input.setAttribute("value", $('meta[name="csrf-token"]').attr('content'));
+          form.appendChild(input);
+          window.document.body.appendChild(form);
+          setTimeout(function() {
+            form.submit();
+          }, 200);
           loader.hide();
         })
         .catch(function(err) {

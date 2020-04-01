@@ -48,8 +48,8 @@ Route::group([
     Route::get('auctions/bid/{id}', 'AuctionsController@bid');
     Route::get('auctions/unbid/{id}', 'AuctionsController@unbid');
     Route::post('addbidder', 'AuctionsController@addBidder');
+    Route::post('settlements', 'SettlementsController@pay');
     Route::post('auctions/bidder/toggle', 'AuctionsController@toggleBidder');
-
 
     Route::get('dialogues', 'DialoguesController@index');
     Route::get('dialogues/check/{contragent_id}', 'DialoguesController@storeDialog');
