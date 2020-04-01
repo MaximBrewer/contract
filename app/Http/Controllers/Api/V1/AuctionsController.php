@@ -678,8 +678,8 @@ class AuctionsController extends Controller
 
         foreach ($auctionBets as $auctionBet) {
 
-        return [$newBet->price,$auction->step,$auctionBet->price,!$rft];
             if ($newBet->price - $auction->step >= $auctionBet->price && !$rft) {
+        return [$newBet->price,$auction->step,$auctionBet->price,!$rft];
                 $bets[] = $newBet;
                 $rft = true;
             }
