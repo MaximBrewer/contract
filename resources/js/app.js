@@ -4,24 +4,17 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-
 require("./bootstrap");
 window.Vue = require("vue");
 window.Vue.mixin(require("./trans"));
 import VueRouter from "vue-router";
 import moment from "moment";
 import VueFlashMessage from "vue-flash-message";
-import {
-    VTooltip,
-    VPopover,
-    VClosePopover
-} from "v-tooltip";
+import { VTooltip, VPopover, VClosePopover } from "v-tooltip";
 Vue.directive("tooltip", VTooltip);
 Vue.directive("close-popover", VClosePopover);
 Vue.component("v-popover", VPopover);
-import {
-    Datetime
-} from 'vue-datetime'
+import { Datetime } from "vue-datetime";
 Vue.component("datetime", Datetime);
 Vue.use(VueRouter);
 Vue.use(VueFlashMessage);
@@ -34,7 +27,7 @@ Vue.component("v-select", vSelect, {});
 import StarRating from "vue-star-rating";
 Vue.component("StarRating", StarRating, {});
 
-import Vue from 'vue'
+import Vue from "vue";
 // const VueInputMask = require('vue-inputmask').default
 // Vue.use(VueInputMask)
 
@@ -43,19 +36,21 @@ Vue.use(Chat);
 
 import Loading from "vue-loading-overlay";
 Vue.use(
-    Loading, {
-    color: "red"
-}, {
-    // slots
-}
+    Loading,
+    {
+        color: "red"
+    },
+    {
+        // slots
+    }
 );
 
-
 window.axios.defaults.headers.common = {
-    'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    "X-Requested-With": "XMLHttpRequest",
+    "X-CSRF-TOKEN": document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content")
 };
-
 
 import ContragentIndex from "./components/contragents/contragentIndex.vue";
 import ContragentCreate from "./components/contragents/contragentCreate.vue";
@@ -80,126 +75,126 @@ import DialoguesShow from "./components/dialogues/dialogueShow.vue";
 import SendMessage from "./components/sendMessage.vue";
 import SettlementsIndex from "./components/settlements/settlementsIndex.vue";
 
-
-
-
 Vue.component("SendMessage", SendMessage, {});
 Vue.component("AllAuctions", AllAuctions, {});
 
 const app = new Vue({
     router: new VueRouter({
         mode: "history",
-        beforeRouteUpdate(to, from, next) {
-        },
-        routes: [{
-            path: "/personal",
-            redirect: "/personal/auctions"
-        },
-        {
-            path: "/personal/contragents",
-            component: ContragentIndex,
-            name: "contragentIndex"
-        },
-        {
-            path: "/personal/contragents/reviews",
-            component: ReviewsIndex,
-            name: "reviews"
-        },
-        {
-            path: "/personal/contragents/create",
-            component: ContragentCreate,
-            name: "createContragent"
-        },
-        {
-            path: "/personal/contragents/show/:id",
-            component: ContragentShow,
-            name: "showContragent"
-        },
-        {
-            path: "/personal/contragents/edit/:id",
-            component: ContragentEdit,
-            name: "editContragent"
-        },
-        {
-            path: "/personal/auctions",
-            component: AuctionIndex,
-            name: "auctionIndex"
-        },
-        {
-            path: "/personal/auctions/archive",
-            component: AuctionArchive,
-            name: "auctionArchive"
-        },
-        {
-            path: "/personal/auctions/my",
-            component: AuctionMy,
-            name: "auctionMy"
-        },
-        {
-            path: "/personal/auctions/bid",
-            component: AuctionBid,
-            name: "auctionBid"
-        },
-        {
-            path: "/personal/dialogues",
-            component: DialoguesIndex,
-            name: "dialoguesIndex"
-        },
-        {
-            path: "/personal/dialogue/show/:id",
-            component: DialoguesShow,
-            name: "showDialogue"
-        },
-        {
-            path: "/personal/company",
-            component: Company,
-            name: "company"
-        },
-        {
-            path: "/personal/auctions/create",
-            component: AuctionCreate,
-            name: "createAuction"
-        },
-        {
-            path: "/personal/auctions/results",
-            component: MyResults,
-            name: "myResults"
-        },
-        {
-            path: "/personal/auctions/show/:id",
-            component: AuctionShow,
-            name: "showAuction"
-        },
-        {
-            path: "/personal/auctions/edit/:id",
-            component: AuctionEdit,
-            name: "editAuction"
-        },
-        {
-            path: "/personal/targets",
-            component: TargetIndex,
-            name: "indexTarget"
-        },
-        {
-            path: "/personal/targets/create",
-            component: TargetCreate,
-            name: "createTarget"
-        },
-        {
-            path: "/personal/targets/edit/:id",
-            component: TargetEdit,
-            name: "editTarget"
-        },
-        {
-            path: "/personal/settlements",
-            component: SettlementsIndex,
-            name: "settlementsIndex"
-        }
+        beforeRouteUpdate(to, from, next) {},
+        routes: [
+            {
+                path: "/personal",
+                redirect: "/personal/auctions"
+            },
+            {
+                path: "/personal/contragents",
+                component: ContragentIndex,
+                name: "contragentIndex"
+            },
+            {
+                path: "/personal/contragents/reviews",
+                component: ReviewsIndex,
+                name: "reviews"
+            },
+            {
+                path: "/personal/contragents/create",
+                component: ContragentCreate,
+                name: "createContragent"
+            },
+            {
+                path: "/personal/contragents/show/:id",
+                component: ContragentShow,
+                name: "showContragent"
+            },
+            {
+                path: "/personal/contragents/edit/:id",
+                component: ContragentEdit,
+                name: "editContragent"
+            },
+            {
+                path: "/personal/auctions",
+                component: AuctionIndex,
+                name: "auctionIndex"
+            },
+            {
+                path: "/personal/auctions/archive",
+                component: AuctionArchive,
+                name: "auctionArchive"
+            },
+            {
+                path: "/personal/auctions/my",
+                component: AuctionMy,
+                name: "auctionMy"
+            },
+            {
+                path: "/personal/auctions/bid",
+                component: AuctionBid,
+                name: "auctionBid"
+            },
+            {
+                path: "/personal/dialogues",
+                component: DialoguesIndex,
+                name: "dialoguesIndex"
+            },
+            {
+                path: "/personal/dialogue/show/:id",
+                component: DialoguesShow,
+                name: "showDialogue"
+            },
+            {
+                path: "/personal/company",
+                component: Company,
+                name: "company"
+            },
+            {
+                path: "/personal/auctions/create",
+                component: AuctionCreate,
+                name: "createAuction"
+            },
+            {
+                path: "/personal/auctions/results",
+                component: MyResults,
+                name: "myResults"
+            },
+            {
+                path: "/personal/auctions/show/:id",
+                component: AuctionShow,
+                name: "showAuction"
+            },
+            {
+                path: "/personal/auctions/edit/:id",
+                component: AuctionEdit,
+                name: "editAuction"
+            },
+            {
+                path: "/personal/targets",
+                component: TargetIndex,
+                name: "indexTarget"
+            },
+            {
+                path: "/personal/targets/create",
+                component: TargetCreate,
+                name: "createTarget"
+            },
+            {
+                path: "/personal/targets/edit/:id",
+                component: TargetEdit,
+                name: "editTarget"
+            },
+            {
+                path: "/personal/settlements",
+                component: SettlementsIndex,
+                name: "settlementsIndex"
+            }
         ]
     }),
     created() {
         let app = this;
-        app.confirmedOptions = [{ id: 2, title: app.__("Yes") }, { id: 1, title: app.__("No") }];
+        app.confirmedOptions = [
+            { id: 2, title: app.__("Yes") },
+            { id: 1, title: app.__("No") }
+        ];
         app.getFederalDistricts();
         app.getMultiplicities();
         app.getProducts();
@@ -207,21 +202,25 @@ const app = new Vue({
         app.getTypes();
         app.getTags();
         axios
-            .get(
-                "/auth"
-            )
+            .get("/auth")
             .then(res => {
                 if (!!res.data.user) {
                     Vue.prototype.user = res.data.user;
                     Vue.prototype.company = res.data.user.contragents[0];
-                    window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.api_token;
+                    window.axios.defaults.headers.common["Authorization"] =
+                        "Bearer " + res.data.api_token;
                     app.getMyStores();
                     app.listenForBroadcast();
                 }
                 app.$mount("#app");
             })
             .catch(err => {
-                if (err.response && err.response.data && err.response.data.errors) { }
+                if (
+                    err.response &&
+                    err.response.data &&
+                    err.response.data.errors
+                ) {
+                }
             });
     },
     data: {
@@ -252,77 +251,68 @@ const app = new Vue({
             let app = this;
             axios
                 .get("/api/v1/dialogues/check/" + contragent_id)
-                .then(function (res) {
-                    app.$router.push("/personal/dialogue/show/" + res.data.data.id)
+                .then(function(res) {
+                    app.$router.push(
+                        "/personal/dialogue/show/" + res.data.data.id
+                    );
                 });
         },
         getFederalDistricts() {
             let app = this;
-            axios
-                .get("/federalDistricts")
-                .then(function (res) {
-                    app.federalDistricts = res.data;
-                });
+            axios.get("/federalDistricts").then(function(res) {
+                app.federalDistricts = res.data;
+            });
         },
 
         getRegions(fd) {
-            axios
-                .get("/regions?federal_district_id=" + fd)
-                .then(function (res) {
-                    app.regions = res.data;
-                });
+            axios.get("/regions?federal_district_id=" + fd).then(function(res) {
+                app.regions = res.data;
+            });
         },
         getTags() {
             let app = this;
-            axios
-                .get("/tags")
-                .then(function (res) {
-                    app.tags = res.data;
-                });
+            axios.get("/tags").then(function(res) {
+                app.tags = res.data;
+            });
         },
         getProducts() {
             let app = this;
-            axios
-                .get("/products")
-                .then(function (res) {
-                    app.products = res.data;
-                });
+            axios.get("/products").then(function(res) {
+                app.products = res.data;
+            });
         },
         getTypes() {
             let app = this;
-            axios
-                .get("/types")
-                .then(function (res) {
-                    app.types = res.data;
-                });
+            axios.get("/types").then(function(res) {
+                app.types = res.data;
+            });
         },
         getMyStores() {
             let app = this;
-            axios
-                .get("/stores")
-                .then(function (res) {
-                    app.stores = res.data;
-                });
+            axios.get("/stores").then(function(res) {
+                app.stores = res.data;
+            });
         },
         getMultiplicities() {
             let app = this;
-            axios
-                .get("/multiplicities")
-                .then(function (res) {
-                    app.multiplicities = res.data;
-                });
+            axios.get("/multiplicities").then(function(res) {
+                app.multiplicities = res.data;
+            });
         },
         listenForBroadcast() {
             var that = this;
-            Echo.channel("private-dialog." + app.company.id).listen("Dialog", function (e) {
-                that.$emit("gotDialog", e.phrase);
-                console.log(e)
-                that.flash(
-                    e.phrase.contragent.title + '<br>' + e.phrase.text,
-                    "success"
-                )
-            });
-            Echo.channel("every-minute").listen("PerMinute", function (e) {
+            Echo.channel("private-dialog." + app.company.id).listen(
+                "Dialog",
+                function(e) {
+                    that.$emit("gotDialog", e.phrase);
+                    console.log(e);
+                    that.flash(
+                        e.phrase.contragent.title + "<br>" + e.phrase.text,
+                        "success"
+                    );
+                }
+            );
+            Echo.channel("every-minute").listen("PerMinute", function(e) {
                 app.time = e.time;
                 e.started.forEach(auction =>
                     that.flash(
@@ -333,21 +323,20 @@ const app = new Vue({
                 e.finished.forEach(auction =>
                     that.flash(
                         that.__("Auction #") +
-                        auction.id +
-                        that.__(" finished"),
+                            auction.id +
+                            that.__(" finished"),
                         "primary"
                     )
                 );
             });
-            Echo.channel("message-pushed").listen("MessagePushed", function (e) {
+            Echo.channel("message-pushed").listen("MessagePushed", function(e) {
                 that.$emit("gotAuction", e.auction);
             });
         }
     }
-})
+});
 
-
-window.Vue.filter("formatDate", function (value) {
+window.Vue.filter("formatDate", function(value) {
     if (value) {
         return moment(String(value))
             .utcOffset("+03:00")
@@ -356,7 +345,7 @@ window.Vue.filter("formatDate", function (value) {
     return "";
 });
 
-window.Vue.filter("formatDateTime", function (value) {
+window.Vue.filter("formatDateTime", function(value) {
     if (value) {
         return moment(String(value))
             .utcOffset("+03:00")
@@ -365,7 +354,7 @@ window.Vue.filter("formatDateTime", function (value) {
     return "";
 });
 
-window.Vue.filter("formatChatTime", function (value) {
+window.Vue.filter("formatChatTime", function(value) {
     if (value) {
         return moment(String(value))
             .utcOffset("+03:00")
@@ -374,9 +363,9 @@ window.Vue.filter("formatChatTime", function (value) {
     return "";
 });
 
-window.Vue.filter("formatMoney", function (value) {
-    if (value) {
-        return new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB' }).format(value);
-    }
-    return "";
+window.Vue.filter("formatMoney", function(value) {
+    return new Intl.NumberFormat("ru-RU", {
+        style: "currency",
+        currency: "RUB"
+    }).format(value);
 });

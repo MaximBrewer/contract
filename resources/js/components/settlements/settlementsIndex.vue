@@ -5,7 +5,7 @@
         Баланс
         <span
           class="badge"
-          v-bind:class="{ 'badge-danger': !user.contragents[0].balance < 0, 'badge-success': user.contragents[0].balance > 0, 'badge-secondary': user.contragents[0].balance ==0 }"
+          v-bind:class="{ 'badge-danger': user.contragents[0].balance < 0, 'badge-success': user.contragents[0].balance > 0, 'badge-secondary': user.contragents[0].balance ==0 }"
         >{{ user.contragents[0].balance | formatMoney }}</span>
       </h1>
     </div>
