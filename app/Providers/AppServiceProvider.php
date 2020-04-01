@@ -9,7 +9,7 @@ use App\Observers\PhraseObserver;
 use App\Observers\Auction as AuctionObserver;
 use App\Observers\Bet as BetObserver;
 use App\Bet;
-use Jenssegers\Date\Date;
+// use Jenssegers\Date\Date;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +33,6 @@ class AppServiceProvider extends ServiceProvider
         Phrase::observe(PhraseObserver::class);
         Auction::observe(AuctionObserver::class);
         Bet::observe(BetObserver::class);
-        Date::setlocale(config('app.locale'));
+        // Date::setlocale(config('app.locale'));
     }
 }
