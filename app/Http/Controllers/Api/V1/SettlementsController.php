@@ -10,6 +10,11 @@ use App\User;
 
 class SettlementsController extends Controller
 {
+    public function index(Request $r)
+    {
+        $settlements = Settlement::where('contragent_id', User::find(Auth::user()->id)->contragents[0]->id)->where('status', 'done')->orderBy('id', 'desc')->get();
+        return $settlements;
+    }
     public function pay(Request $r)
     {
 

@@ -21,13 +21,20 @@ class Settlement extends Model
         'sum',
         'textsum',
         'stextsum',
-        'month',
-        'creq'
+        //'month',
+        'creq',
+        'datetime'
     ];
 
     public function getSumAttribute()
     {
         return number_format($this->balance, 2, '.', ' ') . ' ₽';
+    }
+
+
+    public function getDatetimeAttribute()
+    {
+        return Date::parse($this->created_at)->format('H:i j F Y г.');
     }
 
 

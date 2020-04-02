@@ -49,6 +49,7 @@ Route::group([
     Route::get('auctions/unbid/{id}', 'AuctionsController@unbid');
     Route::post('addbidder', 'AuctionsController@addBidder');
     Route::post('settlements', 'SettlementsController@pay');
+    Route::get('settlements', 'SettlementsController@index');
     Route::post('auctions/bidder/toggle', 'AuctionsController@toggleBidder');
 
     Route::get('dialogues', 'DialoguesController@index');

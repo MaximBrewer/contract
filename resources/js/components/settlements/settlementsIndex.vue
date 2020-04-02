@@ -51,12 +51,45 @@
         class="btn btn-primary"
       >{{ form.method == 'invoice' ? 'Сформировать счет' : 'Оплатить'}}</button>
     </form>
+    <div class="table-responsive my-3" id="settlements" v-if="settlements.length">
+      <div class="h2 text-center">Взаиморасчеты</div>
+      <table class="table table-bordered">
+        <thead>
+          <tr class="text-center">
+            <th class="align-middle">#</th>
+            <th class="align-middle">{{ __('Date & Time') }}</th>
+            <th class="align-middle">{{ __('Platform rewards') }}</th>
+            <th class="align-middle">{{ __('The amount sent') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(settlement, index) in settlements" :key="index">
+            <td class="text-center">{{ settlement.id }}</td>
+            <td class="text-center">{{ settlement.datetime }}</td>
+            <td class="text-right"><span v-if="settlement.type == 'credit'">{{ settlement.balance | formatMoney }}</span></td>
+            <td class="text-right"><span v-if="settlement.type == 'debit'">{{ settlement.balance | formatMoney }}</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 </template>
 <script>
 export default {
   data: function() {
-    return { errors: {}, form: {} };
+    return { errors: {}, form: {}, settlements: [] };
+  },
+  created: function() {
+    var app = this;
+    axios
+      .get("/api/v1/settlements")
+      .then(function(res) {
+        app.settlements = res.data;
+      })
+      .catch(function(err) {
+        app.errors = {};
+        loader.hide();
+      });
   },
   methods: {
     sendForm() {
@@ -83,8 +116,11 @@ export default {
           }
           var input = document.createElement("input");
           input.setAttribute("type", "hidden");
-          input.setAttribute("name", '_token');
-          input.setAttribute("value", $('meta[name="csrf-token"]').attr('content'));
+          input.setAttribute("name", "_token");
+          input.setAttribute(
+            "value",
+            $('meta[name="csrf-token"]').attr("content")
+          );
           form.appendChild(input);
           window.document.body.appendChild(form);
           setTimeout(function() {
