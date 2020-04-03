@@ -17,7 +17,7 @@ class Settlement extends JsonResource
         return [
             'id' => $this->id,
             'datetime' => $this->datetime,
-            'ballance' => $this->ballance,
+            'balance' => $this->balance,
             'auction_id' => $this->bet_id ? $this->bet->auction->id : '',
         ];
     }
