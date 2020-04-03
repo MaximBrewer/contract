@@ -42,6 +42,7 @@ class Auction extends Model
         'bidders',
         'free_volume',
         'messages',
+        'min_bet',
         'undistributed_volume'
     ];
 
@@ -57,6 +58,17 @@ class Auction extends Model
     {
         $cnt = DB::select('select sum(volume) as busy_volume from bets where (approved_volume is not null and approved_volume > 1) and auction_id = ?', [$this->id]);
         return (float) $this->volume - (float) $cnt[0]->busy_volume;
+    }
+
+
+    public function getMinBetAttribute()
+    {
+        if ($this->getUndistributedVolumeAttribute() > 0)
+            return (float) $this->start_price;
+        else {
+            $cnt = DB::select('select min(price) as min from bets where approved_volume is null and auction_id = ?', [$this->id]);
+            return (float) $cnt->min;
+        }
     }
 
     public function getStartAtAttribute($value)
