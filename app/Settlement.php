@@ -63,6 +63,11 @@ class Settlement extends Model
         return $this->belongsTo('App\Contragent');
     }
 
+    public function bet()
+    {
+        return $this->belongsTo('App\Bet');
+    }
+
     public function getTextsumAttribute()
     {
         $num = $this->balance;

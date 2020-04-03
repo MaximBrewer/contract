@@ -60,6 +60,7 @@
             <th class="align-middle">{{ __('Date & Time') }}</th>
             <th class="align-middle">{{ __('Platform rewards') }}</th>
             <th class="align-middle">{{ __('The amount sent') }}</th>
+            <th class="align-middle">{{ __('Auction') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -68,6 +69,7 @@
             <td class="text-center">{{ settlement.datetime }}</td>
             <td class="text-right"><span v-if="settlement.type == 'credit'">{{ settlement.balance | formatMoney }}</span></td>
             <td class="text-right"><span v-if="settlement.type == 'debit'">{{ settlement.balance | formatMoney }}</span></td>
+            <td class="text-right"><span v-if="settlement.bet_id == 'debit'">{{ settlement.bet.auction.id }}</span></td>
           </tr>
         </tbody>
       </table>
