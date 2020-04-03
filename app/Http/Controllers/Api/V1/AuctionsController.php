@@ -536,10 +536,9 @@ class AuctionsController extends Controller
 
         $auction = Auction::findOrFail($auction->id);
 
-        DB::table('auctions')->update([
+        DB::table('auctions')->where('id', $auction->id)->update([
             'volume' => ($auction->volume - $bet->volume)
-        ])->where('id', $auction->id);
-
+        ]);
 
         if (!$auction->volume)
             $auction->update([
