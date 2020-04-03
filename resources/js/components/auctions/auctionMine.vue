@@ -3,8 +3,12 @@
     <div class="col-md-12" v-if="auction.bets.length">
       <div class="card">
         <div class="card-header">
-          {{ __("Auction activity") }}
-          <strong>{{ auction.free_volume }}/{{ auction.volume }}</strong>
+          <strong>
+            {{ __('Auction volume') }}: {{ auction.volume }} |
+            {{ __('Active volume') }}: {{ auction.free_volume }} |
+            {{ __('Approved volume') }}: {{ auction.volume - auction.free_volume }} |
+            {{ __('Undistributed volume') }}: {{ auction.undistributed_volume }}
+          </strong>
         </div>
         <div class="table-responsive" id="auction_activity">
           <table class="table table-bordered line-height-22">
