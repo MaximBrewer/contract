@@ -35,9 +35,13 @@
                 <strong>{{ __('Multiplicity') }}:</strong>
                 <span>{{ auction.multiplicity.title }}</span>
               </div>
-              <div class="text-nowrap" v-if="auction.volume">
+              <div class="text-nowrap" v-if="auction.volume && action == 'bid'">
+                <strong>{{ __('Active volume') }}:</strong>
+                <span>{{ auction.free_volume}}</span>
+              </div>
+              <div class="text-nowrap" v-if="auction.volume && action != 'bid'">
                 <strong>{{ __('Volume') }}:</strong>
-                <span>{{ auction.volume }}</span>
+                <span>{{ auction.volume}}</span>
               </div>
               <div
                 class="text-nowrap"
