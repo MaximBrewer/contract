@@ -647,7 +647,7 @@ class AuctionsController extends Controller
                 'errors' => []
             ], 422);
         }
-        // DB::connection()->enableQueryLog();
+        DB::connection()->enableQueryLog();
 
         $auctionBets = Bet::where('auction_id', $r->post('auction'))
             ->select('bets.*', 'contragents.rating')
@@ -660,8 +660,8 @@ class AuctionsController extends Controller
             ->orderBy('created_at', 'asc')
             ->get();
 
-        // $queries = DB::getQueryLog();
-        // info($queries);
+        $queries = DB::getQueryLog();
+        info($queries);
 
         $myBetsSum = Bet::where('auction_id', $r->post('auction'))->where('contragent_id', $r->post('bidder'))->where(function ($query) {
             $query
