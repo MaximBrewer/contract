@@ -534,11 +534,11 @@ class AuctionsController extends Controller
             'approved_volume' => Carbon::now()
         ]);
 
-        $auction = Auction::findOrFail($auction->id);
-
         DB::table('auctions')->where('id', $auction->id)->update([
             'volume' => ($auction->volume - $bet->volume)
         ]);
+
+        $auction = Auction::findOrFail($auction->id);
 
         if (!$auction->volume)
             $auction->update([
