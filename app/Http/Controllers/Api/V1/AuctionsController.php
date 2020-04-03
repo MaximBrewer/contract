@@ -676,6 +676,9 @@ class AuctionsController extends Controller
         $nev = false;
         $rft = false;
 
+
+        return $auctionBets;
+
         foreach ($auctionBets as $auctionBet) {
 
             if ($newBet->price - $auction->step >= ($auctionBet->price - 0.001) && !$rft) {
