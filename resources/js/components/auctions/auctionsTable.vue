@@ -52,9 +52,13 @@
               </div>
             </td>
             <td>
-              <div class="text-nowrap">
+              <div class="text-nowrap" v-if="auction.start_price && action != 'bid'">
                 <strong>{{ __('Auction start price') }}:</strong>
                 <span>{{ auction.start_price }}₽</span>
+              </div>
+              <div class="text-nowrap" v-if="auction.start_price && action == 'bid'">
+                <strong>{{ __('Auction minimal bet') }}:</strong>
+                <span>{{ auction.min_bet }}₽</span>
               </div>
               <div class="text-nowrap">
                 <strong>{{ __('Auction step') }}:</strong>
