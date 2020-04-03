@@ -67,7 +67,7 @@ class Auction extends Model
             return (float) $this->start_price;
         else {
             $cnt = DB::select('select min(price) as min from bets where approved_volume is null and auction_id = ?', [$this->id]);
-            return (float) $cnt;
+            return (float) $cnt[0]->min;
         }
     }
 
