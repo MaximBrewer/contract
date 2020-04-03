@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 use App\Settlement;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Http\Resources\Settlement as SettlementResource;
 
 class SettlementsController extends Controller
 {
     public function index(Request $r)
     {
         $settlements = Settlement::where('contragent_id', User::find(Auth::user()->id)->contragents[0]->id)->where('status', 'done')->orderBy('id', 'desc')->get();
-        return $settlements;
+        return SettlementResource::collection($settlements);
     }
     public function pay(Request $r)
     {

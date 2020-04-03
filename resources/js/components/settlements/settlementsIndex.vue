@@ -69,7 +69,7 @@
             <td class="text-center">{{ settlement.datetime }}</td>
             <td class="text-right"><span v-if="settlement.type == 'credit'">{{ settlement.balance | formatMoney }}</span></td>
             <td class="text-right"><span v-if="settlement.type == 'debit'">{{ settlement.balance | formatMoney }}</span></td>
-            <td class="text-right"><span v-if="settlement.bet_id == 'debit'">{{ settlement.bet.auction.id }}</span></td>
+            <td class="text-right">{{ settlement.auction_id }}</td>
           </tr>
         </tbody>
       </table>
@@ -86,7 +86,7 @@ export default {
     axios
       .get("/api/v1/settlements")
       .then(function(res) {
-        app.settlements = res.data;
+        app.settlements = res.data.data;
       })
       .catch(function(err) {
         app.errors = {};

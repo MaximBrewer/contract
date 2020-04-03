@@ -23,8 +23,7 @@ class Settlement extends Model
         'stextsum',
         //'month',
         'creq',
-        'datetime',
-        'bet',
+        'datetime'
     ];
 
     public function getSumAttribute()
