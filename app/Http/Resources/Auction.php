@@ -29,6 +29,7 @@ class AuctionResource extends JsonResource
             'id' => $this->id,
             'volume' => $this->volume,
             'min_bet' => $this->min_bet,
+            'undistributed_volume' => $this->undistributed_volume,
             'free_volume' => $this->free_volume,
             'start_price' => $this->start_price,
             'step' => $this->step,
