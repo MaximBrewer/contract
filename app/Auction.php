@@ -49,14 +49,14 @@ class Auction extends Model
     public function getUndistributedVolumeAttribute()
     {
         $cnt = DB::select('select sum(volume) as busy_volume from bets where auction_id = ?', [$this->id]);
-        return (int) $this->volume - (int) $cnt[0]->busy_volume;
+        return (float) $this->volume - (float) $cnt[0]->busy_volume;
     }
 
 
     public function getFreeVolumeAttribute()
     {
         $cnt = DB::select('select sum(volume) as busy_volume from bets where (approved_volume is not null and approved_volume > 1) and auction_id = ?', [$this->id]);
-        return (int) $this->volume - (int) $cnt[0]->busy_volume;
+        return (float) $this->volume - (float) $cnt[0]->busy_volume;
     }
 
     public function getStartAtAttribute($value)
