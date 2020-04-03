@@ -538,7 +538,7 @@ class AuctionsController extends Controller
 
         DB::table('auctions')->update([
             'volume' => ($auction->volume - $bet->volume)
-        ])->where('id', $id);
+        ])->where('id', $auction->id);
 
 
         if (!$auction->volume)
