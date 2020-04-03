@@ -65,7 +65,7 @@
           <thead>
             <tr>
               <th colspan="4">
-                {{ __('Auction volume') }}: {{ auction.free_volume }} | 
+                {{ __('Auction volume') }}: {{ auction.volume }} | 
                 {{ __('Active volume') }}: {{ auction.free_volume }} | 
                 {{ __('Approved volume') }}: {{ auction.volume - auction.free_volume }}
               </th>
