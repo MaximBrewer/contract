@@ -22,8 +22,7 @@ class Bet extends Model
     ];
 
     protected $appends = [
-        'contragent',
-        'bet',
+        'contragent'
     ];
 
     public function getContragentAttribute()
