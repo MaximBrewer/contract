@@ -23,7 +23,7 @@ class SettlementsController extends Controller
             'contragent_id' => User::find(Auth::user()->id)->contragents[0]->id,
             'balance' => $r->post('balance'),
             'method' => $r->post('method'),
-            'type' => 'debit',
+            'type' => 'credit',
             'status' => 'processing'
         ]);
         if ($settlement->method == 'yandex') {

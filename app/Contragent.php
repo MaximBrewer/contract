@@ -38,8 +38,8 @@ class Contragent extends Model
 
     public function getBalanceAttribute()
     {
-        $cnt0 = DB::select("SELECT sum(balance) as s FROM settlements where `contragent_id`=? and type = 'debit' and status='done'", [$this->id]);
-        $cnt1 = DB::select("SELECT sum(balance) as s FROM settlements where `contragent_id`=? and type = 'credit' and status='done'", [$this->id]);
+        $cnt0 = DB::select("SELECT sum(balance) as s FROM settlements where `contragent_id`=? and type = 'credit' and status='done'", [$this->id]);
+        $cnt1 = DB::select("SELECT sum(balance) as s FROM settlements where `contragent_id`=? and type = 'debit' and status='done'", [$this->id]);
         return (float) ($cnt0[0]->s - $cnt1[0]->s);
     }
 

@@ -33,7 +33,7 @@ class Bet
                     'contragent_id' => $b->auction->contragent_id,
                     'bet_id' => $b->id,
                     'balance' => $reward,
-                    'type' => 'credit',
+                    'type' => 'debit',
                     'status' => 'done',
                 ]);
             } else
@@ -41,7 +41,7 @@ class Bet
                     'contragent_id' => $b->auction->contragent_id,
                     'bet_id' => $b->id,
                     'balance' => $reward,
-                    'type' => 'credit',
+                    'type' => 'debit',
                     'status' => 'done',
                 ]);
         }

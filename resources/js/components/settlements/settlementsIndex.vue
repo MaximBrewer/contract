@@ -67,8 +67,8 @@
           <tr v-for="(settlement, index) in settlements" :key="index">
             <td class="text-center">{{ settlement.id }}</td>
             <td class="text-center">{{ settlement.datetime }}</td>
-            <td class="text-right"><span v-if="settlement.type == 'credit'">{{ settlement.balance | formatMoney }}</span></td>
             <td class="text-right"><span v-if="settlement.type == 'debit'">{{ settlement.balance | formatMoney }}</span></td>
+            <td class="text-right"><span v-if="settlement.type == 'credit'">{{ settlement.balance | formatMoney }}</span></td>
             <td class="text-center"><router-link :to="'/personal/auctions/show/' + settlement.auction_id">{{ settlement.auction_id }}</router-link></td>
           </tr>
         </tbody>

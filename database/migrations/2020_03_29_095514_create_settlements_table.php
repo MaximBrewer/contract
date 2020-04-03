@@ -18,7 +18,7 @@ class CreateSettlementsTable extends Migration
             $table->bigInteger('contragent_id');
             $table->bigInteger('bet_id')->nullable();
             $table->decimal('balance');
-            $table->enum('type', ['credit', 'debit']);
+            $table->enum('type', ['debit', 'credit']);
             $table->enum('method', ['yandex', 'invoice']);
             $table->enum('status', ['processing', 'done']);
             $table->timestamps();
