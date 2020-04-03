@@ -638,7 +638,7 @@ class AuctionsController extends Controller
             'took_part' => Carbon::now()
         ]);
 
-        $freeVolume = $auction->volume;
+        $freeVolume = $auction->free_volume;
 
 
         if ($auction->volume < $r->post('volume')) {
@@ -670,7 +670,6 @@ class AuctionsController extends Controller
         })
             ->sum('volume');
 
-
         $freeVolume -= $myBetsSum;
 
         $bets = [];
@@ -687,6 +686,7 @@ class AuctionsController extends Controller
         }
         if (!$rft) $bets[] = $newBet;
 
+        return $bets;
 
         foreach ($bets as $bet) {
 
