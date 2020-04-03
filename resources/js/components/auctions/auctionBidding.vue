@@ -67,7 +67,8 @@
               <th colspan="4">
                 {{ __('Auction volume') }}: {{ auction.volume }} | 
                 {{ __('Active volume') }}: {{ auction.free_volume }} | 
-                {{ __('Approved volume') }}: {{ auction.volume - auction.free_volume }}
+                {{ __('Approved volume') }}: {{ auction.volume - auction.free_volume }} | 
+                {{ __('Approved volume') }}: {{ auction.undistributed }}
               </th>
             </tr>
             <tr>

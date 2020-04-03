@@ -41,8 +41,16 @@ class Auction extends Model
         'bidder',
         'bidders',
         'free_volume',
-        'messages'
+        'messages',
+        'undistributed_volume'
     ];
+
+
+    public function getUndistributedVolumeAttribute()
+    {
+        $cnt = DB::select('select sum(volume) as busy_volume from bets where auction_id = ?', [$this->id]);
+        return (int) $this->volume - (int) $cnt[0]->busy_volume;
+    }
 
 
     public function getFreeVolumeAttribute()
