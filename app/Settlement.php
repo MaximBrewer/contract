@@ -13,7 +13,8 @@ class Settlement extends Model
         'balance',
         'type',
         'status',
-        'method'
+        'method',
+        'bet_id'
     ];
 
     protected $appends = [
