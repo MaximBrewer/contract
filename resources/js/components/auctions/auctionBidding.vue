@@ -72,7 +72,7 @@
               </th>
             </tr>
             <tr>
-              <th>{{ __('Volume') }}: {{ auction.free_volume }}/{{ auction.volume }}</th>
+              <th>{{ __('Volume') }}</th>
               <th>{{ __('Price') }}</th>
               <th>{{ __('Time') }}</th>
               <th></th>
