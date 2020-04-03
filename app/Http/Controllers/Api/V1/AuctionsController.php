@@ -714,7 +714,7 @@ class AuctionsController extends Controller
 
         if ($nev) {
             return response()->json([
-                'message' => __('Too low price or too much volume, or you are trying to outbid your own bet!'),
+                'message' => __('Too low price, too much volume, or you are trying to outbid your own bet!'),
                 'errors' => []
             ], 422);
         }
