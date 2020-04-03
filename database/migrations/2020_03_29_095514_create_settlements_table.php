@@ -16,7 +16,7 @@ class CreateSettlementsTable extends Migration
         Schema::create('settlements', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('contragent_id');
-            $table->bigInteger('bet_id');
+            $table->bigInteger('bet_id')->nullable();
             $table->decimal('balance');
             $table->enum('type', ['credit', 'debit']);
             $table->enum('method', ['yandex', 'invoice']);
