@@ -29,8 +29,8 @@ class Bet
 
             if (count($settlements)) {
                 $settlement = $settlements[0];
-                $settlement[0]->update([
-                    'contragent_id' => $b->contragent_id,
+                $settlement->update([
+                    'contragent_id' => $b->auction->contragent_id,
                     'bet_id' => $b->id,
                     'balance' => $reward,
                     'type' => 'credit',
@@ -38,7 +38,7 @@ class Bet
                 ]);
             } else
                 Settlement::create([
-                    'contragent_id' => $b->contragent_id,
+                    'contragent_id' => $b->auction->contragent_id,
                     'bet_id' => $b->id,
                     'balance' => $reward,
                     'type' => 'credit',
