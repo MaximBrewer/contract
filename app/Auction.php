@@ -63,7 +63,7 @@ class Auction extends Model
 
     public function getMinBetAttribute()
     {
-        if ($this->getUndistributedVolumeAttribute() > 0)
+        if ($this->getUndistributedVolumeAttribute() > 0 || $this->volume == 0)
             return (float) $this->start_price;
         else {
             $cnt = DB::select('select min(price) as min from bets where approved_volume is null and auction_id = ?', [$this->id]);
