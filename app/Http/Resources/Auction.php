@@ -28,6 +28,7 @@ class AuctionResource extends JsonResource
         return [
             'id' => $this->id,
             'volume' => $this->volume,
+            'free_volume' => $this->free_volume,
             'start_price' => $this->start_price,
             'step' => $this->step,
             'comment' => $this->comment,

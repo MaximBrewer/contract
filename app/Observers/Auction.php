@@ -26,6 +26,7 @@ class Auction
      */
     public function updated(AuctionModel $a)
     {
+        
     }
 
 

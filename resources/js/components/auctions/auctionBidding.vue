@@ -64,9 +64,16 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th>{{ __('Active volume') }}: {{ auction.free_volume }}/{{ auction.volume }}</th>
-              <th>{{ __('Active price') }}</th>
-              <th>{{ __('Bet time') }}</th>
+              <th colspan="4">
+                {{ __('Auction volume') }}: {{ auction.free_volume }} | 
+                {{ __('Active volume') }}: {{ auction.free_volume }} | 
+                {{ __('Approved volume') }}: {{ auction.volume - auction.free_volume }}
+              </th>
+            </tr>
+            <tr>
+              <th>{{ __('Volume') }}: {{ auction.free_volume }}/{{ auction.volume }}</th>
+              <th>{{ __('Price') }}</th>
+              <th>{{ __('Time') }}</th>
               <th></th>
             </tr>
           </thead>
