@@ -272,5 +272,6 @@
     "Platform rewards": "Вознаграждение платформы",
     "The amount sent": "Отправленная сумма",
     "Approved volume": "Утвержденный объем",
+    "Undistributed volume": "Нераспределенный объем",
     "Too low price, too much volume, or you are trying to outbid your own bet!": "Слишком низкая цена, большой объем, или вы пытаетесь переиграть свою собственную ставку"
 }
