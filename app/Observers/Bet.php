@@ -46,4 +46,8 @@ class Bet
                 ]);
         }
     }
+    public function deleting(BetModel $b)
+    {
+        Settlement::where('bet_id', $b->id)->first()->delete();
+    }
 }
