@@ -1,7 +1,21 @@
 <template>
   <section class="container-fluid">
     <div class="row">
-      <div class="col-md-12 text-right">
+      <div class="col-md-6">
+        <div class="form-group">
+          <a
+            href="https://docs.google.com/spreadsheets/d/1P9L9G95rsVLXxxhK-XVpEaW14TtaWZWQo1KnN_rGa84"
+            target="_balnk"
+            class="btn btn-primary btn-lg"
+          >{{ __('договор кредитор - покупатель') }}</a>
+          <a
+            href="https://docs.google.com/spreadsheets/d/1P9L9G95rsVLXxxhK-XVpEaW14TtaWZWQo1KnN_rGa84/edit#gid=0"
+            target="_balnk"
+            class="btn btn-primary btn-lg"
+          >{{ __('договор поставщик - кредитор') }}</a>
+        </div>
+      </div>
+      <div class="col-md-6 text-right">
         <div class="form-group">
           <a
             href="javascript:void(0)"
