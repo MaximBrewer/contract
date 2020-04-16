@@ -36,7 +36,7 @@ export default {
     toggleBidder(req) {
       let app = this;
       axios
-        .post("/api/v1/auctions/bidder/toggle", req)
+        .post("/web/v1/auctions/bidder/toggle", req)
         .then(function(resp) {
           // bet.delete();
         })

@@ -96,8 +96,8 @@
                         @endif
                         @else
                         <li class="nav-item">
-                            <a href="/personal/auctions/show/226" class="nav-link"
-                                :to="{name: 'showAuction', props: {id: 226}}">{{ __('Test auction & chat') }}
+                            <a href="/personal/auctions/show/{{ config('app.test_auction') }}" class="nav-link"
+                                :to="{name: 'showAuction', props: {id: {{ config('app.test_auction') }}}}">{{ __('Test auction & chat') }}
                             </a>
                         </li>
 
@@ -143,6 +143,10 @@
                                     {{ __('All targets (tenders)') }}</router-link>
                                 <router-link :to="{name: 'auctionArchive'}" class="dropdown-item">{{ __('Archive') }}
                                 </router-link>
+                                <router-link :to="{name: 'logistics'}" class="dropdown-item">{{ __('Logistics') }}
+                                </router-link>
+                                <router-link :to="{name: 'finance'}" class="dropdown-item">{{ __('Finance') }}
+                                </router-link>
                             </div>
                         </li>
 
@@ -161,6 +165,8 @@
                                 </router-link>
 
                                 <router-link :to="{name: 'myResults'}" class="dropdown-item">{{ __('My results') }}
+                                </router-link>
+                                <router-link :to="{name: 'settlementsIndex'}" class="dropdown-item">{{ __('Mutual Settlements') }}
                                 </router-link>
 
                                 <a class="dropdown-item" href="javascript:void(0)"

@@ -73,7 +73,7 @@ export default {
         auction: this.auction.id
       };
       axios
-        .post("/api/v1/sendmail", data)
+        .post("/web/v1/sendmail", data)
         .then(function(resp) {
           app.$fire({
             title: app.__("Your message has been sent!"),

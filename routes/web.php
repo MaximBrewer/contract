@@ -1,9 +1,4 @@
 <?php
-
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use TCG\Voyager\Facades\Voyager;
-use Illuminate\Support\Facades\Session;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,22 +8,14 @@ use Illuminate\Support\Facades\Session;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-
-<a href="{{ route('home') }}">Home</a>
-
-Если атрибут href указывается с помощью функции-помошника url() (или любым другим образом), то в начале передаем текущий язык приложения:
-<a href="{{ url(App\Http\Middleware\LocaleMiddleware::getLocale() .'/home') }}">Home</a>
-или
-<a href="{{ App\Http\Middleware\LocaleMiddleware::getLocale() .'/home' }}">Home</a>
-
-
 */
 
-// Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], function(){
-//     ..
-//     });
-Auth::routes(['verify' => true]);
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use TCG\Voyager\Facades\Voyager;
+use Illuminate\Support\Facades\Session;
 
+Auth::routes(['verify' => true]);
 
 Route::get('/auctions/{action}', 'Api\V1\AuctionsController@index');
 Route::resource('/federalDistricts', 'Api\V1\FederalDistrictsController', ['except' => ['create', 'edit', 'update', 'delete']]);
@@ -39,56 +26,89 @@ Route::resource('/tags', 'Api\V1\TagsController', ['except' => ['create', 'edit'
 Route::resource('/multiplicities', 'Api\V1\MultiplicitiesController', ['except' => ['create', 'edit', 'update', 'delete']]);
 Route::resource('/types', 'Api\V1\TypesController', ['except' => ['create', 'edit', 'update', 'delete']]);
 
-Route::get('/home', function () {
-    return redirect('/personal');
-});
 Route::get('/', function () {
     return redirect('/personal');
 });
 
-Route::get('/personal', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/contragents', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/contragents/create', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/contragents/edit/{id}', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/contragents/show/{id}', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/auctions', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/auctions/archive', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/auctions/my', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/auctions/bid', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/auctions/create', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/company', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/auctions/edit/{id}', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/auctions/show/{id}', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/dialogue/show/{id}', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/dialogues', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/auctions/results', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/settlements', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::any('/personal/invoice', 'PersonalController@invoice')->middleware('verified')->middleware('contragent')->name('personal-invoice');
+Route::group(['prefix' => 'personal'], function () {
+    Route::any('/{controller}', 'PersonalController@index');
+    Route::any('/{controller}/{action}', 'PersonalController@index');
+    Route::any('/{controller}/{action}/{id}', 'PersonalController@index');
+});
+
+Route::group([
+    'prefix' => 'personal',
+    'middleware' => ['verified', 'contragent'],
+], function () {
+    Route::any('/', 'PersonalController@index');
+    Route::any('/{controller}', 'PersonalController@index');
+    Route::any('/{controller}/{action}', 'PersonalController@index');
+    Route::any('/{controller}/{action}/{id}', 'PersonalController@index');
+});
+
+Route::group([
+    'prefix' => '/web/v1',
+    'middleware' => ['verified'],
+    'namespace' => 'Api\V1'
+], function () {
+    Route::resource('contragents', 'ContragentsController', ['except' => ['edit', 'create']]);
+    Route::resource('messages', 'MessagesController', ['except' => ['edit', 'create']]);
+
+    Route::get('company', 'ContragentsController@my');
+    Route::patch('company', 'ContragentsController@updateCompany');
+
+    Route::post('address', 'RegionsController@address');
+
+    Route::post('auctions/bet', 'AuctionsController@bet');
+    Route::post('auctions', 'AuctionsController@store');
+    Route::post('auctions/{id}', 'AuctionsController@update');
+    Route::get('auction/{id}', 'AuctionsController@show');
+    Route::get('auctions/{action}', 'AuctionsController@index');
+    Route::get('auctions/bet/remove/{id}', 'AuctionsController@betRemove');
+    Route::post('auctions/bet/contract', 'AuctionsController@approveContract');
+    Route::get('auctions/bet/volume/{id}', 'AuctionsController@approveVolume');
+    Route::get('auctions/bid/{id}', 'AuctionsController@bid');
+    Route::get('auctions/unbid/{id}', 'AuctionsController@unbid');
+    Route::post('auctions/bidder/toggle', 'AuctionsController@toggleBidder');
+
+    Route::post('auction/copy', 'AuctionsController@copy');
+    Route::get('auction/delete/{id}', 'AuctionsController@destroy');
+    Route::get('auction/confirm/{id}', 'AuctionsController@confirm');
+    Route::post('addbidder', 'AuctionsController@addBidder');
+    Route::post('settlements', 'SettlementsController@pay');
+    Route::get('settlements', 'SettlementsController@index');
+
+    Route::get('dialogues', 'DialoguesController@index');
+    Route::get('dialogues/check/{contragent_id}', 'DialoguesController@storeDialog');
+    Route::get('dialogue/{id}', 'DialoguesController@show');
+    Route::post('dialogues', 'DialoguesController@store');
+
+    Route::get('targets/all', 'TargetsController@all');
+    Route::resource('targets', 'TargetsController', ['except' => ['edit', 'create']]);
+
+    Route::get('comments/{contragentId}', 'CommentController@show');
+    Route::post('comments', 'CommentController@store');
+    Route::post('commentsmy', 'CommentController@storeMy');
+    Route::get('comments', 'CommentController@index');
+    Route::post('comments/{commentId}/{type}', 'CommentController@update');
+
+    Route::post('results', 'ResultsController@update');
+    Route::get('results', 'ResultsController@index');
+
+    Route::post('sendmail', 'MailController@send');
 
 
-
-Route::get('/personal/targets', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/targets/create', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-Route::get('/personal/targets/edit/{id}', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-
-Route::get('/personal', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
-
-Route::get('/personal/contragents/reviews', 'PersonalController@index')->middleware('verified')->middleware('contragent')->name('personal');
+    Route::resource('defers', 'DefersController', ['except' => ['edit', 'create']]);
 
 
-// Route::get('/about', 'AboutController@index')->name('about');
-// Route::get('/rating', 'RatingController@index')->name('rating');
-// Route::get('/auction', 'AuctionController@index')->name('auction');
+});
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
 
-
 Route::get('auth', function () {
-
     if (Auth::user()) {
-
         return [
             'user' => Auth::user(),
             'api_token' => Session::get('_api_token')
@@ -126,3 +146,18 @@ Route::get('auth', function () {
 //     return redirect($url); //Перенаправляем назад на ту же страницу                            
 
 // })->name('setlocale');
+
+
+// Route::group(['prefix' => App\Http\Middleware\LocaleMiddleware::getLocale()], function(){
+//     ..
+//     });
+
+
+
+
+// <a href="{{ route('home') }}">Home</a>
+
+// Если атрибут href указывается с помощью функции-помошника url() (или любым другим образом), то в начале передаем текущий язык приложения:
+// <a href="{{ url(App\Http\Middleware\LocaleMiddleware::getLocale() .'/home') }}">Home</a>
+// или
+// <a href="{{ App\Http\Middleware\LocaleMiddleware::getLocale() .'/home' }}">Home</a>

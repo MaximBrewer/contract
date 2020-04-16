@@ -112,7 +112,7 @@ export default {
   },
   mounted() {
     var app = this;
-    axios.get("/api/v1/contragents").then(function(res) {
+    axios.get("/web/v1/contragents").then(function(res) {
       app.bidders = res.data;
     });
   },
@@ -121,7 +121,7 @@ export default {
       var app = this;
       if (app.auction && app.add_bidders.length)
         axios
-          .post("/api/v1/addbidder", {
+          .post("/web/v1/addbidder", {
             auction: app.auction.id,
             bidders: app.add_bidders
           })
@@ -135,7 +135,7 @@ export default {
       if (app.auction)
         app.$confirm(app.__("Are you sure?")).then(() => {
           axios
-            .get("/api/v1/auction/delete/" + app.auction.id)
+            .get("/web/v1/auction/delete/" + app.auction.id)
             .then(function(res) {
               app.$router.replace("/personal/auctions");
             });
@@ -146,7 +146,7 @@ export default {
       if (app.auction)
         app.$confirm(app.__("Are you sure?")).then(() => {
           axios
-            .get("/api/v1/auction/confirm/" + app.auction.id)
+            .get("/web/v1/auction/confirm/" + app.auction.id)
             .then(function(res) {
               // app.auction = res.data;
             });
@@ -155,7 +155,7 @@ export default {
     fetchBidders(search, loading) {
       var app = this;
       loading(true);
-      axios.get("/api/v1/contragents?search=" + search).then(function(res) {
+      axios.get("/web/v1/contragents?search=" + search).then(function(res) {
         app.bidders = res.data;
         loading(false);
       });

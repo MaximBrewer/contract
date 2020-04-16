@@ -223,7 +223,7 @@ export default {
 
       if (!!app.auction.id) {
         axios
-          .post("/api/v1/auctions/" + app.auction.id, data)
+          .post("/web/v1/auctions/" + app.auction.id, data)
           .then(function(res) {
             app.$router.replace("/personal/auctions/show/" + res.data.id);
             app.errors = {};
@@ -237,7 +237,7 @@ export default {
           });
       } else {
         axios
-          .post("/api/v1/auctions", data)
+          .post("/web/v1/auctions", data)
           .then(function(res) {
             app.$router.replace("/personal/auctions/show/" + res.data.id);
             loader.hide();

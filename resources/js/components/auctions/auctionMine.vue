@@ -120,7 +120,7 @@ export default {
       var app = this;
       app.$confirm(app.__("Are you sure?")).then(() => {
         axios
-          .get("/api/v1/auctions/bet/remove/" + bet.id)
+          .get("/web/v1/auctions/bet/remove/" + bet.id)
           .then(function(resp) {
             bet.delete();
           })
@@ -138,7 +138,7 @@ export default {
       var app = this;
       app.$confirm(app.__("Are you sure?")).then(() => {
         axios
-          .post("/api/v1/auctions/bet/contract", {
+          .post("/web/v1/auctions/bet/contract", {
             id: bet.id,
             correct: bet.correct
           })
@@ -159,7 +159,7 @@ export default {
       var app = this;
       app.$confirm(app.__("Are you sure?")).then(() => {
         axios
-          .get("/api/v1/auctions/bet/volume/" + bet.id)
+          .get("/web/v1/auctions/bet/volume/" + bet.id)
           .then(function(resp) {
             bet.approved_volume = 1;
           })

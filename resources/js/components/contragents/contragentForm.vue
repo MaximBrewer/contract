@@ -287,7 +287,7 @@ export default {
       if (app.$root.contragent.id) {
         axios
           .patch(
-            "/api/v1/contragents/" + app.$root.contragent.id,
+            "/web/v1/contragents/" + app.$root.contragent.id,
             newContragent
           )
           .then(function(res) {
@@ -307,7 +307,7 @@ export default {
           });
       } else
         axios
-          .post("/api/v1/contragents", newContragent)
+          .post("/web/v1/contragents", newContragent)
           .then(function(res) {
             app.$root.contragent = res.data;
             app.$router.replace(

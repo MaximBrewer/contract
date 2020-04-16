@@ -140,7 +140,7 @@ export default {
       var app = this;
       if (app.auction)
         axios
-          .post("/api/v1/auctions/bet", {
+          .post("/web/v1/auctions/bet", {
             auction: app.auction.id,
             bidder: app.user.contragents[0].id,
             volume: app.bid.volume,

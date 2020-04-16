@@ -156,7 +156,7 @@ export default {
       let app = this;
       let loader = Vue.$loading.show();
       axios
-        .get("/api/v1/auctions/" + app.action)
+        .get("/web/v1/auctions/" + app.action)
         .then(function(res) {
           app.auctions = res.data.data;
           app.filterAuctions();

@@ -44,7 +44,7 @@ export default {
   mounted: function() {
     let app = this;
     axios
-      .get("/api/v1/dialogues")
+      .get("/web/v1/dialogues")
       .then(function(res) {
         app.dialogues = res.data.data;
         app.dialoguesList = res.data.data;

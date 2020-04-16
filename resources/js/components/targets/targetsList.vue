@@ -300,8 +300,8 @@ export default {
     checkTargets() {
       let app = this;
       let loader = Vue.$loading.show();
-      let url = "/api/v1/targets";
-      if (app.action == "all") url = "/api/v1/targets/all";
+      let url = "/web/v1/targets";
+      if (app.action == "all") url = "/web/v1/targets/all";
       axios
         .get(url)
         .then(function(res) {
@@ -315,7 +315,7 @@ export default {
     },
     showPopup(controller, id, template, index) {
       var app = this;
-      axios.get("/api/v1/" + controller + "/" + id).then(function(resp) {
+      axios.get("/web/v1/" + controller + "/" + id).then(function(resp) {
         app.modal_target = resp.data;
         app.modal_target.index = index;
         app.$modal.show("target");
@@ -324,7 +324,7 @@ export default {
     deleteTarget(id, index) {
       var app = this;
       this.$confirm(this.__("Are you sure?")).then(() => {
-        axios.delete("/api/v1/targets/" + id).then(function(resp) {
+        axios.delete("/web/v1/targets/" + id).then(function(resp) {
           if (resp.data) app.targets.splice(index, 1);
           else
             app.$fire({

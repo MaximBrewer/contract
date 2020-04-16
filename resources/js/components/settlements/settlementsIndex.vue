@@ -84,7 +84,7 @@ export default {
   created: function() {
     var app = this;
     axios
-      .get("/api/v1/settlements")
+      .get("/web/v1/settlements")
       .then(function(res) {
         app.settlements = res.data.data;
       })
@@ -99,7 +99,7 @@ export default {
       var app = this;
       let loader = Vue.$loading.show();
       axios
-        .post("/api/v1/settlements", {
+        .post("/web/v1/settlements", {
           balance: app.form.balance,
           method: app.form.method
         })

@@ -25,7 +25,7 @@ export default {
   mounted() {
     var app = this;
     axios
-      .get("/api/v1/contragents")
+      .get("/web/v1/contragents")
       .then(function(res) {
         app.$root.contragents = res.data;
       })
@@ -42,7 +42,7 @@ export default {
     sendMessage: function() {
       let app = this;
       axios
-        .post("/api/v1/dialogues", {
+        .post("/web/v1/dialogues", {
           id: null,
           contragent_id: app.contragent.id,
           text: app.text

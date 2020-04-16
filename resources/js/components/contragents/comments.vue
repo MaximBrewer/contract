@@ -132,7 +132,7 @@ export default {
       let app = this;
       let loader = Vue.$loading.show();
       axios
-        .get("/api/v1/comments/" + app.contragent)
+        .get("/web/v1/comments/" + app.contragent)
         .then(function(res) {
           app.comments = res.data[0];
           app.rating = res.data[1];
@@ -165,7 +165,7 @@ export default {
           );
         else data.append("picture", !!app.picture ? app.picture : '');
 
-        axios.post("/api/v1/comments", data).then(function(res) {
+        axios.post("/web/v1/comments", data).then(function(res) {
           app.comments = res.data[0];
           app.rating = res.data[1];
           app.message = res.data[2].comment;

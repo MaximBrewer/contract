@@ -274,5 +274,14 @@
     "Approved volume": "Утвержденный объем",
     "Undistributed volume": "Нераспределенный объем",
     "Auction minimal bet": "Минимальная ставка аукциона",
-    "Too low price, too much volume, or you are trying to outbid your own bet!": "Слишком низкая цена, большой объем, или вы пытаетесь переиграть свою собственную ставку"
+    "Too low price, too much volume, or you are trying to outbid your own bet!": "Слишком низкая цена, большой объем, или вы пытаетесь переиграть свою собственную ставку",
+    "Logistics": "Логистика",
+    "Finance": "Финансы",
+    "Add a defer": "Добавить отсрочку",
+    "Add a deferred service for the supplier": "Добавить услугу отсрочки для поставщика",
+    "Creditor": "Кредитор",
+    "Supplier": "Поставщик",
+    "Mutual Settlements": "Взаиморасчеты",
+    "Failed to add defer": "Не удалось добавить",
+    "Add": "Добавить"
 }

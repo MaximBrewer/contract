@@ -21,7 +21,7 @@ use TCG\Voyager\Http\Controllers\ContentTypes\SelectMultiple;
 use TCG\Voyager\Http\Controllers\ContentTypes\Text;
 use TCG\Voyager\Http\Controllers\ContentTypes\Timestamp;
 use TCG\Voyager\Traits\AlertsMessages;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 abstract class Controller extends BaseController
 {

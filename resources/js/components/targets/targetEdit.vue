@@ -18,7 +18,7 @@ export default {
   mounted() {
     let app = this;
     axios
-      .get("/api/v1/targets/" + app.$route.params.id)
+      .get("/web/v1/targets/" + app.$route.params.id)
       .then(function(res) {
         app.$root.target = res.data;
       })

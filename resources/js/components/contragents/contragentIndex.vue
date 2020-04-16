@@ -65,7 +65,7 @@ export default {
   mounted() {
     var app = this;
     axios
-      .get("/api/v1/contragents")
+      .get("/web/v1/contragents")
       .then(function(resp) {
         app.$root.contragents = resp.data;
         app.contragentList = app.$root.contragents;

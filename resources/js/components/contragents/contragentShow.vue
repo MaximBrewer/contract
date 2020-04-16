@@ -75,7 +75,7 @@ export default {
     let loader = Vue.$loading.show();
     let id = app.$route.params.id;
     axios
-      .get("/api/v1/contragents/" + id)
+      .get("/web/v1/contragents/" + id)
       .then(function(resp) {
         app.$root.contragent = resp.data;
         loader.hide();

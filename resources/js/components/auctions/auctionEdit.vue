@@ -21,7 +21,7 @@ export default {
     let app = this;
     let loader = Vue.$loading.show();
     axios
-      .get("/api/v1/auction/" + app.$route.params.id)
+      .get("/web/v1/auction/" + app.$route.params.id)
       .then(function(res) {
         app.auction = res.data;
         loader.hide();

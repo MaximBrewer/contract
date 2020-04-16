@@ -103,7 +103,7 @@ export default {
       let app = this;
       let loader = Vue.$loading.show();
       axios
-        .get("/api/v1/comments")
+        .get("/web/v1/comments")
         .then(function(resp) {
           app.comments = resp.data[0];
           loader.hide();
@@ -134,7 +134,7 @@ export default {
         else data.append("picture", !!comment.picture ? comment.picture : '');
 
         axios
-          .post("/api/v1/commentsmy", data)
+          .post("/web/v1/commentsmy", data)
           .then(function(resp) {
             loader.hide();
             app.$fire({

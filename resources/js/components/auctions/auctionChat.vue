@@ -135,7 +135,7 @@ export default {
     },
     deleteMessage(message) {
       axios.delete(
-        "/api/v1/messages/" + message.id
+        "/web/v1/messages/" + message.id
       );
     },
     sendMessage(body) {
@@ -146,7 +146,7 @@ export default {
         message: body.data.text
       };
       axios
-        .post("/api/v1/messages", message)
+        .post("/web/v1/messages", message)
         .then(function(resp) {})
         .catch(function(errors) {
           app.$fire({

@@ -89,7 +89,7 @@ export default {
       let loader = Vue.$loading.show();
       if (!!app.$route.params.id) {
         axios
-          .patch("/api/v1/targets/" + app.$route.params.id, app.$root.target)
+          .patch("/web/v1/targets/" + app.$route.params.id, app.$root.target)
           .then(function(resp) {
             app.$router.replace("/personal/auctions/bid");
             loader.hide();
@@ -100,7 +100,7 @@ export default {
           });
       } else {
         axios
-          .post("/api/v1/targets", app.$root.target)
+          .post("/web/v1/targets", app.$root.target)
           .then(function(resp) {
             app.$router.replace("/personal/auctions/bid");
             loader.hide();

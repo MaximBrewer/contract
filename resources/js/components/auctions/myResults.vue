@@ -74,7 +74,7 @@ export default {
     var app = this;
     let loader = Vue.$loading.show();
     axios
-      .get("/api/v1/results")
+      .get("/web/v1/results")
       .then(function(res) {
         console.log(res.data.data);
         app.results = res.data.data;
@@ -95,7 +95,7 @@ export default {
       var app = this;
       let loader = Vue.$loading.show();
       axios
-        .post("/api/v1/results", { message: result.message, id: result.id })
+        .post("/web/v1/results", { message: result.message, id: result.id })
         .then(function(res) {
           app.$fire({
             title: app.__("Thank you , Your message is accepted!"),

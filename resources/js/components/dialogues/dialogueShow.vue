@@ -71,7 +71,7 @@ export default {
     let app = this;
     let id = app.$route.params.id;
     axios
-      .get("/api/v1/dialogue/" + id)
+      .get("/web/v1/dialogue/" + id)
       .then(function(res) {
         app.dialogue = res.data.data;
       })
@@ -85,7 +85,7 @@ export default {
       let app = this;
       let id = app.$route.params.id;
       axios
-        .post("/api/v1/dialogues", { id: id, text: app.text })
+        .post("/web/v1/dialogues", { id: id, text: app.text })
         .then(function(res) {
           app.text = "";
           app.dialogue.phrases.unshift(res.data.data);

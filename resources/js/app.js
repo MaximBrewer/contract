@@ -74,6 +74,8 @@ import DialoguesIndex from "./components/dialogues/dialoguesIndex.vue";
 import DialoguesShow from "./components/dialogues/dialogueShow.vue";
 import SendMessage from "./components/sendMessage.vue";
 import SettlementsIndex from "./components/settlements/settlementsIndex.vue";
+import Logistics from "./components/auctions/logistics.vue";
+import Finance from "./components/auctions/finance.vue";
 
 Vue.component("SendMessage", SendMessage, {});
 Vue.component("AllAuctions", AllAuctions, {});
@@ -186,6 +188,16 @@ const app = new Vue({
                 path: "/personal/settlements",
                 component: SettlementsIndex,
                 name: "settlementsIndex"
+            },
+            {
+                path: "/personal/logistics",
+                component: Logistics,
+                name: "logistics"
+            },
+            {
+                path: "/personal/finance",
+                component: Finance,
+                name: "finance"
             }
         ]
     }),
@@ -207,8 +219,6 @@ const app = new Vue({
                 if (!!res.data.user) {
                     Vue.prototype.user = res.data.user;
                     Vue.prototype.company = res.data.user.contragents[0];
-                    window.axios.defaults.headers.common["Authorization"] =
-                        "Bearer " + res.data.api_token;
                     app.getMyStores();
                     app.listenForBroadcast();
                 }
@@ -250,7 +260,7 @@ const app = new Vue({
         writeTo(contragent_id) {
             let app = this;
             axios
-                .get("/api/v1/dialogues/check/" + contragent_id)
+                .get("/web/v1/dialogues/check/" + contragent_id)
                 .then(function(res) {
                     app.$router.push(
                         "/personal/dialogue/show/" + res.data.data.id

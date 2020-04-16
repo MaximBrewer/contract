@@ -54,7 +54,7 @@ export default {
           if (address.length) {
             axios
               .post(
-                "/api/v1/address",
+                "/web/v1/address",
                 { address: address }
               )
               .then(function(resp) {

@@ -54,7 +54,7 @@ export default {
       app.renew();
     });
     axios
-      .get("/api/v1/auction/" + id)
+      .get("/web/v1/auction/" + id)
       .then(function(resp) {
         app.auction = resp.data;
         loader.hide();
