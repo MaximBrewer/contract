@@ -4,15 +4,15 @@
       <div class="col-md-6">
         <div class="form-group">
           <a
-            href="https://docs.google.com/spreadsheets/d/1P9L9G95rsVLXxxhK-XVpEaW14TtaWZWQo1KnN_rGa84"
-            target="_balnk"
-            class="btn btn-primary btn-lg"
-          >{{ __('договор кредитор - покупатель') }}</a>
-          <a
             href="https://docs.google.com/spreadsheets/d/1P9L9G95rsVLXxxhK-XVpEaW14TtaWZWQo1KnN_rGa84/edit#gid=0"
             target="_balnk"
-            class="btn btn-primary btn-lg"
+            class="btn btn-link btn-lg"
           >{{ __('договор поставщик - кредитор') }}</a>
+          <a
+            href="https://docs.google.com/spreadsheets/d/1P9L9G95rsVLXxxhK-XVpEaW14TtaWZWQo1KnN_rGa84"
+            target="_balnk"
+            class="btn btn-link btn-lg"
+          >{{ __('договор кредитор - покупатель') }}</a>
         </div>
       </div>
       <div class="col-md-6 text-right">
