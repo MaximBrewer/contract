@@ -20,6 +20,7 @@
             :searchable="false"
             @input="filterList"
             :options="$root.capacities"
+            v-model="filter.capacity"
           >
             <div slot="no-options">{{ __('No Options Here!') }}</div>
           </v-select>
@@ -125,6 +126,8 @@
           <tr v-for="(logistic, index) in logisticsList" :key="index">
             <td>{{ index + 1 }}</td>
             <td>
+              {{ logistic.contragent.title }}
+              <br />
               {{ logistic.title }}
               <br />
               {{ logistic.gosznak }}
@@ -144,6 +147,8 @@
               {{ logistic.federal_district.title }}
               <br />
               {{ logistic.region.title }}
+              <br />
+              <span v-if="logistic.range">{{ logistic.range }} км</span>
             </td>
             <td>{{ logistic.available_from }}</td>
             <td>{{ logistic.description }}</td>
@@ -219,7 +224,8 @@ export default {
         });
     },
     filterGetRegions() {
-      this.$root.getRegions(this.filter.federal_district.id);
+      if (this.filter.federal_district)
+        this.$root.getRegions(this.filter.federal_district.id);
       this.filterList();
     },
     filterList() {
@@ -232,8 +238,8 @@ export default {
         let a = app.logistics[v];
         if (
           (!f.federal_district ||
-            f.federal_district.id == a.store.federal_district.id) &&
-          (!f.region || f.region.id == a.store.region.id) &&
+            f.federal_district.id == a.federal_district.id) &&
+          (!f.region || f.region.id == a.region.id) &&
           (!f.purpose || f.purpose.id == a.purpose.id) &&
           (!f.capacity || f.capacity.id == a.capacity.id) &&
           (!f.contragent || f.contragent.id == a.contragent.id) &&
@@ -250,12 +256,12 @@ export default {
       let coords = store.coords.split(",");
       if (coords.length < 2) return true;
       let cnt = 0;
-      for (let i in app.auctionsList) {
+      for (let i in app.logisticsList) {
         ++cnt;
-        let as = app.auctionsList[i].store.coords.split(",");
-        app.auctionsList[i].range = 10000;
+        let as = app.logisticsList[i].coords.split(",");
+        app.logisticsList[i].range = 10000;
         if (as.length < 2) continue;
-        app.auctionsList[i].range =
+        app.logisticsList[i].range =
           Math.round(
             app.getDistanceFromLatLonInKm(
               coords[0].trim(),
@@ -265,8 +271,8 @@ export default {
             ) * 100
           ) / 100;
       }
-      if (cnt == app.auctionsList.length) {
-        app.auctionsList.sort(function(a, b) {
+      if (cnt == app.logisticsList.length) {
+        app.logisticsList.sort(function(a, b) {
           return a.range - b.range;
         });
       }
