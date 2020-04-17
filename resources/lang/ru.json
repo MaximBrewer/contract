@@ -284,9 +284,11 @@
     "Mutual Settlements": "Взаиморасчеты",
     "Failed to add defer": "Не удалось добавить",
     "Create new vehicle": "Добавить",
+    "Vehicle number": "Госзнак",
+    "Purpose": "Назначение",
+    "Available from": "Доступен с",
+    "Capacity": "Объем",
     "Add": "Добавить",
-    "Add": "Добавить",
-    "Add": "Добавить",
-    "Add": "Добавить",
-    "Add": "Добавить"
+    "All required fields must be filled": "Все необходимые поля должны быть заполнены",
+    "Add vehicle": "Добавить ТС"
 }
