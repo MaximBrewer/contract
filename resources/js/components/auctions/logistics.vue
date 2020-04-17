@@ -1,18 +1,31 @@
 <template>
   <section class="container-fluid">
-    <div class="row" v-if="action == 'my'">
+    <div class="row">
       <div class="col-md-12 text-right">
         <div class="form-group">
           <a
             href="javascript:void(0)"
             @click="createNew"
-            class="btn btn-primary btn-lg"
-          >{{ __('Create new auction') }}</a>
+            class="btn btn-success btn-lg"
+          >{{ __('Create new vehicle') }}</a>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-2 col-sm-3 col-xs-1">
+      <div class="col-md-5th col-sm-6 col-12">
+        <div class="form-group">
+          <label class="control-label">{{ __('Capacity') }}</label>
+          <v-select
+            label="title"
+            :searchable="false"
+            @input="filterList"
+            :options="$root.capacities"
+          >
+            <div slot="no-options">{{ __('No Options Here!') }}</div>
+          </v-select>
+        </div>
+      </div>
+      <div class="col-md-5th col-sm-6 col-12">
         <div class="form-group">
           <label class="control-label">{{ __('Federal district') }}</label>
           <v-select
@@ -26,13 +39,13 @@
           </v-select>
         </div>
       </div>
-      <div class="col-md-2 col-sm-3 col-xs-1">
+      <div class="col-md-5th col-sm-6 col-12">
         <div class="form-group">
           <label class="control-label">{{ __('Region') }}</label>
           <v-select
             label="title"
             :searchable="true"
-            @input="filterAuctions"
+            @input="filterList"
             :options="$root.regions"
             v-model="filter.region"
           >
@@ -40,13 +53,13 @@
           </v-select>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 col-xs-1">
+      <div class="col-md-5th col-sm-6 col-12">
         <div class="form-group">
           <label class="control-label">{{ __('Contragent') }}</label>
           <v-select
             label="title"
             :searchable="true"
-            @input="filterAuctions"
+            @input="filterList"
             :options="$root.contragents"
             v-model="filter.contragent"
           >
@@ -54,64 +67,35 @@
           </v-select>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 col-xs-1">
+      <div class="col-md-5th col-sm-6 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __('Product') }}</label>
+          <label class="control-label">{{ __('Available from') }}</label>
+          <datetime
+            type="date"
+            zone="Europe/Moscow"
+            value-zone="Europe/Moscow"
+            class="theme-primary"
+            input-class="form-control"
+            v-model="filter.avilable_from"
+          ></datetime>
+        </div>
+      </div>
+      <div class="col-md-25th col-sm-6 col-12">
+        <div class="form-group">
+          <label class="control-label">{{ __('Purpose') }}</label>
           <v-select
             label="title"
             :searchable="true"
-            @input="filterAuctions"
-            :options="$root.products"
-            v-model="filter.product"
+            @input="filterList"
+            :options="$root.purposes"
+            v-model="filter.purpose"
           >
             <div slot="no-options">{{ __('No Options Here!') }}</div>
           </v-select>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 col-xs-1">
-        <div class="form-group">
-          <label class="control-label">{{ __('Multiplicity') }}</label>
-          <v-select
-            label="title"
-            :searchable="true"
-            @input="filterAuctions"
-            :options="$root.multiplicities"
-            v-model="filter.multiplicity"
-          >
-            <div slot="no-options">{{ __('No Options Here!') }}</div>
-          </v-select>
-        </div>
-      </div>
-      <div class="col-md-2 col-sm-3 col-xs-1">
-        <div class="form-group">
-          <label class="control-label">{{ __('Confirmed') }}</label>
-          <v-select
-            label="title"
-            :searchable="false"
-            @input="filterAuctions"
-            :options="$root.confirmedOptions"
-            v-model="filter.confirmed"
-          >
-            <div slot="no-options">{{ __('No Options Here!') }}</div>
-          </v-select>
-        </div>
-      </div>
-      <div class="col-md-2 col-sm-3 col-xs-1">
-        <div class="form-group">
-          <label class="control-label">{{ __('Tags') }}</label>
-          <v-select
-            label="title"
-            :searchable="true"
-            @input="filterAuctions"
-            :options="$root.tags"
-            :multiple="true"
-            v-model="filter.tags"
-          >
-            <div slot="no-options">{{ __('No Options Here!') }}</div>
-          </v-select>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 col-xs-1">
+      <div class="col-md-5th"></div>
+      <div class="col-md-25th col-sm-6 col-12">
         <div class="form-group">
           <label class="control-label">{{ __('Sort by distance from store') }}</label>
           <v-select
@@ -138,108 +122,126 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(logistics, index) in defers" :key="index">
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+          <tr v-for="(logistic, index) in logisticsList" :key="index">
+            <td>{{ index + 1 }}</td>
+            <td>
+              {{ logistic.title }}
+              <br />
+              {{ logistic.gosznak }}
+              <br />
+              {{ logistic.purpose.title }}
+              <br />
+              {{ logistic.capacity.title }}
+              <br />
+              <a
+                @click="showPhone(logistic)"
+                href="javascript:void(0)"
+                v-if="!logistic.phone"
+              >{{ __('Show phone') }}</a>
+              <span v-if="!!logistic.phone">{{ logistic.phone }}</span>
+            </td>
+            <td>
+              {{ logistic.federal_district.title }}
+              <br />
+              {{ logistic.region.title }}
+            </td>
+            <td>{{ logistic.available_from }}</td>
+            <td>{{ logistic.description }}</td>
           </tr>
         </tbody>
       </table>
     </div>
+    <modal
+      :scrollable="true"
+      name="add_logistic"
+      height="auto"
+      :adaptive="true"
+      width="90%"
+      :maxWidth="maxModalWidth"
+    >
+      <logistic-modal :id="logisticId" />
+    </modal>
   </section>
 </template>
 <script>
+import LogisticModal from "./logisticModal";
 export default {
-  components: {
-  },
+  components: { LogisticModal },
   props: ["action"],
   mounted() {
-    this.getAuctions();
+    let app = this;
+    let loader = Vue.$loading.show();
+    axios
+      .get("/web/v1/logistics")
+      .then(function(res) {
+        app.logistics = res.data.data;
+        app.filterList();
+        loader.hide();
+      })
+      .catch(function(res) {
+        loader.hide();
+        app.$fire({
+          title: app.__("Error!"),
+          text: app.__("Failed to load logistics"),
+          type: "error",
+          timer: 5000
+        });
+      });
   },
   data: function() {
     return {
-      auctions: [],
-      auctionsList: [],
+      maxModalWidth: 800,
+      logisticId: null,
       logistics: [],
+      logisticsList: [],
       store: null,
       filter: {
         federal_district: null,
-        product: null,
-        multiplicity: null,
+        purpose: null,
+        capacity: null,
         region: null,
-        confirmed: 0,
-        tags: []
+        contragent: null,
+        available_grom: null
       }
     };
   },
   methods: {
     createNew() {
       let app = this;
-      if (!!app.company.rating && app.company.rating > 2)
-        app.$router.push("/personal/auctions/create");
-      else
+      if (true) {
+        this.$modal.show("add_logistic");
+        let app = this;
+      } else
         app.$fire({
           title: app.__("Error!"),
-          text: app.__(
-            "You have a low rating, contact the administration or ask other Russian companies to write reviews about your company."
-          ),
+          text: app.__(""),
           type: "error"
         });
     },
-    getAuctions() {
-      let app = this;
-    //   let loader = Vue.$loading.show();
-    //   axios
-    //     .get("/web/v1/auctions/" + app.action)
-    //     .then(function(res) {
-    //       app.auctions = res.data.data;
-    //       app.filterAuctions();
-    //       loader.hide();
-    //     })
-    //     .catch(function(res) {
-    //       loader.hide();
-    //       app.$fire({
-    //         title: app.__("Error!"),
-    //         text: app.__("Failed to load auctions"),
-    //         type: "error",
-    //         timer: 5000
-    //       });
-    //     });
-    },
     filterGetRegions() {
       this.$root.getRegions(this.filter.federal_district.id);
-      this.filterAuctions();
+      this.filterList();
     },
-    filterAuctions() {
+    filterList() {
       let app = this;
-      app.auctionsList = [];
+      app.logisticsList = [];
       let cnt = 0;
       let f = app.filter;
-      for (let v in app.auctions) {
+      for (let v in app.logistics) {
         ++cnt;
-        let a = app.auctions[v];
-        let intags = false;
-        if (f.tags.length) {
-          for (let g in f.tags) {
-            for (let d in a.tags) {
-              intags = intags ? intags : a.tags[d].id == f.tags[g].id;
-            }
-          }
-        }
+        let a = app.logistics[v];
         if (
           (!f.federal_district ||
             f.federal_district.id == a.store.federal_district.id) &&
           (!f.region || f.region.id == a.store.region.id) &&
-          (!f.product || f.product.id == a.product.id) &&
-          (!f.multiplicity || f.multiplicity.id == a.multiplicity.id) &&
-          (!f.confirmed || f.confirmed.id - 1 == a.confirmed) &&
+          (!f.purpose || f.purpose.id == a.purpose.id) &&
+          (!f.capacity || f.capacity.id == a.capacity.id) &&
           (!f.contragent || f.contragent.id == a.contragent.id) &&
-          (!f.tags.length || intags)
+          (!f.available_from || f.contragent.id == a.contragent.id)
         )
-          app.auctionsList.push(a);
+          app.logisticsList.push(a);
       }
-      if (app.auctions.length == cnt) app.sorByDistance();
+      if (app.logistics.length == cnt) app.sorByDistance();
     },
     sorByDistance() {
       let app = this;

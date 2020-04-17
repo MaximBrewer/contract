@@ -213,6 +213,8 @@ const app = new Vue({
         app.getRegions(app.fd);
         app.getTypes();
         app.getTags();
+        app.getPurposes();
+        app.getCapacities();
         axios
             .get("/auth")
             .then(res => {
@@ -240,6 +242,8 @@ const app = new Vue({
         contragent: {},
         errors: {},
         fd: false,
+        purposes: [],
+        capacities: [],
         federalDistricts: [],
         types: [],
         regions: [],
@@ -277,6 +281,18 @@ const app = new Vue({
         getRegions(fd) {
             axios.get("/regions?federal_district_id=" + fd).then(function(res) {
                 app.regions = res.data;
+            });
+        },
+        getPurposes() {
+            let app = this;
+            axios.get("/purposes").then(function(res) {
+                app.purposes = res.data;
+            });
+        },
+
+        getCapacities(fd) {
+            axios.get("/capacities").then(function(res) {
+                app.capacities = res.data;
             });
         },
         getTags() {

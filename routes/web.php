@@ -22,6 +22,8 @@ Route::resource('/federalDistricts', 'Api\V1\FederalDistrictsController', ['exce
 Route::resource('/regions', 'Api\V1\RegionsController', ['except' => ['create', 'edit', 'update', 'delete']]);
 Route::resource('/stores', 'Api\V1\StoresController', ['except' => ['create', 'edit', 'update', 'delete']]);
 Route::resource('/products', 'Api\V1\ProductsController', ['except' => ['create', 'edit', 'update', 'delete']]);
+Route::resource('/purposes', 'Api\V1\PurposesController', ['except' => ['create', 'edit', 'update', 'delete']]);
+Route::resource('/capacities', 'Api\V1\CapacitiesController', ['except' => ['create', 'edit', 'update', 'delete']]);
 Route::resource('/tags', 'Api\V1\TagsController', ['except' => ['create', 'edit', 'update', 'delete']]);
 Route::resource('/multiplicities', 'Api\V1\MultiplicitiesController', ['except' => ['create', 'edit', 'update', 'delete']]);
 Route::resource('/types', 'Api\V1\TypesController', ['except' => ['create', 'edit', 'update', 'delete']]);
@@ -99,6 +101,7 @@ Route::group([
 
 
     Route::resource('defers', 'DefersController', ['except' => ['edit', 'create']]);
+    Route::resource('logistics', 'LogisticsController', ['except' => ['edit', 'create']]);
 
 
 });

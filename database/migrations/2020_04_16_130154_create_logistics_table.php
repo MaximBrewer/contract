@@ -15,6 +15,16 @@ class CreateLogisticsTable extends Migration
     {
         Schema::create('logistics', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title');
+            $table->string('gosznak');
+            $table->string('coords');
+            $table->text('description')->nullable();
+            $table->integer('contragent_id');
+            $table->integer('purpose_id');
+            $table->integer('capacity_id');
+            $table->integer('federal_district_id');
+            $table->integer('region_id');
+            $table->timestamp('available_from');
             $table->timestamps();
         });
     }

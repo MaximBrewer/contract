@@ -9,17 +9,21 @@ body.swal2-height-auto {
 .col-lg-5th {
     position: relative;
     min-height: 1px;
-    padding-right: 10px;
-    padding-left: 10px;
+    padding-right: 15px;
+    padding-left: 15px;
     width: 20%;
     float: left;
 }
-.col-5-th {
-    -webkit-box-flex: 0;
-    -webkit-flex: 0 0 20%;
-    -ms-flex: 0 0 20%;
-    flex: 0 0 20%;
-    max-width: 20%;
+.col-xs-25th,
+.col-sm-25th,
+.col-md-25th,
+.col-lg-25th {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    width: 40%;
+    float: left;
 }
 @media (min-width: 768px) {
     .col-sm-5th {
@@ -28,6 +32,13 @@ body.swal2-height-auto {
         -ms-flex: 0 0 20%;
         flex: 0 0 20%;
         max-width: 20%;
+    }
+    .col-sm-25th {
+        -webkit-box-flex: 0;
+        -webkit-flex: 0 0 40%;
+        -ms-flex: 0 0 40%;
+        flex: 0 0 40%;
+        max-width: 40%;
     }
 }
 @media (min-width: 992px) {
@@ -38,6 +49,13 @@ body.swal2-height-auto {
         flex: 0 0 20%;
         max-width: 20%;
     }
+    .col-md-25th {
+        -webkit-box-flex: 0;
+        -webkit-flex: 0 0 40%;
+        -ms-flex: 0 0 40%;
+        flex: 0 0 40%;
+        max-width: 40%;
+    }
 }
 @media (min-width: 1200px) {
     .col-lg-5th {
@@ -47,87 +65,17 @@ body.swal2-height-auto {
         flex: 0 0 20%;
         max-width: 20%;
     }
-}
-
-@media only screen and (max-width: 992px) {
-    .col-md-5th {
-        width: 33%;
-        float: none;
-        display: block;
-
+    .col-lg-25th {
         -webkit-box-flex: 0;
-        -webkit-flex: 0 0 33%;
-        -ms-flex: 0 0 33%;
-        flex: 0 0 33%;
-        max-width: 33%;
-    }
-    .col-md-5th.col-sm-5th {
-        width: 20%;
-        float: left;
-
-        -webkit-box-flex: 0;
-        -webkit-flex: 0 0 20%;
-        -ms-flex: 0 0 20%;
-        flex: 0 0 20%;
-        max-width: 20%;
-    }
-}
-
-@media only screen and (max-width: 769px) {
-    .col-md-5th {
-        width: 100%;
-        float: none;
-        display: block;
-
-        -webkit-box-flex: 0;
-        -webkit-flex: 0 0 50%;
-        -ms-flex: 0 0 50%;
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
-
-    .col-md-5th.col-sm-5th {
-        width: 50%;
-        float: none;
-        display: block;
-
-        -webkit-box-flex: 0;
-        -webkit-flex: 0 0 50%;
-        -ms-flex: 0 0 50%;
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
-}
-
-@media only screen and (max-width: 767px) {
-    .col-md-5th {
-        width: 100%;
-        float: none;
-        display: block;
-
-        -webkit-box-flex: 0;
-        -webkit-flex: 0 0 100%;
-        -ms-flex: 0 0 100%;
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-
-    .col-md-5th.col-sm-5th {
-        width: 100%;
-        float: none;
-        display: block;
-
-        -webkit-box-flex: 0;
-        -webkit-flex: 0 0 100%;
-        -ms-flex: 0 0 100%;
-        flex: 0 0 100%;
-        max-width: 100%;
+        -webkit-flex: 0 0 40%;
+        -ms-flex: 0 0 40%;
+        flex: 0 0 40%;
+        max-width: 40%;
     }
 }
 
 .col-md-5th .control-label {
     white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
 }

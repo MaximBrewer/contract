@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-2 col-sm-3 col-xs-1">
+      <div class="col-md-2 col-sm-3 col-12">
         <div class="form-group">
           <label class="control-label">{{ __('Federal district') }}</label>
           <v-select
@@ -24,7 +24,7 @@
           ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
         </div>
       </div>
-      <div class="col-md-2 col-sm-3 col-xs-1">
+      <div class="col-md-2 col-sm-3 col-12">
         <div class="form-group">
           <label class="control-label">{{ __('Region') }}</label>
           <v-select
@@ -36,7 +36,7 @@
           ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 col-xs-1">
+      <div class="col-md-4 col-sm-6 col-12">
         <div class="form-group">
           <label class="control-label">{{ __('Contragent') }}</label>
           <v-select
@@ -48,7 +48,7 @@
           ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 col-xs-1">
+      <div class="col-md-4 col-sm-6 col-12">
         <div class="form-group">
           <label class="control-label">{{ __('Product') }}</label>
           <v-select
@@ -60,7 +60,7 @@
           ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 col-xs-1">
+      <div class="col-md-4 col-sm-6 col-12">
         <div class="form-group">
           <label class="control-label">{{ __('Multiplicity') }}</label>
           <v-select
@@ -72,7 +72,7 @@
           ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
         </div>
       </div>
-      <div class="col-md-2 col-sm-3 col-xs-1">
+      <div class="col-md-2 col-sm-3 col-12">
         <div class="form-group">
           <label class="control-label">{{ __('Confirmed') }}</label>
           <v-select
@@ -84,7 +84,7 @@
           ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
         </div>
       </div>
-      <div class="col-md-2 col-sm-3 col-xs-1">
+      <div class="col-md-2 col-sm-3 col-12">
         <div class="form-group">
           <label class="control-label">{{ __('Tags') }}</label>
           <v-select
@@ -97,7 +97,7 @@
           ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 col-xs-1">
+      <div class="col-md-4 col-sm-6 col-12">
         <div class="form-group">
           <label class="control-label">{{ __('Sort by distance from store') }}</label>
           <v-select

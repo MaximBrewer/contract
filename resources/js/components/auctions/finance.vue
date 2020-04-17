@@ -7,12 +7,12 @@
             href="https://docs.google.com/spreadsheets/d/1P9L9G95rsVLXxxhK-XVpEaW14TtaWZWQo1KnN_rGa84/edit#gid=0"
             target="_balnk"
             class="btn btn-link btn-lg"
-          >{{ __('договор поставщик - кредитор') }}</a>
+          >{{ __('договор поставки поставщик-кредитор') }}</a>
           <a
             href="https://docs.google.com/spreadsheets/d/1P9L9G95rsVLXxxhK-XVpEaW14TtaWZWQo1KnN_rGa84"
             target="_balnk"
             class="btn btn-link btn-lg"
-          >{{ __('договор кредитор - покупатель') }}</a>
+          >{{ __('договор поставки с отсрочкой кредитор-покупатель') }}</a>
         </div>
       </div>
       <div class="col-md-6 text-right">
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="col-md-6 col-sm-6 col-12">
         <div class="form-group">
           <label class="control-label">{{ __('Creditor') }}</label>
           <v-select
@@ -40,7 +40,7 @@
           </v-select>
         </div>
       </div>
-      <div class="col-md-6 col-sm-6 col-xs-12">
+      <div class="col-md-6 col-sm-6 col-12">
         <div class="form-group">
           <label class="control-label">{{ __('Supplier') }}</label>
           <v-select
@@ -134,7 +134,7 @@ export default {
         loader.hide();
         app.$fire({
           title: app.__("Error!"),
-          text: app.__("Failed to load auctions"),
+          text: app.__("Failed to load defers"),
           type: "error",
           timer: 5000
         });

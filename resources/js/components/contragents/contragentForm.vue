@@ -209,7 +209,7 @@
                           :disabled="true"
                           v-bind:class="{ 'is-invalid': $root.errors.stores && $root.errors.stores[index] && $root.errors.stores[index]['region.id'] }"
                           label="title"
-                          :options="$root.federalDistricts"
+                          :options="$root.regions"
                           v-model="store.region"
                           :ref="'stores_'+index+'_region'"
                         ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
