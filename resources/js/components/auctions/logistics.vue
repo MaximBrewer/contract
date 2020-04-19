@@ -233,7 +233,7 @@ export default {
   },
   methods: {
     showPhone(index) {
-      this.logistics[index].phone = this.logistics[index].contragent.phone;
+      this.logisticsList[index].phone = this.logisticsList[index].contragent.phone;
       this.filterList();
     },
     createNew() {
