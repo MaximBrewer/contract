@@ -21,7 +21,7 @@ Vue.use(VueFlashMessage);
 import VueSimpleAlert from "vue-simple-alert";
 Vue.use(VueSimpleAlert);
 import VModal from "vue-js-modal";
-Vue.use(VModal);
+Vue.use(VModal, { dynamic: true, injectModalsContainer: true });
 import vSelect from "vue-select";
 Vue.component("v-select", vSelect, {});
 import StarRating from "vue-star-rating";

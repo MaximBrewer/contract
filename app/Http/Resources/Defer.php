@@ -15,6 +15,7 @@ class Defer extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'creditor' => [
                 'id' => $this->creditor->id,
                 'title' => $this->creditor->title,

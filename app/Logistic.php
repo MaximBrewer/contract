@@ -11,6 +11,7 @@ class Logistic extends Model
         'title',
         'gosznak',
         'coords',
+        'address',
         'description',
         'contragent_id',
         'purpose_id',

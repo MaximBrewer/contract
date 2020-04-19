@@ -15,9 +15,11 @@ class Logistic extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'contragent' => [
                 'id' => $this->contragent->id,
                 'title' => $this->contragent->title,
+                'phone' => $this->contragent->phone,
             ],
             'federal_district' => [
                 'id' => $this->federalDistrict->id,
@@ -40,8 +42,7 @@ class Logistic extends JsonResource
             'description' => $this->description,
             'available_from' => date("Y-m-d", strtotime($this->available_from)),
             'coords' => $this->coords,
-            'gosznak' => $this->gosznak,
-            'gosznak' => $this->gosznak,
+            'address' => $this->address,
         ];
     }
 }

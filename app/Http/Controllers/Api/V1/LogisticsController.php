@@ -44,6 +44,7 @@ class LogisticsController extends Controller
             'contragent_id' => User::find(Auth::user()->id)->contragents[0]->id,
             'gosznak' => $r->post('gosznak'),
             'title' => $r->post('title'),
+            'address' => $r->post('address'),
             'description' => $r->post('description'),
             'purpose_id' => $r->post('purpose_id'),
             'capacity_id' => $r->post('capacity_id'),
@@ -52,7 +53,7 @@ class LogisticsController extends Controller
             'available_from' => date("Y-m-d", strtotime($r->post('available_from'))),
             'coords' => $r->post('coords')
         ]);
-        return [];
+        return LogisticResource::collection(Logistic::all());
     }
 
     public function update(Request $r, $id)
@@ -80,9 +81,10 @@ class LogisticsController extends Controller
 
         $validator->validate();
 
-        Logistic::update($id, [
+        $logistic->update([
             'gosznak' => $r->post('gosznak'),
             'title' => $r->post('title'),
+            'address' => $r->post('address'),
             'description' => $r->post('description'),
             'purpose_id' => $r->post('purpose_id'),
             'capacity_id' => $r->post('capacity_id'),
@@ -91,7 +93,22 @@ class LogisticsController extends Controller
             'available_from' => date("Y-m-d", strtotime($r->post('available_from'))),
             'coords' => $r->post('coords')
         ]);
-        return [];
+        return LogisticResource::collection(Logistic::all());
 
+    }
+
+    public function destroy(Request $r, $id){
+
+        $logistic = Logistic::findOrFail($id);
+
+        if ($logistic->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+
+        Logistic::findOrFail($id)->delete();
+        return LogisticResource::collection(Logistic::all());
     }
 }

@@ -120,6 +120,7 @@
             <th>{{ __('локация фед. округ область адрес') }}</th>
             <th>{{ __('свободен начиная с') }}</th>
             <th>{{ __('Description') }}</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -136,22 +137,42 @@
               <br />
               {{ logistic.capacity.title }}
               <br />
-              <a
-                @click="showPhone(logistic)"
-                href="javascript:void(0)"
-                v-if="!logistic.phone"
-              >{{ __('Show phone') }}</a>
-              <span v-if="!!logistic.phone">{{ logistic.phone }}</span>
+              <div @click="showPhone(index)">
+                <a href="javascript:void(0)" v-if="!logistic.phone">{{ __('show phone') }}</a>
+                <span v-if="!!logistic.phone">{{ logistic.phone }}</span>
+              </div>
             </td>
             <td>
               {{ logistic.federal_district.title }}
               <br />
               {{ logistic.region.title }}
               <br />
+              {{ logistic.address }}
+              <br />
               <span v-if="logistic.range">{{ logistic.range }} км</span>
             </td>
             <td>{{ logistic.available_from }}</td>
             <td>{{ logistic.description }}</td>
+            <td class="text-center">
+              <a
+                v-tooltip="__('Edit vehicle')"
+                href="javascript:void(0)"
+                class="btn btn-primary btn-sm"
+                v-if="logistic.contragent.id == company.id"
+                @click="editLogistic(logistic)"
+              >
+                <i class="mdi mdi-pencil" aria-hidden="true"></i>
+              </a>
+              <a
+                v-tooltip="__('Delete vehicle')"
+                href="javascript:void(0)"
+                class="btn btn-danger btn-sm"
+                v-if="logistic.contragent.id == company.id"
+                @click="deleteLogistic(logistic)"
+              >
+                <i class="mdi mdi-delete" aria-hidden="true"></i>
+              </a>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -164,7 +185,7 @@
       width="90%"
       :maxWidth="maxModalWidth"
     >
-      <logistic-modal :id="logisticId" />
+      <logistic-modal :form="logistic" />
     </modal>
   </section>
 </template>
@@ -196,7 +217,7 @@ export default {
   data: function() {
     return {
       maxModalWidth: 800,
-      logisticId: null,
+      logistic: {},
       logistics: [],
       logisticsList: [],
       store: null,
@@ -211,16 +232,40 @@ export default {
     };
   },
   methods: {
+    showPhone(index) {
+      this.logistics[index].phone = this.logistics[index].contragent.phone;
+      this.filterList();
+    },
     createNew() {
-      let app = this;
-      if (true) {
-        this.$modal.show("add_logistic");
-        let app = this;
-      } else
-        app.$fire({
-          title: app.__("Error!"),
-          text: app.__(""),
-          type: "error"
+      this.logistic = {
+        id: null,
+        contragent: null,
+        federal_district: null,
+        region: null,
+        purpose: null,
+        address: null,
+        capacity: null,
+        title: null,
+        gosznak: null,
+        description: null,
+        available_from: null,
+        coords: null
+      };
+      this.$modal.show("add_logistic");
+    },
+    editLogistic(logistic) {
+      this.logistic = JSON.parse(JSON.stringify(logistic));
+      console.log(this.logistic);
+      this.$modal.show("add_logistic");
+    },
+    deleteLogistic(logistic) {
+      var app = this;
+      if (logistic)
+        app.$confirm(app.__("Are you sure?")).then(() => {
+          axios.delete("/web/v1/logistics/" + logistic.id).then(function(res) {
+            app.logistics = res.data.data;
+            app.filterList();
+          });
         });
     },
     filterGetRegions() {

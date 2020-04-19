@@ -152,6 +152,18 @@
             </v-select>
           </div>
         </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="control-label">{{ __('Location') }}</label>
+            <input
+              v-bind:class="{ 'is-invalid': errors.address }"
+              type="text"
+              v-model="form.address"
+              class="form-control"
+              ref="address"
+            />
+          </div>
+        </div>
       </div>
     </div>
     <div class="modal-footer">
@@ -168,7 +180,7 @@
 import { yandexMap, ymapMarker } from "vue-yandex-maps";
 export default {
   components: { yandexMap, ymapMarker },
-  props: ["id"],
+  props: ["form"],
   data: function() {
     return {
       controls: ["searchControl"],
@@ -180,40 +192,10 @@ export default {
       },
       defaultCoords: [55.75222, 37.61556],
       errors: {},
-      form: {
-        id: null,
-        title: null,
-        gosznak: null,
-        purpose_id: null,
-        capacity_id: null,
-        available_from: null,
-        description: null,
-        federal_district: null,
-        region: null,
-        coords: null
-      }
     };
   },
   mounted: function() {
-    if (this.id) {
-      let app = this;
-      let loader = Vue.$loading.show();
-      axios
-        .get("/web/v1/forms/" + id)
-        .then(function(res) {
-          app.form = res.data.data;
-          loader.hide();
-        })
-        .catch(function(res) {
-          loader.hide();
-          app.$fire({
-            title: app.__("Error!"),
-            text: app.__("Failed to load vehicle"),
-            type: "error",
-            timer: 5000
-          });
-        });
-    }
+    
   },
   methods: {
     addVehicle() {
@@ -240,8 +222,10 @@ export default {
       app.form.region_id = app.form.region.id;
       if (app.form.id)
         axios
-          .patch("/web/v1/logistics/" + id, app.form)
+          .patch("/web/v1/logistics/" + app.form.id, app.form)
           .then(function(res) {
+            app.$parent.$parent.logistics = res.data.data;
+            app.$parent.$parent.filterList();
             app.$fire({
               title: app.__("Success!"),
               text: app.__("The vehicle was updated successfully!"),
@@ -267,6 +251,8 @@ export default {
         axios
           .post("/web/v1/logistics", app.form)
           .then(function(res) {
+            app.$parent.$parent.logistics = res.data.data;
+            app.$parent.$parent.filterList();
             app.$fire({
               title: app.__("Success!"),
               text: app.__("The vehicle was added successfully!"),
