@@ -2,7 +2,7 @@
   <section>
     <div class="modal-header">
       <h5 class="modal-title">
-        <strong>{{ __('Add vehicle') }}</strong>
+        <strong>{{ form.id ? __('Edit vehicle') : __('Add vehicle') }}</strong>
       </h5>
       <button
         type="button"
@@ -172,7 +172,7 @@
         class="btn btn-success"
         data-dismiss="modal"
         @click="addVehicle()"
-      >{{ __('Add') }}</button>
+      >{{ form.id ? __('Update') : __('Add')</button>
     </div>
   </section>
 </template>

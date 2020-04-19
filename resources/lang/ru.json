@@ -290,5 +290,11 @@
     "Capacity": "Объем",
     "Add": "Добавить",
     "All required fields must be filled": "Все необходимые поля должны быть заполнены",
-    "Add vehicle": "Добавить ТС"
+    "Add vehicle": "Добавить ТС",
+    "show phone": "Показать телефон",
+    "Location": "Расположение",
+    "Edit vehicle": "Обновить ТС",
+    "Delete vehicle": "Удалить ТС",
+    "Update": "Обновить",
+    "Add": "Добавить"
 }
