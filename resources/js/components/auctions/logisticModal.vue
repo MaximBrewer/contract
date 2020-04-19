@@ -172,7 +172,7 @@
         class="btn btn-success"
         data-dismiss="modal"
         @click="addVehicle()"
-      >{{ form.id ? __('Update') : __('Add')</button>
+      >{{ form.id ? __('Update') : __('Add') }}</button>
     </div>
   </section>
 </template>
