@@ -86,6 +86,7 @@
           <label class="control-label">{{ __('Purpose') }}</label>
           <v-select
             label="title"
+            
             :searchable="true"
             @input="filterList"
             :options="$root.purposes"
