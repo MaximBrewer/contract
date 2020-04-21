@@ -138,10 +138,12 @@
               </ul>
               {{ logistic.capacity.title }}
               <br />
-              <div @click="showPhone(index)">
-                <a href="javascript:void(0)" v-if="!logistic.phone">{{ __('show phone') }}</a>
-                <span v-if="!!logistic.phone">{{ logistic.phone }}</span>
-              </div>
+              <a
+                @click="showPhone(index)"
+                href="javascript:void(0)"
+                v-if="!logistic.phone"
+              >{{ __('show phone') }}</a>
+              <span v-if="!!logistic.phone">{{ logistic.phone }}</span>
             </td>
             <td>
               {{ logistic.federal_district.title }}
@@ -225,14 +227,13 @@ export default {
       let app = this;
       let loader = Vue.$loading.show();
       axios
-        .get("/web/v1/showPhone/" + this.logisticsList[index].contragent.id)
+        .get("/web/v1/show_phone/" + this.logisticsList[index].id)
         .then(function(res) {
-          this.logisticsList[index].phone = this.logisticsList[
-            index
-          ].contragent.phone;
+          app.logistics = res.data.data;
+          app.filterList();
           loader.hide();
         })
-        .catch(function(res) {
+        .catch(function(err) {
           loader.hide();
           app.$fire({
             title: app.__("Error!"),
@@ -241,10 +242,6 @@ export default {
             timer: 5000
           });
         });
-      this.logisticsList[index].phone = this.logisticsList[
-        index
-      ].contragent.phone;
-      this.filterList();
     },
     deleteLogistic(logistic) {
       var app = this;

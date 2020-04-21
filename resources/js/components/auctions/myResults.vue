@@ -3,7 +3,8 @@
     <div class="row">
       <div class="col-md-12 text-right">
         <div class="form-group">
-          <router-link class="btn btn-primary btn-lg"
+          <router-link
+            class="btn btn-primary btn-lg"
             :to="'/personal/settlements'"
           >{{ __('Взаиморасчеты') }}</router-link>
         </div>
@@ -60,6 +61,27 @@
         </tbody>
       </table>
     </div>
+    <div class="table-responsive" id="logistic_logs">
+      <div class="h2 text-center">{{ __('My results') }}</div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>{{ __('Vehicle') }}</th>
+            <th>{{ __('Who watched') }}</th>
+            <th>{{ __('Date & time') }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(logistic_log, index) in logistic_logs" :key="index">
+            <td>{{ index + 1 }}</td>
+            <td>{{ logistic_log.vehicle }}</td>
+            <td>{{ logistic_log.contragent.title }}</td>
+            <td>{{ logistic_log.datetime }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 </template>
 <script>
@@ -67,7 +89,8 @@ export default {
   data: function() {
     return {
       results: [],
-      message: []
+      message: [],
+      logistic_logs: []
     };
   },
   mounted() {
@@ -76,8 +99,8 @@ export default {
     axios
       .get("/web/v1/results")
       .then(function(res) {
-        console.log(res.data.data);
-        app.results = res.data.data;
+        app.results = res.data.results;
+        app.logistic_logs = res.data.logistic_logs;
         loader.hide();
       })
       .catch(function(err) {

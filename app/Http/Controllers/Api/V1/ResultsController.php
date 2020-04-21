@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Bet;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\LogisticLog as LogisticLogResource;
+use App\LogisticLog;
+use Illuminate\Database\Eloquent\Builder;
 
 class ResultsController extends Controller
 {
@@ -19,15 +22,19 @@ class ResultsController extends Controller
      */
     public function index()
     {
-        return ResultResource::collection(
+        return ['results' => ResultResource::collection(
             DB::table('bets')
-            ->leftJoin('auctions', 'bets.auction_id', '=', 'auctions.id')
-            ->select('bets.*')
-            ->where('auctions.contragent_id', Auth::user()->contragents[0]->id)
-            ->whereNotNull(['approved_contract'])
-            ->orderBy('id', 'DESC')
-            ->get()
-        );
+                ->leftJoin('auctions', 'bets.auction_id', '=', 'auctions.id')
+                ->select('bets.*')
+                ->where('auctions.contragent_id', Auth::user()->contragents[0]->id)
+                ->whereNotNull(['approved_contract'])
+                ->orderBy('id', 'DESC')
+                ->get()
+        ), 'logistic_logs' => LogisticLogResource::collection(
+            LogisticLog::whereHas('logistic', function (Builder $query) {
+                $query->where('contragent_id', Auth::user()->contragents[0]->id);
+            })->get()
+        )];
     }
     /**
      * Display a listing of the resource.

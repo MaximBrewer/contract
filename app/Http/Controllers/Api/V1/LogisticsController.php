@@ -9,6 +9,7 @@ use App\Http\Resources\Logistic as LogisticResource;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use App\LogisticLog;
 
 class LogisticsController extends Controller
 {
@@ -26,6 +27,16 @@ class LogisticsController extends Controller
     public function show($id)
     {
         return new LogisticResource(Logistic::findOrFail($id));
+    }
+
+    public function showPhone($id)
+    {
+        $logistic = Logistic::findOrFail($id);
+        $logisticLog = LogisticLog::create([
+            'logistic_id' => $id,
+            'contragent_id' => User::find(Auth::user()->id)->contragents[0]->id
+        ]);
+        return LogisticResource::collection(Logistic::all());
     }
 
     public function store(Request $r)
@@ -55,7 +66,7 @@ class LogisticsController extends Controller
             'coords' => $r->post('coords')
         ]);
         $purposes = [];
-        foreach($r->post('purposes') as $purpose) $purposes[] = $purpose['id'];
+        foreach ($r->post('purposes') as $purpose) $purposes[] = $purpose['id'];
 
         $logistic->purposes()->sync($purposes);
 
@@ -73,7 +84,7 @@ class LogisticsController extends Controller
                 'errors' => []
             ], 422);
         }
-        
+
         $validator = Validator::make($r->all(), [
             "title" => "required|min:3",
             "gosznak" => "required|min:3",
@@ -100,15 +111,15 @@ class LogisticsController extends Controller
 
         $purposes = [];
 
-        foreach($r->post('purposes') as $purpose) $purposes[] = $purpose['id'];
+        foreach ($r->post('purposes') as $purpose) $purposes[] = $purpose['id'];
 
         $logistic->purposes()->sync($purposes);
 
         return LogisticResource::collection(Logistic::all());
-
     }
 
-    public function destroy(Request $r, $id){
+    public function destroy(Request $r, $id)
+    {
 
         $logistic = Logistic::findOrFail($id);
 
