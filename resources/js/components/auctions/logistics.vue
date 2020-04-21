@@ -222,6 +222,25 @@ export default {
   },
   methods: {
     showPhone(index) {
+      let app = this;
+      let loader = Vue.$loading.show();
+      axios
+        .get("/web/v1/showPhone/" + this.logisticsList[index].contragent.id)
+        .then(function(res) {
+          this.logisticsList[index].phone = this.logisticsList[
+            index
+          ].contragent.phone;
+          loader.hide();
+        })
+        .catch(function(res) {
+          loader.hide();
+          app.$fire({
+            title: app.__("Error!"),
+            text: app.__("Failed to load logistics"),
+            type: "error",
+            timer: 5000
+          });
+        });
       this.logisticsList[index].phone = this.logisticsList[
         index
       ].contragent.phone;
@@ -254,7 +273,9 @@ export default {
         if (f.purposes.length) {
           for (let g in f.purposes) {
             for (let d in a.purposes) {
-              inpurposes = inpurposes ? inpurposes : a.purposes[d].id == f.purposes[g].id;
+              inpurposes = inpurposes
+                ? inpurposes
+                : a.purposes[d].id == f.purposes[g].id;
             }
           }
         }
