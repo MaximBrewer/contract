@@ -60,8 +60,8 @@
           </tr>
         </tbody>
       </table>
-    </div>
-    <div class="table-responsive" id="logistic_logs">
+    </div><br><br>
+    <div class="table-responsive" id="logistic_logs" v-if="logistic_logs.length">
       <div class="h2 text-center">{{ __('My results') }}</div>
       <table class="table table-bordered">
         <thead>
