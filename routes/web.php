@@ -28,6 +28,9 @@ Route::resource('/tags', 'Api\V1\TagsController', ['except' => ['create', 'edit'
 Route::resource('/multiplicities', 'Api\V1\MultiplicitiesController', ['except' => ['create', 'edit', 'update', 'delete']]);
 Route::resource('/types', 'Api\V1\TypesController', ['except' => ['create', 'edit', 'update', 'delete']]);
 
+
+Route::get('/storesAll', 'Api\V1\StoresController@all');
+
 Route::get('/', function () {
     return redirect('/personal');
 });

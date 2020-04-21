@@ -227,6 +227,7 @@ const app = new Vue({
         app.getTags();
         app.getPurposes();
         app.getCapacities();
+        app.getAllStores();
         axios
             .get("/auth")
             .then(res => {
@@ -261,6 +262,7 @@ const app = new Vue({
         regions: [],
         products: [],
         miltiplicities: [],
+        allStores: [],
         stores: [],
         target: {},
         filter: {
@@ -323,6 +325,12 @@ const app = new Vue({
             let app = this;
             axios.get("/types").then(function(res) {
                 app.types = res.data;
+            });
+        },
+        getAllStores() {
+            let app = this;
+            axios.get("/storesAll").then(function(res) {
+                app.allStores = res.data.data;
             });
         },
         getMyStores() {

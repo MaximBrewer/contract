@@ -89,7 +89,8 @@
             :searchable="true"
             @input="filterList"
             :options="$root.purposes"
-            v-model="filter.purpose"
+            :multiple="true"
+            v-model="filter.purposes"
           >
             <div slot="no-options">{{ __('No Options Here!') }}</div>
           </v-select>
@@ -100,10 +101,10 @@
         <div class="form-group">
           <label class="control-label">{{ __('Sort by distance from store') }}</label>
           <v-select
-            label="address"
+            label="title"
             :searchable="false"
             @input="sorByDistance"
-            :options="$root.stores"
+            :options="$root.allStores"
             v-model="store"
           >
             <div slot="no-options">{{ __('No Options Here!') }}</div>
@@ -133,10 +134,7 @@
               <br />
               {{ logistic.gosznak }}
               <ul>
-                <li
-                  v-for="(purpose, ind) in logistic.purposes"
-                  :key="ind"
-                >{{ purpose.title }}</li>
+                <li v-for="(purpose, ind) in logistic.purposes" :key="ind">{{ purpose.title }}</li>
               </ul>
               {{ logistic.capacity.title }}
               <br />
@@ -214,7 +212,7 @@ export default {
       store: null,
       filter: {
         federal_district: null,
-        purpose: null,
+        purposes: [],
         capacity: null,
         region: null,
         contragent: null,
@@ -252,6 +250,14 @@ export default {
       for (let v in app.logistics) {
         ++cnt;
         let a = app.logistics[v];
+        let inpurposes = false;
+        if (f.purposes.length) {
+          for (let g in f.purposes) {
+            for (let d in a.purposes) {
+              inpurposes = inpurposes ? inpurposes : a.purposes[d].id == f.purposes[g].id;
+            }
+          }
+        }
         if (
           (!f.federal_district ||
             f.federal_district.id == a.federal_district.id) &&
@@ -259,7 +265,8 @@ export default {
           (!f.purpose || f.purpose.id == a.purpose.id) &&
           (!f.capacity || f.capacity.id == a.capacity.id) &&
           (!f.contragent || f.contragent.id == a.contragent.id) &&
-          (!f.available_from || f.contragent.id == a.contragent.id)
+          (!f.available_from || f.contragent.id == a.contragent.id) &&
+          (!f.purposes.length || inpurposes)
         )
           app.logisticsList.push(a);
       }

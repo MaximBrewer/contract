@@ -15,16 +15,16 @@ class Store extends Model
         'region_id'
     ];
 
-    protected $appends = [
-        'filled',
-    ];
+    // protected $appends = [
+    //     'filled',
+    // ];
 
-    public function getFilledAttribute()
-    {
-        $this->federalDistrict;
-        $this->region;
-        return true;
-    }
+    // public function getFilledAttribute()
+    // {
+    //     $this->federalDistrict;
+    //     $this->region;
+    //     return true;
+    // }
     
     public function federalDistrict()
     {
@@ -34,5 +34,10 @@ class Store extends Model
     public function region()
     {
         return $this->belongsTo('App\Region');
+    }
+    
+    public function contragent()
+    {
+        return $this->belongsTo('App\Contragent');
     }
 }

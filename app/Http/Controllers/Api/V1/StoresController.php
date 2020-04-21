@@ -6,6 +6,7 @@ use App\Store;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Store as StoreResource;
 
 class StoresController extends Controller
 {
@@ -23,5 +24,9 @@ class StoresController extends Controller
 
         return Store::where('contragent_id', Auth::user()->contragents[0]->id)->get();
 
+    }
+    public function all()
+    {
+        return StoreResource::collection(Store::all());
     }
 }
