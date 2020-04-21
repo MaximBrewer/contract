@@ -3,11 +3,11 @@
     <div class="row">
       <div class="col-md-12 text-right">
         <div class="form-group">
-          <a
-            href="javascript:void(0)"
-            @click="createNew"
+          <router-link
+            v-tooltip="__('Create new vehicle')"
+            :to="{name: 'createLogistic'}"
             class="btn btn-success btn-lg"
-          >{{ __('Create new vehicle') }}</a>
+          >{{ __('Create new vehicle') }}</router-link>
         </div>
       </div>
     </div>
@@ -132,9 +132,12 @@
               {{ logistic.title }}
               <br />
               {{ logistic.gosznak }}
-              <br />
-              {{ logistic.purpose.title }}
-              <br />
+              <ul>
+                <li
+                  v-for="(purpose, ind) in logistic.purposes"
+                  :key="ind"
+                >{{ purpose.title }}</li>
+              </ul>
               {{ logistic.capacity.title }}
               <br />
               <div @click="showPhone(index)">
@@ -154,15 +157,15 @@
             <td>{{ logistic.available_from }}</td>
             <td>{{ logistic.description }}</td>
             <td class="text-center">
-              <a
+              <router-link
                 v-tooltip="__('Edit vehicle')"
                 href="javascript:void(0)"
                 class="btn btn-primary btn-sm"
                 v-if="logistic.contragent.id == company.id"
-                @click="editLogistic(logistic)"
+                :to="{name: 'editLogistic', 'params': {'id': logistic.id}}"
               >
                 <i class="mdi mdi-pencil" aria-hidden="true"></i>
-              </a>
+              </router-link>
               <a
                 v-tooltip="__('Delete vehicle')"
                 href="javascript:void(0)"
@@ -177,22 +180,10 @@
         </tbody>
       </table>
     </div>
-    <modal
-      :scrollable="true"
-      name="add_logistic"
-      height="auto"
-      :adaptive="true"
-      width="90%"
-      :maxWidth="maxModalWidth"
-    >
-      <logistic-modal :form="logistic" />
-    </modal>
   </section>
 </template>
 <script>
-import LogisticModal from "./logisticModal";
 export default {
-  components: { LogisticModal },
   props: ["action"],
   mounted() {
     let app = this;
@@ -233,30 +224,10 @@ export default {
   },
   methods: {
     showPhone(index) {
-      this.logisticsList[index].phone = this.logisticsList[index].contragent.phone;
+      this.logisticsList[index].phone = this.logisticsList[
+        index
+      ].contragent.phone;
       this.filterList();
-    },
-    createNew() {
-      this.logistic = {
-        id: null,
-        contragent: null,
-        federal_district: null,
-        region: null,
-        purpose: null,
-        address: null,
-        capacity: null,
-        title: null,
-        gosznak: null,
-        description: null,
-        available_from: null,
-        coords: null
-      };
-      this.$modal.show("add_logistic");
-    },
-    editLogistic(logistic) {
-      this.logistic = JSON.parse(JSON.stringify(logistic));
-      console.log(this.logistic);
-      this.$modal.show("add_logistic");
     },
     deleteLogistic(logistic) {
       var app = this;

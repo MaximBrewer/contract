@@ -23,36 +23,42 @@ class LogisticsController extends Controller
     {
         return LogisticResource::collection(Logistic::all());
     }
+    public function show($id)
+    {
+        return new LogisticResource(Logistic::findOrFail($id));
+    }
 
     public function store(Request $r)
     {
-        
         $validator = Validator::make($r->all(), [
             "title" => "required|min:3",
             "gosznak" => "required|min:3",
             "coords" => "required",
-            "purpose_id" => "required|exists:purposes,id",
-            "capacity_id" => "required|exists:capacities,id",
-            "federal_district_id" => "required|exists:federal_districts,id",
-            "region_id" => "required|exists:regions,id",
+            "capacity.id" => "required|exists:capacities,id",
+            "federal_district.id" => "required|exists:federal_districts,id",
+            "region.id" => "required|exists:regions,id",
             'available_from' => 'required|date|after:today'
         ]);
 
         $validator->validate();
 
-        Logistic::create([
+        $logistic = Logistic::create([
             'contragent_id' => User::find(Auth::user()->id)->contragents[0]->id,
             'gosznak' => $r->post('gosznak'),
             'title' => $r->post('title'),
             'address' => $r->post('address'),
             'description' => $r->post('description'),
-            'purpose_id' => $r->post('purpose_id'),
-            'capacity_id' => $r->post('capacity_id'),
-            'federal_district_id' => $r->post('federal_district_id'),
-            'region_id' => $r->post('region_id'),
+            'capacity_id' => $r->post('capacity')['id'],
+            'federal_district_id' => $r->post('federal_district')['id'],
+            'region_id' => $r->post('region')['id'],
             'available_from' => date("Y-m-d", strtotime($r->post('available_from'))),
             'coords' => $r->post('coords')
         ]);
+        $purposes = [];
+        foreach($r->post('purposes') as $purpose) $purposes[] = $purpose['id'];
+
+        $logistic->purposes()->sync($purposes);
+
         return LogisticResource::collection(Logistic::all());
     }
 
@@ -72,10 +78,9 @@ class LogisticsController extends Controller
             "title" => "required|min:3",
             "gosznak" => "required|min:3",
             "coords" => "required",
-            "purpose_id" => "required|exists:purposes,id",
-            "capacity_id" => "required|exists:capacities,id",
-            "federal_district_id" => "required|exists:federal_districts,id",
-            "region_id" => "required|exists:regions,id",
+            "capacity.id" => "required|exists:capacities,id",
+            "federal_district.id" => "required|exists:federal_districts,id",
+            "region.id" => "required|exists:regions,id",
             'available_from' => 'required|date|after:today'
         ]);
 
@@ -86,13 +91,19 @@ class LogisticsController extends Controller
             'title' => $r->post('title'),
             'address' => $r->post('address'),
             'description' => $r->post('description'),
-            'purpose_id' => $r->post('purpose_id'),
-            'capacity_id' => $r->post('capacity_id'),
-            'federal_district_id' => $r->post('federal_district_id'),
-            'region_id' => $r->post('region_id'),
+            'capacity_id' => $r->post('capacity')['id'],
+            'federal_district_id' => $r->post('federal_district')['id'],
+            'region_id' => $r->post('region')['id'],
             'available_from' => date("Y-m-d", strtotime($r->post('available_from'))),
             'coords' => $r->post('coords')
         ]);
+
+        $purposes = [];
+
+        foreach($r->post('purposes') as $purpose) $purposes[] = $purpose['id'];
+
+        $logistic->purposes()->sync($purposes);
+
         return LogisticResource::collection(Logistic::all());
 
     }

@@ -14,6 +14,13 @@ class Logistic extends JsonResource
      */
     public function toArray($request)
     {
+        $purposes = [];
+        foreach ($this->purposes as $purpose) {
+            $purposes[] = [
+                'id' => $purpose->id,
+                'title' => $purpose->title,
+            ];
+        }
         return [
             'id' => $this->id,
             'contragent' => [
@@ -29,10 +36,7 @@ class Logistic extends JsonResource
                 'id' => $this->region->id,
                 'title' => $this->region->title,
             ],
-            'purpose' => [
-                'id' => $this->purpose->id,
-                'title' => $this->purpose->title,
-            ],
+            'purposes' => $purposes,
             'capacity' => [
                 'id' => $this->capacity->id,
                 'title' => $this->capacity->title,

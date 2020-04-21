@@ -75,6 +75,8 @@ import DialoguesShow from "./components/dialogues/dialogueShow.vue";
 import SendMessage from "./components/sendMessage.vue";
 import SettlementsIndex from "./components/settlements/settlementsIndex.vue";
 import Logistics from "./components/auctions/logistics.vue";
+import LogisticCreate from "./components/auctions/logisticCreate.vue";
+import LogisticEdit from "./components/auctions/logisticEdit.vue";
 import Finance from "./components/auctions/finance.vue";
 
 Vue.component("SendMessage", SendMessage, {});
@@ -150,11 +152,6 @@ const app = new Vue({
                 name: "company"
             },
             {
-                path: "/personal/auctions/create",
-                component: AuctionCreate,
-                name: "createAuction"
-            },
-            {
                 path: "/personal/auctions/results",
                 component: MyResults,
                 name: "myResults"
@@ -163,6 +160,11 @@ const app = new Vue({
                 path: "/personal/auctions/show/:id",
                 component: AuctionShow,
                 name: "showAuction"
+            },
+            {
+                path: "/personal/auctions/create",
+                component: AuctionCreate,
+                name: "createAuction"
             },
             {
                 path: "/personal/auctions/edit/:id",
@@ -193,6 +195,16 @@ const app = new Vue({
                 path: "/personal/logistics",
                 component: Logistics,
                 name: "logistics"
+            },
+            {
+                path: "/personal/logistics/create",
+                component: LogisticCreate,
+                name: "createLogistic"
+            },
+            {
+                path: "/personal/logistics/edit/:id",
+                component: LogisticEdit,
+                name: "editLogistic"
             },
             {
                 path: "/personal/finance",

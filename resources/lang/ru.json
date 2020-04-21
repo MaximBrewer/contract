@@ -296,5 +296,9 @@
     "Edit vehicle": "Обновить ТС",
     "Delete vehicle": "Удалить ТС",
     "Update": "Обновить",
-    "Add": "Добавить"
+    "Add": "Добавить",
+    "Field is required!": "Поле необходимо заполнить!",
+    "Enter vehicle location on the map!": "Укажите на карте расположение ТС",
+    "Success!": "ОК",
+    "The vehicle was updated successfully!": "Данные ТС успешно обновлены"
 }

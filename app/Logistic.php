@@ -41,9 +41,9 @@ class Logistic extends Model
     {
         return $this->belongsTo('App\Capacity');
     }
-    
-    public function purpose()
+
+    public function purposes()
     {
-        return $this->belongsTo('App\Purpose');
+        return $this->belongsToMany('App\Purpose', 'logistic_purpose')->orderBy('id', 'desc');
     }
 }

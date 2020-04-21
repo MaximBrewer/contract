@@ -20,7 +20,6 @@ class CreateLogisticsTable extends Migration
             $table->string('coords');
             $table->text('description')->nullable();
             $table->integer('contragent_id');
-            $table->integer('purpose_id');
             $table->integer('capacity_id');
             $table->integer('federal_district_id');
             $table->integer('region_id');
