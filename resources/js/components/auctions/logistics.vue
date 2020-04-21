@@ -86,7 +86,6 @@
           <label class="control-label">{{ __('Purpose') }}</label>
           <v-select
             label="title"
-            
             :searchable="true"
             @input="filterList"
             :options="$root.purposes"
@@ -103,7 +102,7 @@
           <label class="control-label">{{ __('Sort by distance from store') }}</label>
           <v-select
             label="title"
-            :searchable="false"
+            :searchable="true"
             @input="sorByDistance"
             :options="$root.allStores"
             v-model="store"
