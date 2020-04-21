@@ -300,5 +300,8 @@
     "Field is required!": "Поле необходимо заполнить!",
     "Enter vehicle location on the map!": "Укажите на карте расположение ТС",
     "Success!": "ОК",
-    "The vehicle was updated successfully!": "Данные ТС успешно обновлены"
+    "The vehicle was updated successfully!": "Данные ТС успешно обновлены",
+    "Vehicle": "ТС",
+    "Who watched": "Кто смотрел",
+    "Date & time": "Когда"
 }
