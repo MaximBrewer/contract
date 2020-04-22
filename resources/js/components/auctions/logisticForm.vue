@@ -226,6 +226,11 @@ export default {
               type: "success",
               timer: 5000
             });
+            if (res.data.user) {
+            console.log(res.data);
+              app.$root.user.contragents[0].balance = res.data.user.contragents[0].balance;
+              app.$root.company.balance = res.data.user.contragents[0].balance;
+            }
             app.$router.replace("/personal/logistics/");
             loader.hide();
           })

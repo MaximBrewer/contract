@@ -116,7 +116,7 @@ class LogisticsController extends Controller
 
         $logistic->purposes()->sync($purposes);
 
-        return LogisticResource::collection(Logistic::all());
+        return ['user' => Auth::user()];
     }
 
     public function destroy(Request $r, $id)
