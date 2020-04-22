@@ -14,6 +14,7 @@ class Settlement extends Model
         'type',
         'status',
         'method',
+        'logistic_id',
         'bet_id'
     ];
 
@@ -57,6 +58,11 @@ class Settlement extends Model
         if ($this->contragent->kpp) $str .= ", КПП " . $this->contragent->kpp;
         if ($this->contragent->legal_address) $str .= ", " . $this->contragent->legal_address;
         return $str;
+    }
+
+    public function logistic()
+    {
+        return $this->belongsTo('App\Logistic');
     }
 
     public function contragent()

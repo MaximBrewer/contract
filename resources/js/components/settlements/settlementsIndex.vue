@@ -61,6 +61,7 @@
             <th class="align-middle">{{ __('Platform rewards') }}</th>
             <th class="align-middle">{{ __('The amount sent') }}</th>
             <th class="align-middle">{{ __('Auction') }}</th>
+            <th class="align-middle">{{ __('Vehicle') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -69,7 +70,8 @@
             <td class="text-center">{{ settlement.datetime }}</td>
             <td class="text-right"><span v-if="settlement.type == 'debit'">{{ settlement.balance | formatMoney }}</span></td>
             <td class="text-right"><span v-if="settlement.type == 'credit'">{{ settlement.balance | formatMoney }}</span></td>
-            <td class="text-center"><router-link :to="'/personal/auctions/show/' + settlement.auction_id">{{ settlement.auction_id }}</router-link></td>
+            <td class="text-center"><router-link v-if="settlement.auction_id" :to="'/personal/auctions/show/' + settlement.auction_id">{{ settlement.auction_id }}</router-link></td>
+            <td class="text-center"><span v-if="settlement.logistic">{{  settlement.logistic.title }}</span></td>
           </tr>
         </tbody>
       </table>
