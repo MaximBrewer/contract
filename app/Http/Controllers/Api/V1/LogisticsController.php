@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\LogisticLog;
+use Illuminate\Support\Carbon;
 
 class LogisticsController extends Controller
 {
@@ -62,7 +63,7 @@ class LogisticsController extends Controller
             'capacity_id' => $r->post('capacity')['id'],
             'federal_district_id' => $r->post('federal_district')['id'],
             'region_id' => $r->post('region')['id'],
-            'available_from' => date("Y-m-d", strtotime($r->post('available_from'))),
+            'available_from' => (new Carbon($r->post('available_from')))->format("Y-m-d 00:00:00"),
             'coords' => $r->post('coords')
         ]);
         $purposes = [];
@@ -98,15 +99,15 @@ class LogisticsController extends Controller
         $validator->validate();
 
         $logistic->update([
+            'available_from' => Carbon::parse($r->post('available_from'))->format("Y-m-d H:i:s"),
+            'coords' => $r->post('coords'),
             'gosznak' => $r->post('gosznak'),
             'title' => $r->post('title'),
             'address' => $r->post('address'),
             'description' => $r->post('description'),
             'capacity_id' => $r->post('capacity')['id'],
             'federal_district_id' => $r->post('federal_district')['id'],
-            'region_id' => $r->post('region')['id'],
-            'available_from' => date("Y-m-d", strtotime($r->post('available_from'))),
-            'coords' => $r->post('coords')
+            'region_id' => $r->post('region')['id']
         ]);
 
         $purposes = [];

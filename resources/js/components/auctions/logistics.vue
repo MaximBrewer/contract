@@ -154,7 +154,7 @@
               <br />
               <span v-if="logistic.range">{{ logistic.range }} км</span>
             </td>
-            <td>{{ logistic.available_from }}</td>
+            <td>{{ logistic.available_from | formatDate }}</td>
             <td>{{ logistic.description }}</td>
             <td class="text-center">
               <router-link

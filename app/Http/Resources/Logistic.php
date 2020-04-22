@@ -49,7 +49,7 @@ class Logistic extends JsonResource
             'title' => $this->title,
             'gosznak' => $this->gosznak,
             'description' => $this->description,
-            'available_from' => date("Y-m-d", strtotime($this->available_from)),
+            'available_from' => date(DATE_ATOM, strtotime($this->available_from)),
             'coords' => $this->coords,
             'address' => $this->address,
         ];
