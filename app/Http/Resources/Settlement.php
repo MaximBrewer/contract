@@ -22,7 +22,9 @@ class Settlement extends JsonResource
             'auction_id' => !!$this->bet ? $this->bet->auction->id : '',
             'logistic' => $this->logistic ? [
                 'title' => $this->logistic->title . ' ' . $this->logistic->gosznak
-            ] : null
+            ] : ($this->logistic_id ? [
+                'title' => __('Deleted')
+            ] : '')
         ];
     }
 }
