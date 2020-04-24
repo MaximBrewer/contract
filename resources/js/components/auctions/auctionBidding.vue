@@ -120,7 +120,7 @@
                     href="javascript:void(0)"
                     class="btn btn-primary"
                   >
-                    {{__('Het the Invoice')}}
+                    {{__('Get the Invoice')}}
                   </a>
                 </div>
               </td>

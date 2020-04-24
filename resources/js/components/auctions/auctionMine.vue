@@ -102,7 +102,7 @@
                     >
                       <i class="mdi mdi-check-circle" aria-hidden="true"></i>
                     </a>
-                    <a v-if="!!bet.approved_contract" href="javascript:void(0)" class="btn btn-primary">{{__('Het the Invoice')}}</a>
+                    <a v-if="!!bet.approved_contract" href="javascript:void(0)" class="btn btn-primary">{{__('Get the Invoice')}}</a>
                   </div>
                 </td>
               </tr>

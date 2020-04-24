@@ -216,8 +216,8 @@ const app = new Vue({
     created() {
         let app = this;
         app.confirmedOptions = [
-            { id: 2, title: app.__("Yes") },
-            { id: 1, title: app.__("No") }
+            { id: 2, title: app.__("Confirmed") },
+            { id: 1, title: app.__("Not confirmed") }
         ];
         app.getFederalDistricts();
         app.getMultiplicities();

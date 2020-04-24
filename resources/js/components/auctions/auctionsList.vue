@@ -14,9 +14,9 @@
     <div class="row">
       <div class="col-md-2 col-sm-3 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __('Federal district') }}</label>
           <v-select
             label="title"
+            :placeholder="__('Federal district')"
             :searchable="true"
             :disabled="!canaction"
             @input="filterGetRegions"
@@ -29,9 +29,9 @@
       </div>
       <div class="col-md-2 col-sm-3 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __('Region') }}</label>
           <v-select
             label="title"
+            :placeholder="__('Region')"
             :searchable="true"
             :disabled="!canaction"
             @input="filterAuctions"
@@ -44,9 +44,9 @@
       </div>
       <div class="col-md-4 col-sm-6 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __('Contragent') }}</label>
           <v-select
             label="title"
+            :placeholder="__('Contragent')"
             :searchable="true"
             :disabled="!canaction"
             @input="filterAuctions"
@@ -59,9 +59,9 @@
       </div>
       <div class="col-md-4 col-sm-6 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __('Product') }}</label>
           <v-select
             label="title"
+            :placeholder="__('Product')"
             :searchable="true"
             :disabled="!canaction"
             @input="filterAuctions"
@@ -74,10 +74,10 @@
       </div>
       <div class="col-md-4 col-sm-6 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __('Multiplicity') }}</label>
           <v-select
             label="title"
             :searchable="true"
+            :placeholder="__('Multiplicity')"
             :disabled="!canaction"
             @input="filterAuctions"
             :options="$root.multiplicities"
@@ -89,10 +89,10 @@
       </div>
       <div class="col-md-2 col-sm-3 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __('Start at from') }}</label>
           <datetime
             type="date"
             zone="Europe/Moscow"
+            :placeholder="__('Start at from')"
             :disabled="!canaction"
             value-zone="Europe/Moscow"
             class="theme-primary"
@@ -104,10 +104,10 @@
       </div>
       <div class="col-md-2 col-sm-3 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __('to') }}</label>
           <datetime
             type="date"
             zone="Europe/Moscow"
+            :placeholder="__('to')"
             :disabled="!canaction"
             value-zone="Europe/Moscow"
             class="theme-primary"
@@ -119,11 +119,11 @@
       </div>
       <div class="col-md-4 col-sm-6 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __('Confirmed') }}</label>
           <v-select
             label="title"
             :searchable="false"
             :disabled="!canaction"
+            :placeholder="__('Confirmed?')"
             @input="filterAuctions"
             :options="$root.confirmedOptions"
             :reduce="cod => cod.id"
@@ -134,11 +134,11 @@
           </v-select>
         </div>
       </div>
-      <div class="col-md-2 col-sm-3 col-12">
+      <div class="col-md-4 col-sm-3 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __('Tags') }}</label>
           <v-select
             label="title"
+            :placeholder="__('Tags')"
             :searchable="true"
             :disabled="!canaction"
             @input="filterAuctions"
@@ -150,12 +150,12 @@
           </v-select>
         </div>
       </div>
-      <div class="col-md-2 col-sm-3 col-12">
+      <div class="col-md-4 col-sm-3 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __('Mode') }}</label>
           <v-select
             :searchable="false"
             :disabled="!canaction"
+            :placeholder="__('Mode')"
             @input="filterAuctions"
             :options="[{code: 'future', label: 'впрок'}, {code: 'price2day', label: 'price2day'}]"
             :reduce="cod => cod.code"
@@ -169,26 +169,9 @@
       </div>
       <div class="col-md-4 col-sm-6 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __('New can bet?') }}</label>
-          <v-select
-            :searchable="false"
-            :disabled="!canaction"
-            @input="filterAuctions"
-            :options="[{code: 'no', label: 'Нет'}, {code: 'yes', label: 'Да'}]"
-            :reduce="cod => cod.code"
-            :cod="filter.can_bet"
-            :multiple="false"
-            v-model="filter.can_bet"
-          >
-            <div slot="no-options">{{ __('No Options Here!') }}</div>
-          </v-select>
-        </div>
-      </div>
-      <div class="col-md-4 col-sm-6 col-12">
-        <div class="form-group">
-          <label class="control-label">{{ __('Sort by distance from store') }}</label>
           <v-select
             label="address"
+            :placeholder="__('Sort by distance from store')"
             :searchable="false"
             :disabled="!canaction"
             @input="sorByDistance"
@@ -243,7 +226,7 @@ export default {
         product: null,
         multiplicity: null,
         region: null,
-        confirmed: this.action == "all" ? { id: 2, title: "Да" } : null,
+        confirmed: this.action == "all" ? 2 : null,
         start_at: null,
         finish_at: null,
         tags: []
@@ -314,7 +297,7 @@ export default {
           (!f.region || f.region.id == a.store.region.id) &&
           (!f.product || f.product.id == a.product.id) &&
           (!f.multiplicity || f.multiplicity.id == a.multiplicity.id) &&
-          (!f.confirmed || f.confirmed.id - 1 == a.confirmed) &&
+          (!f.confirmed || f.confirmed - 1 == a.confirmed) &&
           (!f.contragent || f.contragent.id == a.contragent.id) &&
           (!f.can_bet || f.can_bet == a.can_bet) &&
           (!f.mode || f.mode == a.mode) &&
