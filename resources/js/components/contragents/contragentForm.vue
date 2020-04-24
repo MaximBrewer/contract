@@ -25,7 +25,9 @@
               label="title"
               :options="$root.federalDistricts"
               v-model="$root.contragent.federal_district"
-            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+            >
+              <div slot="no-options">{{ __('No Options Here!') }}</div>
+            </v-select>
             <div role="alert" class="invalid-feedback" v-if="$root.errors['federal_district.id']">
               <span
                 v-for="(error, index) in $root.errors['federal_district.id']"
@@ -43,7 +45,9 @@
               :options="$root.regions"
               v-model="$root.contragent.region"
               ref="region"
-            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+            >
+              <div slot="no-options">{{ __('No Options Here!') }}</div>
+            </v-select>
             <div role="alert" class="invalid-feedback" v-if="$root.errors['region.id']">
               <span v-for="(error, index) in $root.errors['region.id']" :key="index">{{ error }}</span>
             </div>
@@ -59,7 +63,9 @@
               v-model="$root.contragent.types"
               :multiple="true"
               ref="types"
-            ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+            >
+              <div slot="no-options">{{ __('No Options Here!') }}</div>
+            </v-select>
             <div role="alert" class="invalid-feedback" v-if="$root.errors['types.id']">
               <span v-for="(error, index) in $root.errors['types.id']" :key="index">{{ error }}</span>
             </div>
@@ -191,7 +197,9 @@
                           :options="$root.federalDistricts"
                           v-model="store.federal_district"
                           :ref="'stores_'+index+'_federal_district'"
-                        ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+                        >
+                          <div slot="no-options">{{ __('No Options Here!') }}</div>
+                        </v-select>
                         <div
                           role="alert"
                           class="invalid-feedback"
@@ -212,7 +220,9 @@
                           :options="$root.regions"
                           v-model="store.region"
                           :ref="'stores_'+index+'_region'"
-                        ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+                        >
+                          <div slot="no-options">{{ __('No Options Here!') }}</div>
+                        </v-select>
                         <div
                           role="alert"
                           class="invalid-feedback"
@@ -245,6 +255,108 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label class="control-label"></label>
+          <div class="form-group form-check">
+            <input
+              type="checkbox"
+              v-model="$root.contragent.requisites"
+              readonly
+              class="form-check-input"
+              id="contragent_requisites"
+            />
+            <label class="form-check-label" for="contragent_requisites">
+              <h4>{{ __('Fill bank details') }}</h4>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row" v-if="$root.contragent.requisites">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">{{ __('KPP') }}</label>
+            <input
+              v-bind:class="{ 'is-invalid':  $root.errors.kpp }"
+              type="text"
+              v-model="$root.contragent.kpp"
+              class="form-control"
+              ref="title"
+            />
+            <div role="alert" class="invalid-feedback" v-if="$root.errors.kpp">
+              <span v-for="(error, index) in $root.errors.kpp" :key="index">{{ error }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">{{ __('Checking account') }}</label>
+            <input
+              v-bind:class="{ 'is-invalid':  $root.errors.rs }"
+              type="text"
+              v-model="$root.contragent.rs"
+              class="form-control"
+              ref="title"
+            />
+            <div role="alert" class="invalid-feedback" v-if="$root.errors.rs">
+              <span v-for="(error, index) in $root.errors.rs" :key="index">{{ error }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">{{ __('BIC') }}</label>
+            <input
+              v-bind:class="{ 'is-invalid':  $root.errors.bik }"
+              type="text"
+              v-model="$root.contragent.bik"
+              class="form-control"
+              ref="title"
+            />
+            <div role="alert" class="invalid-feedback" v-if="$root.errors.bik">
+              <span v-for="(error, index) in $root.errors.bik" :key="index">{{ error }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">{{ __('VAT') }}</label>
+            <v-select
+              v-bind:class="{ 'is-invalid': $root.errors['types.id'] }"
+              :options="[{code: 'w0', label: 'без ндс'}, {code: 'w10', label: 'включая ндс 10'}, {code: 'w18', label: 'включая ндс 18'}, {code: 'w20', label: 'включая ндс 20'}]"
+              :reduce="cod => cod.code"
+              :cod="$root.contragent.nds"
+              v-model="$root.contragent.nds"
+              :searchable="false"
+              :clearable="false"
+            >
+              <div slot="no-options">{{ __('No Options Here!') }}</div>
+            </v-select>
+            <div role="alert" class="invalid-feedback" v-if="$root.errors.nds">
+              <span v-for="(error, index) in $root.errors.nds" :key="index">{{ error }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="control-label">{{ __('Bank name') }}</label>
+            <input
+              v-bind:class="{ 'is-invalid':  $root.errors.bank }"
+              type="text"
+              v-model="$root.contragent.bank"
+              class="form-control"
+              ref="title"
+            />
+            <div role="alert" class="invalid-feedback" v-if="$root.errors.bank">
+              <span v-for="(error, index) in $root.errors.bank" :key="index">{{ error }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
           <div class="form-group text-right">
             <button class="btn btn-primary">{{ __('Save') }}</button>
           </div>
@@ -276,6 +388,7 @@ export default {
     saveForm() {
       event.preventDefault();
       var app = this;
+      app.$root.errors = {};
       let loader = Vue.$loading.show();
       var newContragent = app.$root.contragent;
       newContragent.federal_district_id = newContragent.federal_district.id;

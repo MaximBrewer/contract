@@ -13,7 +13,7 @@
         <auction-bidders :auction="auction" v-if="auction.contragent.id == company.id"></auction-bidders>
       </div>
       <div v-if="auction.started" class="pb-4">
-        <auction-history :auction="auction"></auction-history>
+        <auction-history :auction="auction" v-if="observer"></auction-history>
       </div>
       <div v-if="!auction.finished" class="pb-4">
         <auction-mail :auction="auction" v-if="auction.contragent.id == company.id"></auction-mail>

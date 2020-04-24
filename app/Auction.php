@@ -25,15 +25,19 @@ class Auction extends Model
         'store_id',
         'comment',
         'start_at',
+        'autosale',
         'finish_at',
         'product_id',
         'multiplicity_id',
         'step',
         'start_price',
         'volume',
+        'prepay',
         'confirmed',
         'finished',
-        'started'
+        'started',
+        'can_bet',
+        'mode'
     ];
 
     protected $appends = [

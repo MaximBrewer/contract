@@ -303,5 +303,21 @@
     "The vehicle was updated successfully!": "Данные ТС успешно обновлены",
     "Vehicle": "ТС",
     "Who watched": "Кто смотрел",
-    "Date & time": "Когда"
+    "Date & time": "Когда",
+    "Fill bank details": "Заполнить реквизиты",
+    "KPP": "Когда",
+    "Checking account": "Рассчетный счет",
+    "BIC": "БИК",
+    "VAT": "НДС",
+    "Bank name": "Наименование банка",
+    "Mode": "Режим",
+    "yes": "Да",
+    "no": "Нет",
+    "price2day": "Прайс на сегодня",
+    "future": "Впрок",
+    "New can bet?": "Могут ли новые участники делать ставки?",
+    "Autosale": "Автопродажи",
+    "Start at from": "Начало с",
+    "to": "до",
+    "Auction Prepay": "Процент предоплаты (при выставлении автосчета)"
 }

@@ -36,7 +36,10 @@ class AuctionResource extends JsonResource
             'comment' => $this->comment,
             'start_at' => $this->start_at,
             'finish_at' => $this->finish_at,
+            'autosale' => $this->autosale,
             'confirmed' => $this->confirmed,
+            'can_bet' => $this->can_bet,
+            'mode' => $this->mode,
             'contragent' => [
                 'id' => $this->contragent->id,
                 'title' => $this->contragent->title,

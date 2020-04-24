@@ -36,6 +36,9 @@ class AuctionsController extends Controller
             case "all":
                 return AuctionResource::collection(Auction::where('finished', '<>', 1)->orderBy('id', 'desc')->get());
                 break;
+            case "confirmed":
+                return AuctionResource::collection(Auction::where('confirmed', 1)->where('finished', '<>', 1)->orderBy('id', 'desc')->get());
+                break;
             case "archive":
                 return AuctionResource::collection(Auction::where('finished', 1)->orderBy('id', 'desc')->get());
                 break;
@@ -148,6 +151,8 @@ class AuctionsController extends Controller
             "start_price" => "required",
             "volume" => "required",
             "step" => "required",
+            "can_bet" => "required",
+            "mode" => "required",
         ]);
 
         $attributes = $request->all();
@@ -226,6 +231,8 @@ class AuctionsController extends Controller
             "start_price" => "required",
             "volume" => "required",
             "step" => "required",
+            "can_bet" => "required",
+            "mode" => "required",
         ]);
 
 
@@ -409,6 +416,10 @@ class AuctionsController extends Controller
             if ($auction->contragent_id == $bidder['id'] && $auction->contragent_id == User::find(Auth::user()->id)->contragents[0]->id) continue;
             $contragent = Contragent::findOrFail($bidder['id']);
             $contragent->auctions()->attach($auction->id);
+            $contragentAuction = ContragentAuction::where('auction_id', $auction->id)->where('contragent_id', $contragent->id)->first();
+            if ($auction->can_bet == 'yes') {
+                $contragentAuction->update(['can_bet' => 1, 'observer', 1]);
+            }
         }
         $auction = Auction::findOrFail($request->post('auction'));
 
@@ -696,6 +707,11 @@ class AuctionsController extends Controller
             if ($freeVolume >= $bet->volume) {
                 $freeVolume -= $bet->volume;
                 if (!$bet->id) {
+                    if ($auction->autosale == 'yes') {
+                        $newBet->approved_volume = Carbon::now();
+                        $newBet->approved_contract = Carbon::now();
+                        $newBet->correct = $newBet->price;
+                    }
                     $newBet->save();
 
                     History::create([
@@ -721,6 +737,7 @@ class AuctionsController extends Controller
         }
 
         if ($auction = Auction::find($r->post('auction'))) {
+
             if (strtotime($auction->finish_at) < Carbon::now()->addMinutes(10)->timestamp) {
                 $auction->update([
                     'finish_at' => date('Y-m-d H:i:s', Carbon::now()->addMinutes(10)->timestamp)

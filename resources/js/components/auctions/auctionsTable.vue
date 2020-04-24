@@ -37,6 +37,14 @@
               <strong>{{ __('Multiplicity') }}:</strong>
               <span>{{ auction.multiplicity.title }}</span>
             </div>
+            <div class="text-nowrap">
+              <strong>{{ __('New can bet?') }}:</strong>
+              <span>{{ __(auction.can_bet) }}</span>
+            </div>
+            <div class="text-nowrap">
+              <strong>{{ __('Mode') }}:</strong>
+              <span>{{ __(auction.mode) }}</span>
+            </div>
             <div class="text-nowrap" v-if="auction.volume && action == 'bid'">
               <strong>{{ __('Active volume') }}:</strong>
               <span>{{ auction.free_volume}}</span>
@@ -65,6 +73,10 @@
             <div class="text-nowrap">
               <strong>{{ __('Auction step') }}:</strong>
               <span>{{ auction.step }}₽</span>
+            </div>
+            <div class="text-nowrap">
+              <strong>{{ __('Autosale') }}:</strong>
+              <span>{{ __(auction.autosale) }}</span>
             </div>
             <div class="text-nowrap">
               <strong>{{ __('Auction start') }}:</strong>

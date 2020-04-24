@@ -41,6 +41,11 @@ class ContragentsController extends Controller
             "inn" => "required|regex:/^[0-9]{10,12}$/i|unique:contragents",
             "federal_district.id" => "required|exists:federal_districts,id",
             "region.id" => "required|exists:regions,id",
+            "kpp" => "required_if:requisites,1",
+            "bank" => "required_if:requisites,1",
+            "nds" => "required_if:requisites,1",
+            "bik" => "required_if:requisites,1",
+            "rs" => "required_if:requisites,1",
         ]);
 
         $validator->validate();
@@ -98,7 +103,6 @@ class ContragentsController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $validator = Validator::make($request->all(), [
             "title" => "required|min:3",
             "fio" => "required|min:3",
@@ -106,6 +110,11 @@ class ContragentsController extends Controller
             "legal_address" => "required|min:3",
             "federal_district.id" => "required|exists:federal_districts,id",
             "region.id" => "required|exists:regions,id",
+            "kpp" => "required_if:requisites,1",
+            "bank" => "required_if:requisites,1",
+            "nds" => "required_if:requisites,1",
+            "bik" => "required_if:requisites,1",
+            "rs" => "required_if:requisites,1",
         ]);
 
         $validator->validate();
@@ -158,7 +167,6 @@ class ContragentsController extends Controller
 
         $id = Auth::user()->contragents[0]->id;
 
-
         $validator = Validator::make($request->all(), [
             "title" => "required|min:3",
             "fio" => "required|min:3",
@@ -167,6 +175,11 @@ class ContragentsController extends Controller
             "inn" => "required|regex:/^[0-9]{10,12}$/i",
             "federal_district.id" => "required|exists:federal_districts,id",
             "region.id" => "required|exists:regions,id",
+            "kpp" => "required_if:requisites,1",
+            "bank" => "required_if:requisites,1",
+            "nds" => "required_if:requisites,1",
+            "bik" => "required_if:requisites,1",
+            "rs" => "required_if:requisites,1",
         ]);
 
         $validator->validate();
@@ -202,7 +215,7 @@ class ContragentsController extends Controller
         $contragent = Contragent::findOrFail($id);
         $contragent->types()->sync($request->all()['typeIds']);
         $storesIds = [];
-        $contragent->update($request->all());
+        $contragent->update($request->except(['inn']));
         if (count($request->all()['stores'])) {
             foreach ($request->all()['stores'] as $store) {
                 if ($store['coords'] && $store['address']) {

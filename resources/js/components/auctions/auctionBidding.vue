@@ -65,9 +65,9 @@
           <thead>
             <tr>
               <th colspan="4">
-                {{ __('Auction volume') }}: {{ auction.volume }} | 
-                {{ __('Active volume') }}: {{ auction.free_volume }} | 
-                {{ __('Approved volume') }}: {{ auction.volume - auction.free_volume }} | 
+                {{ __('Auction volume') }}: {{ auction.volume }} |
+                {{ __('Active volume') }}: {{ auction.free_volume }} |
+                {{ __('Approved volume') }}: {{ auction.volume - auction.free_volume }} |
                 {{ __('Undistributed volume') }}: {{ auction.undistributed_volume }}
               </th>
             </tr>
@@ -112,6 +112,17 @@
                 >
                   <div class="h6">{{ __('The contract has approved') }}</div>
                 </div>
+                <div
+                  v-if="!!bet.approved_contract && bet.contragent_id == company.id"
+                  class="text-nowrap"
+                >
+                  <a
+                    href="javascript:void(0)"
+                    class="btn btn-primary"
+                  >
+                    {{__('Het the Invoice')}}
+                  </a>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -132,7 +143,9 @@ export default {
   computed: {
     betsList: function() {
       var app = this;
-      return app.auction.bets.filter(bet => bet.contragent_id == app.company.id || !bet.approved_contract);
+      return app.auction.bets.filter(
+        bet => bet.contragent_id == app.company.id || !bet.approved_contract
+      );
     }
   },
   methods: {

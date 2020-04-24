@@ -1,13 +1,66 @@
 <template>
+<!-- 'future', 'price2day' -->
   <div class="container">
     <form v-on:submit="saveForm()">
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
+            <label class="control-label">{{ __('Mode') }}</label>
+            <v-select
+              v-bind:class="{ 'is-invalid': errors.mode }"
+              :options="[{code: 'future', label: 'впрок'}, {code: 'price2day', label: 'price2day'}]"
+              :reduce="cod => cod.code"
+              :cod="auction.mode"
+              v-model="auction.mode"
+              :searchable="false"
+              :clearable="false"
+            >
+              <div slot="no-options">{{ __('No Options Here!') }}</div>
+            </v-select>
+            <div role="alert" class="invalid-feedback" v-if="errors.mode">
+              <span v-for="(error, index) in errors.mode" :key="index">{{ error }}</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">{{ __('New can bet?') }}</label>
+            <v-select
+              v-bind:class="{ 'is-invalid': errors.can_bet }"
+              :options="[{code: 'no', label: 'Нет'}, {code: 'yes', label: 'Да'}]"
+              :reduce="cod => cod.code"
+              :cod="auction.can_bet"
+              v-model="auction.can_bet"
+              :searchable="false"
+              :clearable="false"
+            >
+              <div slot="no-options">{{ __('No Options Here!') }}</div>
+            </v-select>
+            <div role="alert" class="invalid-feedback" v-if="errors.can_bet">
+              <span v-for="(error, index) in errors.can_bet" :key="index">{{ error }}</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">{{ __('Autosale') }}</label>
+            <v-select
+              v-bind:class="{ 'is-invalid': errors['types.id'] }"
+              :options="[{code: 'no', label: 'Нет'}, {code: 'yes', label: 'Да'}]"
+              :reduce="cod => cod.code"
+              :cod="auction.autosale"
+              v-model="auction.autosale"
+              :searchable="false"
+              :clearable="false"
+            >
+              <div slot="no-options">{{ __('No Options Here!') }}</div>
+            </v-select>
+            <div role="alert" class="invalid-feedback" v-if="errors.autosale">
+              <span v-for="(error, index) in errors.autosale" :key="index">{{ error }}</span>
+            </div>
+          </div>
+          <div class="form-group">
             <label class="control-label">{{ __('Auction lot') }}</label>
             <v-select
               label="title"
               :options="$root.products"
+              :searchable="false"
               v-model="auction.product"
               v-bind:class="{ 'is-invalid': errors['product.id'] }"
             >
@@ -22,6 +75,7 @@
             <v-select
               label="title"
               :options="$root.multiplicities"
+              :searchable="false"
               v-model="auction.multiplicity"
               v-bind:class="{ 'is-invalid': errors['multiplicity.id'] }"
             >
@@ -36,6 +90,7 @@
             <v-select
               label="address"
               :options="$root.stores"
+              :searchable="false"
               v-model="auction.store"
               v-bind:class="{ 'is-invalid': errors['store.id'] }"
             >
@@ -58,14 +113,14 @@
               <strong v-for="(error, index) in errors.volume" :key="index">{{ error }}</strong>
             </span>
           </div>
+        </div>
+        <div class="col-md-6">
           <div class="form-group">
             <label class="control-label">{{ __('Auction tags') }}</label>
             <v-select label="title" :multiple="true" :options="$root.tags" v-model="auction.tags">
               <div slot="no-options">{{ __('No Options Here!') }}</div>
             </v-select>
           </div>
-        </div>
-        <div class="col-md-6">
           <div class="form-group">
             <label class="control-label">{{ __('Auction Start Price') }}</label>
             <input
@@ -123,6 +178,19 @@
             </span>
           </div>
           <div class="form-group">
+            <label class="control-label">{{ __('Auction Prepay') }}</label>
+            <input
+              step=".01"
+              type="number"
+              v-model="auction.prepay"
+              class="form-control"
+              v-bind:class="{ 'is-invalid': errors.prepay }"
+            />
+            <span role="alert" class="invalid-feedback" v-if="errors.prepay">
+              <strong v-for="(error, index) in errors.prepay" :key="index">{{ error }}</strong>
+            </span>
+          </div>
+          <div class="form-group">
             <label class="control-label">{{ __('Auction comment') }}</label>
             <textarea
               v-model="auction.comment"
@@ -141,12 +209,12 @@
               width="300"
               height="200"
               margin="0"
-              @change="onPhotoChange" 
-              @remove="onPhotoRemove" 
+              @change="onPhotoChange"
+              @remove="onPhotoRemove"
               :removable="true"
               accept="image/jpeg, image/png, image/webp"
               size="10"
-              :prefill="!!auction.picture ? '/storage/' + auction.picture : null"
+              :prefill="!!auction.picture && auction.picture != 'null' ? '/storage/' + auction.picture : null"
               buttonClass="btn btn-primary"
               :zIndex="1"
               :customStrings="{
@@ -188,11 +256,11 @@ export default {
   },
   props: ["auction"],
   methods: {
-    onPhotoChange(){
-      this.auction.picture = '';
+    onPhotoChange() {
+      this.auction.picture = "";
     },
-    onPhotoRemove(){
-      this.auction.picture = '';
+    onPhotoRemove() {
+      this.auction.picture = "";
     },
     saveForm() {
       event.preventDefault();
@@ -203,12 +271,19 @@ export default {
       data.append("multiplicity_id", app.auction.multiplicity.id);
       data.append("product_id", app.auction.product.id);
       data.append("store_id", app.auction.store.id);
+      data.append("autosale", app.auction.autosale);
       data.append("start_at", app.auction.start_at);
       data.append("finish_at", app.auction.finish_at);
-      data.append("comment", !!app.auction.comment ? app.auction.comment : '');
-      data.append("volume", !!app.auction.volume ? app.auction.volume : '');
-      data.append("start_price", !!app.auction.start_price ? app.auction.start_price : '');
-      data.append("step", !!app.auction.step ? app.auction.step : '');
+      data.append("can_bet", app.auction.can_bet);
+      data.append("mode", app.auction.mode);
+      data.append("prepay", app.auction.prepay);
+      data.append("comment", !!app.auction.comment ? app.auction.comment : "");
+      data.append("volume", !!app.auction.volume ? app.auction.volume : "");
+      data.append(
+        "start_price",
+        !!app.auction.start_price ? app.auction.start_price : ""
+      );
+      data.append("step", !!app.auction.step ? app.auction.step : "");
 
       let tags = [];
       for (let i in app.auction.tags) {
@@ -218,8 +293,7 @@ export default {
 
       if (!!app.$refs.pictureInput.$refs.fileInput.files[0])
         data.append("picture", app.$refs.pictureInput.$refs.fileInput.files[0]);
-      else
-        data.append("picture", app.auction.picture);
+      else data.append("picture", app.auction.picture);
 
       if (!!app.auction.id) {
         axios

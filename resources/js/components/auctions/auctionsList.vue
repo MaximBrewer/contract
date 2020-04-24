@@ -18,10 +18,13 @@
           <v-select
             label="title"
             :searchable="true"
+            :disabled="!canaction"
             @input="filterGetRegions"
             :options="$root.federalDistricts"
             v-model="filter.federal_district"
-          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+          >
+            <div slot="no-options">{{ __('No Options Here!') }}</div>
+          </v-select>
         </div>
       </div>
       <div class="col-md-2 col-sm-3 col-12">
@@ -30,10 +33,13 @@
           <v-select
             label="title"
             :searchable="true"
+            :disabled="!canaction"
             @input="filterAuctions"
             :options="$root.regions"
             v-model="filter.region"
-          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+          >
+            <div slot="no-options">{{ __('No Options Here!') }}</div>
+          </v-select>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-12">
@@ -42,10 +48,13 @@
           <v-select
             label="title"
             :searchable="true"
+            :disabled="!canaction"
             @input="filterAuctions"
             :options="$root.contragents"
             v-model="filter.contragent"
-          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+          >
+            <div slot="no-options">{{ __('No Options Here!') }}</div>
+          </v-select>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-12">
@@ -54,10 +63,13 @@
           <v-select
             label="title"
             :searchable="true"
+            :disabled="!canaction"
             @input="filterAuctions"
             :options="$root.products"
             v-model="filter.product"
-          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+          >
+            <div slot="no-options">{{ __('No Options Here!') }}</div>
+          </v-select>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-12">
@@ -66,22 +78,60 @@
           <v-select
             label="title"
             :searchable="true"
+            :disabled="!canaction"
             @input="filterAuctions"
             :options="$root.multiplicities"
             v-model="filter.multiplicity"
-          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+          >
+            <div slot="no-options">{{ __('No Options Here!') }}</div>
+          </v-select>
         </div>
       </div>
       <div class="col-md-2 col-sm-3 col-12">
+        <div class="form-group">
+          <label class="control-label">{{ __('Start at from') }}</label>
+          <datetime
+            type="date"
+            zone="Europe/Moscow"
+            :disabled="!canaction"
+            value-zone="Europe/Moscow"
+            class="theme-primary"
+            :input-class="'form-control'"
+            @input="filterAuctions"
+            v-model="filter.start_at"
+          ></datetime>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-3 col-12">
+        <div class="form-group">
+          <label class="control-label">{{ __('to') }}</label>
+          <datetime
+            type="date"
+            zone="Europe/Moscow"
+            :disabled="!canaction"
+            value-zone="Europe/Moscow"
+            class="theme-primary"
+            :input-class="'form-control'"
+            @input="filterAuctions"
+            v-model="filter.finish_at"
+          ></datetime>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12">
         <div class="form-group">
           <label class="control-label">{{ __('Confirmed') }}</label>
           <v-select
             label="title"
             :searchable="false"
+            :disabled="!canaction"
             @input="filterAuctions"
             :options="$root.confirmedOptions"
+            :reduce="cod => cod.id"
+            :cod="filter.confirmed"
             v-model="filter.confirmed"
-          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+          >
+            <div slot="no-options">{{ __('No Options Here!') }}</div>
+          </v-select>
         </div>
       </div>
       <div class="col-md-2 col-sm-3 col-12">
@@ -90,11 +140,48 @@
           <v-select
             label="title"
             :searchable="true"
+            :disabled="!canaction"
             @input="filterAuctions"
             :options="$root.tags"
             :multiple="true"
             v-model="filter.tags"
-          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+          >
+            <div slot="no-options">{{ __('No Options Here!') }}</div>
+          </v-select>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-3 col-12">
+        <div class="form-group">
+          <label class="control-label">{{ __('Mode') }}</label>
+          <v-select
+            :searchable="false"
+            :disabled="!canaction"
+            @input="filterAuctions"
+            :options="[{code: 'future', label: 'впрок'}, {code: 'price2day', label: 'price2day'}]"
+            :reduce="cod => cod.code"
+            :cod="filter.mode"
+            :multiple="false"
+            v-model="filter.mode"
+          >
+            <div slot="no-options">{{ __('No Options Here!') }}</div>
+          </v-select>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6 col-12">
+        <div class="form-group">
+          <label class="control-label">{{ __('New can bet?') }}</label>
+          <v-select
+            :searchable="false"
+            :disabled="!canaction"
+            @input="filterAuctions"
+            :options="[{code: 'no', label: 'Нет'}, {code: 'yes', label: 'Да'}]"
+            :reduce="cod => cod.code"
+            :cod="filter.can_bet"
+            :multiple="false"
+            v-model="filter.can_bet"
+          >
+            <div slot="no-options">{{ __('No Options Here!') }}</div>
+          </v-select>
         </div>
       </div>
       <div class="col-md-4 col-sm-6 col-12">
@@ -103,10 +190,13 @@
           <v-select
             label="address"
             :searchable="false"
+            :disabled="!canaction"
             @input="sorByDistance"
             :options="$root.stores"
             v-model="store"
-          ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+          >
+            <div slot="no-options">{{ __('No Options Here!') }}</div>
+          </v-select>
         </div>
       </div>
     </div>
@@ -121,10 +211,30 @@ export default {
   },
   props: ["action"],
   mounted() {
-    this.getAuctions();
+    if (this.action == "all") {
+      let app = this;
+      let loader = Vue.$loading.show();
+      axios
+        .get("/web/v1/auctions/confirmed")
+        .then(function(res) {
+          app.auctionsList = res.data.data;
+          loader.hide();
+          app.getAuctions(false);
+        })
+        .catch(function(res) {
+          loader.hide();
+          app.$fire({
+            title: app.__("Error!"),
+            text: app.__("Failed to load auctions"),
+            type: "error",
+            timer: 5000
+          });
+        });
+    } else this.getAuctions(true);
   },
   data: function() {
     return {
+      canaction: false,
       auctions: [],
       auctionsList: [],
       store: null,
@@ -133,7 +243,9 @@ export default {
         product: null,
         multiplicity: null,
         region: null,
-        confirmed: 0,
+        confirmed: this.action == "all" ? { id: 2, title: "Да" } : null,
+        start_at: null,
+        finish_at: null,
         tags: []
       }
     };
@@ -152,18 +264,20 @@ export default {
           type: "error"
         });
     },
-    getAuctions() {
+    getAuctions(sl) {
       let app = this;
-      let loader = Vue.$loading.show();
+      let loader;
+      if(sl) loader = Vue.$loading.show();
       axios
         .get("/web/v1/auctions/" + app.action)
         .then(function(res) {
+          app.canaction = true;
           app.auctions = res.data.data;
           app.filterAuctions();
-          loader.hide();
+          if(sl) loader.hide();
         })
         .catch(function(res) {
-          loader.hide();
+          if(sl) loader.hide();
           app.$fire({
             title: app.__("Error!"),
             text: app.__("Failed to load auctions"),
@@ -173,10 +287,12 @@ export default {
         });
     },
     filterGetRegions() {
+      if (!this.canaction) return false;
       this.$root.getRegions(this.filter.federal_district.id);
       this.filterAuctions();
     },
     filterAuctions() {
+      if (!this.canaction) return false;
       let app = this;
       app.auctionsList = [];
       let cnt = 0;
@@ -200,6 +316,12 @@ export default {
           (!f.multiplicity || f.multiplicity.id == a.multiplicity.id) &&
           (!f.confirmed || f.confirmed.id - 1 == a.confirmed) &&
           (!f.contragent || f.contragent.id == a.contragent.id) &&
+          (!f.can_bet || f.can_bet == a.can_bet) &&
+          (!f.mode || f.mode == a.mode) &&
+          (!f.start_at || f.start_at <= a.start_at) &&
+          (!f.finish_at ||
+            new Date(f.finish_at).getTime() + 24 * 3600000 >=
+              new Date(a.start_at).getTime()) &&
           (!f.tags.length || intags)
         )
           app.auctionsList.push(a);
@@ -207,6 +329,7 @@ export default {
       if (app.auctions.length == cnt) app.sorByDistance();
     },
     sorByDistance() {
+      if (!this.canaction) return false;
       let app = this;
       let store = app.store;
       if (!store || !store.coords) return false;
@@ -235,6 +358,7 @@ export default {
       }
     },
     getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+      if (!this.canaction) return false;
       var R = 6371; // Radius of the earth in km
       var dLat = this.deg2rad(lat2 - lat1); // deg2rad below
       var dLon = this.deg2rad(lon2 - lon1);

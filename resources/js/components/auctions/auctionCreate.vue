@@ -26,12 +26,15 @@ export default {
     return {
       auction: {
         contragent: null,
+        prepay: 10,
         store: null,
         start_at: null,
         finish_at: null,
         comment: "",
         product: null,
-        multiplicity: null
+        multiplicity: null,
+        mode: 'price2day',
+        can_bet: 'yes'
       }
     };
   }
