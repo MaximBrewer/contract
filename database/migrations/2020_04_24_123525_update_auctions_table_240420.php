@@ -16,7 +16,7 @@ class UpdateAuctionsTable240420 extends Migration
         Schema::table('auctions', function ($table) {
             $table->enum('can_bet', ["yes", "no"])->default('yes');
             $table->enum('autosale', ["yes", "no"])->default('no');
-            $table->decimal('prepay')->default(10);
+            $table->integer('prepay')->default(50);
             $table->enum('mode', ["future", "price2day"])->default('price2day');
         });
     }
