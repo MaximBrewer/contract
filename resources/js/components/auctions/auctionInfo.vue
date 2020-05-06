@@ -15,12 +15,10 @@
           <li class="list-group-item" v-if="auction.store.address">{{ auction.store.address }}</li>
           <li class="list-group-item" v-if="auction.contragent">{{ auction.contragent.fio }}</li>
           <li class="list-group-item" v-if="auction.contragent">{{ auction.contragent.phone }}</li>
-          <li class="list-group-item" v-if="auction.picture">
-            <vue-pure-lightbox
-              style="width: 20em"
-              :thumbnail="'/storage/' + auction.picture"
-              :images="['/storage/' + auction.picture]"
-            ></vue-pure-lightbox>
+          <li class="list-group-item" style="display:flex;flex-wrap:wrap;">
+            <div v-for="(image, index) in auction.images" :key="index" style="padding:.5em .7em;">
+              <img :src="image.path" alt style="max-width:10em;"/>
+            </div>
           </li>
         </ul>
       </div>
@@ -30,7 +28,10 @@
       <div class="card">
         <div class="card-header" v-if="auction.product">{{ auction.product.title }}</div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item" v-if="auction.multiplicity">{{ __('Auction multiplicity') }}: {{ auction.multiplicity.title }}</li>
+          <li
+            class="list-group-item"
+            v-if="auction.multiplicity"
+          >{{ __('Auction multiplicity') }}: {{ auction.multiplicity.title }}</li>
           <li
             class="list-group-item"
           >{{ __('Auction volume') }}: {{ auction.volume }} {{ __('un') }}.</li>
