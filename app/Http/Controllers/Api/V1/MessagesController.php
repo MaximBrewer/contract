@@ -8,7 +8,10 @@ use App\Message;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Auction;
+use App\Mail\ChatMessage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\Message as MessageResource;
 use App\Http\Resources\Messages as MessagesCollection;
 
@@ -50,7 +53,13 @@ class MessagesController extends Controller
             "message" => $request->post('message')
         ]);
 
+
         $auction = Auction::findOrFail($request->post('auction_id'));
+
+        $userc = DB::table('user_contragent')->where('contragent_id', $auction->contragent_id)->select('user_id')->first();
+        $user = User::findOrFail($userc['user_id']);
+
+        Mail::to($user->email)->send(new ChatMessage($request->post('message'), $auction));
         event(new \App\Events\MessagePushed($auction));
 
         return $message;
