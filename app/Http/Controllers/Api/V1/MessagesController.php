@@ -57,7 +57,7 @@ class MessagesController extends Controller
         $auction = Auction::findOrFail($request->post('auction_id'));
 
         $userc = DB::table('user_contragent')->where('contragent_id', $auction->contragent_id)->select('user_id')->first();
-        $user = User::findOrFail($userc['user_id']);
+        $user = User::findOrFail($userc->user_id);
 
         Mail::to($user->email)->send(new ChatMessage($request->post('message'), $auction));
         event(new \App\Events\MessagePushed($auction));
