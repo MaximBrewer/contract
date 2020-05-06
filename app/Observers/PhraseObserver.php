@@ -27,13 +27,12 @@ class PhraseObserver
 
         $whom = $dialogue->contragents[0]->id == $phrase->contragent_id ? $dialogue->contragents[1] : $dialogue->contragents[0];
         $from = $dialogue->contragents[0]->id == $phrase->contragent_id ? $dialogue->contragents[0] : $dialogue->contragents[1];
-        $userc = DB::table('user_contragent')->where('contragent_id', $whom->id)->select('user_id')->first();
-        $user = User::findOrFail($userc->user_id);
+        $userc = DB::table('user_contragent')->where('contragent_id', $whom->id)->select('user_id')->get();
 
-        var_dump($user->email);die;
-
-        Mail::to($user->email)->send(new ContragentMessage($phrase->text, $from));
-
+        foreach ($userc as $userd) {
+            $user = User::findOrFail($userd->user_id);
+            Mail::to($user->email)->send(new ContragentMessage($phrase->text, $from));
+        }
     }
 
     /**
