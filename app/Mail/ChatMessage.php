@@ -29,7 +29,7 @@ class ChatMessage extends Mailable
     public function build()
     {
         return $this->subject('С вами пытались связаться на cross-contract.ru')
-            ->view('chat_message.auction')->with([
+            ->view('mail.chat_message')->with([
                 'text' => $this->text,
                 'contragent' => $this->auction->contragent->title,
                 'contragent_link' => 'http://project.cross-contract.ru/personal/contragents/show/' . $this->auction->contragent->id,
