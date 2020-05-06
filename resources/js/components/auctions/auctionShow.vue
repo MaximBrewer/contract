@@ -56,7 +56,7 @@ export default {
     axios
       .get("/web/v1/auction/" + id)
       .then(function(resp) {
-        app.auction = resp.data;
+        app.auction = resp.data.data;
         loader.hide();
         app.bid.price = app.auction.price;
         app.bid.volume = 1;

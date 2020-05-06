@@ -26,34 +26,21 @@
               <span class="input" v-if="errorComment" style="color:red">{{errorComment}}</span>
             </div>
             <div class="col-sm-4">
-              <picture-input
-                class="float-rigth"
-                id="pictureInput"
-                width="300"
-                height="200"
-                margin="30"
-                radius="5"
-                @remove="onPhotoRemove()"
-                :removable="true"
-                accept="image/jpeg, image/png, image/webp"
-                size="10"
-                :prefill="!!picture ? '/storage/' + picture : null"
-                buttonClass="btn btn-primary btn-sm"
-                removeButtonClass="btn btn-secondary btn-sm"
-                :zIndex="1"
-                :customStrings="{
-              change:__('Change Photo'),
-              remove:__('Remove Photo'),
-              select:__('Select a Photo'),
-              upload:__('<p>Your device does not support file uploading.</p>'),
-              drag:__('Drag an image or <br>click here to select a file'),
-              tap:__('Tap here to select a photo <br>from your gallery'),
-              selected:__('<p>Photo successfully selected!</p>'),
-              fileSize:__('The file size exceeds the limit'),
-              fileType:__('This file type is not supported.'),
-              aspect:__('Landscape/Portrait')
-            }"
-              ></picture-input>
+              <vue-upload-multiple-image
+                dragText="перетащите изображения (несколько)"
+                browseText="(или) выберите"
+                primaryText="по умолчанию"
+                markIsPrimaryText="Установить по умолчанию"
+                popupText="Это изображение будет отображаться по умолчанию"
+                dropText="Перетащите свой файл сюда ..."
+                @upload-success="uploadImageSuccess"
+                @before-remove="beforeRemove"
+                @edit-image="editImage"
+                :showPrimary="false"
+                :data-images="images"
+                idUpload="imagesComments"
+                editUpload="myIdEdit"
+              ></vue-upload-multiple-image>
             </div>
           </div>
         </div>
@@ -88,11 +75,11 @@
                 <p>{{comment.comment}}</p>
                 <small>{{ comment.updated_at | formatDateTime }}</small>
               </div>
-              <div class="col-sm-4" v-if="comment.picture">
+              <div class="col-sm-4" v-if="comment.images">
                 <vue-pure-lightbox
-                  style="width: 20em"
-                  :thumbnail="'/storage/' + comment.picture"
-                  :images="['/storage/' + comment.picture]"
+                  style="width: 100%;max-width:100px;margin: 0 auto;"
+                  :thumbnail="toSlider(comment.images)[0]"
+                  :images="toSlider(comment.images)"
                 ></vue-pure-lightbox>
               </div>
             </div>
@@ -104,11 +91,11 @@
   </div>
 </template>
 <script>
-import PictureInput from "../vue-picture-input";
-import VuePureLightbox from 'vue-pure-lightbox';
+import VueUploadMultipleImage from "../vue-upload-multiple-image";
+import VuePureLightbox from "vue-pure-lightbox";
 export default {
   components: {
-    PictureInput,
+    VueUploadMultipleImage,
     VuePureLightbox
   },
   mounted() {
@@ -122,12 +109,20 @@ export default {
       rating: 0,
       message: null,
       errorComment: null,
-      picture: null,
+      formData: new FormData(),
+      images: [],
       starSize: 20,
       starSizeSmall: 15
     };
   },
   methods: {
+    toSlider(images){
+      let sim = [];
+      for(let s of images){
+        sim.push(s.path)
+      }
+      return sim
+    },
     fetchComments() {
       let app = this;
       let loader = Vue.$loading.show();
@@ -137,15 +132,29 @@ export default {
           app.comments = res.data[0];
           app.rating = res.data[1];
           app.message = res.data[2].comment;
-          app.picture = res.data[2].picture;
+          app.images = res.data[2].images;
           loader.hide();
         })
         .catch(function(e) {
           loader.hide();
         });
     },
-    onPhotoRemove(comment) {
-      this.picture = "";
+    uploadImageSuccess(formData, index, fileList) {
+      for (var pair of formData.entries()) {
+        this.formData.set("images[" + index + "]", pair[1]);
+      }
+    },
+    beforeRemove(index, done, fileList) {
+      this.formData.delete("images[" + index + "]");
+      var r = confirm("remove image");
+      if (r == true) {
+        done();
+      }
+    },
+    editImage(formData, index, fileList) {
+      for (var pair of formData.entries()) {
+        this.formData.set("images[" + index + "]", pair[1]);
+      }
     },
     saveComment() {
       var app = this;
@@ -153,23 +162,22 @@ export default {
         let loader = Vue.$loading.show();
         app.errorComment = null;
 
-        const data = new FormData();
-        data.append("contragent_id", app.contragent);
-        data.append("comment", app.message);
-        data.append("rate", app.rating);
+        this.formData.set("contragent_id", app.contragent);
+        this.formData.set("comment", app.message);
+        this.formData.set("rate", app.rating);
 
-        if (document.getElementById("pictureInput").files[0])
-          data.append(
-            "picture",
-            document.getElementById("pictureInput").files[0]
-          );
-        else data.append("picture", !!app.picture ? app.picture : '');
+        this.formData.delete("pics[]");
 
-        axios.post("/web/v1/comments", data).then(function(res) {
+        for (let img of this.images) {
+          if (img.id) this.formData.append("pics[]", img.id);
+        }
+
+        axios.post("/web/v1/comments", this.formData).then(function(res) {
           app.comments = res.data[0];
           app.rating = res.data[1];
           app.message = res.data[2].comment;
           loader.hide();
+          app.formData = new FormData();
         });
       }
     }

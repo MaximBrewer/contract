@@ -29,7 +29,7 @@
     "dependencies": {
         "buefy": "^0.8.10",
         "laravel-echo": "^1.6.1",
-        "laravel-echo-server": "^1.6.0",
+        "laravel-echo-server": "^1.6.2",
         "luxon": "^1.22.0",
         "socket.io-client": "^2.3.0",
         "v-tooltip": "^2.0.3",
@@ -49,6 +49,7 @@
         "vue-star-rating": "^1.6.1",
         "vue-tooltip": "^0.1.0",
         "vue-upload-image": "^1.1.5",
+        "vue-upload-multiple-image": "^1.1.4",
         "vue-yandex-maps": "^0.10.6",
         "weekstart": "^1.0.1"
     }

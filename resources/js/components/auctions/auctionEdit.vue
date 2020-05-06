@@ -23,7 +23,7 @@ export default {
     axios
       .get("/web/v1/auction/" + app.$route.params.id)
       .then(function(res) {
-        app.auction = res.data;
+        app.auction = res.data.data;
         loader.hide();
       })
       .catch(function(err) {

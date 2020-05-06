@@ -95,6 +95,7 @@ class Auction extends Model
         $this->contragent;
         $this->tags;
         $this->bets;
+        $this->images;
         $this->histories;
         return true;
     }
@@ -186,5 +187,9 @@ class Auction extends Model
             }
         }
         return 0;
+    }
+
+    public function getImagesAttribute(){
+        return Attachment::where('entity', 'auction')->where('entity_id', $this->id)->get();
     }
 }

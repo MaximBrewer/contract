@@ -27,6 +27,7 @@ class AuctionResource extends JsonResource
         }
         return [
             'id' => $this->id,
+            'approved' =>$this->approved,
             'volume' => $this->volume,
             'min_bet' => $this->min_bet,
             'undistributed_volume' => $this->undistributed_volume,
@@ -36,6 +37,7 @@ class AuctionResource extends JsonResource
             'comment' => $this->comment,
             'start_at' => $this->start_at,
             'finish_at' => $this->finish_at,
+            'images' => $this->images,
             'autosale' => $this->autosale,
             'confirmed' => $this->confirmed,
             'can_bet' => $this->can_bet,
@@ -54,6 +56,7 @@ class AuctionResource extends JsonResource
                 'title' => $this->product->title
             ],
             'store' => [
+                'id' => $this->store->id,
                 'federal_district' => [
                     'id' => $this->store->federalDistrict->id,
                     'title' => $this->store->federalDistrict ? $this->store->federalDistrict->title : ''

@@ -12,29 +12,23 @@ class Comment extends Model
      *
      * @return array
      */
-    protected $appends = [
-        'by',
-        'to'
-    ];
+    
     protected $fillable = [
         'comment',
         'votes',
         'contragent_id',
-        'writer',
-        'picture'
+        'writer'
     ];
-    protected $dates = ['created_at', 'updated_at'];
 
-
-    public function getToAttribute()
-    {
-        $to = Contragent::find($this->contragent_id);
-        return $to->title;
+    public function by(){
+        return $this->belongsTo('App\Contragent', 'writer');
     }
 
-    public function getByAttribute()
-    {
-        $by = Contragent::find($this->writer);
-        return $by->title;
+    public function to(){
+        return $this->belongsTo('App\Contragent', 'contragent_id');
+    }
+
+    public function getImagesAttribute(){
+        return Attachment::where('entity', 'comment')->where('entity_id', $this->id)->get();
     }
 }

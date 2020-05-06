@@ -10,11 +10,13 @@ use \App\User;
 use Illuminate\Support\Facades\Auth;
 use \App\Contragent;
 use \App\History;
+use App\Attachment;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use \App\Store;
+use App\Http\Resources\AuctionFull as AuctionFullResource;
 use \App\Tag;
 use Illuminate\Support\Facades\Validator;
 use App\ContragentAuction;
@@ -157,20 +159,22 @@ class AuctionsController extends Controller
 
         $attributes = $request->all();
 
-        if ($request->hasfile('picture')) {
-            $file = $request->file('picture');
-            $extension = $file->getClientOriginalExtension();
-            $path = 'auctions' . DIRECTORY_SEPARATOR . date('FY') . DIRECTORY_SEPARATOR;
-            $fullpath = storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path;
-            @mkdir($fullpath, 0777, true);
-            do {
-                $filename = Str::random(20);
-            } while (is_file($fullpath . $filename . '.' . $file->getClientOriginalExtension()));
-            $file->move($fullpath, $filename . '.' . $extension);
-            $attributes['picture'] = $path . $filename . '.' . $extension;
-        } else {
-            $attributes['picture'] = '';
-        }
+
+
+        // if ($request->hasfile('picture')) {
+        //     $file = $request->file('picture');
+        //     $extension = $file->getClientOriginalExtension();
+        //     $path = 'auctions' . DIRECTORY_SEPARATOR . date('FY') . DIRECTORY_SEPARATOR;
+        //     $fullpath = storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path;
+        //     @mkdir($fullpath, 0777, true);
+        //     do {
+        //         $filename = Str::random(20);
+        //     } while (is_file($fullpath . $filename . '.' . $file->getClientOriginalExtension()));
+        //     $file->move($fullpath, $filename . '.' . $extension);
+        //     $attributes['picture'] = $path . $filename . '.' . $extension;
+        // } else {
+        //     $attributes['picture'] = '';
+        // }
 
 
         $rtags = explode(',', strval($attributes['tags']));
@@ -190,10 +194,38 @@ class AuctionsController extends Controller
         $attributes['contragent_id'] = User::find(Auth::user()->id)->contragents[0]->id;
         $auction = Auction::create($attributes);
 
+
+        $path = 'auctions' . DIRECTORY_SEPARATOR . $auction->id . DIRECTORY_SEPARATOR;
+        $fullpath = storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path;
+
+        @mkdir($fullpath, 0777, true);
+        foreach (Attachment::where('entity_id', $auction->id)->where('entity', 'auction')->get() as $attachment) {
+            if (is_array($request->post('pics')) && !in_array($attachment->id, $request->post('pics')))
+                $attachment->delete();
+        };
+        if ($request->hasfile('images')) {
+            $c = 0;
+            foreach ($request->file('images') as $file) {
+                $extension = $file->getClientOriginalExtension();
+                do {
+                    $filename = Str::random(20);
+                } while (is_file($fullpath . $filename . '.' . $file->getClientOriginalExtension()));
+                $file->move($fullpath, $filename . '.' . $extension);
+                Attachment::create([
+                    'title' => $filename,
+                    'url' => $path . $filename . '.' . $extension,
+                    'entity' => 'auction',
+                    'entity_id' => $auction->id,
+                    'sort' => (++$c) * 100,
+                ]);
+            }
+        }
+
+
         $auction->tags()->sync($rtags);
 
         $auction = Auction::findOrFail($auction->id);
-        return $auction;
+        return new AuctionFullResource($auction);
     }
 
 
@@ -236,19 +268,6 @@ class AuctionsController extends Controller
         ]);
 
 
-        if ($request->hasfile('picture')) {
-            $file = $request->file('picture');
-            $extension = $file->getClientOriginalExtension();
-            $path = 'auctions' . DIRECTORY_SEPARATOR . date('FY') . DIRECTORY_SEPARATOR;
-            $fullpath = storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path;
-            @mkdir($fullpath, 0777, true);
-            do {
-                $filename = Str::random(20);
-            } while (is_file($fullpath . $filename . '.' . $file->getClientOriginalExtension()));
-            $file->move($fullpath, $filename . '.' . $extension);
-            $attributes['picture'] = $path . $filename . '.' . $extension;
-        }
-
         $rtags = explode(',', strval($attributes['tags']));
 
         $rtags = array_filter($rtags, function ($element) {
@@ -263,11 +282,39 @@ class AuctionsController extends Controller
         $auction->tags()->sync($rtags);
         $auction->update($attributes);
 
+
+
+        $path = 'auctions' . DIRECTORY_SEPARATOR . $auction->id . DIRECTORY_SEPARATOR;
+        $fullpath = storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path;
+
+        @mkdir($fullpath, 0777, true);
+        foreach (Attachment::where('entity_id', $auction->id)->where('entity', 'auction')->get() as $attachment) {
+            if (is_array($request->post('pics')) && !in_array($attachment->id, $request->post('pics')))
+                $attachment->delete();
+        };
+        if ($request->hasfile('images')) {
+            $c = 0;
+            foreach ($request->file('images') as $file) {
+                $extension = $file->getClientOriginalExtension();
+                do {
+                    $filename = Str::random(20);
+                } while (is_file($fullpath . $filename . '.' . $file->getClientOriginalExtension()));
+                $file->move($fullpath, $filename . '.' . $extension);
+                Attachment::create([
+                    'title' => $filename,
+                    'url' => $path . $filename . '.' . $extension,
+                    'entity' => 'auction',
+                    'entity_id' => $auction->id,
+                    'sort' => (++$c) * 100,
+                ]);
+            }
+        }
+
         if ($auction) event(new \App\Events\MessagePushed($auction));
 
         $auction = Auction::findOrFail($auction->id);
 
-        return $auction;
+        return new AuctionFullResource($auction);
     }
 
 
@@ -284,7 +331,7 @@ class AuctionsController extends Controller
         Bet::where('contragent_id', $user->contragents[0]->id)->update([
             'took_part' => Carbon::now()
         ]);
-        return Auction::findOrFail($id);
+        return new AuctionFullResource(Auction::findOrFail($id));
     }
 
     /**

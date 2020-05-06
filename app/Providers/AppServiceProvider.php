@@ -3,14 +3,16 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Bet;
+use App\Attachment;
 use App\Phrase;
 use App\Auction;
 use App\Logistic;
+use App\Observers\Bet as BetObserver;
+use App\Observers\Attachment as AttachmentObserver;
 use App\Observers\PhraseObserver;
 use App\Observers\Auction as AuctionObserver;
-use App\Observers\Bet as BetObserver;
 use App\Observers\Logistic as LogisticObserver;
-use App\Bet;
 use Jenssegers\Date\Date;
 
 class AppServiceProvider extends ServiceProvider
@@ -34,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Phrase::observe(PhraseObserver::class);
         Auction::observe(AuctionObserver::class);
+        Attachment::observe(AttachmentObserver::class);
         Bet::observe(BetObserver::class);
         Logistic::observe(LogisticObserver::class);
         Date::setlocale(config('app.locale'));

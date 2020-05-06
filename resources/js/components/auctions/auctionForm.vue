@@ -1,5 +1,5 @@
 <template>
-<!-- 'future', 'price2day' -->
+  <!-- 'future', 'price2day' -->
   <div class="container">
     <form v-on:submit="saveForm()">
       <div class="row">
@@ -204,32 +204,21 @@
         </div>
         <div class="col-12 col-md-6">
           <div class="form-group">
-            <picture-input
-              ref="pictureInput"
-              width="300"
-              height="200"
-              margin="0"
-              @change="onPhotoChange"
-              @remove="onPhotoRemove"
-              :removable="true"
-              accept="image/jpeg, image/png, image/webp"
-              size="10"
-              :prefill="!!auction.picture && auction.picture != 'null' ? '/storage/' + auction.picture : null"
-              buttonClass="btn btn-primary"
-              :zIndex="1"
-              :customStrings="{
-                change:__('Change Photo'),
-                remove:__('Remove Photo'),
-                select:__('Select a Photo'),
-                upload:__('<p>Your device does not support file uploading.</p>'),
-                drag:__('Drag an image or <br>click here to select a file'),
-                tap:__('Tap here to select a photo <br>from your gallery'),
-                selected:__('<p>Photo successfully selected!</p>'),
-                fileSize:__('The file size exceeds the limit'),
-                fileType:__('This file type is not supported.'),
-                aspect:__('Landscape/Portrait')
-              }"
-            ></picture-input>
+            <vue-upload-multiple-image
+              dragText="перетащите изображения (несколько)"
+              browseText="(или) выберите"
+              primaryText="по умолчанию"
+              markIsPrimaryText="Установить по умолчанию"
+              popupText="Это изображение будет отображаться по умолчанию"
+              dropText="Перетащите свой файл сюда ..."
+              @upload-success="uploadImageSuccess"
+              @before-remove="beforeRemove"
+              @edit-image="editImage"
+              :showPrimary="false"
+              :data-images="auction.images"
+              idUpload="imagesComments"
+              editUpload="myIdEdit"
+            ></vue-upload-multiple-image>
           </div>
         </div>
         <div class="col-12 col-md-6">
@@ -242,17 +231,27 @@
   </div>
 </template>
 <script>
-import PictureInput from "../vue-picture-input";
+import VueUploadMultipleImage from "../vue-upload-multiple-image";
 export default {
   components: {
-    PictureInput
+    VueUploadMultipleImage
+  },
+  toSlider(images) {
+    let sim = [];
+    for (let s of images) {
+      sim.push(s.path);
+    }
+    return sim;
   },
   mounted() {
     let loader = Vue.$loading.show();
     loader.hide();
   },
   data: function() {
-    return { errors: {} };
+    return {
+      errors: {},
+      formData: new FormData()
+    };
   },
   props: ["auction"],
   methods: {
@@ -262,46 +261,71 @@ export default {
     onPhotoRemove() {
       this.auction.picture = "";
     },
+    uploadImageSuccess(formData, index, fileList) {
+      for (var pair of formData.entries()) {
+        this.formData.set("images[" + index + "]", pair[1]);
+      }
+    },
+    beforeRemove(index, done, fileList) {
+      this.formData.delete("images[" + index + "]");
+      var r = confirm("remove image");
+      if (r == true) {
+        done();
+      }
+    },
+    editImage(formData, index, fileList) {
+      for (var pair of formData.entries()) {
+        this.formData.set("images[" + index + "]", pair[1]);
+      }
+    },
     saveForm() {
       event.preventDefault();
       var app = this;
       let loader = Vue.$loading.show();
 
-      const data = new FormData();
-      data.append("multiplicity_id", app.auction.multiplicity.id);
-      data.append("product_id", app.auction.product.id);
-      data.append("store_id", app.auction.store.id);
-      data.append("autosale", app.auction.autosale);
-      data.append("start_at", app.auction.start_at);
-      data.append("finish_at", app.auction.finish_at);
-      data.append("can_bet", app.auction.can_bet);
-      data.append("mode", app.auction.mode);
-      data.append("prepay", app.auction.prepay);
-      data.append("comment", !!app.auction.comment ? app.auction.comment : "");
-      data.append("volume", !!app.auction.volume ? app.auction.volume : "");
-      data.append(
+      this.formData.set("multiplicity_id", app.auction.multiplicity.id);
+      this.formData.set("product_id", app.auction.product.id);
+      this.formData.set("store_id", app.auction.store.id);
+      this.formData.set("autosale", app.auction.autosale);
+      this.formData.set("start_at", app.auction.start_at);
+      this.formData.set("finish_at", app.auction.finish_at);
+      this.formData.set("can_bet", app.auction.can_bet);
+      this.formData.set("mode", app.auction.mode);
+      this.formData.set("prepay", app.auction.prepay);
+      this.formData.set(
+        "comment",
+        !!app.auction.comment ? app.auction.comment : ""
+      );
+      this.formData.set(
+        "volume",
+        !!app.auction.volume ? app.auction.volume : ""
+      );
+      this.formData.set(
         "start_price",
         !!app.auction.start_price ? app.auction.start_price : ""
       );
-      data.append("step", !!app.auction.step ? app.auction.step : "");
+      this.formData.set("step", !!app.auction.step ? app.auction.step : "");
 
       let tags = [];
       for (let i in app.auction.tags) {
         tags.push(app.auction.tags[i].id);
       }
-      data.append("tags", tags);
+      this.formData.set("tags", tags);
 
-      if (!!app.$refs.pictureInput.$refs.fileInput.files[0])
-        data.append("picture", app.$refs.pictureInput.$refs.fileInput.files[0]);
-      else data.append("picture", app.auction.picture);
+      this.formData.delete("pics[]");
+
+      for (let img of this.auction.images) {
+        if (img.id) this.formData.append("pics[]", img.id);
+      }
 
       if (!!app.auction.id) {
         axios
-          .post("/web/v1/auctions/" + app.auction.id, data)
+          .post("/web/v1/auctions/" + app.auction.id, this.formData)
           .then(function(res) {
-            app.$router.replace("/personal/auctions/show/" + res.data.id);
+            app.$router.replace("/personal/auctions/show/" + res.data.data.id);
             app.errors = {};
             loader.hide();
+            app.formData = new FormData();
           })
           .catch(function(err) {
             app.errors = {};
@@ -311,10 +335,11 @@ export default {
           });
       } else {
         axios
-          .post("/web/v1/auctions", data)
+          .post("/web/v1/auctions", this.formData)
           .then(function(res) {
-            app.$router.replace("/personal/auctions/show/" + res.data.id);
+            app.$router.replace("/personal/auctions/show/" + res.data.data.id);
             loader.hide();
+            app.formData = new FormData();
           })
           .catch(function(err) {
             app.errors = {};

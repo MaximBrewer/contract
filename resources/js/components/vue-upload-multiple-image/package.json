@@ -1,0 +1,69 @@
+{
+  "_from": "vue-upload-multiple-image",
+  "_id": "vue-upload-multiple-image@1.1.4",
+  "_inBundle": false,
+  "_integrity": "sha512-oJ9usjiNN24t3L1rHX+OAcPnBX8XcNnLv9tqYLfRk6LidBXcO38Bhhlq6WVM/c8zhV1G77TZ2P8f6D4CsH07zw==",
+  "_location": "/vue-upload-multiple-image",
+  "_phantomChildren": {
+    "follow-redirects": "1.5.10",
+    "is-buffer": "2.0.4"
+  },
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "vue-upload-multiple-image",
+    "name": "vue-upload-multiple-image",
+    "escapedName": "vue-upload-multiple-image",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/vue-upload-multiple-image/-/vue-upload-multiple-image-1.1.4.tgz",
+  "_shasum": "c0178e861868a9129750317edb3f614f3cb84e7d",
+  "_spec": "vue-upload-multiple-image",
+  "_where": "/Users/maxim/Projects/contract",
+  "author": {
+    "name": "Lee Khang",
+    "email": "lekhang2512@gmail.com"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "bundleDependencies": false,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "lodash": "^4.17.11",
+    "vue": "^2.5.11",
+    "vue-image-lightbox-carousel": "^1.0.7",
+    "vue-popperjs": "^1.5.3"
+  },
+  "deprecated": false,
+  "description": "A Vue.js project",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.4",
+    "vue-loader": "^13.0.5",
+    "vue-template-compiler": "^2.4.4",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1"
+  },
+  "license": "MIT",
+  "main": "src/main.js",
+  "name": "vue-upload-multiple-image",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot"
+  },
+  "version": "1.1.4"
+}
