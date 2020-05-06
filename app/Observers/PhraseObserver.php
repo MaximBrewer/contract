@@ -30,8 +30,9 @@ class PhraseObserver
         $userc = DB::table('user_contragent')->where('contragent_id', $whom->id)->select('user_id')->get();
 
         foreach ($userc as $userd) {
-            $user = User::findOrFail($userd->user_id);
-            Mail::to($user->email)->send(new ContragentMessage($phrase->text, $from));
+            $user = User::find($userd->user_id);
+            if ($user)
+                Mail::to($user->email)->send(new ContragentMessage($phrase->text, $from));
         }
     }
 

@@ -59,15 +59,15 @@ class MessagesController extends Controller
         $userc = DB::table('user_contragent')->where('contragent_id', $auction->contragent_id)->select('user_id')->get();
 
         foreach ($userc as $userd) {
-            $user = User::findOrFail($userd->user_id);
-            Mail::to($user->email)->send(new ChatMessage($request->post('message'), $auction));
+            $user = User::find($userd->user_id);
+            if ($user)
+                Mail::to($user->email)->send(new ChatMessage($request->post('message'), $auction));
         }
 
 
         event(new \App\Events\MessagePushed($auction));
 
         return $message;
-
     }
 
     /**
@@ -93,7 +93,7 @@ class MessagesController extends Controller
                 'errors' => []
             ], 422);
         }
-        
+
         $validator = Validator::make($request->all(), [
             "message" => "required|min:10",
             "auction_id" => "exists:auctions"
@@ -110,7 +110,6 @@ class MessagesController extends Controller
         event(new \App\Events\MessagePushed($auction));
 
         return $message;
-
     }
 
     /**
@@ -139,6 +138,5 @@ class MessagesController extends Controller
         event(new \App\Events\MessagePushed($auction));
 
         return '';
-        
     }
 }
