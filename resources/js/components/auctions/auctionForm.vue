@@ -282,6 +282,14 @@ export default {
       event.preventDefault();
       var app = this;
       let loader = Vue.$loading.show();
+      if (
+        !app.auction.multiplicity ||
+        !app.auction.product ||
+        !app.auction.store
+      ) {
+        loader.hide();
+        return false;
+      }
 
       this.formData.set("multiplicity_id", app.auction.multiplicity.id);
       this.formData.set("product_id", app.auction.product.id);
@@ -314,9 +322,10 @@ export default {
 
       this.formData.delete("pics[]");
 
-      for (let img of this.auction.images) {
-        if (img.id) this.formData.append("pics[]", img.id);
-      }
+      if (this.auction.images)
+        for (let img of this.auction.images) {
+          if (img.id) this.formData.append("pics[]", img.id);
+        }
 
       if (!!app.auction.id) {
         axios
