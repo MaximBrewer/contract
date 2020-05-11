@@ -15,13 +15,13 @@ class Comment extends JsonResource
     public function toArray($request)
     {
         return [
-            'by' => $this->by->title,
+            'by' => $this->by ? $this->by->title : "",
             'comment' => $this->comment,
             'contragent_id' => $this->contragent_id,
             'created_at' => $this->created_at,
             'id' => $this->id,
             'images' => $this->images,
-            'to' => $this->to->title,
+            'to' => $this->to ? $this->to->title : "",
             'updated_at' => $this->updated_at,
             'votes' => $this->votes,
             'writer' => $this->writer,
