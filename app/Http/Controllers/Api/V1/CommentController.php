@@ -141,10 +141,11 @@ class CommentController extends Controller
     {
 
         $comments = CommentResource::collection(Comment::where('contragent_id', $contragentId)->orderBy('updated_at', 'desc')->get());
+        $comment = Comment::where('contragent_id', $contragentId)->where('writer', User::find(Auth::user()->id)->contragents[0]->id)->first();
         return [
             $comments->collection,
             Contragent::find($contragentId)->rating,
-            new CommentResource(Comment::where('contragent_id', $contragentId)->where('writer', User::find(Auth::user()->id)->contragents[0]->id)->first())
+            $comment ? new CommentResource($comment) : null
         ];
     }
 
