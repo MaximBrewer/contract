@@ -60,7 +60,7 @@
             <v-select
               label="title"
               :options="$root.products"
-              :searchable="false"
+              :searchable="true"
               v-model="auction.product"
               v-bind:class="{ 'is-invalid': errors['product.id'] }"
             >
