@@ -19,14 +19,14 @@ class TargetsController extends Controller
     public function all(Request $request, $action = null)
     {
 
-        return Target::all();
+        return Target::where('kind_id', Auth::user()->kind_id)->get();
     }
 
 
     public function index(Request $request, $action = null)
     {
 
-        return Target::where('contragent_id', Auth::user()->contragents[0]->id)->get();
+        return Target::where('contragent_id', Auth::user()->contragents[0]->id)->where('kind_id', Auth::user()->kind_id)->get();
     }
 
 
