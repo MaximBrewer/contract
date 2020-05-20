@@ -128,7 +128,7 @@ class AuctionsController extends Controller
         } else {
             $attributes['picture'] = '';
         }
-
+        $attributes['kind_id'] = Auth::user()->kind_id;
 
         $auction = Auction::create($attributes);
 
@@ -160,6 +160,7 @@ class AuctionsController extends Controller
         ]);
 
         $attributes = $request->all();
+        $attributes['kind_id'] = Auth::user()->kind_id;
 
 
 

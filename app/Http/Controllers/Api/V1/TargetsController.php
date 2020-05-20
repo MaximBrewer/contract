@@ -52,6 +52,7 @@ class TargetsController extends Controller
             'multiplicity_id' => $request->post('multiplicity')['id'],
             'store_id' => $request->post('store')['id'],
             'remain' => $request->post('volume'),
+            'kind_id' => Auth::user()->kind_id,
             'volume' => $request->post('volume'),
         ]);
         $target = Target::findOrFail($target->id);
