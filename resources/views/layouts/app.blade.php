@@ -52,14 +52,22 @@
                         <li class="nav-item dropdown">
                             <a id="loginDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                @guest
                                 {{ $kinds[0]->title }} <span class="caret"></span>
+                                @else
+                                {{ Auth::user()->kind->title }} <span class="caret"></span>
+                                @endguest
+                                
                             </a>
                             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="loginDropdown">
                                 @foreach($kinds as $kind)
+                                @guest
                                 <a class="dropdown-item" href="javascript:void(0)">{{ $kind->title }}</a>
+                                @else
+                                <a class="dropdown-item" href="/personal?kind={{ $kind->id }}">{{ $kind->title }}</a>
+                                @endguest
                                 @endforeach
                             </div>
-
                         </li>
                         {{-- <li class="nav-item">
                             <a class="nav-link" href="//cross-contract.ru">{{ __('About project') }}</a>

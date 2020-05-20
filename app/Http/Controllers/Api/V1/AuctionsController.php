@@ -33,24 +33,26 @@ class AuctionsController extends Controller
 
     public function index(Request $request, $action = null)
     {
+        $kind_id = Auth::user() ? Auth::user()->kind_id : 1;
 
         switch ($action) {
             case "all":
-                return AuctionResource::collection(Auction::where('finished', '<>', 1)->orderBy('id', 'desc')->get());
+                $auctions = Auction::where('finished', '<>', 1)->orderBy('id', 'desc')->get();
                 break;
             case "confirmed":
-                return AuctionResource::collection(Auction::where('confirmed', 1)->where('finished', '<>', 1)->orderBy('id', 'desc')->get());
+                $auctions = Auction::where('confirmed', 1)->where('kind_id', $kind_id)->where('finished', '<>', 1)->orderBy('id', 'desc')->get();
                 break;
             case "archive":
-                return AuctionResource::collection(Auction::where('finished', 1)->orderBy('id', 'desc')->get());
+                $auctions = Auction::where('finished', 1)->where('kind_id', $kind_id)->orderBy('id', 'desc')->get();
                 break;
             case "my":
-                return AuctionResource::collection(Auction::orderBy('id', 'desc')->where('finished', '<>', 1)->where('contragent_id', Auth::user()->contragents[0]->id)->get());
+                $auctions = Auction::orderBy('id', 'desc')->where('kind_id', $kind_id)->where('finished', '<>', 1)->where('contragent_id', Auth::user()->contragents[0]->id)->get();
                 break;
             case "bid":
-                return AuctionResource::collection(Auth::user()->contragents[0]->bid_auctions);
+                $auctions = Auth::user()->contragents[0]->bid_auctions()->where('kind_id', $kind_id);
                 break;
         }
+        return AuctionResource::collection($auctions);
     }
     /**
      * Display a listing of the resource.

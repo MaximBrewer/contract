@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
@@ -15,6 +16,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        return Product::all();
+        $kind_id = Auth::user() ? Auth::user()->kind_id : 1;
+        return Product::where('kind_id', $kind_id)->get();
     }
 }

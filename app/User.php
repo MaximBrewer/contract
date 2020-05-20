@@ -16,7 +16,7 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'inn',
+        'name', 'email', 'password', 'inn', 'kind_id'
     ];
 
     /**
@@ -43,12 +43,17 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
 
     public function getFilledAttribute()
     {
+        $this->kind;
         $this->contragents;
         return true;
     }
 
     public function contragents(){
         return $this->belongsToMany('App\Contragent', 'user_contragent');
+    }
+
+    public function kind(){
+        return $this->belongsTo('App\Kind');
     }
 
 }
