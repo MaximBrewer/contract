@@ -605,7 +605,7 @@ class AuctionsController extends Controller
             ], 422);
         }
         
-        $interval = Interval::findOrFail($interval[0]->id);
+        $interval = Interval::findOrFail($r->post('interval'));
 
         if (!$auction[0]->can_bet) {
             return response()->json([
