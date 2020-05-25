@@ -18,10 +18,13 @@ use App\Http\Resources\History as HistoryResource;
 class Auction extends Model
 {
 
+    //INSERT INTO `intervals`(`auction_id`, `start_price`, `from`, `to`, created_at, updated_at) SELECT `id`, `start_price`, `start_at`, `finish_at`, created_at, updated_at FROM `auctions`
+
 
     protected $fillable = [
         'picture',
         'contragent_id',
+        'kind_id',
         'store_id',
         'comment',
         'start_at',
@@ -30,8 +33,6 @@ class Auction extends Model
         'product_id',
         'multiplicity_id',
         'step',
-        'start_price',
-        'volume',
         'prepay',
         'confirmed',
         'finished',
@@ -124,6 +125,11 @@ class Auction extends Model
     public function bets()
     {
         return $this->hasMany('App\Bet')->orderBy('created_at', 'desc');
+    }
+
+    public function intervals()
+    {
+        return $this->hasMany('App\Interval');
     }
 
     public function getMessagesAttribute()

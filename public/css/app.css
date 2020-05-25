@@ -14496,3 +14496,27 @@ span.online.is-offline {
   min-height: 200px;
 }
 
+.intervals ul {
+  padding: 0;
+  margin: 0;
+}
+
+.intervals .interval {
+  padding: 0 0 1rem;
+  list-style: none;
+  margin: 0;
+}
+
+.unstyled {
+  list-style: outside none;
+  padding: 5px;
+  margin: 0;
+}
+
+.unstyled li {
+  list-style: outside none;
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+  margin: 0;
+}
+

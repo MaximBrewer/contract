@@ -6,7 +6,7 @@
         <tr>
           <th>#</th>
           <th>{{ __('Auction') }}</th>
-          <th>{{ __('Time') }}</th>
+          <th>{{ __('Intervals') }}</th>
           <th>{{ __('Store') }}</th>
           <th>{{ __('Description') }}</th>
           <th v-if="action != 'archive'">{{ __('Confirmed') }}</th>
@@ -53,19 +53,6 @@
               <strong>{{ __('Volume') }}:</strong>
               <span>{{ auction.volume}}</span>
             </div>
-            <div
-              class="text-nowrap"
-              v-if="auction.range != undefined && auction.range != 10000 && store"
-            >
-              <strong>{{ __('Range') }}:</strong>
-              <span>{{ auction.range * 1 }} {{ __('km') }}</span>
-            </div>
-          </td>
-          <td>
-            <div class="text-nowrap" v-if="auction.start_price && action != 'bid'">
-              <strong>{{ __('Auction start price') }}:</strong>
-              <span>{{ auction.start_price }}₽</span>
-            </div>
             <div class="text-nowrap" v-if="auction.start_price && action == 'bid'">
               <strong>{{ __('Auction minimal bet') }}:</strong>
               <span>{{ auction.min_bet }}₽</span>
@@ -86,6 +73,35 @@
               <strong>{{ __('Auction finish') }}:</strong>
               <span>{{ auction.finish_at | formatDateTime }}</span>
             </div>
+            <div
+              class="text-nowrap"
+              v-if="auction.range != undefined && auction.range != 10000 && store"
+            >
+              <strong>{{ __('Range') }}:</strong>
+              <span>{{ auction.range * 1 }} {{ __('km') }}</span>
+            </div>
+          </td>
+          <td>
+            <ul class="unstyled">
+              <li v-for="(interval, idx) in auction.intervals" :key="idx">
+                <div class="text-nowrap">
+                  <strong>{{ __('Start Price') }}:</strong>
+                  <span>{{ interval.start_price }}</span>
+                </div>
+                <div class="text-nowrap">
+                  <strong>{{ __('Volume') }}:</strong>
+                  <span>{{ interval.volume }}</span>
+                </div>
+                <div class="text-nowrap">
+                  <strong>{{ __('From') }}:</strong>
+                  <span>{{ interval.from | formatDateTime }}</span>
+                </div>
+                <div class="text-nowrap">
+                  <strong>{{ __('To') }}:</strong>
+                  <span>{{ interval.to | formatDateTime }}</span>
+                </div>
+              </li>
+            </ul>
           </td>
           <td>
             <div v-if="auction.store && auction.store.federal_district" class="text-nowrap">

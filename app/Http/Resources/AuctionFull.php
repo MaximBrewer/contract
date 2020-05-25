@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Interval as IntervalResource;
 
 class AuctionFull extends JsonResource
 {
@@ -46,6 +47,7 @@ class AuctionFull extends JsonResource
             'finish_at' => $this->finish_at,
             'images' => $this->images,
             'mode' => $this->mode,
+            'intervals' => IntervalResource::collection($this->intervals),
             'multiplicity' => [
                 'id' => $this->multiplicity->id,
                 'title' => $this->multiplicity->title

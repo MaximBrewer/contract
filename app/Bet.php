@@ -11,6 +11,7 @@ class Bet extends Model
         'volume',
         'contragent_id',
         'auction_id',
+        'interval_id',
         'price',
         'approved_volume',
         'approved_contract',

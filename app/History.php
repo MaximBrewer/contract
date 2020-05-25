@@ -11,6 +11,7 @@ class History extends Model
 
     protected $fillable = [
         'price',
+        'interval_id',
         'volume',
         'auction_id',
         'contragent_id'

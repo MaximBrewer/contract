@@ -21,6 +21,7 @@ use \App\Tag;
 use Illuminate\Support\Facades\Validator;
 use App\ContragentAuction;
 use App\Http\Resources\AuctionResource;
+use App\Interval;
 
 
 class AuctionsController extends Controller
@@ -97,54 +98,11 @@ class AuctionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeManager(Request $request)
-    {
-        $attributes = $request->all();
-
-        $request->validate([
-            "multiplicity_id" => "required|exists:multiplicities,id",
-            "product_id" => "required|exists:products,id",
-            "store_id" => "required|exists:stores,id",
-            "start_at" => "required",
-            "finish_at" => "required|after:start_at",
-            "comment" => "",
-            "start_price" => "required",
-            "volume" => "required",
-            "step" => "required",
-        ]);
-
-
-        if ($request->hasfile('picture')) {
-            $file = $request->file('picture');
-            $extension = $file->getClientOriginalExtension();
-            $path = 'auctions' . DIRECTORY_SEPARATOR . date('FY') . DIRECTORY_SEPARATOR;
-            $fullpath = storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path;
-            @mkdir($fullpath, 0777, true);
-            do {
-                $filename = Str::random(20);
-            } while (is_file($fullpath . $filename . '.' . $file->getClientOriginalExtension()));
-            $file->move($fullpath, $filename . '.' . $extension);
-            $attributes['picture'] = $path . $filename . '.' . $extension;
-        } else {
-            $attributes['picture'] = '';
-        }
-        $attributes['kind_id'] = Auth::user()->kind_id;
-
-        $auction = Auction::create($attributes);
-
-        $auction = Auction::findOrFail($auction->id);
-        return $auction;
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
 
     public function store(Request $request)
     {
+        $attributes = $request->all();
+
         $request->validate([
             "multiplicity_id" => "required|exists:multiplicities,id",
             "product_id" => "required|exists:products,id",
@@ -152,32 +110,17 @@ class AuctionsController extends Controller
             "start_at" => "required",
             "finish_at" => "required|after:start_at",
             "comment" => "",
-            "start_price" => "required",
-            "volume" => "required",
             "step" => "required",
             "can_bet" => "required",
             "mode" => "required",
+            "intervals.*.start_price" => "required|numeric",
+            "intervals.*.volume" => "required|numeric",
+            "intervals.*.from" => "required",
+            "intervals.*.to" => "required|after_or_equal:intervals.*.from",
         ]);
 
         $attributes = $request->all();
         $attributes['kind_id'] = Auth::user()->kind_id;
-
-
-
-        // if ($request->hasfile('picture')) {
-        //     $file = $request->file('picture');
-        //     $extension = $file->getClientOriginalExtension();
-        //     $path = 'auctions' . DIRECTORY_SEPARATOR . date('FY') . DIRECTORY_SEPARATOR;
-        //     $fullpath = storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path;
-        //     @mkdir($fullpath, 0777, true);
-        //     do {
-        //         $filename = Str::random(20);
-        //     } while (is_file($fullpath . $filename . '.' . $file->getClientOriginalExtension()));
-        //     $file->move($fullpath, $filename . '.' . $extension);
-        //     $attributes['picture'] = $path . $filename . '.' . $extension;
-        // } else {
-        //     $attributes['picture'] = '';
-        // }
 
 
         $rtags = explode(',', strval($attributes['tags']));
@@ -189,7 +132,6 @@ class AuctionsController extends Controller
 
 
         unset($attributes['tags']);
-
 
         $attributes['start_at'] = date('Y-m-d H:i:s', strtotime($attributes['start_at']));
         $attributes['finish_at'] = date('Y-m-d H:i:s', strtotime($attributes['finish_at']));
@@ -224,6 +166,12 @@ class AuctionsController extends Controller
             }
         }
 
+        foreach ($attributes['intervals'] as $data) {
+            $data['auction_id'] = $auction->id;
+            $data['from'] = date('Y-m-d', strtotime($data['from']));
+            $data['to'] = date('Y-m-d', strtotime($data['to']));
+            $interval = Interval::create($data);
+        }
 
         $auction->tags()->sync($rtags);
 
@@ -253,7 +201,6 @@ class AuctionsController extends Controller
             ], 422);
         }
 
-
         $attributes = $request->all();
 
         $request->validate([
@@ -263,13 +210,14 @@ class AuctionsController extends Controller
             "start_at" => "required",
             "finish_at" => "required|after:start_at",
             "comment" => "",
-            "start_price" => "required",
-            "volume" => "required",
             "step" => "required",
             "can_bet" => "required",
             "mode" => "required",
+            "intervals.*.start_price" => "required|numeric",
+            "intervals.*.volume" => "required|numeric",
+            "intervals.*.from" => "required",
+            "intervals.*.to" => "required|after_or_equal:intervals.*.from",
         ]);
-
 
         $rtags = explode(',', strval($attributes['tags']));
 
@@ -285,7 +233,20 @@ class AuctionsController extends Controller
         $auction->tags()->sync($rtags);
         $auction->update($attributes);
 
-
+        $ids = [];
+        foreach ($attributes['intervals'] as $data) {
+            $data['auction_id'] = $auction->id;
+            $data['from'] = date('Y-m-d', strtotime($data['from']));
+            $data['to'] = date('Y-m-d', strtotime($data['to']));
+            if ($data['id']) {
+                $interval = Interval::findOrFail($data['id']);
+                $interval->update($data);
+            } else {
+                $interval = Interval::create($data);
+            }
+            $ids[] = $interval->id;
+        }
+        Interval::where('auction_id', $auction->id)->whereNotIn('id', $ids)->delete();
 
         $path = 'auctions' . DIRECTORY_SEPARATOR . $auction->id . DIRECTORY_SEPARATOR;
         $fullpath = storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path;
@@ -418,37 +379,6 @@ class AuctionsController extends Controller
         if ($auction) event(new \App\Events\MessagePushed($auction));
 
         return new AuctionResource($auction);
-    }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updateManager(Request $request, $id)
-    {
-        $auction = Auction::findOrFail($id);
-        $auction->update([
-            'contragent_id' => $request->post('contragent')['id'],
-            'product_id' => $request->post('product')['id'],
-            'multiplicity_id' => $request->post('multiplicity')['id'],
-            'store_id' => $request->post('store')['id'],
-            'start_at' => date('Y-m-d H:i:s', strtotime($request->post('start_at'))),
-            'finish_at' => date('Y-m-d H:i:s', strtotime($request->post('finish_at'))),
-            'comment' => $request->post('comment'),
-            'start_price' => $request->post('start_price'),
-            'volume' => $request->post('volume'),
-        ]);
-
-        if ($request->post('tags')) {
-            $tags = [];
-            foreach ($request->post('tags') as $t) $tags[] = $t['id'];
-            $auction->tags()->sync($tags);
-        }
-
-        $auction = Auction::findOrFail($id);
-        return $auction;
     }
 
     /**
@@ -649,6 +579,13 @@ class AuctionsController extends Controller
             ], 422);
         }
 
+        if (!$r->post('interval')) {
+            return response()->json([
+                'message' => __('Choose interval!'),
+                'errors' => []
+            ], 422);
+        }
+
         $auction = DB::select('select id, contragent_id, can_bet from contragent_auction where auction_id = ? && contragent_id = ?', [$r->post('auction'), $r->post('bidder')]);
 
         if (empty($auction) || $r->post('bidder') != Auth::user()->contragents[0]->id) {
@@ -657,6 +594,18 @@ class AuctionsController extends Controller
                 'errors' => []
             ], 422);
         }
+
+        $interval = DB::select('select id from intervals where auction_id = ? && id = ?', [$r->post('auction'), $r->post('interval')]);
+
+
+        if (empty($interval) || $r->post('bidder') != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+        
+        $interval = Interval::findOrFail($interval[0]->id);
 
         if (!$auction[0]->can_bet) {
             return response()->json([
@@ -667,17 +616,7 @@ class AuctionsController extends Controller
 
         $auction = Auction::findOrFail($r->post('auction'));
 
-
-
-        if ((float) $r->post('price') < $auction->start_price) {
-            return response()->json([
-                'message' => __('Ai Ai!'),
-                'errors' => []
-            ], 422);
-        }
-
-
-        if ((float) $r->post('price') < $auction->start_price) {
+        if ((float) $r->post('price') < $interval->start_price) {
             return response()->json([
                 'message' => __('Too low price!'),
                 'errors' => []
@@ -687,6 +626,7 @@ class AuctionsController extends Controller
         $newBet = new Bet([
             'id' => null,
             'auction_id' => $r->post('auction'),
+            'interval_id' => $interval->id,
             'contragent_id' => $r->post('bidder'),
             'price' => (float) $r->post('price'),
             'volume' => $r->post('volume'),
@@ -700,10 +640,10 @@ class AuctionsController extends Controller
             'took_part' => Carbon::now()
         ]);
 
-        $freeVolume = $auction->free_volume;
+        $freeVolume = $interval->free_volume;
 
 
-        if ($auction->volume < $r->post('volume')) {
+        if ($interval->volume < $r->post('volume')) {
             return response()->json([
                 'message' => __('You request more than auction total volume!'),
                 'errors' => []
@@ -711,7 +651,7 @@ class AuctionsController extends Controller
         }
         // DB::connection()->enableQueryLog();
 
-        $auctionBets = Bet::where('auction_id', $r->post('auction'))
+        $auctionBets = Bet::where('interval_id', $r->post('interval'))
             ->select('bets.*', 'contragents.rating')
             ->where('contragent_id', '<>', $r->post('bidder'))
             ->whereNull('approved_volume')
@@ -725,7 +665,7 @@ class AuctionsController extends Controller
         // $queries = DB::getQueryLog();
         // info($queries);
 
-        $myBetsSum = Bet::where('auction_id', $r->post('auction'))->where('contragent_id', $r->post('bidder'))->where(function ($query) {
+        $myBetsSum = Bet::where('interval_id', $r->post('interval'))->where('contragent_id', $r->post('bidder'))->where(function ($query) {
             $query
                 ->whereNull('approved_volume')
                 ->orWhere('approved_volume', '<', 1);
@@ -766,6 +706,7 @@ class AuctionsController extends Controller
 
                     History::create([
                         'auction_id' => $newBet->auction_id,
+                        'interval_id' => $newBet->interval_id,
                         'volume' => $newBet->volume,
                         'price' => $newBet->price,
                         'contragent_id' => $newBet->contragent_id,

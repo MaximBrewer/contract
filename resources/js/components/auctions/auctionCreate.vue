@@ -34,7 +34,11 @@ export default {
         product: null,
         multiplicity: null,
         mode: 'price2day',
-        can_bet: 'yes'
+        can_bet: 'yes',
+        autosale: 'no',
+        intervals: [
+          {}
+        ]
       }
     };
   }

@@ -1,117 +1,123 @@
 <template>
-  <div class="row">
-    <div class="col-md-12" v-if="auction.bets.length">
-      <div class="card">
-        <div class="card-header">
-          <strong>
-            {{ __('Auction volume') }}: {{ auction.volume }} |
-            {{ __('Active volume') }}: {{ auction.free_volume }} |
-            {{ __('Approved volume') }}: {{ auction.volume - auction.free_volume }} |
-            {{ __('Undistributed volume') }}: {{ auction.undistributed_volume }}
-          </strong>
-        </div>
-        <div class="table-responsive" id="auction_activity">
-          <table class="table table-bordered line-height-22">
-            <thead>
-              <tr>
-                <th>{{ __('Contragent') }}</th>
-                <th>{{ __('Is online') }}</th>
-                <th>{{ __('Remove bet') }}</th>
-                <th>{{ __('Active volume') }}</th>
-                <th>{{ __('Active price') }}</th>
-                <th>{{ __('Approve volume') }}</th>
-                <th>{{ __('Correcting price') }}</th>
-                <th>{{ __('Approve contract') }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(bet, index) in auction.bets" :key="index">
-                <td>
-                  <div v-if="bet.contragent" class="text-nowrap">
-                    <div class="h6">{{ bet.contragent.title }}</div>
-                  </div>
-                </td>
-                <td class="text-center">
-                  <div class="text-nowrap">
-                    <span
-                      v-tooltip="__('Is online')"
-                      href="javascript:void(0)"
-                      class="online"
-                      v-bind:class="{ 'is-online': bet.took_part, 'is-offline': !bet.took_part }"
-                    ></span>
-                  </div>
-                </td>
-                <td class="text-center">
-                  <div class="text-nowrap">
-                    <a
-                      v-tooltip="__('Delete bet')"
-                      href="javascript:void(0)"
-                      class="btn-sm"
-                      :disabled="bet.approved_volume || approved_contract"
-                      v-bind:class="{ 'btn-danger': !bet.approved_volume, 'btn-secondary': bet.approved_volume }"
-                      @click="bet.approved_volume || approved_contract ? function(){ return false; } : removeBet(bet)"
-                    >
-                      <i class="mdi mdi-delete" aria-hidden="true"></i>
-                    </a>
-                  </div>
-                </td>
-                <td class="text-center">
-                  <div class="text-nowrap">
-                    <span>{{ bet.volume }}</span>
-                  </div>
-                </td>
-                <td class="text-center">
-                  <div class="text-nowrap">
-                    <span>{{ bet.price }}</span>
-                  </div>
-                </td>
-                <td class="text-center">
-                  <div class="text-nowrap">
-                    <a
-                      v-tooltip="__('Approve volume')"
-                      href="javascript:void(0)"
-                      class="btn btn-sm"
-                      :disabled="!!bet.approved_volume"
-                      v-bind:class="{ 'btn-success': !bet.approved_volume, 'btn-secondary': bet.approved_volume }"
-                      @click="bet.approved_volume ? function(){ return false; } : approveVolume(bet)"
-                    >
-                      <i class="mdi mdi-check-circle" aria-hidden="true"></i>
-                    </a>
-                  </div>
-                </td>
-                <td>
-                  <div class="text-nowrap">
-                    <input
-                      class="text-right form-control"
-                      size="10"
-                      type="text"
-                      v-model="bet.correct"
-                      :disabled="!!bet.approved_contract"
-                    />
-                  </div>
-                </td>
-                <td class="text-center">
-                  <div class="text-nowrap">
-                    <a
-                      v-tooltip="__('Approve contract')"
-                      href="javascript:void(0)"
-                      class="btn btn-sm"
-                      :disabled="!!bet.approved_contract"
-                      v-bind:class="{ 'btn-success': !bet.approved_contract, 'btn-secondary': bet.approved_contract }"
-                      @click="bet.approved_contract ? function(){ return false; } : approveContract(bet)"
-                    >
-                      <i class="mdi mdi-check-circle" aria-hidden="true"></i>
-                    </a>
-                    <a v-if="!!bet.approved_contract" href="javascript:void(0)" class="btn btn-primary">{{__('Get the Invoice')}}</a>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+  <section>
+    <div class="row" v-for="(interval, ind) in auction.intervals" :key="ind">
+      <div class="col-md-12" v-if="interval.bets.length">
+        <div class="card">
+          <div class="card-header">
+            <strong>
+              {{ __('Auction volume') }}: {{ auction.volume }} |
+              {{ __('Active volume') }}: {{ auction.free_volume }} |
+              {{ __('Approved volume') }}: {{ auction.volume - auction.free_volume }} |
+              {{ __('Undistributed volume') }}: {{ auction.undistributed_volume }}
+            </strong>
+          </div>
+          <div class="table-responsive" id="auction_activity">
+            <table class="table table-bordered line-height-22">
+              <thead>
+                <tr>
+                  <th>{{ __('Contragent') }}</th>
+                  <th>{{ __('Is online') }}</th>
+                  <th>{{ __('Remove bet') }}</th>
+                  <th>{{ __('Active volume') }}</th>
+                  <th>{{ __('Active price') }}</th>
+                  <th>{{ __('Approve volume') }}</th>
+                  <th>{{ __('Correcting price') }}</th>
+                  <th>{{ __('Approve contract') }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(bet, index) in interval.bets" :key="index">
+                  <td>
+                    <div v-if="bet.contragent" class="text-nowrap">
+                      <div class="h6">{{ bet.contragent.title }}</div>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <div class="text-nowrap">
+                      <span
+                        v-tooltip="__('Is online')"
+                        href="javascript:void(0)"
+                        class="online"
+                        v-bind:class="{ 'is-online': bet.took_part, 'is-offline': !bet.took_part }"
+                      ></span>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <div class="text-nowrap">
+                      <a
+                        v-tooltip="__('Delete bet')"
+                        href="javascript:void(0)"
+                        class="btn-sm"
+                        :disabled="bet.approved_volume || approved_contract"
+                        v-bind:class="{ 'btn-danger': !bet.approved_volume, 'btn-secondary': bet.approved_volume }"
+                        @click="bet.approved_volume || approved_contract ? function(){ return false; } : removeBet(bet)"
+                      >
+                        <i class="mdi mdi-delete" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <div class="text-nowrap">
+                      <span>{{ bet.volume }}</span>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <div class="text-nowrap">
+                      <span>{{ bet.price }}</span>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <div class="text-nowrap">
+                      <a
+                        v-tooltip="__('Approve volume')"
+                        href="javascript:void(0)"
+                        class="btn btn-sm"
+                        :disabled="!!bet.approved_volume"
+                        v-bind:class="{ 'btn-success': !bet.approved_volume, 'btn-secondary': bet.approved_volume }"
+                        @click="bet.approved_volume ? function(){ return false; } : approveVolume(bet)"
+                      >
+                        <i class="mdi mdi-check-circle" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="text-nowrap">
+                      <input
+                        class="text-right form-control"
+                        size="10"
+                        type="text"
+                        v-model="bet.correct"
+                        :disabled="!!bet.approved_contract"
+                      />
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <div class="text-nowrap">
+                      <a
+                        v-tooltip="__('Approve contract')"
+                        href="javascript:void(0)"
+                        class="btn btn-sm"
+                        :disabled="!!bet.approved_contract"
+                        v-bind:class="{ 'btn-success': !bet.approved_contract, 'btn-secondary': bet.approved_contract }"
+                        @click="bet.approved_contract ? function(){ return false; } : approveContract(bet)"
+                      >
+                        <i class="mdi mdi-check-circle" aria-hidden="true"></i>
+                      </a>
+                      <a
+                        v-if="!!bet.approved_contract"
+                        href="javascript:void(0)"
+                        class="btn btn-primary"
+                      >{{__('Get the Invoice')}}</a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 <script>
 export default {

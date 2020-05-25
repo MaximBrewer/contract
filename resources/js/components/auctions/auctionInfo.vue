@@ -13,8 +13,6 @@
           >{{ auction.store.federal_district.title }}</li>
           <li class="list-group-item" v-if="auction.store.region">{{ auction.store.region.title }}</li>
           <li class="list-group-item" v-if="auction.store.address">{{ auction.store.address }}</li>
-          <li class="list-group-item" v-if="auction.contragent">{{ auction.contragent.fio }}</li>
-          <li class="list-group-item" v-if="auction.contragent">{{ auction.contragent.phone }}</li>
           <li class="list-group-item" style="display:flex;flex-wrap:wrap;">
             <div v-for="(image, index) in auction.images" :key="index" style="padding:.5em .7em;">
               <img :src="image.path" alt style="max-width:10em;"/>
@@ -28,14 +26,12 @@
       <div class="card">
         <div class="card-header" v-if="auction.product">{{ auction.product.title }}</div>
         <ul class="list-group list-group-flush">
+          <li class="list-group-item" v-if="auction.contragent">{{ auction.contragent.fio }}</li>
+          <li class="list-group-item" v-if="auction.contragent">{{ auction.contragent.phone }}</li>
           <li
             class="list-group-item"
             v-if="auction.multiplicity"
           >{{ __('Auction multiplicity') }}: {{ auction.multiplicity.title }}</li>
-          <li
-            class="list-group-item"
-          >{{ __('Auction volume') }}: {{ auction.volume }} {{ __('un') }}.</li>
-          <li class="list-group-item">{{ __('Auction start price') }}: {{ auction.start_price }}₽</li>
           <li class="list-group-item">{{ __('Auction step') }}: {{ auction.step }}₽</li>
           <li v-if="auction.tags.length" class="list-group-item">
             {{ __('Auction tags') }}:

@@ -57,7 +57,7 @@
           </v-select>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 col-12">
+      <div class="col-md-2 col-sm-4 col-12">
         <div class="form-group">
           <v-select
             label="title"
@@ -72,7 +72,7 @@
           </v-select>
         </div>
       </div>
-      <div class="col-md-4 col-sm-6 col-12">
+      <div class="col-md-2 col-sm-4 col-12">
         <div class="form-group">
           <v-select
             label="title"
@@ -117,6 +117,36 @@
           ></datetime>
         </div>
       </div>
+      <div class="col-md-2 col-sm-3 col-12">
+        <div class="form-group">
+          <datetime
+            type="date"
+            zone="Europe/Moscow"
+            :placeholder="__('Interval From')"
+            :disabled="!canaction"
+            value-zone="Europe/Moscow"
+            class="theme-primary"
+            :input-class="'form-control'"
+            @input="filterAuctions"
+            v-model="filter.interval_from"
+          ></datetime>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-3 col-12">
+        <div class="form-group">
+          <datetime
+            type="date"
+            zone="Europe/Moscow"
+            :placeholder="__('Interval To')"
+            :disabled="!canaction"
+            value-zone="Europe/Moscow"
+            class="theme-primary"
+            :input-class="'form-control'"
+            @input="filterAuctions"
+            v-model="filter.interval_to"
+          ></datetime>
+        </div>
+      </div>
       <div class="col-md-4 col-sm-6 col-12">
         <div class="form-group">
           <v-select
@@ -157,7 +187,7 @@
             :disabled="!canaction"
             :placeholder="__('Mode')"
             @input="filterAuctions"
-            :options="[{code: 'future', label: 'впрок'}, {code: 'price2day', label: 'price2day'}]"
+            :options="[{code: 'future', label: 'срочный аукцион впрок'}, {code: 'price2day', label: 'price2day'}]"
             :reduce="cod => cod.code"
             :cod="filter.mode"
             :multiple="false"
@@ -250,17 +280,17 @@ export default {
     getAuctions(sl) {
       let app = this;
       let loader;
-      if(sl) loader = Vue.$loading.show();
+      if (sl) loader = Vue.$loading.show();
       axios
         .get("/web/v1/auctions/" + app.action)
         .then(function(res) {
           app.canaction = true;
           app.auctions = res.data.data;
           app.filterAuctions();
-          if(sl) loader.hide();
+          if (sl) loader.hide();
         })
         .catch(function(res) {
-          if(sl) loader.hide();
+          if (sl) loader.hide();
           app.$fire({
             title: app.__("Error!"),
             text: app.__("Failed to load auctions"),
@@ -291,6 +321,29 @@ export default {
             }
           }
         }
+        let interval_from = false;
+        if (f.interval_from) {
+          for (let d in a.intervals) {
+            if (a.intervals[d].from >= f.interval_from) interval_from = true;
+            console.log(
+              a.intervals[d].from <= f.interval_from,
+              a.intervals[d].from,
+              f.interval_from
+            );
+            break;
+          }
+        }
+        let interval_to = false;
+        if (f.interval_to) {
+          for (let d in a.intervals) {
+            if (
+              new Date(f.interval_to).getTime() + 24 * 3600000 >=
+              new Date(a.intervals[d].to).getTime()
+            )
+              interval_to = true;
+            break;
+          }
+        }
         if (
           (!f.federal_district ||
             f.federal_district.id == a.store.federal_district.id) &&
@@ -305,7 +358,9 @@ export default {
           (!f.finish_at ||
             new Date(f.finish_at).getTime() + 24 * 3600000 >=
               new Date(a.start_at).getTime()) &&
-          (!f.tags.length || intags)
+          (!f.tags.length || intags) &&
+          (!f.interval_from || interval_from) &&
+          (!f.interval_to || interval_to)
         )
           app.auctionsList.push(a);
       }

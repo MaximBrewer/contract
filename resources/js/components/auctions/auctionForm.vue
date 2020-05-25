@@ -8,7 +8,7 @@
             <label class="control-label">{{ __('Mode') }}</label>
             <v-select
               v-bind:class="{ 'is-invalid': errors.mode }"
-              :options="[{code: 'future', label: 'впрок'}, {code: 'price2day', label: 'price2day'}]"
+              :options="[{code: 'future', label: 'срочный аукцион впрок'}, {code: 'price2day', label: 'price2day'}]"
               :reduce="cod => cod.code"
               :cod="auction.mode"
               v-model="auction.mode"
@@ -62,12 +62,12 @@
               :options="$root.products"
               :searchable="true"
               v-model="auction.product"
-              v-bind:class="{ 'is-invalid': errors['product.id'] }"
+              v-bind:class="{ 'is-invalid': errors['product_id'] }"
             >
               <div slot="no-options">{{ __('No Options Here!') }}</div>
             </v-select>
-            <span role="alert" class="invalid-feedback" v-if="errors['product.id']">
-              <strong v-for="(error, index) in errors['product.id']" :key="index">{{ error }}</strong>
+            <span role="alert" class="invalid-feedback" v-if="errors['product_id']">
+              <strong v-for="(error, index) in errors['product_id']" :key="index">{{ error }}</strong>
             </span>
           </div>
           <div class="form-group">
@@ -77,12 +77,12 @@
               :options="$root.multiplicities"
               :searchable="false"
               v-model="auction.multiplicity"
-              v-bind:class="{ 'is-invalid': errors['multiplicity.id'] }"
+              v-bind:class="{ 'is-invalid': errors['multiplicity_id'] }"
             >
               <div slot="no-options">{{ __('No Options Here!') }}</div>
             </v-select>
-            <span role="alert" class="invalid-feedback" v-if="errors['multiplicity.id']">
-              <strong v-for="(error, index) in errors['multiplicity.id']" :key="index">{{ error }}</strong>
+            <span role="alert" class="invalid-feedback" v-if="errors['multiplicity_id']">
+              <strong v-for="(error, index) in errors['multiplicity_id']" :key="index">{{ error }}</strong>
             </span>
           </div>
           <div class="form-group">
@@ -92,15 +92,15 @@
               :options="$root.stores"
               :searchable="false"
               v-model="auction.store"
-              v-bind:class="{ 'is-invalid': errors['store.id'] }"
+              v-bind:class="{ 'is-invalid': errors['store_id'] }"
             >
               <div slot="no-options">{{ __('No Options Here!') }}</div>
             </v-select>
-            <span role="alert" class="invalid-feedback" v-if="errors['store.id']">
-              <strong v-for="(error, index) in errors['store.id']" :key="index">{{ error }}</strong>
+            <span role="alert" class="invalid-feedback" v-if="errors['store_id']">
+              <strong v-for="(error, index) in errors['store_id']" :key="index">{{ error }}</strong>
             </span>
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label class="control-label">{{ __('Auction Volume') }}</label>
             <input
               step=".01"
@@ -112,7 +112,7 @@
             <span role="alert" class="invalid-feedback" v-if="errors.volume">
               <strong v-for="(error, index) in errors.volume" :key="index">{{ error }}</strong>
             </span>
-          </div>
+          </div> -->
         </div>
         <div class="col-md-6">
           <div class="form-group">
@@ -121,7 +121,7 @@
               <div slot="no-options">{{ __('No Options Here!') }}</div>
             </v-select>
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label class="control-label">{{ __('Auction Start Price') }}</label>
             <input
               step=".01"
@@ -133,7 +133,7 @@
             <span role="alert" class="invalid-feedback" v-if="errors.start_price">
               <strong v-for="(error, index) in errors.start_price" :key="index">{{ error }}</strong>
             </span>
-          </div>
+          </div> -->
           <div class="form-group">
             <label class="control-label">{{ __('Auction Step') }}</label>
             <input
@@ -221,7 +221,130 @@
             ></vue-upload-multiple-image>
           </div>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="control-label">{{ __('Shipment Intervals') }}</label>
+            <div class="intervals">
+              <ul>
+                <li class="interval" v-for="(model, index) in auction.intervals" :key="index">
+                  <input type="hidden" v-model="model.id" class="form-control" />
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <input
+                          step=".01"
+                          type="number"
+                          v-model="model.start_price"
+                          :placeholder="__('Start Price')"
+                          class="form-control"
+                          v-bind:class="{ 'is-invalid': errors['intervals.'+index+'.start_price'] }"
+                          :ref="'interval_'+index+'_start_price'"
+                        />
+                        <div
+                          role="alert"
+                          class="invalid-feedback"
+                          v-if="errors['intervals.'+index+'.start_price']"
+                        >
+                          <span
+                            v-for="(error, index) in errors['intervals.'+index+'.start_price']"
+                            :key="index"
+                          >{{ error }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <input
+                          step=".01"
+                          type="number"
+                          v-model="model.volume"
+                          :placeholder="__('Volume')"
+                          class="form-control"
+                          v-bind:class="{ 'is-invalid': errors['intervals.'+index+'.volume'] }"
+                          :ref="'interval_'+index+'_volume'"
+                        />
+                        <div
+                          role="alert"
+                          class="invalid-feedback"
+                          v-if="errors['intervals.'+index+'.volume']"
+                        >
+                          <span
+                            v-for="(error, index) in errors['intervals.'+index+'.volume']"
+                            :key="index"
+                          >{{ error }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <datetime
+                          type="date"
+                          class="theme-primary"
+                          zone="Europe/Moscow"
+                          value-zone="Europe/Moscow"
+                          input-class="form-control"
+                          :placeholder="__('Interval From')"
+                          v-model="model.from"
+                          v-bind:class="{ 'is-invalid': errors['intervals.'+index+'.from'] }"
+                        ></datetime>
+                        <div
+                          role="alert"
+                          class="invalid-feedback"
+                          v-if="errors['intervals.'+index+'.from']"
+                        >
+                          <span
+                            v-for="(error, index) in errors['intervals.'+index+'.from']"
+                            :key="index"
+                          >{{ error }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <datetime
+                          type="date"
+                          class="theme-primary"
+                          zone="Europe/Moscow"
+                          :placeholder="__('Interval To')"
+                          value-zone="Europe/Moscow"
+                          input-class="form-control"
+                          v-model="model.to"
+                          v-bind:class="{ 'is-invalid': errors['intervals.'+index+'.to'] }"
+                        ></datetime>
+                        <div
+                          role="alert"
+                          class="invalid-feedback"
+                          v-if="errors['intervals.'+index+'.to']"
+                        >
+                          <span
+                            v-for="(error, index) in errors['intervals.'+index+'.to']"
+                            :key="index"
+                          >{{ error }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12 text-right" v-if="!!index">
+                      <a
+                        href="javascript:void(0)"
+                        class="btn btn-danger btn-sm"
+                        v-on:click="deleteInterval(index)"
+                      >{{ __('Delete interval') }}</a>
+                    </div>
+                  </div>
+                  <hr>
+                </li>
+              </ul>
+              <div class="text-right">
+                <a
+                  href="javascript:void(0)"
+                  class="btn btn-primary btn-sm"
+                  v-on:click="addInterval"
+                >{{ __('Add interval') }}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
           <div class="form-group text-right">
             <button class="btn btn-primary">{{ __('Save') }}</button>
           </div>
@@ -278,22 +401,20 @@ export default {
         this.formData.set("images[" + index + "]", pair[1]);
       }
     },
+    addInterval() {
+      this.auction.intervals.push({});
+    },
+    deleteInterval(index) {
+      this.auction.intervals.splice(index, 1);
+    },
     saveForm() {
       event.preventDefault();
       var app = this;
       let loader = Vue.$loading.show();
-      if (
-        !app.auction.multiplicity ||
-        !app.auction.product ||
-        !app.auction.store
-      ) {
-        loader.hide();
-        return false;
-      }
 
-      this.formData.set("multiplicity_id", app.auction.multiplicity.id);
-      this.formData.set("product_id", app.auction.product.id);
-      this.formData.set("store_id", app.auction.store.id);
+      this.formData.set("multiplicity_id", app.auction.multiplicity ? app.auction.multiplicity.id : null);
+      this.formData.set("product_id", app.auction.product ? app.auction.product.id : null);
+      this.formData.set("store_id", app.auction.store ? app.auction.store.id : null);
       this.formData.set("autosale", app.auction.autosale);
       this.formData.set("start_at", app.auction.start_at);
       this.formData.set("finish_at", app.auction.finish_at);
@@ -304,15 +425,24 @@ export default {
         "comment",
         !!app.auction.comment ? app.auction.comment : ""
       );
-      this.formData.set(
-        "volume",
-        !!app.auction.volume ? app.auction.volume : ""
-      );
-      this.formData.set(
-        "start_price",
-        !!app.auction.start_price ? app.auction.start_price : ""
-      );
+      // this.formData.set(
+      //   "volume",
+      //   !!app.auction.volume ? app.auction.volume : ""
+      // );
+      // this.formData.set(
+      //   "start_price",
+      //   !!app.auction.start_price ? app.auction.start_price : ""
+      // );
       this.formData.set("step", !!app.auction.step ? app.auction.step : "");
+
+      let intervals = [];
+      for (let i in app.auction.intervals) {
+        this.formData.set("intervals["+i+"][id]", !!app.auction.intervals[i].id ? app.auction.intervals[i].id : 0);
+        this.formData.set("intervals["+i+"][start_price]", app.auction.intervals[i].start_price);
+        this.formData.set("intervals["+i+"][volume]", app.auction.intervals[i].volume);
+        this.formData.set("intervals["+i+"][from]", app.auction.intervals[i].from);
+        this.formData.set("intervals["+i+"][to]", app.auction.intervals[i].to);
+      }
 
       let tags = [];
       for (let i in app.auction.tags) {
@@ -341,6 +471,7 @@ export default {
             if (!!err.response.data.errors)
               app.errors = err.response.data.errors;
             loader.hide();
+            console.log(app.errors);
           });
       } else {
         axios
@@ -355,6 +486,7 @@ export default {
             if (!!err.response.data.errors)
               app.errors = err.response.data.errors;
             loader.hide();
+            console.log(app.errors);
           });
       }
     }

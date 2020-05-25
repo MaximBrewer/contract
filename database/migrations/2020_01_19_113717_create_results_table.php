@@ -22,6 +22,8 @@ class CreateBetsTable extends Migration
             $table->decimal('price');
             $table->integer('volume');
             $table->decimal('correct');
+            $table->timestamp('approved_volume')->nullable();
+            $table->timestamp('approved_contract')->nullable();
             $table->timestamps();
         });
     }
