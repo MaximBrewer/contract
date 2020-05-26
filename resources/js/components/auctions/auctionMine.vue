@@ -3,7 +3,7 @@
     <div class="row" v-for="(interval, ind) in auction.intervals" :key="ind">
       <div class="col-md-12" v-if="interval.bets.length">
         <div class="card">
-          <div class="card-header">
+          <div class="card-header">vbvb
             <strong>
               {{ __('Interval start price') }}: {{ interval.volume }} |
               {{ __('Interval volume') }}: {{ interval.volume }} |
