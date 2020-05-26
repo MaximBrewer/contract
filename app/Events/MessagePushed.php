@@ -8,6 +8,7 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
+use App\Http\Resources\AuctionFull as AuctionFullResource;
 use Illuminate\Queue\SerializesModels;
 
 class MessagePushed implements ShouldBroadcast
@@ -23,7 +24,7 @@ class MessagePushed implements ShouldBroadcast
 
     public function __construct($auction)
     {
-        $this->auction = $auction;
+        $this->auction = new AuctionFullResource($auction);
     }
 
     /**

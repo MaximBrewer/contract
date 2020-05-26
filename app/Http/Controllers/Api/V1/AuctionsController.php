@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use \App\Auction;
 use \App\Bet;
 use \App\User;
+use \App\Events\MessagePushed;
 use Illuminate\Support\Facades\Auth;
 use \App\Contragent;
 use \App\History;
@@ -87,7 +88,7 @@ class AuctionsController extends Controller
         }
 
 
-        if ($auction) event(new \App\Events\MessagePushed($auction));
+        if ($auction) event(new MessagePushed($auction));
 
         return 1;
     }
@@ -274,7 +275,7 @@ class AuctionsController extends Controller
             }
         }
 
-        if ($auction) event(new \App\Events\MessagePushed($auction));
+        if ($auction) event(new MessagePushed($auction));
 
         $auction = Auction::findOrFail($auction->id);
 
@@ -357,7 +358,7 @@ class AuctionsController extends Controller
         if (count(Auth::user()->contragents)) Auth::user()->contragents[0]->auctions()->attach($id);
 
         $auction = Auction::findOrFail($id);
-        if ($auction) event(new \App\Events\MessagePushed($auction));
+        if ($auction) event(new MessagePushed($auction));
 
         return new AuctionResource($auction);
     }
@@ -376,7 +377,7 @@ class AuctionsController extends Controller
         Bet::where('auction_id', $id)->where('contragent_id', User::find(Auth::user()->id)->contragents[0]->id)->delete();
 
         $auction = Auction::findOrFail($id);
-        if ($auction) event(new \App\Events\MessagePushed($auction));
+        if ($auction) event(new MessagePushed($auction));
 
         return new AuctionResource($auction);
     }
@@ -403,7 +404,7 @@ class AuctionsController extends Controller
         }
         $auction = Auction::findOrFail($request->post('auction'));
 
-        if ($auction) event(new \App\Events\MessagePushed($auction));
+        if ($auction) event(new MessagePushed($auction));
 
         return $auction;
     }
@@ -441,7 +442,7 @@ class AuctionsController extends Controller
         }
 
         $auction = Auction::findOrFail($id);
-        if ($auction) event(new \App\Events\MessagePushed($auction));
+        if ($auction) event(new MessagePushed($auction));
 
         return $auction;
     }
@@ -469,7 +470,7 @@ class AuctionsController extends Controller
 
         $auction = Auction::findOrFail($auction->id);
 
-        event(new \App\Events\MessagePushed($auction));
+        event(new MessagePushed($auction));
 
         return ['ok'];
     }
@@ -504,7 +505,7 @@ class AuctionsController extends Controller
 
         $auction = Auction::findOrFail($auction->id);
 
-        event(new \App\Events\MessagePushed($auction));
+        event(new MessagePushed($auction));
 
         return ['ok'];
     }
@@ -538,7 +539,7 @@ class AuctionsController extends Controller
                 'finished' => 1
             ]);
 
-        event(new \App\Events\MessagePushed($auction));
+        event(new MessagePushed($auction));
 
         return ['ok'];
     }
@@ -735,7 +736,7 @@ class AuctionsController extends Controller
                 ]);
             }
 
-            event(new \App\Events\MessagePushed($auction));
+            event(new MessagePushed($auction));
         }
         return ['ok'];
     }

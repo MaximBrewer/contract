@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Auction;
 use App\Mail\ChatMessage;
+use \App\Events\MessagePushed;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
@@ -65,7 +66,7 @@ class MessagesController extends Controller
         }
 
 
-        event(new \App\Events\MessagePushed($auction));
+        event(new MessagePushed($auction));
 
         return $message;
     }
@@ -107,7 +108,7 @@ class MessagesController extends Controller
 
 
         $auction = Auction::findOrFail($message->auction_id);
-        event(new \App\Events\MessagePushed($auction));
+        event(new MessagePushed($auction));
 
         return $message;
     }
@@ -135,7 +136,7 @@ class MessagesController extends Controller
         $message->delete();
 
         $auction = Auction::findOrFail($auction_id);
-        event(new \App\Events\MessagePushed($auction));
+        event(new MessagePushed($auction));
 
         return '';
     }
