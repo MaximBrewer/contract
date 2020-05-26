@@ -324,10 +324,10 @@ export default {
         let interval = false;
         for (let d in a.intervals) {
           if (
-            (a.intervals[d].to >= f.interval_from || !f.interval_from) &&
-            (new Date(f.interval_to).getTime() + 24 * 3600000 >=
-              new Date(a.intervals[d].from).getTime() ||
-              !f.interval_to)
+            (new Date(a.intervals[d].to).getTime() + 24 * 3600000 >=
+              new Date(f.interval_from).getTime() ||
+              !f.interval_from) &&
+            (a.intervals[d].from <= f.interval_to || !f.interval_to)
           ) {
             interval = true;
             break;
