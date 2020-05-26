@@ -208,7 +208,7 @@
     <!-- Footer -->
     @include ('footer')
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}?ver=3.8" defer></script>
+    <script src="{{ asset('js/app.js') }}?ver=3.10" defer></script>
     <script src="//code.jivosite.com/widget/SgKrZgYDyo" async></script>
 </body>
 
