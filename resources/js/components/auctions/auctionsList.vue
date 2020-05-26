@@ -325,7 +325,7 @@ export default {
         for (let d in a.intervals) {
           if (
             (a.intervals[d].to >= f.interval_from || !f.interval_from) &&
-            (a.intervals[d].from <= f.interval_to || !f.interval_from)
+            (a.intervals[d].from <= f.interval_to || !f.interval_to)
           )
             interval = true;
           break;
