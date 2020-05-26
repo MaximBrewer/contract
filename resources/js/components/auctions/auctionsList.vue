@@ -332,8 +332,9 @@ export default {
         if (f.interval_to) {
           for (let d in a.intervals) {
             if (
-              new Date(f.interval_to).getTime() + 24 * 3600000 >=
-              new Date(a.intervals[d].from).getTime()
+              a.intervals[d].from <= f.interval_to
+              // new Date(f.interval_to).getTime() + 24 * 3600000 >=
+              // new Date(a.intervals[d].from).getTime()
             )
               interval_to = true;
             break;
