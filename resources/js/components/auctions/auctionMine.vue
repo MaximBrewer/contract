@@ -5,10 +5,12 @@
         <div class="card">
           <div class="card-header">
             <strong>
-              {{ __('Auction volume') }}: {{ auction.volume }} |
-              {{ __('Active volume') }}: {{ auction.free_volume }} |
-              {{ __('Approved volume') }}: {{ auction.volume - auction.free_volume }} |
-              {{ __('Undistributed volume') }}: {{ auction.undistributed_volume }}
+              {{ __('Interval start price') }}: {{ interval.volume }} |
+              {{ __('Interval volume') }}: {{ interval.volume }} |
+              {{ __('Active volume') }}: {{ interval.free_volume }} |
+              {{ __('Approved volume') }}: {{ interval.volume - interval.free_volume }} |
+              {{ __('Undistributed volume') }}: {{ interval.undistributed_volume }} |
+              {{ __('Interval') }}: {{ interval.label }}
             </strong>
           </div>
           <div class="table-responsive" id="auction_activity">
