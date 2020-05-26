@@ -324,12 +324,7 @@ export default {
         let interval_from = false;
         if (f.interval_from) {
           for (let d in a.intervals) {
-            if (a.intervals[d].from >= f.interval_from) interval_from = true;
-            console.log(
-              a.intervals[d].from <= f.interval_from,
-              a.intervals[d].from,
-              f.interval_from
-            );
+            if (a.intervals[d].to >= f.interval_from) interval_from = true;
             break;
           }
         }
@@ -338,7 +333,7 @@ export default {
           for (let d in a.intervals) {
             if (
               new Date(f.interval_to).getTime() + 24 * 3600000 >=
-              new Date(a.intervals[d].to).getTime()
+              new Date(a.intervals[d].from).getTime()
             )
               interval_to = true;
             break;
