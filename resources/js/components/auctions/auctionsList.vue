@@ -326,9 +326,10 @@ export default {
           if (
             (a.intervals[d].to >= f.interval_from || !f.interval_from) &&
             (a.intervals[d].from <= f.interval_to || !f.interval_to)
-          )
+          ) {
             interval = true;
-          break;
+            break;
+          }
         }
         // let interval_to = false;
         // if (f.interval_to) {
