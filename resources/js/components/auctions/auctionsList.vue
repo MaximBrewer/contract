@@ -323,11 +323,13 @@ export default {
         }
         let interval = false;
         for (let d in a.intervals) {
+          console.log(new Date(a.intervals[d].to).getTime());
+          console.log(new Date(f.interval_from).getTime() + 24 * 3600000);
           if (
-            (new Date(a.intervals[d].to).getTime() >=
-              new Date(f.interval_from).getTime() + 24 * 3600000 ||
-              !f.interval_from) &&
-            (a.intervals[d].from <= f.interval_to || !f.interval_to)
+            (!f.interval_from ||
+              new Date(a.intervals[d].to).getTime() >=
+                new Date(f.interval_from).getTime() + 24 * 3600000) &&
+            (!f.interval_to || a.intervals[d].from <= f.interval_to)
           ) {
             interval = true;
             break;
