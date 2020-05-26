@@ -326,9 +326,10 @@ export default {
           console.log(new Date(a.intervals[d].to).getTime() + 24 * 3600000);
           console.log(new Date(f.interval_from).getTime());
           if (
-            (!f.interval_from ||
-              new Date(a.intervals[d].to).getTime() + 24 * 3600000 >=
-                new Date(f.interval_from).getTime()) &&
+            (!f.interval_from || a.intervals[d].to >=f.interval_from
+              // new Date(a.intervals[d].to).getTime() + 24 * 3600000 >=
+              //   new Date(f.interval_from).getTime()
+                ) &&
             (!f.interval_to || a.intervals[d].from <= f.interval_to)
           ) {
             interval = true;
