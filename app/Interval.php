@@ -16,6 +16,17 @@ class Interval extends Model
         'to'
     ];
 
+    public function getFromAttribute($value)
+    {
+        return $value ? date(DATE_ATOM, strtotime($value)) : null;
+    }
+
+
+    public function getToAttribute($value)
+    {
+        return $value ? date(DATE_ATOM, strtotime($value)) : null;
+    }
+
     public function bets()
     {
         return $this->hasMany('App\Bet')->orderBy('created_at', 'desc');
