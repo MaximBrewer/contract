@@ -9,7 +9,7 @@
             <v-select
               v-bind:class="{ 'is-invalid': errors.mode }"
               :options="[
-                {code: 'future', label: 'срочный аукцион впрок'},
+                {code: 'future', label: 'Срочный аукцион впрок'},
                 {code: 'price2day', label: 'Продажи по прайсу'},
                 {code: 'callApp', label: 'Сбор заявок'}
               ]"

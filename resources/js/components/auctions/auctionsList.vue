@@ -187,7 +187,7 @@
             :disabled="!canaction"
             :placeholder="__('Mode')"
             @input="filterAuctions"
-            :options="[{code: 'future', label: 'срочный аукцион впрок'}, {code: 'price2day', label: 'Продажи по прайсу'}, {code: 'callApp', label: 'Сбор заявок'}]"
+            :options="[{code: 'future', label: 'Срочный аукцион впрок'}, {code: 'price2day', label: 'Продажи по прайсу'}, {code: 'callApp', label: 'Сбор заявок'}]"
             :reduce="cod => cod.code"
             :cod="filter.mode"
             :multiple="false"
