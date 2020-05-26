@@ -1,5 +1,5 @@
 <template>
-  <!-- 'future', 'price2day' -->
+  <!-- 'future', 'price2day', 'callApp' -->
   <div class="container">
     <form v-on:submit="saveForm()">
       <div class="row">
@@ -8,7 +8,11 @@
             <label class="control-label">{{ __('Mode') }}</label>
             <v-select
               v-bind:class="{ 'is-invalid': errors.mode }"
-              :options="[{code: 'future', label: 'срочный аукцион впрок'}, {code: 'price2day', label: 'price2day'}]"
+              :options="[
+                {code: 'future', label: 'срочный аукцион впрок'},
+                {code: 'price2day', label: 'Продажи по прайсу'},
+                {code: 'callApp', label: 'Сбор заявок'}
+              ]"
               :reduce="cod => cod.code"
               :cod="auction.mode"
               v-model="auction.mode"
@@ -112,7 +116,7 @@
             <span role="alert" class="invalid-feedback" v-if="errors.volume">
               <strong v-for="(error, index) in errors.volume" :key="index">{{ error }}</strong>
             </span>
-          </div> -->
+          </div>-->
         </div>
         <div class="col-md-6">
           <div class="form-group">
@@ -133,7 +137,7 @@
             <span role="alert" class="invalid-feedback" v-if="errors.start_price">
               <strong v-for="(error, index) in errors.start_price" :key="index">{{ error }}</strong>
             </span>
-          </div> -->
+          </div>-->
           <div class="form-group">
             <label class="control-label">{{ __('Auction Step') }}</label>
             <input
@@ -331,7 +335,7 @@
                       >{{ __('Delete interval') }}</a>
                     </div>
                   </div>
-                  <hr>
+                  <hr />
                 </li>
               </ul>
               <div class="text-right">
@@ -412,9 +416,18 @@ export default {
       var app = this;
       let loader = Vue.$loading.show();
 
-      this.formData.set("multiplicity_id", app.auction.multiplicity ? app.auction.multiplicity.id : null);
-      this.formData.set("product_id", app.auction.product ? app.auction.product.id : null);
-      this.formData.set("store_id", app.auction.store ? app.auction.store.id : null);
+      this.formData.set(
+        "multiplicity_id",
+        app.auction.multiplicity ? app.auction.multiplicity.id : null
+      );
+      this.formData.set(
+        "product_id",
+        app.auction.product ? app.auction.product.id : null
+      );
+      this.formData.set(
+        "store_id",
+        app.auction.store ? app.auction.store.id : null
+      );
       this.formData.set("autosale", app.auction.autosale);
       this.formData.set("start_at", app.auction.start_at);
       this.formData.set("finish_at", app.auction.finish_at);
@@ -437,11 +450,26 @@ export default {
 
       let intervals = [];
       for (let i in app.auction.intervals) {
-        this.formData.set("intervals["+i+"][id]", !!app.auction.intervals[i].id ? app.auction.intervals[i].id : 0);
-        this.formData.set("intervals["+i+"][start_price]", app.auction.intervals[i].start_price);
-        this.formData.set("intervals["+i+"][volume]", app.auction.intervals[i].volume);
-        this.formData.set("intervals["+i+"][from]", app.auction.intervals[i].from);
-        this.formData.set("intervals["+i+"][to]", app.auction.intervals[i].to);
+        this.formData.set(
+          "intervals[" + i + "][id]",
+          !!app.auction.intervals[i].id ? app.auction.intervals[i].id : 0
+        );
+        this.formData.set(
+          "intervals[" + i + "][start_price]",
+          app.auction.intervals[i].start_price
+        );
+        this.formData.set(
+          "intervals[" + i + "][volume]",
+          app.auction.intervals[i].volume
+        );
+        this.formData.set(
+          "intervals[" + i + "][from]",
+          app.auction.intervals[i].from
+        );
+        this.formData.set(
+          "intervals[" + i + "][to]",
+          app.auction.intervals[i].to
+        );
       }
 
       let tags = [];
