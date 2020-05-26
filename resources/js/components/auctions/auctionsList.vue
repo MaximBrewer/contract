@@ -324,8 +324,8 @@ export default {
         let interval = false;
         for (let d in a.intervals) {
           if (
-            (new Date(a.intervals[d].to).getTime() + 24 * 3600000 >=
-              new Date(f.interval_from).getTime() ||
+            (new Date(a.intervals[d].to).getTime() >=
+              new Date(f.interval_from).getTime() + 24 * 3600000 ||
               !f.interval_from) &&
             (a.intervals[d].from <= f.interval_to || !f.interval_to)
           ) {
