@@ -321,25 +321,27 @@ export default {
             }
           }
         }
-        let interval_from = false;
-        if (f.interval_from) {
-          for (let d in a.intervals) {
-            if (a.intervals[d].to >= f.interval_from) interval_from = true;
-            break;
-          }
+        let interval = false;
+        for (let d in a.intervals) {
+          if (
+            (a.intervals[d].to >= f.interval_from || !f.interval_from) &&
+            (a.intervals[d].from <= f.interval_to || !f.interval_from)
+          )
+            interval = true;
+          break;
         }
-        let interval_to = false;
-        if (f.interval_to) {
-          for (let d in a.intervals) {
-            if (
-              a.intervals[d].from <= f.interval_to
-              // new Date(f.interval_to).getTime() + 24 * 3600000 >=
-              // new Date(a.intervals[d].from).getTime()
-            )
-              interval_to = true;
-            break;
-          }
-        }
+        // let interval_to = false;
+        // if (f.interval_to) {
+        //   for (let d in a.intervals) {
+        //     if (
+        //       a.intervals[d].from <= f.interval_to
+        //       // new Date(f.interval_to).getTime() + 24 * 3600000 >=
+        //       // new Date(a.intervals[d].from).getTime()
+        //     )
+        //       interval_to = true;
+        //     break;
+        //   }
+        // }
         if (
           (!f.federal_district ||
             f.federal_district.id == a.store.federal_district.id) &&
@@ -355,8 +357,7 @@ export default {
             new Date(f.finish_at).getTime() + 24 * 3600000 >=
               new Date(a.start_at).getTime()) &&
           (!f.tags.length || intags) &&
-          (!f.interval_from || interval_from) &&
-          (!f.interval_to || interval_to)
+          interval
         )
           app.auctionsList.push(a);
       }
