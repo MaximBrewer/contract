@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-header">vbvb
             <strong>
-              {{ __('Interval start price') }}: {{ interval.volume }} |
+              {{ __('Interval start price') }}: {{ interval.start_price }} |
               {{ __('Interval volume') }}: {{ interval.volume }} |
               {{ __('Active volume') }}: {{ interval.free_volume }} |
               {{ __('Approved volume') }}: {{ interval.volume - interval.free_volume }} |
