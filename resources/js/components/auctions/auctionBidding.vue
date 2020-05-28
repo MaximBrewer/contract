@@ -159,7 +159,7 @@ export default {
       var app = this;
       let betsList = [];
       for (let i in bets) {
-        if (bets[i].contragent_id == app.company.id || !bet.approved_contract)
+        if (bets[i].contragent_id == app.company.id || !bets[i].approved_contract)
           betsList.push(bets[i]);
       }
       return betsList;
