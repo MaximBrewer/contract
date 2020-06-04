@@ -45,36 +45,34 @@ class Auction extends Model
         'filled',
         'bidder',
         'bidders',
-        'free_volume',
         'messages',
         'min_bet',
-        'undistributed_volume'
     ];
 
 
-    public function getUndistributedVolumeAttribute()
-    {
-        $cnt = DB::select('select sum(volume) as busy_volume from bets where auction_id = ?', [$this->id]);
-        return (float) $this->volume - (float) $cnt[0]->busy_volume;
-    }
+    // public function getUndistributedVolumeAttribute()
+    // {
+    //     $cnt = DB::select('select sum(volume) as busy_volume from bets where auction_id = ?', [$this->id]);
+    //     return (float) $this->volume - (float) $cnt[0]->busy_volume;
+    // }
 
 
-    public function getFreeVolumeAttribute()
-    {
-        $cnt = DB::select('select sum(volume) as busy_volume from bets where (approved_volume is not null and approved_volume > 1) and auction_id = ?', [$this->id]);
-        return (float) $this->volume - (float) $cnt[0]->busy_volume;
-    }
+    // public function getFreeVolumeAttribute()
+    // {
+    //     $cnt = DB::select('select sum(volume) as busy_volume from bets where (approved_volume is not null and approved_volume > 1) and auction_id = ?', [$this->id]);
+    //     return (float) $this->volume - (float) $cnt[0]->busy_volume;
+    // }
 
 
-    public function getMinBetAttribute()
-    {
-        if ($this->getUndistributedVolumeAttribute() > 0 || $this->volume == 0)
-            return (float) $this->start_price;
-        else {
-            $cnt = DB::select('select min(price) as min from bets where approved_volume is null and auction_id = ?', [$this->id]);
-            return (float) $cnt[0]->min;
-        }
-    }
+    // public function getMinBetAttribute()
+    // {
+    //     if ($this->getUndistributedVolumeAttribute() > 0 || $this->volume == 0)
+    //         return (float) $this->start_price;
+    //     else {
+    //         $cnt = DB::select('select min(price) as min from bets where approved_volume is null and auction_id = ?', [$this->id]);
+    //         return (float) $cnt[0]->min;
+    //     }
+    // }
 
     public function getStartAtAttribute($value)
     {
@@ -152,10 +150,10 @@ class Auction extends Model
         $this->attributes['step'] = str_replace(',', '.', $value);
     }
 
-    public function setStartPriceAttribute($value)
-    {
-        $this->attributes['start_price'] = str_replace(',', '.', $value);
-    }
+    // public function setStartPriceAttribute($value)
+    // {
+    //     $this->attributes['start_price'] = str_replace(',', '.', $value);
+    // }
 
     public function getBiddersAttribute()
     {
