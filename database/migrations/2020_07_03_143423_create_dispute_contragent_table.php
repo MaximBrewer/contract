@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDisputeContragentsTable extends Migration
+class CreateDisputeContragentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateDisputeContragentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dispute_contragents', function (Blueprint $table) {
+        Schema::create('dispute_contragent', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('dispute_id');
             $table->bigInteger('contragent_id');
@@ -28,6 +28,6 @@ class CreateDisputeContragentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dispute_contragents');
+        Schema::dropIfExists('dispute_contragent');
     }
 }
