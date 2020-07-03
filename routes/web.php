@@ -109,6 +109,18 @@ Route::group([
     Route::resource('logistics', 'LogisticsController', ['except' => ['edit', 'create']]);
 
 
+
+    Route::get('disputes', 'DisputesController@index');
+    Route::patch('disputes', 'DisputesController@store');
+    Route::get('disputes/{id}', 'DisputesController@show');
+    Route::post('disputes/{id}/line', 'DisputesController@lineStore');
+    Route::patch('disputes/{id}/line/{line_id}', 'DisputesController@lineUpdate');
+    Route::delete('disputes/{id}/line/{line_id}', 'DisputesController@lineDelete');
+    Route::post('disputes/{id}/proposal', 'DisputesController@proposalStore');
+    Route::patch('disputes/{id}/proposal/{proposal_id}', 'DisputesController@proposalUpdate');
+    Route::delete('disputes/{id}/proposal/{proposal_id}', 'DisputesController@proposalDelete');
+
+
 });
 
 Route::group(['prefix' => 'admin'], function () {
