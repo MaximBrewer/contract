@@ -66,6 +66,13 @@
             :show-rating="false"
             :read-only="true"
           ></star-rating>
+          <a
+            v-if="comment.writer == $root.user.contragents[0].id || comment.contragent_id == $root.user.contragents[0].id"
+            href="javascript:void(0)"
+            class="btn btn-primary float-right btn-sm"
+            @click="openDispute"
+            style="margin-right:1rem;"
+          >{{ __('Open Dispute') }}</a>
           <strong>{{ comment.by }}</strong>
         </div>
         <ul class="list-group list-group-flush">
@@ -116,12 +123,32 @@ export default {
     };
   },
   methods: {
-    toSlider(images){
+    openDispute() {
+      let app = this;
+      axios
+        .patch("/web/v1/disputes/", {
+          contragent_id: this.$route.params.id
+        })
+        .then(function(res) {
+          app.$router.push({
+            path: "/personal/disputes/" + res.data.dispute.id
+          });
+        })
+        .catch(function(errors) {
+          app.$fire({
+            title: app.__("Error!"),
+            text: errors.response.data.message,
+            type: "error",
+            timer: 5000
+          });
+        });
+    },
+    toSlider(images) {
       let sim = [];
-      for(let s of images){
-        sim.push(s.path)
+      for (let s of images) {
+        sim.push(s.path);
       }
-      return sim
+      return sim;
     },
     fetchComments() {
       let app = this;

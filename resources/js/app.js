@@ -79,6 +79,9 @@ import LogisticCreate from "./components/auctions/logisticCreate.vue";
 import LogisticEdit from "./components/auctions/logisticEdit.vue";
 import Finance from "./components/auctions/finance.vue";
 
+
+import DisputesIndex from "./components/disputes/disputesIndex.vue";
+
 Vue.component("SendMessage", SendMessage, {});
 Vue.component("AllAuctions", AllAuctions, {});
 
@@ -191,6 +194,22 @@ const app = new Vue({
                 component: SettlementsIndex,
                 name: "settlementsIndex"
             },
+
+
+
+            {
+                path: "/personal/disputes",
+                component: DisputesIndex,
+                name: "disputesIndex"
+            },
+            {
+                path: "/personal/disputes/:id",
+                component: DisputesIndex,
+                name: "disputesIndex"
+            },
+
+
+
             {
                 path: "/personal/logistics",
                 component: Logistics,
@@ -377,6 +396,12 @@ const app = new Vue({
             });
             Echo.channel("message-pushed").listen("MessagePushed", function(e) {
                 that.$emit("gotAuction", e.auction);
+            });
+            Echo.channel("dispute").listen("Dispute", function(e) {
+                that.$emit("gotDispute", e.dispute);
+            });
+            Echo.channel("line").listen("Line", function(e) {
+                that.$emit("gotLine", e.line);
             });
         }
     }

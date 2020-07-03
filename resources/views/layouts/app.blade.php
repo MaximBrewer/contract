@@ -132,6 +132,8 @@
                                     {{ __('Create new contragent') }}</router-link>
                                 <router-link :to="{name: 'reviews'}" class="dropdown-item">{{ __('My reviews') }}
                                 </router-link>
+                                <router-link :to="{name: 'disputesIndex'}" class="dropdown-item">
+                                    {{ __('Disputes') }}</router-link>
                             </div>
                         </li>
 
