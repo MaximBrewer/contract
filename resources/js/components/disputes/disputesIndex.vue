@@ -72,7 +72,7 @@ export default {
     app.$root.$on("gotDispute", function(dispute) {
       if (dispute.id == app.dispute.id) app.dispute = dispute;
       let r = 0;
-      for (d of app.disputes) d.id == dispute.id || ((d = dispute) && (r = 1));
+      for (let d of app.disputes) d.id == dispute.id || ((d = dispute) && (r = 1));
       r || app.disputes.push(dispute);
     });
     axios
