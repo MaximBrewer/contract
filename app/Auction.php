@@ -46,7 +46,6 @@ class Auction extends Model
         'bidder',
         'bidders',
         'messages',
-        'min_bet',
     ];
 
 
