@@ -36,7 +36,7 @@ class DisputeMail extends Mailable
         return $this->subject('Приглашение на диспут между компаниями' . $this->dispute->contragents[0]->title . ' и ' . $this->dispute->contragents[1]->title)
             ->view('mail.dispute')->with([
                 'text' => $this->text,
-                'link' => 'http://project.cross-contract.ru/personal/disputes/' . $this->dispute->id
+                'dispute' => $this->dispute
             ]);
     }
 }
