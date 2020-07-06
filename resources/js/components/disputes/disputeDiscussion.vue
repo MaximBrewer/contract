@@ -158,7 +158,7 @@ export default {
     deleteMessage(message) {
       let app = this;
       axios.delete(
-        "/web/v1/disputes/" + app.dispute.id + "/line/" + message.id
+        "/web/v1/disputes/" + app.dispute.id + "/line/" + message.message_id
       );
     },
     sendMessage(body) {
