@@ -73,15 +73,15 @@ export default {
     let app = this;
     app.$root.$on("gotLine", function(line) {
       if (typeof line == "number") {
-        for (let j in this.dispute.lines) {
-          if (line == this.dispute.lines[j].id) {
-            delete this.dispute.lines[j];
+        for (let j in app.dispute.lines) {
+          if (line == app.dispute.lines[j].id) {
+            delete app.dispute.lines[j];
           }
         }
       }
-      if (line.dispute_id != this.dispute.id) return false;
+      if (line.dispute_id != app.dispute.id) return false;
       let r = 0;
-      for (let j of this.dispute.lines) {
+      for (let j of app.dispute.lines) {
         if (line.id == j.id) {
           r = 1;
           j = line;
