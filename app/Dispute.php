@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use App\Vote;
 
 class Dispute extends Model
 {
@@ -50,5 +51,10 @@ class Dispute extends Model
         })->whereHas('contragents', function ($query) use ($ids) {
             $query->where('contragents.id', $ids[1]);
         })->where('status', 'is_open')->first();
+    }
+
+    public function getVotesAttribute()
+    {
+        return Vote::where('dispute_id', $this->id)->count();
     }
 }

@@ -22,6 +22,7 @@ class DisputeResource extends JsonResource
             'contragents' => ContragentResource::collection($this->contragents),
             'first_review' => $this->first,
             'second_review' => $this->second,
+            'votes' => $this->votes,
             'proposal' => new ProposalResource($this->proposal),
             'proposals' => ProposalResource::collection($this->proposals),
             'created_at' => $this->created_at,
