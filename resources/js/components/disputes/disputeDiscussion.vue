@@ -49,7 +49,7 @@ import CloseIconSvg from "vue-beautiful-chat/src/assets/close.svg";
 export default {
   props: ["dispute"],
   computed: {
-    disputeMessages: function() {
+    disputeMessages() {
       let ar = [];
       let app = this;
       for (let j of this.dispute.lines)
