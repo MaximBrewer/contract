@@ -227,6 +227,11 @@ class DisputesController extends Controller
         } else {
             $vote->delete();
         }
+        if (!$dispute->goal && (int) setting('site.dispute_target') && (int) $dispute->votes > setting('site.dispute_target')) {
+            $dispute->update([
+                'goal' => Carbon::now()
+            ]);
+        }
         event(new DisputeEvent($dispute));
         return [
             'dispute' => new DisputeResource($dispute)
@@ -250,5 +255,9 @@ class DisputesController extends Controller
         foreach ($users as $user) {
             Mail::to($user)->send($dispute);
         }
+        event(new DisputeEvent($dispute));
+        return [
+            'dispute' => new DisputeResource($dispute)
+        ];
     }
 }

@@ -13,6 +13,8 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use App\Bet;
+use App\Dispute;
+use App\Events\Dispute as DisputeEvent;
 
 class PerMinute implements ShouldBroadcast
 {
@@ -31,6 +33,20 @@ class PerMinute implements ShouldBroadcast
     public function __construct()
     {
         $carbon = new Carbon();
+
+        $disputes = DB::select(
+            "select id from disputes where goal is not null and timestamp(goal) < timestamp(?) and status = 'is_open'",
+            [
+                Carbon::now()->subWeeks(2)->toDateTimeString()
+            ]
+        );
+
+        foreach ($disputes as $dispute) {
+            $dispute->update([
+                'status' => 'closed'
+            ]);
+            event(new DisputeEvent($dispute));
+        }
 
         $finished = DB::select(
             'select id from auctions where timestamp(finish_at) < timestamp(?) and confirmed = 1 and started = 1 and finished = 0',
@@ -60,7 +76,7 @@ class PerMinute implements ShouldBroadcast
             DB::table('auctions')->where('id', $auction->id)->update(array(
                 'approved' => 1,
             ));
-            
+
             $bets = Bet::where('auction_id', $auction->id)->whereNull('approved_contract')->get();
             foreach ($bets as $bet) {
                 $bet->update([
