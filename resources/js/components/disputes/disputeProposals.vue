@@ -68,6 +68,15 @@
         <button class="btn btn-primary">{{ dispute.proposal.id ? __('Update') : __('Send') }}</button>
       </div>
     </form>
+    <form v-on:submit="sendEmails()">
+      <div class="form-group">
+        <label class="control-label">{{ __('Отправить приглашение') }}</label>
+        <textarea v-model="dispute.message" class="form-control"></textarea>
+      </div>
+      <div class="button-group">
+        <button class="btn btn-primary">{{ __('Send') }}</button>
+      </div>
+    </form>
   </section>
 </template>
 
@@ -81,11 +90,28 @@ export default {
   },
   mounted() {},
   methods: {
+    sendEmails() {
+      axios
+        .patch("/web/v1/disputes/" + app.dispute.id + "/emails")
+        .then(function(res) {
+          app.dispute = res.data.dispute;
+        })
+        .catch(function(errors) {
+          app.$fire({
+            title: app.__("Error!"),
+            text: errors.response.data.message,
+            type: "error",
+            timer: 5000
+          });
+        });
+    },
     toggleVote(id) {
       event.preventDefault();
       let app = this;
       axios
-        .patch("/web/v1/disputes/" + app.dispute.id + "/proposal/" + id + "/vote")
+        .patch(
+          "/web/v1/disputes/" + app.dispute.id + "/proposal/" + id + "/vote"
+        )
         .then(function(res) {
           app.dispute = res.data.dispute;
         })

@@ -79,7 +79,6 @@ import LogisticCreate from "./components/auctions/logisticCreate.vue";
 import LogisticEdit from "./components/auctions/logisticEdit.vue";
 import Finance from "./components/auctions/finance.vue";
 
-
 import DisputesIndex from "./components/disputes/disputesIndex.vue";
 
 Vue.component("SendMessage", SendMessage, {});
@@ -195,8 +194,6 @@ const app = new Vue({
                 name: "settlementsIndex"
             },
 
-
-
             {
                 path: "/personal/disputes",
                 component: DisputesIndex,
@@ -207,8 +204,6 @@ const app = new Vue({
                 component: DisputesIndex,
                 name: "disputesIndex"
             },
-
-
 
             {
                 path: "/personal/logistics",
