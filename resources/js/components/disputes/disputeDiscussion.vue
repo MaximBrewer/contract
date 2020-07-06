@@ -77,8 +77,8 @@ export default {
       if (typeof line == "number") {
         console.log(line);
         for (let j in app.dispute.lines) {
-          console.log(app.dispute.lines[j]);
           if (line == app.dispute.lines[j].id) {
+            console.log(app.dispute.lines[j]);
             delete app.dispute.lines[j];
           }
         }
