@@ -17,6 +17,8 @@ use App\Http\Resources\ProposalResource;
 use App\Events\Line as LineEvent;
 use App\Events\Dispute as DisputeEvent;
 use App\Events\Proposal as ProposalEvent;
+use App\DisputeContragent;
+use App\Vote;
 
 class DisputesController extends Controller
 {
@@ -53,26 +55,40 @@ class DisputesController extends Controller
      */
     public function store(Request $request)
     {
+        $dispute = Dispute::findByContragents([Auth::user()->contragents[0]->id, $request->post('contragent_id')]);
+        if (!$dispute) {
+            $comment1 = Comment::where('writer', Auth::user()->contragents[0]->id)->where('contragent_id', $request->post('contragent_id'))->first();
+            $comment2 = Comment::where('writer', $request->post('contragent_id'))->where('contragent_id', Auth::user()->contragents[0]->id)->first();
+            if (!$comment1 && $comment2) {
+                return response()->json([
+                    'message' => __('No testimonials!'),
+                    'errors' => []
+                ], 422);
+            }
+            if (
+                ($comment1 && $comment1->votes == 5) || ($comment2 && $comment2->votes == 5)
+            ) {
+                return response()->json([
+                    'message' => __('Review is perfect, dispute is not neccessary!'),
+                    'errors' => []
+                ], 422);
+            }
+            if (
+                ($comment1 && Carbon::now()->subDays(7)->timestamp < strtotime($comment1->updated_at))
+                || ($comment2 && Carbon::now()->subDays(7)->timestamp < strtotime($comment2->updated_at))
+            ) {
+                return response()->json([
+                    'message' => __('Wait seven days!'),
+                    'errors' => []
+                ], 422);
+            }
+            $dispute = Dispute::create([
+                'status' => 'is_open'
+            ]);
 
-        $comment1 = Comment::where('writer', Auth::user()->contragents[0]->id)->where('contragent_id', $request->post('contragent_id'))->first();
-        $comment2 = Comment::where('writer', Auth::user()->contragents[0]->id)->where('contragent_id', $request->post('contragent_id'))->first();
-
-        if (
-            Carbon::now()->subDays(7)->timestamp < strtotime($comment1->updated_at)
-            || Carbon::now()->subDays(7)->timestamp < strtotime($comment2->updated_at)
-        ) {
-            return response()->json([
-                'message' => __('Wait seven days!'),
-                'errors' => []
-            ], 422);
+            $dispute->contragents()->sync([Auth::user()->contragents[0]->id, $request->post('contragent_id')]);
+            event(new DisputeEvent($dispute));
         }
-
-        $dispute = Dispute::create([
-            'status' => 'is_open'
-        ]);
-
-        $dispute->contragents()->sync([Auth::user()->contragents[0]->id, $request->post('contragent_id')]);
-        event(new DisputeEvent($dispute));
         return [
             'dispute' => new DisputeResource($dispute)
         ];
@@ -188,6 +204,26 @@ class DisputesController extends Controller
             event(new DisputeEvent($dispute));
             $proposal->delete();
         }
+        return [
+            'dispute' => new DisputeResource($dispute)
+        ];
+    }
+
+    public function toggleVote($id, $proposal_id, Request $request)
+    {
+        $dispute = Dispute::findOrFail($id);
+        Vote::where('contragent_id', Auth::user()->contragents[0]->id)->where('proposal_id', '<>', $proposal_id)->delete();
+        $vote = Vote::where('proposal_id', $proposal_id)->where('contragent_id', Auth::user()->contragents[0]->id)->first();
+        if (!$vote) {
+            Vote::create([
+                'contragent_id' => Auth::user()->contragents[0]->id,
+                'proposal_id' => $proposal_id,
+                'dispute_id' => $id,
+            ]);
+        } else {
+            $vote->delete();
+        }
+        event(new DisputeEvent($dispute));
         return [
             'dispute' => new DisputeResource($dispute)
         ];

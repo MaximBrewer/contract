@@ -13,4 +13,19 @@ class Line extends Model
         'user_id',
         'message'
     ];
+
+    public function contragent()
+    {
+        return $this->belongsTo('App\Contragent');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    public function dispute()
+    {
+        return $this->belongsTo('App\Dispute');
+    }
 }
