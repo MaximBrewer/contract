@@ -32,7 +32,7 @@ class DisputesController extends Controller
     {
         return [
             'disputes' => DisputeResource::collection(Dispute::all()),
-            'settins' => setting('site')
+            'settings' => setting('site')
         ];
     }
     //
