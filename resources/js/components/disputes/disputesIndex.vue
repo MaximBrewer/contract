@@ -8,9 +8,9 @@
             <th style="width:20%">{{ __('Disputes') }}</th>
             <th style="width:80%">
               {{ __('Proposals') }}
-              <div v-if="dispute.votes && !!settings.dispute_target">
+              <div v-if="!!settings.dispute_target">
                 <br />
-                {{ __('tagret') }} {{ dispute.votes + ' / ' + settings.dispute_target }}
+                {{ __('tagret') }} {{ '200 / ' + settings.dispute_target }}
               </div>
             </th>
           </tr>
@@ -72,7 +72,8 @@ export default {
     app.$root.$on("gotDispute", function(dispute) {
       if (dispute.id == app.dispute.id) app.dispute = dispute;
       let r = 0;
-      for (let d of app.disputes) d.id == dispute.id || ((d = dispute) && (r = 1));
+      for (let d of app.disputes)
+        d.id == dispute.id || ((d = dispute) && (r = 1));
       r || app.disputes.push(dispute);
     });
     axios
