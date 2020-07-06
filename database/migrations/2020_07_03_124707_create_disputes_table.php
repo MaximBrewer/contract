@@ -16,6 +16,9 @@ class CreateDisputesTable extends Migration
         Schema::create('disputes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->enum('status', ['is_open', 'closed']);
+            $table->text('message');
+            $table->boolean('sent')->default(0);
+            $table->timestamp('goal')->nullable();
             $table->timestamps();
         });
     }
