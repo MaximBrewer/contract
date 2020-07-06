@@ -19,6 +19,8 @@ use App\Events\Dispute as DisputeEvent;
 use App\Events\Proposal as ProposalEvent;
 use App\DisputeContragent;
 use App\Contragent;
+use App\User;
+use Illuminate\Support\Facades\Mail;
 use App\Vote;
 
 class DisputesController extends Controller
@@ -85,7 +87,7 @@ class DisputesController extends Controller
             }
             $dispute = Dispute::create([
                 'status' => 'is_open',
-                'message' => "Приглашение на диспут между компаниями " . Auth::user()->contragents[0]->title . " и " . Contragent::find($request->post('contragent_id'))->title . ".\nЭто приглашение всех компании России принять участие в диспуте(Целевое общение) между компаниями комп А и компанией Б по поводу не отличных отзывов между ними.\nВ силу того, что компании не смогли самостоятельно разрешить вопросы между собой, мы призываем каждую фирму Росси имеющую отношение к сфере Мясной промышлености РФ принять участие в диспуте(Целевое общение) и совместно принять решение о том, какие действия необходимо произвести компании А и компании Б, чтобы выйти из неприятной ситуации между ними."
+                'message' => "Приглашение на диспут между компаниями " . Auth::user()->contragents[0]->title . " и " . Contragent::findOrFail($request->post('contragent_id'))->title . ".\nЭто приглашение всех компании России принять участие в диспуте (Целевое общение) между компаниями " . Auth::user()->contragents[0]->title . " и " . Contragent::findOrFail($request->post('contragent_id'))->title . " по поводу не отличных отзывов между ними.\nВ силу того, что компании не смогли самостоятельно разрешить вопросы между собой, мы призываем каждую фирму Росси имеющую отношение к сфере Мясной промышлености РФ принять участие в диспуте (Целевое общение) и совместно принять решение о том, какие действия необходимо произвести компании " . Auth::user()->contragents[0]->title . " и компании " . Contragent::findOrFail($request->post('contragent_id'))->title . ", чтобы выйти из неприятной ситуации между ними."
             ]);
 
             $dispute->contragents()->sync([Auth::user()->contragents[0]->id, $request->post('contragent_id')]);
@@ -229,5 +231,24 @@ class DisputesController extends Controller
         return [
             'dispute' => new DisputeResource($dispute)
         ];
+    }
+
+    public function sendEmails($id, Request $request)
+    {
+        $dispute = Dispute::findOrFail($id);
+        if ($dispute->sent) {
+            return response()->json([
+                'message' => __('Messages already sent!'),
+                'errors' => []
+            ], 422);
+        }
+        $dispute->update([
+            'sent' => 1,
+            'message' => $request->post('message')
+        ]);
+        $users = User::all();
+        foreach ($users as $user) {
+            Mail::to($user)->send($dispute);
+        }
     }
 }
