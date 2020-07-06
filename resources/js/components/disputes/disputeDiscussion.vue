@@ -66,6 +66,7 @@ export default {
     }
   },
   mounted() {
+    let app = this;
     app.$root.$on("gotLine", function(line) {
       if (typeof line == "number") {
         for (let j in this.dispute.lines) {
