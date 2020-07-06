@@ -68,7 +68,7 @@
         <button class="btn btn-primary">{{ dispute.proposal.id ? __('Update') : __('Send') }}</button>
       </div>
     </form>
-    <form v-on:submit="sendEmails()">
+    <form v-on:submit="sendEmails()" v-if="!dispute.sent && dispute.contragents[0].id == $root.user.contragents[0].id || dispute.contragents[1].id == $root.user.contragents[0].id">
       <div class="form-group">
         <label class="control-label">{{ __('Отправить приглашение') }}</label>
         <textarea v-model="dispute.message" class="form-control"></textarea>
