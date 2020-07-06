@@ -21,10 +21,10 @@ class ProposalResource extends JsonResource
                     'id' => $this->contragent->id,
                     'title' => $this->contragent->title,
                 ],
-                'user' => [
-                    'id' => $this->user->id,
-                    'name' => $this->user->name,
-                ],
+                // 'user' => [
+                //     'id' => $this->user->id,
+                //     'name' => $this->user->name,
+                // ],
                 'message' => $this->message,
                 'votes' => $this->votes,
                 'vote' => $this->vote,
