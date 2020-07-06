@@ -199,11 +199,11 @@ export default {
       // leverage pagination for loading another page of messages
     },
     handleOnType() {},
-    editMessage(message) {
-      const m = this.messageList.find(m => m.id === message.id);
-      m.isEdited = true;
-      m.data.text = message.data.text;
-    }
+    // editMessage(message) {
+    //   const m = this.messageList.find(m => m.id === message.id);
+    //   m.isEdited = true;
+    //   m.data.text = message.data.text;
+    // }
   }
 };
 </script>
