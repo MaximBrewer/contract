@@ -73,14 +73,13 @@ export default {
     let app = this;
     app.$root.$on("gotLine", function(line) {
       let r = 0;
-      console.log(typeof line);
       if (typeof line == "number") {
-        console.log(line);
         for (let j in app.dispute.lines) {
-          console.log(app.dispute.lines[j]);
-          if (line == app.dispute.lines[j].id) delete app.dispute.lines[j];
-          return false;
+          if (line == app.dispute.lines[j].id) {
+            delete app.dispute.lines[j];
+          }
         }
+        return false;
       }
       if (typeof line == "object" && !!line.dispute_id) {
         if (line.dispute_id == app.dispute.id) {
