@@ -8,9 +8,9 @@
             <th style="width:20%">{{ __('Disputes') }}</th>
             <th style="width:80%">
               {{ __('Proposals') }}
-              <div v-if="!!settings && !!settings.dispute_target">
+              <div>
                 <br />
-                {{ __('tagret') }} {{ '200 / ' + settings.dispute_target }}
+                {{ __('tagret') }} {{ '200 / 300'}}
               </div>
             </th>
           </tr>
