@@ -54,7 +54,10 @@ export default {
       for (let j of this.dispute.lines)
         ar.push({
           id: j.id,
-          author: this.user.id == j.user_id ? "me" : j.user.author,
+          author:
+            this.user.contragent[0].id == j.contragent_id
+              ? "me"
+              : j.contragent.title,
           message_id: j.id,
           type: "text",
           created_at: j.created_at,
