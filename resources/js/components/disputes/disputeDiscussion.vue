@@ -56,7 +56,7 @@ export default {
         ar.push({
           id: j.id,
           author:
-            app.$root.user.contragents[0].id == j.contragent_id
+            app.user.contragents[0].id == j.contragent.id
               ? "me"
               : j.contragent.title,
           message_id: j.id,
