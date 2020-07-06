@@ -10,7 +10,8 @@ class Dispute extends Model
 {
     //
     protected $fillable = [
-        'status'
+        'status',
+        'message'
     ];
 
     public function getProposalAttribute()
