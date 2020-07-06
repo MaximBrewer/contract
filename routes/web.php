@@ -120,6 +120,8 @@ Route::group([
     Route::patch('disputes/{id}/proposal/{proposal_id}', 'DisputesController@proposalUpdate');
     Route::delete('disputes/{id}/proposal/{proposal_id}', 'DisputesController@proposalDelete');
 
+    Route::patch('disputes/{id}/proposal/{proposal_id}/vote', 'DisputesController@toggleVote');
+
 
 });
 

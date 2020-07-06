@@ -16,6 +16,39 @@
       <hr />
     </div>
 
+    <div id="proposals">
+      <h5>{{ __('Предложения и голосование по выходу из проблемы:') }}</h5>
+      <hr />
+      <ul class="list-unstyled">
+        <li v-for="(proposal, index) in dispute.proposals" :key="index">
+          <div>
+            {{ proposal.message }}
+            <br />
+            <div class="d-flex justify-content-between">
+              <div>
+                <small>{{ proposal.created_at | formatChatTime}} / {{ proposal.contragent.title }}</small>
+              </div>
+              <div>
+                <a
+                  href="javascript:void(0);"
+                  @click="toggleVote(proposal.id)"
+                  class="text-decoration-none"
+                  v-tooltip="!proposal.vote ? __('Нравится') : __('Не нравится')"
+                >
+                  <i
+                    aria-hidden="true"
+                    class="mdi"
+                    v-bind:class="{ 'mdi-thumb-up': !!proposal.vote, 'mdi-thumb-up-outline': !proposal.vote }"
+                  ></i>
+                  &nbsp;&nbsp;{{ proposal.votes.length }}
+                </a>
+              </div>
+            </div>
+          </div>
+          <hr />
+        </li>
+      </ul>
+    </div>
     <form v-on:submit="saveForm()" v-if="!!dispute.proposal">
       <div class="form-group">
         <label
@@ -48,6 +81,23 @@ export default {
   },
   mounted() {},
   methods: {
+    toggleVote(id) {
+      event.preventDefault();
+      let app = this;
+      axios
+        .patch("/web/v1/disputes/" + app.dispute.id + "/proposal/" + id + "/vote")
+        .then(function(res) {
+          app.dispute = res.data.dispute;
+        })
+        .catch(function(errors) {
+          app.$fire({
+            title: app.__("Error!"),
+            text: errors.response.data.message,
+            type: "error",
+            timer: 5000
+          });
+        });
+    },
     saveForm() {
       event.preventDefault();
       let app = this;

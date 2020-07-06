@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\LineResource;
+use App\Http\Resources\ProposalResource;
 
 class DisputeResource extends JsonResource
 {
@@ -21,7 +22,8 @@ class DisputeResource extends JsonResource
             'contragents' => ContragentResource::collection($this->contragents),
             'first_review' => $this->first,
             'second_review' => $this->second,
-            'proposal' => $this->proposal,
+            'proposal' => new ProposalResource($this->proposal),
+            'proposals' => ProposalResource::collection($this->proposals),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

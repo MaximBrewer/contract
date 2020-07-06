@@ -37,4 +37,18 @@ class Dispute extends Model
     {
         return $this->hasMany('App\Line');
     }
+
+    public function proposals()
+    {
+        return $this->hasMany('App\Proposal');
+    }
+
+    public static function findByContragents($ids)
+    {
+        return self::whereHas('contragents', function ($query) use ($ids) {
+            $query->where('contragents.id', $ids[0]);
+        })->whereHas('contragents', function ($query) use ($ids) {
+            $query->where('contragents.id', $ids[1]);
+        })->where('status', 'is_open')->first();
+    }
 }
