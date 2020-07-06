@@ -73,7 +73,7 @@ export default {
       if (dispute.id == app.dispute.id) app.dispute = dispute;
       let r = 0;
       for (let d of app.disputes)
-        d.id == dispute.id || ((d = dispute) && (r = 1));
+        d.id == dispute.id && (d = dispute) && (r = 1);
       r || app.disputes.push(dispute);
     });
     axios
