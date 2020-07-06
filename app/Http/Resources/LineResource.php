@@ -20,6 +20,7 @@ class LineResource extends JsonResource
                 'id' => $this->contragent->id,
                 'title' => $this->contragent->title,
             ],
+            'author' => $this->contragent->title,
             // 'user' => [
             //     'id' => $this->user->id,
             //     'name' => $this->user->name,
