@@ -14,8 +14,8 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
+    <link href="http://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}?ver=3.41" rel="stylesheet">
