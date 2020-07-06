@@ -74,8 +74,10 @@ export default {
     app.$root.$on("gotLine", function(line) {
       let r = 0;
       if (typeof line == "number")
-        for (let j in app.dispute.lines)
+        for (let j in app.dispute.lines) {
           if (line == app.dispute.lines[j].id) delete app.dispute.lines[j];
+          return false;
+        }
       if (typeof line == "object" && !!line.dispute_id) {
         if (line.dispute_id == app.dispute.id) {
           for (let j of app.dispute.lines) {
