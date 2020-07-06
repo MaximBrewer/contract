@@ -72,22 +72,22 @@ export default {
   mounted() {
     let app = this;
     app.$root.$on("gotLine", function(line) {
-      if (typeof line == "number") {
-        for (let j in app.dispute.lines) {
-          if (line == app.dispute.lines[j].id) {
-            delete app.dispute.lines[j];
+      if (typeof line == "number")
+        for (let j in app.dispute.lines)
+          if (line == app.dispute.lines[j].id) delete app.dispute.lines[j];
+      if (typeof line == "object" && !!line.dispute_id) {
+        if (line.dispute_id == app.dispute.id) {
+          let r = 0;
+          for (let j of app.dispute.lines) {
+            if (line.id == j.id) {
+              r = 1;
+              j = line;
+            }
           }
         }
       }
-      if (line.dispute_id != app.dispute.id) return false;
-      let r = 0;
-      for (let j of app.dispute.lines) {
-        if (line.id == j.id) {
-          r = 1;
-          j = line;
-        }
-      }
-      app.disputes = disputes;
+      if (!r) app.dispute.lines.push(line);
+      app.dispute = dispute;
     });
   },
   data() {
@@ -169,7 +169,7 @@ export default {
       };
       axios
         .post("/web/v1/disputes/" + app.dispute.id + "/line", message)
-        .then(function(resp) {
+        .then(function(res) {
           // app.dispute.lines.push(resp.data.line)
         })
         .catch(function(errors) {
