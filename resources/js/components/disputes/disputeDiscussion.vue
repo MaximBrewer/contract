@@ -25,7 +25,7 @@
       <template v-slot:text-message-body="{ message, me }">
         <div style="font-weight:bold;">{{message.data.text}}</div>
         <i>
-          <small>{{me ? user.contragents[0].title : message.author }} - {{ message.created_at | formatChatTime}}</small>
+          <small>{{me ? $root.user.contragents[0].title : message.author }} - {{ message.created_at | formatChatTime}}</small>
         </i>
       </template>
       <template v-slot:user-avatar>&nbsp;</template>
@@ -55,10 +55,9 @@ export default {
         ar.push({
           id: j.id,
           author:
-            // this.$root.user.contragents[0].id == j.contragent_id
-            //   ? "me"
-            //   :
-            j.contragent.title,
+            this.$root.user.contragents[0].id == j.contragent_id
+              ? "me"
+              : j.contragent.title,
           message_id: j.id,
           type: "text",
           created_at: j.created_at,
@@ -87,7 +86,6 @@ export default {
         }
       }
       if (!r) app.dispute.lines.push(line);
-      app.dispute = dispute;
     });
   },
   data() {
