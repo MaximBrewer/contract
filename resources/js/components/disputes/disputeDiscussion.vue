@@ -55,9 +55,10 @@ export default {
         ar.push({
           id: j.id,
           author:
-            this.$root.user.contragents[0].id == j.contragent_id
-              ? "me"
-              : j.contragent.title,
+            // this.$root.user.contragents[0].id == j.contragent_id
+            //   ? "me"
+            //   :
+            j.contragent.title,
           message_id: j.id,
           type: "text",
           created_at: j.created_at,
