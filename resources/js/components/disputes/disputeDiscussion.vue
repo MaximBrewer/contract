@@ -51,11 +51,12 @@ export default {
   computed: {
     disputeMessages: function() {
       let ar = [];
+      let app = this;
       for (let j of this.dispute.lines)
         ar.push({
           id: j.id,
           author:
-            this.$root.user.contragents[0].id == j.contragent_id
+            app.$root.user.contragents[0].id == j.contragent_id
               ? "me"
               : j.contragent.title,
           message_id: j.id,
