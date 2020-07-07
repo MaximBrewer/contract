@@ -98,6 +98,7 @@ export default {
     sendEmails() {
       event.preventDefault();
       let app = this;
+      app.dispute.sent = 1;
       axios
         .patch("/web/v1/disputes/" + app.dispute.id + "/emails", {message: app.dispute.message})
         .then(function(res) {
