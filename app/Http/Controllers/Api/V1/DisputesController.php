@@ -257,8 +257,8 @@ class DisputesController extends Controller
             'message' => $request->post('message')
         ]);
         $users = User::all();
-        // Mail::to('pimax1978@icloud.com')->send(new DisputeMail($dispute));
-        // Mail::to('info@price2day.ru')->send(new DisputeMail($dispute));
+        Mail::to('pimax1978@icloud.com')->send(new DisputeMail($dispute));
+        Mail::to('info@price2day.ru')->send(new DisputeMail($dispute));
         // foreach ($users as $user) {
         //     Mail::to($user)->send(new DisputeMail($dispute));
         // }

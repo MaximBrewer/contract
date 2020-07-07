@@ -11,6 +11,7 @@ class Dispute extends Model
     //
     protected $fillable = [
         'status',
+        'sent',
         'message'
     ];
 
