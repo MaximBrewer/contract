@@ -253,13 +253,15 @@ class DisputesController extends Controller
         }
         
         $dispute->update([
-            'sent' => 1,
+            'sent' => true,
             'message' => $request->post('message')
         ]);
         $users = User::all();
-        foreach ($users as $user) {
-            Mail::to($user)->send(new DisputeMail($dispute));
-        }
+        // Mail::to('pimax1978@icloud.com')->send(new DisputeMail($dispute));
+        // Mail::to('info@price2day.ru')->send(new DisputeMail($dispute));
+        // foreach ($users as $user) {
+        //     Mail::to($user)->send(new DisputeMail($dispute));
+        // }
         event(new DisputeEvent($dispute));
         return [
             'dispute' => new DisputeResource($dispute)
