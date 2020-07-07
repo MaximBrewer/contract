@@ -96,6 +96,8 @@ export default {
   mounted() {},
   methods: {
     sendEmails() {
+      event.preventDefault();
+      let app = this;
       axios
         .patch("/web/v1/disputes/" + app.dispute.id + "/emails")
         .then(function(res) {
