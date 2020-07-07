@@ -22,6 +22,7 @@ use App\Contragent;
 use App\User;
 use Illuminate\Support\Facades\Mail;
 use App\Vote;
+use App\Mail\DisputeMail;
 
 class DisputesController extends Controller
 {
@@ -256,7 +257,7 @@ class DisputesController extends Controller
         ]);
         $users = User::all();
         foreach ($users as $user) {
-            Mail::to($user)->send($dispute);
+            Mail::to($user)->send(new DisputeMail($dispute));
         }
         event(new DisputeEvent($dispute));
         return [

@@ -17,12 +17,10 @@ class DisputeMail extends Mailable
      *
      * @return void
      */
-    protected $text;
     protected $dispute;
 
-    public function __construct($text, Dispute $dispute)
+    public function __construct(Dispute $dispute)
     {
-        $this->text = $text;
         $this->dispute = $dispute;
     }
 
@@ -35,7 +33,6 @@ class DisputeMail extends Mailable
     {
         return $this->subject('Приглашение на диспут между компаниями' . $this->dispute->contragents[0]->title . ' и ' . $this->dispute->contragents[1]->title)
             ->view('mail.dispute')->with([
-                'text' => $this->text,
                 'dispute' => $this->dispute
             ]);
     }
