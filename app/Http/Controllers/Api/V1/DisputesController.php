@@ -251,6 +251,7 @@ class DisputesController extends Controller
                 'errors' => []
             ], 422);
         }
+        
         $dispute->update([
             'sent' => 1,
             'message' => $request->post('message')
