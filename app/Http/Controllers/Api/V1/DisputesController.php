@@ -256,9 +256,11 @@ class DisputesController extends Controller
             'sent' => 1,
             'message' => $request->post('message')
         ]);
+
+        var_dump($dispute);die;
         $users = User::all();
         foreach ($users as $user) {
-            Mail::to($user)->send(new DisputeMail($dispute));
+            // Mail::to($user)->send(new DisputeMail($dispute));
         }
         event(new DisputeEvent($dispute));
         return [
