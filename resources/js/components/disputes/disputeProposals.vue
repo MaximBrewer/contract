@@ -99,7 +99,7 @@ export default {
       event.preventDefault();
       let app = this;
       axios
-        .patch("/web/v1/disputes/" + app.dispute.id + "/emails")
+        .patch("/web/v1/disputes/" + app.dispute.id + "/emails", {message: app.dispute.message})
         .then(function(res) {
           app.dispute = res.data.dispute;
         })
