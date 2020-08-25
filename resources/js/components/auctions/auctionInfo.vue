@@ -13,6 +13,7 @@
           >{{ auction.store.federal_district.title }}</li>
           <li class="list-group-item" v-if="auction.store.region">{{ auction.store.region.title }}</li>
           <li class="list-group-item" v-if="auction.store.address">{{ auction.store.address }}</li>
+          <li class="list-group-item">{{ __(auction.mode) }}</li>
           <li class="list-group-item" style="display:flex;flex-wrap:wrap;">
             <div v-for="(image, index) in auction.images" :key="index" style="padding:.5em .7em;">
               <img :src="image.path" alt style="max-width:10em;"/>
