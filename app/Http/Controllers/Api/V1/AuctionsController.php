@@ -533,11 +533,11 @@ class AuctionsController extends Controller
 
         $auction = Auction::findOrFail($auction->id);
 
-        if (!$auction->volume)
-            $auction->update([
-                'finish_at' => Carbon::now(),
-                'finished' => 1
-            ]);
+        // if (!$auction->volume)
+        //     $auction->update([
+        //         'finish_at' => Carbon::now(),
+        //         'finished' => 1
+        //     ]);
 
         event(new MessagePushed($auction));
 
