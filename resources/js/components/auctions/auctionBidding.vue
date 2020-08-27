@@ -117,35 +117,37 @@
                     <div class="h6">{{ bet.created_at | formatDateTime }}</div>
                   </div>
                 </td>
-                <td>
-                  <a
-                    v-if="bet.contragent_id == company.id"
-                    v-tooltip="!bet.guarantee ? __('give a guarantee to the supplier that your company will take this volume in any case') : __('withdraw the guarantee to the supplier that you will take the given volume')"
-                    href="javascript:void(0)"
-                    class="btn btn-sm"
-                    :disabled="!!bet.approved_volume"
-                    v-bind:class="{ 'btn-success': !bet.guarantee, 'btn-danger': !!bet.guarantee, 'btn-secondary': bet.approved_volume }"
-                    @click="bet.approved_volume ? function(){ return false; } : guarantee(bet)"
-                  >
-                    <i class="mdi mdi-star" aria-hidden="true"></i>
-                  </a>
-                  <div
-                    v-if="!!bet.approved_volume && bet.contragent_id == company.id"
-                    class="text-nowrap"
-                  >
-                    <div class="h6">{{ __('The volume of bet has approved') }}</div>
-                  </div>
-                  <div
-                    v-if="!!bet.approved_contract && bet.contragent_id == company.id"
-                    class="text-nowrap"
-                  >
-                    <div class="h6">{{ __('The contract has approved') }}</div>
-                  </div>
-                  <div
-                    v-if="!!bet.approved_contract && bet.contragent_id == company.id"
-                    class="text-nowrap"
-                  >
-                    <a href="javascript:void(0)" class="btn btn-primary">{{__('Get the Invoice')}}</a>
+                <td v-if="!bet.approved_volume || bet.contragent_id == company.id">
+                  <div class="d-flex">
+                    <a
+                      v-if="bet.contragent_id == company.id"
+                      v-tooltip="!bet.guarantee ? __('give a guarantee to the supplier that your company will take this volume in any case') : __('withdraw the guarantee to the supplier that you will take the given volume')"
+                      href="javascript:void(0)"
+                      class="btn btn-sm d-block"
+                      :disabled="!!bet.approved_volume"
+                      v-bind:class="{ 'btn-success': !bet.guarantee, 'btn-danger': !!bet.guarantee, 'btn-secondary': bet.approved_volume }"
+                      @click="bet.approved_volume ? function(){ return false; } : guarantee(bet)"
+                    >
+                      <i class="mdi mdi-star" aria-hidden="true"></i>
+                    </a>
+                    <div
+                      v-if="!!bet.approved_volume && bet.contragent_id == company.id"
+                      class="text-nowrap"
+                    >
+                      <div class="h6">{{ __('The volume of bet has approved') }} {{ bet.correct ? __('Price: ') + bet.correct : '' }}</div>
+                    </div>
+                    <div
+                      v-if="!!bet.approved_contract && bet.contragent_id == company.id"
+                      class="text-nowrap"
+                    >
+                      <div class="h6">{{ __('The contract has approved') }}</div>
+                    </div>
+                    <div
+                      v-if="!!bet.approved_contract && bet.contragent_id == company.id"
+                      class="text-nowrap"
+                    >
+                      <a href="javascript:void(0)" class="btn btn-primary">{{__('Get the Invoice')}}</a>
+                    </div>
                   </div>
                 </td>
               </tr>
