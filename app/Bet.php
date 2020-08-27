@@ -19,6 +19,7 @@ class Bet extends Model
         'can_bet',
         'correct',
         'store_id',
+        'guarantee',
         'message',
     ];
 
