@@ -516,9 +516,7 @@ class AuctionsController extends Controller
         $bet = Bet::findOrFail($r->id);
         $auction = $bet->auction;
 
-
-
-        if (empty($auction) || $auction->contragent_id != Auth::user()->contragents[0]->id) {
+        if (empty($auction) || $bet->contragent_id != Auth::user()->contragents[0]->id) {
             return response()->json([
                 'message' => __('It`s not yours!'),
                 'errors' => []
