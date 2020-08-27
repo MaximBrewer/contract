@@ -65,6 +65,9 @@ Route::group([
     Route::post('address', 'RegionsController@address');
 
     Route::get('show_phone/{id}', 'LogisticsController@showPhone');
+    
+
+    Route::post('auctions/guarantee', 'AuctionsController@guaranteeBet');
 
     Route::post('auctions/bet', 'AuctionsController@bet');
     Route::post('auctions', 'AuctionsController@store');
