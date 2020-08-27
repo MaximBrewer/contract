@@ -177,7 +177,25 @@ export default {
       }
       return betsList;
     },
-    guarantee(){},
+    guarantee(bet) {
+      var app = this;
+      if (app.auction)
+        axios
+          .post("/web/v1/auctions/guarantee", {
+            id: bet.id,
+          })
+          .then(function (resp) {
+            bet = resp.bet;
+          })
+          .catch(function (err) {
+            app.$fire({
+              title: app.__("Error!"),
+              text: err.response.data.message,
+              type: "error",
+              timer: 5000,
+            });
+          });
+    },
     betIt() {
       var app = this;
       if (app.auction)

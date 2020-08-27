@@ -510,6 +510,33 @@ class AuctionsController extends Controller
         return ['ok'];
     }
 
+    public function guaranteeBet(Request $r)
+    {
+
+        $bet = Bet::findOrFail($r->id);
+        $auction = $bet->auction;
+
+
+
+        if (empty($auction) || $auction->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+
+        $bet->update([
+            'guarantee' => !$bet->guarantee
+        ]);
+
+
+        $auction = Auction::find($auction->id);
+
+        event(new MessagePushed($auction));
+
+        return ['bet' => $bet];
+    }
+
     public function approveVolume($id)
     {
         $bet = Bet::findOrFail($id);
@@ -605,7 +632,7 @@ class AuctionsController extends Controller
                 'errors' => []
             ], 422);
         }
-        
+
         $interval = Interval::findOrFail($r->post('interval'));
 
         if (!$auction[0]->can_bet) {
