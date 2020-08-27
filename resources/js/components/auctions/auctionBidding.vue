@@ -179,7 +179,8 @@ export default {
     },
     guarantee(bet) {
       var app = this;
-      if (app.auction)
+      if (app.auction) {
+        bet.guarantee = !bet.guarantee * 1
         axios
           .post("/web/v1/auctions/guarantee", {
             id: bet.id,
@@ -195,6 +196,7 @@ export default {
               timer: 5000,
             });
           });
+      }
     },
     betIt() {
       var app = this;
