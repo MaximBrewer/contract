@@ -3,7 +3,8 @@
     <div class="row" v-for="(interval, ind) in auction.intervals" :key="ind">
       <div class="col-md-12" v-if="interval.bets.length">
         <div class="card">
-          <div class="card-header">vbvb
+          <div class="card-header">
+            vbvb
             <strong>
               {{ __('Interval start price') }}: {{ interval.start_price }} |
               {{ __('Interval volume') }}: {{ interval.volume }} |
@@ -71,6 +72,15 @@
                   <td class="text-center">
                     <div class="text-nowrap">
                       <a
+                        v-tooltip="!bet.guarantee ? __('the buyer did not guarantee that he would take this volume') : __('the buyer guarantees that he will take this volume in any case')"
+                        href="javascript:void(0)"
+                        class="btn btn-sm"
+                        :disabled="true"
+                        v-bind:class="{ 'btn-success': !!bet.guarantee, 'btn-secondary': !bet.guarantee }"
+                      >
+                        <i class="mdi mdi-star" aria-hidden="true"></i>
+                      </a>
+                      <a
                         v-tooltip="__('Approve volume')"
                         href="javascript:void(0)"
                         class="btn btn-sm"
@@ -130,15 +140,15 @@ export default {
       app.$confirm(app.__("Are you sure?")).then(() => {
         axios
           .get("/web/v1/auctions/bet/remove/" + bet.id)
-          .then(function(resp) {
+          .then(function (resp) {
             bet.delete();
           })
-          .catch(function(errors) {
+          .catch(function (errors) {
             app.$fire({
               title: app.__("Error!"),
               text: errors.response.data.message,
               type: "error",
-              timer: 5000
+              timer: 5000,
             });
           });
       });
@@ -149,17 +159,17 @@ export default {
         axios
           .post("/web/v1/auctions/bet/contract", {
             id: bet.id,
-            correct: bet.correct
+            correct: bet.correct,
           })
-          .then(function(resp) {
+          .then(function (resp) {
             bet.approved_contract = 1;
           })
-          .catch(function(errors) {
+          .catch(function (errors) {
             app.$fire({
               title: app.__("Error!"),
               text: errors.response.data.message,
               type: "error",
-              timer: 5000
+              timer: 5000,
             });
           });
       });
@@ -169,19 +179,19 @@ export default {
       app.$confirm(app.__("Are you sure?")).then(() => {
         axios
           .get("/web/v1/auctions/bet/volume/" + bet.id)
-          .then(function(resp) {
+          .then(function (resp) {
             bet.approved_volume = 1;
           })
-          .catch(function(errors) {
+          .catch(function (errors) {
             app.$fire({
               title: app.__("Error!"),
               text: errors.response.data.message,
               type: "error",
-              timer: 5000
+              timer: 5000,
             });
           });
       });
-    }
-  }
+    },
+  },
 };
 </script>

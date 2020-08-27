@@ -118,6 +118,16 @@
                   </div>
                 </td>
                 <td>
+                  <a
+                    v-tooltip="!bet.guarantee ? __('give a guarantee to the supplier that your company will take this volume in any case') : __('withdraw the guarantee to the supplier that you will take the given volume')"
+                    href="javascript:void(0)"
+                    class="btn btn-sm"
+                    :disabled="!!bet.approved_volume"
+                    v-bind:class="{ 'btn-success': !bet.guarantee, 'btn-danger': !!bet.guarantee, 'btn-secondary': bet.approved_volume }"
+                    @click="bet.approved_volume ? function(){ return false; } : guarantee(bet)"
+                  >
+                    <i class="mdi mdi-star" aria-hidden="true"></i>
+                  </a>
                   <div
                     v-if="!!bet.approved_volume && bet.contragent_id == company.id"
                     class="text-nowrap"
@@ -148,10 +158,10 @@
 <script>
 export default {
   props: ["auction", "can_bet", "observer"],
-  data: function() {
+  data: function () {
     return {
       bid: {},
-      errors: {}
+      errors: {},
     };
   },
   methods: {
@@ -159,11 +169,15 @@ export default {
       var app = this;
       let betsList = [];
       for (let i in bets) {
-        if (bets[i].contragent_id == app.company.id || !bets[i].approved_contract)
+        if (
+          bets[i].contragent_id == app.company.id ||
+          !bets[i].approved_contract
+        )
           betsList.push(bets[i]);
       }
       return betsList;
     },
+    guarantee(){},
     betIt() {
       var app = this;
       if (app.auction)
@@ -174,20 +188,20 @@ export default {
             bidder: app.user.contragents[0].id,
             volume: app.bid.volume,
             price: app.bid.price,
-            store: app.bid.store ? app.bid.store.id : false
+            store: app.bid.store ? app.bid.store.id : false,
           })
-          .then(function(resp) {
+          .then(function (resp) {
             app.$modal.hide("add_bidder");
           })
-          .catch(function(err) {
+          .catch(function (err) {
             app.$fire({
               title: app.__("Error!"),
               text: err.response.data.message,
               type: "error",
-              timer: 5000
+              timer: 5000,
             });
           });
-    }
-  }
+    },
+  },
 };
 </script>
