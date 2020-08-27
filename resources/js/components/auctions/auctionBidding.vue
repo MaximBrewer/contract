@@ -134,7 +134,9 @@
                       v-if="!!bet.approved_volume && bet.contragent_id == company.id"
                       class="text-nowrap mr-2"
                     >
-                      <div class="h6">{{ __('The volume of bet has approved') }} {{ bet.correct ? __('Price: ') + bet.correct : '' }}</div>
+                      <div
+                        class="h6"
+                      >{{ __('The volume of bet has approved') }} {{ bet.correct ? __('Price') +": " + bet.correct : '' }}</div>
                     </div>
                     <div
                       v-if="!!bet.approved_contract && bet.contragent_id == company.id"
