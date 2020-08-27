@@ -119,6 +119,7 @@
                 </td>
                 <td>
                   <a
+                    v-if="bet.contragent_id == company.id"
                     v-tooltip="!bet.guarantee ? __('give a guarantee to the supplier that your company will take this volume in any case') : __('withdraw the guarantee to the supplier that you will take the given volume')"
                     href="javascript:void(0)"
                     class="btn btn-sm"
@@ -180,7 +181,7 @@ export default {
     guarantee(bet) {
       var app = this;
       if (app.auction) {
-        bet.guarantee = !bet.guarantee * 1
+        bet.guarantee = !bet.guarantee * 1;
         axios
           .post("/web/v1/auctions/guarantee", {
             id: bet.id,

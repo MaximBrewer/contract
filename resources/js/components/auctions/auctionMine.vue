@@ -75,7 +75,6 @@
                         v-tooltip="!bet.guarantee ? __('the buyer did not guarantee that he would take this volume') : __('the buyer guarantees that he will take this volume in any case')"
                         href="javascript:void(0)"
                         class="btn btn-sm"
-                        :disabled="true"
                         v-bind:class="{ 'btn-success': !!bet.guarantee, 'btn-secondary': !bet.guarantee }"
                       >
                         <i class="mdi mdi-star" aria-hidden="true"></i>
