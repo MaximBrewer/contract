@@ -155,7 +155,7 @@
               </a>
               <a
                 v-tooltip="__('Go to auction page')"
-                href="/personal/auctions/show/" + auction.id
+                :href="'/personal/auctions/show/' + auction.id"
                 class="btn btn-secondary"
                 target="_blank"
               >
