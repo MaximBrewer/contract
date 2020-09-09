@@ -161,6 +161,7 @@
                     href="javascript:void(0)"
                     class="btn btn-secondary"
                     @click="loginDropdown"
+                    target="_blank"
                   >
                     <i class="mdi mdi-eye" aria-hidden="true"></i>
                   </a>

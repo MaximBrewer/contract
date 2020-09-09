@@ -153,13 +153,14 @@
               >
                 <i class="mdi mdi-account-remove" aria-hidden="true"></i>
               </a>
-              <router-link
+              <a
                 v-tooltip="__('Go to auction page')"
-                :to="{name: 'showAuction', 'params': {'id': auction.id}}"
+                href="/personal/auctions/show/" + auction.id
                 class="btn btn-secondary"
+                target="_blank"
               >
                 <i class="mdi mdi-eye" aria-hidden="true"></i>
-              </router-link>
+              </a>
               <router-link
                 v-if="company.id == auction.contragent.id"
                 v-tooltip="__('Edit auction')"
@@ -178,9 +179,9 @@
 <script>
 export default {
   props: ["action", "auctions", "store"],
-  data: function() {
+  data: function () {
     return {
-      title: ""
+      title: "",
     };
   },
   mounted() {
@@ -202,17 +203,17 @@ export default {
       let loader = Vue.$loading.show();
       axios
         .get("/web/v1/auctions/bid/" + auction.id)
-        .then(function(res) {
+        .then(function (res) {
           let bidder = res.data.data.bidder;
           auction.bidder = res.data.data.bidder;
           loader.hide();
         })
-        .catch(function(err) {
+        .catch(function (err) {
           console.log(err);
           app.$fire({
             title: app.__("Failed to bid auction"),
             type: "error",
-            timer: 2000
+            timer: 2000,
           });
           loader.hide();
         });
@@ -222,16 +223,16 @@ export default {
       let loader = Vue.$loading.show();
       axios
         .get("/web/v1/auctions/unbid/" + auction.id)
-        .then(function(res) {
+        .then(function (res) {
           let bidder = res.data.data.bidder;
           auction.bidder = res.data.data.bidder;
           loader.hide();
         })
-        .catch(function(err) {
+        .catch(function (err) {
           app.$fire({
             title: app.__("Failed to unbid auction"),
             type: "error",
-            timer: 2000
+            timer: 2000,
           });
           loader.hide();
         });
@@ -241,20 +242,20 @@ export default {
       let loader = Vue.$loading.show();
       axios
         .post("/web/v1/auction/copy", { id: id })
-        .then(function(res) {
+        .then(function (res) {
           loader.hide();
           app.$router.push("/personal/auctions/edit/" + res.data.id);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           app.$fire({
             title: app.__("Error!"),
             text: err.response ? err.response.data.message : "",
             type: "error",
-            timer: 2000
+            timer: 2000,
           });
           loader.hide();
         });
-    }
-  }
+    },
+  },
 };
 </script>
