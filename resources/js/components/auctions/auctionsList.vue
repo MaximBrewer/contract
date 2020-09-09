@@ -348,6 +348,7 @@ export default {
         //     break;
         //   }
         // }
+        
         if (
           (!f.federal_district ||
             f.federal_district.id == a.store.federal_district.id) &&
@@ -362,11 +363,14 @@ export default {
           (!f.finish_at ||
             new Date(f.finish_at).getTime() + 24 * 3600000 >=
               new Date(a.start_at).getTime()) &&
-          (!f.tags.length || intags) &&
-          interval
+          (!f.tags.length || intags) 
+          && interval
         )
           app.auctionsList.push(a);
       }
+      console.log(f);
+      console.log(app.auctions);
+      console.log(app.auctionsList);
       if (app.auctions.length == cnt) app.sorByDistance();
     },
     sorByDistance() {
@@ -392,6 +396,7 @@ export default {
             ) * 100
           ) / 100;
       }
+      console.log(app.auctionsList);
       if (cnt == app.auctionsList.length) {
         app.auctionsList.sort(function(a, b) {
           return a.range - b.range;

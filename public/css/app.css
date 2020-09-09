@@ -14019,3 +14019,15 @@ span.online.is-offline {
   margin: 0;
 }
 
+.fancy-box-image-wrapper div {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.fancy-box-image-wrapper div img {
+  cursor: pointer;
+}
+

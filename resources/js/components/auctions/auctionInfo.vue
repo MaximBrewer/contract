@@ -21,7 +21,7 @@
               :key="index"
               style="padding:.5em .7em;"
             >
-              <img :src="n.url" alt style="max-width:10em;" @click="open($event)" />
+              <img :src="n.url" alt style="max-width:10em;cursor:pointer" @click="open($event)"/>
             </div>
           </li>
         </ul>
@@ -98,17 +98,19 @@ export default {
     },
   },
   data() {
+    return {
+      imageList: [],
+    };
+  },
+  mounted() {
     let list = [];
-    for (let img in this.auction) {
-      list.push({
-        width: 900,
-        height: 600,
+    console.log(this.auction);
+    console.log(this.imageList);
+    for (let img of this.auction.images) {
+      this.imageList.push({
         url: img.path,
       });
     }
-    return {
-      imageList: list,
-    };
   },
   methods: {
     open(e) {

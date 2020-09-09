@@ -339,6 +339,27 @@ class AuctionsController extends Controller
             ]);
         }
 
+        $path = 'auctions' . DIRECTORY_SEPARATOR . $new_auction->id . DIRECTORY_SEPARATOR;
+        $oldpath = 'auctions' . DIRECTORY_SEPARATOR . $auction->id . DIRECTORY_SEPARATOR;
+        $fullpath = storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path;
+        $oldfullpath = storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $oldpath;
+        @mkdir($fullpath, 0777, true);
+
+        $attchs = Attachment::where('entity_id', $auction->id)->where('entity', 'auction')->get();
+
+        foreach ($attchs as $attachment) {
+            $filename = explode(DIRECTORY_SEPARATOR, $attachment->url);
+            $filename = end($filename);
+            @copy($oldfullpath . $filename, $fullpath . $filename);
+            Attachment::create([
+                'title' => $attachment->title,
+                'url' => $path . $filename,
+                'entity' => 'auction',
+                'entity_id' => $new_auction->id,
+                'sort' => $attachment->sort,
+            ]);
+        };
+
         foreach ($tags as $tag)
             Tag::find($tag['id'])->auctions()->attach($new_auction->id);
 
