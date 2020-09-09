@@ -499,7 +499,7 @@ export default {
             if (!!err.response.data.errors)
               app.errors = err.response.data.errors;
             loader.hide();
-            console.log(app.errors);
+            // console.log(app.errors);
           });
       } else {
         axios
@@ -514,7 +514,7 @@ export default {
             if (!!err.response.data.errors)
               app.errors = err.response.data.errors;
             loader.hide();
-            console.log(app.errors);
+            // console.log(app.errors);
           });
       }
     }

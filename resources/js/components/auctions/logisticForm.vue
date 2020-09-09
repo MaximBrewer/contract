@@ -227,7 +227,7 @@ export default {
               timer: 5000
             });
             if (res.data.user) {
-            console.log(res.data);
+            // console.log(res.data);
               app.$root.user.contragents[0].balance = res.data.user.contragents[0].balance;
               app.$root.company.balance = res.data.user.contragents[0].balance;
             }
@@ -294,7 +294,7 @@ export default {
               .post("/web/v1/address", { address: address })
               .then(function(resp) {
                 // if (resp.data[0]) {
-                console.log(resp.data);
+                // console.log(resp.data);
                 app.logistic.region = resp.data[0];
                 app.logistic.federal_district = resp.data[1];
                 // }

@@ -365,7 +365,7 @@ const app = new Vue({
                 "Dialog",
                 function(e) {
                     that.$emit("gotDialog", e.phrase);
-                    console.log(e);
+                    // console.log(e);
                     that.flash(
                         e.phrase.contragent.title + "<br>" + e.phrase.text,
                         "success"

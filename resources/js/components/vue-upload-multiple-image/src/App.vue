@@ -24,14 +24,14 @@ export default {
   },
   methods: {
     uploadImageSuccess(formData, index, fileList) {
-      console.log('data', formData, index, fileList)
+      // console.log('data', formData, index, fileList)
       // Upload image api
       // axios.post('http://gostore.gostore-api.test/api/items/upload', formData).then(response => {
       //   console.log(response)
       // })
     },
     beforeRemove (index, done, fileList) {
-      console.log('index', index, fileList)
+      // console.log('index', index, fileList)
       var r = confirm("remove image")
       if (r == true) {
         done()
@@ -39,13 +39,13 @@ export default {
       }
     },
     editImage (formData, index, fileList) {
-      console.log('edit data', formData, index, fileList)
+      // console.log('edit data', formData, index, fileList)
     },
     dataChange (data) {
-      console.log(data)
+      // console.log(data)
     },
     limitExceeded(amount){
-      console.log(amount)
+      // console.log(amount)
     }
   }
 }

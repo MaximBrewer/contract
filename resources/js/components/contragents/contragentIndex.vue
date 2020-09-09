@@ -55,7 +55,7 @@ export default {
           let c = app.$root.contragents[i];
           if (!!c.title) {
             var reg = new RegExp(newSearch, "gi");
-            console.log(newSearch, c);
+            // console.log(newSearch, c);
             if (reg.test(c.title)) app.contragentList.push(c);
           }
         }

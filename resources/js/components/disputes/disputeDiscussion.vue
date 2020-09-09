@@ -65,7 +65,7 @@ export default {
           updated_at: j.updated_at,
           data: { text: j.message }
         });
-      console.log(ar);
+      // console.log(ar);
       return ar;
     }
   },

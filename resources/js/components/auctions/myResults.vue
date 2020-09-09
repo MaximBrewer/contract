@@ -104,7 +104,7 @@ export default {
         loader.hide();
       })
       .catch(function(err) {
-        console.log(err);
+        // console.log(err);
         app.$fire({
           title: app.__("Failed to load results"),
           type: "error",
