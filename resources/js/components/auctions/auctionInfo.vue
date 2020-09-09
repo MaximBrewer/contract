@@ -15,8 +15,13 @@
           <li class="list-group-item" v-if="auction.store.address">{{ auction.store.address }}</li>
           <li class="list-group-item">{{ __(auction.mode) }}</li>
           <li class="list-group-item" style="display:flex;flex-wrap:wrap;">
-            <div v-for="(image, index) in auction.images" :key="index" style="padding:.5em .7em;">
-              <img :src="image.path" alt style="max-width:10em;"/>
+            <div
+              v-for="(n, index) in imageList"
+              :data-index="index"
+              :key="index"
+              style="padding:.5em .7em;"
+            >
+              <img :src="n.url" alt style="max-width:10em;" @click="open($event)" />
             </div>
           </li>
         </ul>
@@ -81,15 +86,34 @@
 </template>
 <script>
 import VuePureLightbox from "vue-pure-lightbox";
+import fancyBox from "vue-fancybox";
 export default {
   components: {
-    VuePureLightbox
+    VuePureLightbox,
   },
   props: {
     auction: {
       type: Object,
-      default: {}
+      default: {},
+    },
+  },
+  data() {
+    let list = [];
+    for (let img in this.auction) {
+      list.push({
+        width: 900,
+        height: 600,
+        url: img.path,
+      });
     }
-  }
+    return {
+      imageList: list,
+    };
+  },
+  methods: {
+    open(e) {
+      fancyBox(e.target, this.imageList);
+    },
+  },
 };
 </script>
