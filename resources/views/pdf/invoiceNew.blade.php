@@ -241,7 +241,7 @@
             </dd>
         </dl>
         <dl>
-            <dt>Грузоотправитель</dt>
+            <dt>Грузо- отправитель</dt>
             <dd>
                 {{ $recipient->title }}, ИНН
                 {{ $recipient->inn }}, КПП {{ $recipient->kpp }}, {{ $recipient->legal_address }}
@@ -253,7 +253,7 @@
             </dd>
         </dl>
         <dl>
-            <dt>Грузополучатель</dt>
+            <dt>Грузо- получатель</dt>
             <dd>{{ $settlement->creq }}
             </dd>
         </dl>
