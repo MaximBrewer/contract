@@ -41,8 +41,8 @@ Route::group([
     'prefix' => 'personal',
     'middleware' => ['verified', 'contragent'],
 ], function () {
-    Route::post('/invoice/invoice', 'PersonalController@invoice');
     Route::any('/', 'PersonalController@index');
+    Route::post('/invoice', 'PersonalController@invoice');
     Route::any('/{controller}', 'PersonalController@index');
     Route::any('/{controller}/{action}', 'PersonalController@index');
     Route::any('/{controller}/{action}/{id}', 'PersonalController@index');
