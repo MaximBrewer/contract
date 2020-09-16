@@ -43,6 +43,7 @@ Route::group([
 ], function () {
     Route::any('/', 'PersonalController@index');
     Route::post('/invoice', 'PersonalController@invoice');
+    Route::get('/invoice/{bet_id}', 'PersonalController@invoiceNew');
     Route::any('/{controller}', 'PersonalController@index');
     Route::any('/{controller}/{action}', 'PersonalController@index');
     Route::any('/{controller}/{action}/{id}', 'PersonalController@index');

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Laracasts\Utilities\JavaScript\JavaScriptFacade as JavaScript;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Bet;
 use App\Kind;
 use App\Settlement;
 use Illuminate\Support\Facades\View;
@@ -41,7 +42,7 @@ class PersonalController extends Controller
 
             $request->session()->put('_api_token', $token);
         }
-        if($request->kind){
+        if ($request->kind) {
             $user->update([
                 'kind_id' => $request->kind
             ]);
@@ -58,6 +59,28 @@ class PersonalController extends Controller
 
 
         response()
-        ->view('pdf.invoice', ['settlement' => $settlement], 200);
+            ->view('pdf.invoice', ['settlement' => $settlement], 200);
+    }
+
+    public function invoiceNew(Request $request, $id)
+    {
+
+        $bet = Bet::findOrfail($id);
+        $auction = Auction::findOrfail($bet->auction_id);
+
+        $settlement = Settlement::create([
+            'contragent_id' => Auth::user()->contragents[0]->id,
+            'balance' => round($bet->correct * $bet->volume * $auction->prepay) / 100,
+            'method' => 'invoice',
+            'type' => 'credit',
+            'status' => 'processing'
+        ]);
+
+        $pdf = PDF::loadView('pdf.invoice', ['settlement' => $settlement]);
+        return $pdf->stream();
+
+
+        response()
+            ->view('pdf.invoice', ['settlement' => $settlement], 200);
     }
 }
