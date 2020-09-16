@@ -272,7 +272,7 @@
                 <tr>
                     <td>1</td>
                     <td>{{ $auction->product->title }}
-                        {{ $auction->product->title }} по брони(ставке) {{ $bet->id }} аукцион номер {{ $auction->id }} с отгрузкой с {{ Carbon::parse($auction->from)->format('d.m.y') }} до {{ Carbon::parse($auction->to)->format('d.m.y') }}, частичная оплата({{ $auction->prepay }} от суммы покупки)
+                        {{ $auction->product->title }} по брони(ставке) {{ $bet->id }} аукцион номер {{ $auction->id }} с отгрузкой с {{ $auction->ffrom }} до {{ $auction->fto }}, частичная оплата({{ $auction->prepay }} от суммы покупки)
                     
                     </td>
                     <td>{{ $auction->multiplicity->title }}</td>

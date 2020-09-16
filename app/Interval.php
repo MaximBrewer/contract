@@ -27,6 +27,17 @@ class Interval extends Model
         return $value ? date(DATE_ATOM, strtotime($value)) : null;
     }
 
+    public function getFFromAttribute($value)
+    {
+        return Carbon::parse($value)->format('d.m.y');
+    }
+
+
+    public function getFToAttribute($value)
+    {
+        return Carbon::parse($value)->format('d.m.y');
+    }
+
     public function bets()
     {
         return $this->hasMany('App\Bet')->orderBy('created_at', 'desc');
