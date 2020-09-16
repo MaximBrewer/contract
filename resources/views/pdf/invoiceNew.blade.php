@@ -274,18 +274,18 @@
                     <td>{{ $auction->product->title }}</td>
                     <td>{{ $auction->multiplicity->title }}</td>
                     <td>{{ $bet->volume }}</td>
-                    <td>{{ floor($bet->correct * (100 - str_replace("w", "", $recipient->nds))) / 100 }}</td>
-                    <td>{{ floor($bet->correct * (100 - str_replace("w", "", $recipient->nds))) / 100 * $bet->volume }}
+                    <td>{{ floor($bet->correct / (100 + str_replace("w", "", $recipient->nds))) * 100 }}</td>
+                    <td>{{ floor($bet->correct / (100 + str_replace("w", "", $recipient->nds))) * 100 * $bet->volume }}
                     </td>
                 </tr>
                 <tr class="result">
                     <td colspan="5">Итого:</td>
-                    <td>{{ floor($bet->correct * (100 - str_replace("w", "", $recipient->nds))) / 100 * $bet->volume}}
+                    <td>{{ floor($bet->correct / (100 + str_replace("w", "", $recipient->nds))) * 100 * $bet->volume}}
                     </td>
                 </tr>
                 <tr class="result">
                     <td colspan="5">в том числе НДС, {{ str_replace("w", "", $recipient->nds) }}%</td>
-                    <td>{{  $bet->correct * $bet->volume - floor($bet->correct * (100 - str_replace("w", "", $recipient->nds))) / 100 * $bet->volume }}
+                    <td>{{  $bet->correct * $bet->volume - floor($bet->correct / (100 + str_replace("w", "", $recipient->nds))) * 100 * $bet->volume }}
                     </td>
                 </tr>
                 <tr class="result">
