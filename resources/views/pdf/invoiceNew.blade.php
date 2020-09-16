@@ -285,7 +285,7 @@
                 </tr>
                 <tr class="result">
                     <td colspan="5">в том числе НДС, {{ str_replace("w", "", $recipient->nds) }}%</td>
-                    <td>{{ round($settlement->balance / (100 + str_replace("w", "", $recipient->nds)) * 100, 2) }}
+                    <td>{{ $settlement->balance - round($settlement->balance / (100 + str_replace("w", "", $recipient->nds)) * 100, 2) }}
                     </td>
                 </tr>
                 <tr class="result">
