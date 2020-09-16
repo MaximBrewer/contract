@@ -148,7 +148,7 @@
                       v-if="!!bet.approved_contract && bet.contragent_id == company.id"
                       class="text-nowrap mr-2"
                     >
-                      <a :href="'/personal/auctions/invoice/' + bet.id" class="btn btn-primary btn-sm" target="_blank">{{__('Get the Invoice')}}</a>
+                      <a :href="'/personal/invoice/' + bet.id" class="btn btn-primary btn-sm" target="_blank">{{__('Get the Invoice')}}</a>
                     </div>
                   </div>
                 </td>
