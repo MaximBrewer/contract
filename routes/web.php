@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Session;
 
 Auth::routes(['verify' => true]);
 
+
+
 Route::get('/auctions/{action}', 'Api\V1\AuctionsController@index');
 Route::resource('/federalDistricts', 'Api\V1\FederalDistrictsController', ['except' => ['create', 'edit', 'update', 'delete']]);
 Route::resource('/regions', 'Api\V1\RegionsController', ['except' => ['create', 'edit', 'update', 'delete']]);
@@ -35,16 +37,11 @@ Route::get('/', function () {
     return redirect('/personal');
 });
 
-Route::group(['prefix' => 'personal'], function () {
-    Route::any('/{controller}', 'PersonalController@index');
-    Route::any('/{controller}/{action}', 'PersonalController@index');
-    Route::any('/{controller}/{action}/{id}', 'PersonalController@index');
-});
-
 Route::group([
     'prefix' => 'personal',
     'middleware' => ['verified', 'contragent'],
 ], function () {
+    Route::post('/invoice/invoice', 'PersonalController@invoice');
     Route::any('/', 'PersonalController@index');
     Route::any('/{controller}', 'PersonalController@index');
     Route::any('/{controller}/{action}', 'PersonalController@index');
