@@ -27,13 +27,13 @@ class Interval extends Model
         return $value ? date(DATE_ATOM, strtotime($value)) : null;
     }
 
-    public function getFFromAttribute($value)
+    public function getFfromAttribute($value)
     {
         return Carbon::parse($value)->format('d.m.y');
     }
 
 
-    public function getFToAttribute($value)
+    public function getFtoAttribute($value)
     {
         return Carbon::parse($value)->format('d.m.y');
     }
