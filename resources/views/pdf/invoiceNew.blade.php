@@ -272,7 +272,7 @@
                 <tr>
                     <td>1</td>
                     <td>{{ $auction->product->title }}
-                        {{ $auction->product->title }} по брони(ставке) {{ $bet->id }} аукцион номер {{ $auction->id }} с отгрузкой с {{ $interval->ffrom }} до {{ $interval->fto }}, частичная оплата({{ $auction->prepay }} от суммы покупки)
+                        {{ $auction->product->title }} по брони(ставке) {{ $bet->id }} аукцион номер {{ $auction->id }} с отгрузкой с {{ $interval->ffrom }} до {{ $interval->fto }}, частичная оплата({{ $auction->prepay }}% от суммы покупки)
                     
                     </td>
                     <td>{{ $auction->multiplicity->title }}</td>
