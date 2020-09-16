@@ -12,6 +12,7 @@ use Laracasts\Utilities\JavaScript\JavaScriptFacade as JavaScript;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Bet;
+use App\Contragent;
 use App\Kind;
 use App\Settlement;
 use Illuminate\Support\Facades\View;
@@ -76,11 +77,13 @@ class PersonalController extends Controller
             'status' => 'processing'
         ]);
 
-        $pdf = PDF::loadView('pdf.invoice', ['settlement' => $settlement]);
+        $recipient = Contragent::findOrfail($auction->contragent_id);
+
+        $pdf = PDF::loadView('pdf.invoiceNew', ['settlement' => $settlement, 'auction' => $auction, 'bet' => $bet, 'recipient' => $recipient]);
         return $pdf->stream();
 
 
         response()
-            ->view('pdf.invoice', ['settlement' => $settlement], 200);
+            ->view('pdf.invoiceNew', ['settlement' => $settlement], 200);
     }
 }
