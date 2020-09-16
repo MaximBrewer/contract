@@ -274,23 +274,23 @@
                     <td>{{ $auction->product->title }}</td>
                     <td>{{ $auction->multiplicity->title }}</td>
                     <td>{{ $bet->volume }}</td>
-                    <td>{{ round($bet->correct / (100 + str_replace("w", "", $recipient->nds)) * 100, 2) }}</td>
-                    <td>{{ round($bet->correct / (100 + str_replace("w", "", $recipient->nds)) * 100, 2) * $bet->volume }}
+                    <td>{{ $bet->correct }}</td>
+                    <td>{{ $settlement->balance }}
                     </td>
                 </tr>
                 <tr class="result">
                     <td colspan="5">Итого:</td>
-                    <td>{{ round($bet->correct / (100 + str_replace("w", "", $recipient->nds)) * 100, 2) * $bet->volume}}
+                    <td>{{ $settlement->balance }}
                     </td>
                 </tr>
                 <tr class="result">
                     <td colspan="5">в том числе НДС, {{ str_replace("w", "", $recipient->nds) }}%</td>
-                    <td>{{  $bet->correct * $bet->volume - round($bet->correct / (100 + str_replace("w", "", $recipient->nds)) * 100, 2) * $bet->volume }}
+                    <td>{{ round($settlement->balance / (100 + str_replace("w", "", $recipient->nds)) * 100, 2) }}
                     </td>
                 </tr>
                 <tr class="result">
                     <td colspan="5">Всего к оплате:</td>
-                    <td>{{ $bet->correct * $bet->volume }}</td>
+                    <td>{{ $settlement->balance }}</td>
                 </tr>
             </tbody>
         </table>
