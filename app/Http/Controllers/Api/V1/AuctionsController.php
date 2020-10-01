@@ -605,14 +605,14 @@ class AuctionsController extends Controller
             ], 422);
         }
 
-        if (!(int) $r->post('volume')) {
+        if (!(float) $r->post('volume')) {
             return response()->json([
                 'message' => __('Input volume!'),
                 'errors' => []
             ], 422);
         }
 
-        if ($r->post('volume') <= 0) {
+        if ((float) $r->post('volume') <= 0) {
             return response()->json([
                 'message' => __('Объем должен быть положительным!'),
                 'errors' => []
