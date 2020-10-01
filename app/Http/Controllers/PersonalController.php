@@ -73,7 +73,7 @@ class PersonalController extends Controller
 
         $settlement = Settlement::create([
             'contragent_id' => Auth::user()->contragents[0]->id,
-            'balance' => round($bet->correct * $bet->volume * $auction->multiplicity->coefficient * $auction->prepay) / 100,
+            'balance' => round($bet->correct * $bet->volume * (int)$auction->multiplicity->coefficient * $auction->prepay) / 100,
             'method' => 'invoice',
             'type' => 'credit',
             'status' => 'processing'
