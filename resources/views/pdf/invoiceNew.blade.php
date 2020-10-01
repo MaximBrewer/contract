@@ -277,8 +277,8 @@
                     </td>
                     <td>{{ $auction->multiplicity->title }}</td>
                     <td>{{ $bet->volume }}</td>
-                    <td>{{ $bet->correct }}</td>
-                    <td>{{ $bet->correct * $bet->volume }}
+                    <td>{{ $bet->correct * $auction->prepay }}</td>
+                    <td>{{ $bet->correct * (float)$auction->multiplicity->coefficient * $bet->volume * $auction->prepay }}
                     </td>
                 </tr>
                 <tr class="result">
