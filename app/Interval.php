@@ -29,13 +29,13 @@ class Interval extends Model
 
     public function getFfromAttribute($value)
     {
-        return Carbon::parse($value)->format('d.m.y');
+        return Carbon::parse($this->from)->format('d.m.y');
     }
 
 
     public function getFtoAttribute($value)
     {
-        return Carbon::parse($value)->format('d.m.y');
+        return Carbon::parse($this->to)->format('d.m.y');
     }
 
     public function bets()
