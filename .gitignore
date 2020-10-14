@@ -11,3 +11,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+/laravel.sql
+/public/js/app.js
+/public/css/app.css
+.DS_Store
