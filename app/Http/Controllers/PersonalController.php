@@ -18,6 +18,10 @@ use App\Kind;
 use App\Settlement;
 use Illuminate\Support\Facades\View;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewInvoiceReceiver;
+use App\Mail\NewInvoiceRecipient;
+use Illuminate\Support\Facades\DB;
 
 class PersonalController extends Controller
 {
@@ -66,26 +70,38 @@ class PersonalController extends Controller
 
     public function invoiceNew(Request $request, $id)
     {
-
         $bet = Bet::findOrfail($id);
         $auction = Auction::findOrfail($bet->auction_id);
         $interval = Interval::findOrfail($bet->interval_id);
-
-        $settlement = Settlement::create([
-            'contragent_id' => Auth::user()->contragents[0]->id,
-            'balance' => round($bet->correct * $bet->volume * (float)$auction->multiplicity->coefficient * $auction->prepay) / 100,
-            'method' => 'invoice',
-            'type' => 'credit',
-            'status' => 'processing'
-        ]);
-
         $recipient = Contragent::findOrfail($auction->contragent_id);
+        $receiver = Contragent::findOrfail($bet->contragent_id);
+        $settlement = Settlement::where('bet_id', $bet->id)->first();
+        if (!$settlement) {
+            $settlement = Settlement::create([
+                'bet_id' => $bet->id,
+                'contragent_id' => $receiver->id,
+                'balance' => round($bet->correct * $bet->volume * (float)$auction->multiplicity->coefficient * $auction->prepay) / 100,
+                'method' => 'invoice',
+                'type' => 'credit',
+                'status' => 'processing'
+            ]);
+            $users = DB::table('users')
+                ->whereRaw('id in (select user_id from user_contragent where contragent_id=?)', [$recipient->id])
+                ->get();
+            foreach ($users as $user) {
+                Mail::to($user->email)->send(new NewInvoiceRecipient($settlement, $receiver, $recipient));
+            }
+            $users = DB::table('users')
+                ->whereRaw('id in (select user_id from user_contragent where contragent_id=?)', [$receiver])
+                ->get();
+            foreach ($users as $user) {
+                Mail::to($user->email)->send(new NewInvoiceReceiver($settlement, $receiver, $recipient));
+            }
+        }
 
         $pdf = PDF::loadView('pdf.invoiceNew', ['settlement' => $settlement, 'interval' => $interval, 'auction' => $auction, 'bet' => $bet, 'recipient' => $recipient]);
+
         return $pdf->stream();
-
-
-        response()
-            ->view('pdf.invoiceNew', ['settlement' => $settlement], 200);
+        response()->view('pdf.invoiceNew', ['settlement' => $settlement], 200);
     }
 }
