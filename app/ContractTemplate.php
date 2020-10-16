@@ -17,4 +17,9 @@ class ContractTemplate extends Model
         'accepting',
         'version'
     ];
+
+    public function contragent()
+    {
+        return $this->belongsTo('App\Contragent');
+    }
 }

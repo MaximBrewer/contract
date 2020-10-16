@@ -1,6 +1,5 @@
 <template>
   <section class="container">
-    <contract-header></contract-header>
     <form @submit="saveForm()">
       <div class="mb-2">
         <v-select
@@ -63,25 +62,34 @@
           class="form-control"
           v-bind:class="{ 'is-invalid': errors.acceptor_header }"
         />
-        <span role="alert" class="invalid-feedback" v-if="errors.acceptor_header">
-          <strong v-for="(error, index) in errors.acceptor_header" :key="index">{{
-            error
-          }}</strong>
+        <span
+          role="alert"
+          class="invalid-feedback"
+          v-if="errors.acceptor_header"
+        >
+          <strong
+            v-for="(error, index) in errors.acceptor_header"
+            :key="index"
+            >{{ error }}</strong
+          >
         </span>
-        <span>пример: ООО "Ромашка" в лице генерального директора Ромашов Павел Викторович, действующий на основании устава</span>
+        <span
+          >пример: ООО "Ромашка" в лице генерального директора Ромашов Павел
+          Викторович, действующий на основании устава</span
+        >
       </div>
       <div class="form-group text-right">
-        <button class="btn btn-primary" :disabled="!canSave">{{ __("добавить договор") }}</button>
+        <button class="btn btn-primary" :disabled="!canSave">
+          {{ __("добавить договор") }}
+        </button>
       </div>
     </form>
   </section>
 </template>
 <script>
-import contractHeader from "./header";
 import switchCheckbox from "./switchCheckbox";
 export default {
   components: {
-    contractHeader: contractHeader,
     switchCheckbox: switchCheckbox,
   },
   methods: {
@@ -90,17 +98,25 @@ export default {
       event.preventDefault();
       app.errors = {};
       let loader = Vue.$loading.show();
-      //   axios
-      //     .post("/web/v1/contractTemplates", this.template)
-      //     .then(function (res) {
-      //       app.$router.replace("/personal/contracts/recipient");
-      //       loader.hide();
-      //       return true;
-      //     })
-      //     .catch(function (err) {
-      //       app.errors = err.response.data.errors;
-      //       loader.hide();
-      //     });
+      axios
+        .post("/web/v1/contracts", this.contract)
+        .then(function (res) {
+          app.$router.replace("/personal/contracts/reciever");
+          loader.hide();
+          return true;
+        })
+        .catch(function (err) {
+          if(err.status == 422)
+          app.errors = err.response.data.errors;
+          loader.hide();
+        });
+    },
+    checkFields() {
+      this.canSave = false;
+      this.contract.acceptor_header &&
+        this.contract.contract_template_id &&
+        this.contract.contragent_id &&
+        (this.canSave = true);
     },
   },
   data: function () {
@@ -139,12 +155,14 @@ export default {
             console.log(err);
             loader.hide();
           });
+        app.checkFields();
       },
     },
     contractTemplate: {
       handler() {
         let app = this;
         app.contract.contract_template_id = app.contractTemplate.id;
+        app.checkFields();
       },
     },
   },

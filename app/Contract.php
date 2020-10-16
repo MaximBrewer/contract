@@ -13,4 +13,24 @@ class Contract extends Model
         'contragent_id',
         'status'
     ];
+
+    protected static $statuses = [
+        0 => "расторгнут(не заключен)",
+        1 => "запрос разрешения на подписание",
+        2 => "подписан предложившим",
+        3 => "договор подписан",
+    ];
+
+
+    public static function getStatus($status)
+    {
+        return static::$statuses[$status];
+    }
+
+    public function contractTemplate()
+    {
+        return $this->belongsTo('App\ContractTemplate');
+    }
+
 }
+ 

@@ -1,6 +1,5 @@
 <template>
   <section class="container">
-    <contract-header></contract-header>
     <form @submit="saveForm()">
       <div>Вы создаете шаблон договора типа "{{ contractType.name }}"</div>
       <br />
@@ -86,7 +85,6 @@ import contractHeader from "./header";
 import switchCheckbox from "./switchCheckbox";
 export default {
   components: {
-    contractHeader: contractHeader,
     switchCheckbox: switchCheckbox,
   },
   methods: {

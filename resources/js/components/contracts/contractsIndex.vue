@@ -73,7 +73,7 @@
             <td>{{ contract.acceptor }}</td>
             <td class="text-center">{{ contract.date }}</td>
             <td class="text-center">
-              {{ contract.contract_template.version / 10 }}
+              {{ contract.version / 10 }}
             </td>
             <td class="text-center">{{ contract.status }}</td>
             <td class="text-center">
@@ -94,29 +94,17 @@
   </section>
 </template>
 <script>
-import contractHeader from "./header";
 export default {
-  components: {
-    contractHeader: contractHeader,
-  },
+  components: {},
   data: function () {
     return {
       contractTypesMine: [],
       contractTypes: window.contractTypes,
-      contracts: [
-        {
-          id: 1,
-          acceptor: "q",
-          date: "1",
-          contract_template: {
-            version: 12,
-          },
-          status: "h",
-        },
-      ],
+      contracts: [],
     };
   },
   mounted() {
+    let app = this;
     for (let ctm of window.contractTypesMine) {
       let name = "";
       for (let ct of window.contractTypes) {
@@ -124,6 +112,18 @@ export default {
       }
       this.contractTypesMine.push(ctm);
     }
+    app.errors = {};
+    let loader = Vue.$loading.show();
+    axios
+      .get("/web/v1/contracts/my")
+      .then(function (res) {
+        app.contracts = res.data.contracts;
+        loader.hide();
+        return true;
+      })
+      .catch(function (err) {
+        loader.hide();
+      });
   },
   methods: {},
 };

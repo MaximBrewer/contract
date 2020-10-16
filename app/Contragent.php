@@ -32,6 +32,12 @@ class Contragent extends Model
         'balance'
     ];
 
+
+    public function contractTemplates()
+    {
+        return $this->hasMany('App\ContractTemplate');
+    }
+
     public function getFilledAttribute()
     {
         $this->stores;

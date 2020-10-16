@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Contract;
+use App\Http\Resources\Contract as ContractResource;
 
 class ContractsController extends Controller
 {
@@ -15,6 +19,52 @@ class ContractsController extends Controller
     public function index()
     {
         //
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function my()
+    {
+        $contracts = DB::table('contracts AS c')
+            ->select(DB::raw('c.*, co.title as recipient, ct.version as version'))
+            ->leftJoin('contract_templates AS ct', function ($join) {
+                $join->on('c.contract_template_id', '=', 'ct.id');
+            })
+            ->leftJoin('contragents AS co', function ($join) {
+                $join->on('ct.contragent_id', '=', 'co.id');
+            })->where(
+                'ct.contragent_id',
+                Auth::user()->contragents[0]->id
+            )->get();
+
+        $contracts = $contracts->map(function ($item, $key) {
+            return [
+                'id' => $item->id,
+                'acceptor_header' => $item->acceptor_header,
+                'acceptor' => $item->acceptor_header,
+                'contract_template_id' => $item->contract_template_id,
+                'contragent_id' => $item->contragent_id,
+                'recipient' => $item->recipient,
+                'status' => Contract::getStatus($item->status),
+                'date' => $item->created_at,
+                'version' => $item->version
+            ];
+        });
+
+
+        return ['contracts' => $contracts];
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function tome()
+    {
+        $contracts = Contract::where("contragent_id", Auth::user()->contragents[0]->id)->orderBy('created_at', 'DESC')->get();
+        return ['contracts' => ContractResource::collection($contracts)];
     }
 
     /**
@@ -35,7 +85,19 @@ class ContractsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "acceptor_header" => "required|min:4",
+            "contract_template_id" => "required|exists:contract_templates,id"
+        ]);
+
+        $contract = Contract::create([
+            'contract_template_id' => $request->post('contract_template_id'),
+            "acceptor_header" => $request->post('acceptor_header'),
+            "status" => 0,
+            "contragent_id" => Auth::user()->contragents[0]->id
+        ]);
+
+        return $contract;
     }
 
     /**

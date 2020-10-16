@@ -128,6 +128,8 @@ Route::group([
     Route::get('contractTemplates/get', 'ContractTemplatesController@get');
     Route::get('contractTemplates/contragent/{id}', 'ContractTemplatesController@contragent');
     Route::resource('contractTemplates', 'ContractTemplatesController', ['except' => ['edit', 'create']]);
+    Route::get('contracts/my', 'ContractsController@my');
+    Route::get('contracts/tome', 'ContractsController@tome');
     Route::resource('contracts', 'ContractsController', ['except' => ['edit', 'create']]);
 });
 
