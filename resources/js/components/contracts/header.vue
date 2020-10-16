@@ -23,7 +23,7 @@
         </div>
       </div>
       <router-link class="btn btn-primary" :to="'/personal/contracts/get'">{{
-        __("договор со мной")
+        __("добавить договор со мной")
       }}</router-link>
     </div>
     <div class="form-group mb-3">

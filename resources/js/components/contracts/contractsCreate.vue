@@ -98,7 +98,7 @@ export default {
       axios
         .post("/web/v1/contractTemplates", this.template)
         .then(function (res) {
-          app.$router.replace("/personal/contracts/recipient");
+          app.$router.replace("/personal/contracts");
           loader.hide();
           return true;
         })

@@ -41,23 +41,20 @@
             <div class="container">
                 <a class="navbar-brand" href="https://www.cross-contract.ru">о
                     Cross-Contract.ru<br><small>8(495)144-53-34</small></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item dropdown">
-                            <a id="loginDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="loginDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 @guest
                                 {{ $kinds[0]->title }} <span class="caret"></span>
                                 @else
                                 {{ Auth::user()->kind->title }} <span class="caret"></span>
                                 @endguest
-                                
+
                             </a>
                             <div class="dropdown-menu dropdown-menu-left" aria-labelledby="loginDropdown">
                                 @foreach($kinds as $kind)
@@ -80,12 +77,10 @@
                         @guest
                         @hasSection('loginform'))
                         <li class="nav-item dropdown">
-                            <a id="loginDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="loginDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ __('Login') }} <span class="caret"></span>
                             </a>
-                            <div id="loginDropdownMenu" class="dropdown-menu dropdown-menu-left"
-                                aria-labelledby="loginDropdown" onclick="event.stopPropagation();">
+                            <div id="loginDropdownMenu" class="dropdown-menu dropdown-menu-left" aria-labelledby="loginDropdown" onclick="event.stopPropagation();">
                                 @yield('loginform')
                             </div>
 
@@ -104,25 +99,21 @@
                         @endif
                         @else
                         <li class="nav-item">
-                            <a href="/personal/auctions/show/{{ config('app.test_auction') }}" class="nav-link"
-                                :to="{name: 'showAuction', props: {id: {{ config('app.test_auction') }}}}">{{ __('Test auction & chat') }}
+                            <a href="/personal/auctions/show/{{ config('app.test_auction') }}" class="nav-link" :to="{name: 'showAuction', props: {id: {{ config('app.test_auction') }}}}">{{ __('Test auction & chat') }}
                             </a>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a id="sendmessageDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="sendmessageDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ __('Send Message') }} <span class="caret"></span>
                             </a>
-                            <div id="sendmessageDropdownMenu" class="dropdown-menu dropdown-menu-right"
-                                aria-labelledby="sendmessageDropdown" onclick="event.stopPropagation();">
+                            <div id="sendmessageDropdownMenu" class="dropdown-menu dropdown-menu-right" aria-labelledby="sendmessageDropdown" onclick="event.stopPropagation();">
                                 <send-message></send-message>
                             </div>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ __('Contragents') }} <span class="caret"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -134,12 +125,17 @@
                                 </router-link>
                                 <router-link :to="{name: 'disputesIndex'}" class="dropdown-item">
                                     {{ __('Disputes') }}</router-link>
+                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-header"><h5>Договоры</h5></div>
+                                <router-link :to="{name: 'contracts'}" class="dropdown-item">{{ __('Предложенные мной') }}
+                                </router-link>
+                                <router-link :to="{name: 'contractsReciever'}" class="dropdown-item">{{ __('Предложенные мне') }}
+                                </router-link>
                             </div>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ __('Auctions') }} <span class="caret"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -153,8 +149,6 @@
                                     {{ __('All targets (tenders)') }}</router-link>
                                 <router-link :to="{name: 'auctionArchive'}" class="dropdown-item">{{ __('Archive') }}
                                 </router-link>
-                                <router-link :to="{name: 'contracts'}" class="dropdown-item">{{ __('Contracts') }}
-                                </router-link>
                                 <router-link :to="{name: 'logistics'}" class="dropdown-item">{{ __('Logistics') }}
                                 </router-link>
                                 <router-link :to="{name: 'finance'}" class="dropdown-item">{{ __('Finance') }}
@@ -163,8 +157,7 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
@@ -181,13 +174,11 @@
                                 <router-link :to="{name: 'settlementsIndex'}" class="dropdown-item">{{ __('Mutual Settlements') }}
                                 </router-link>
 
-                                <a class="dropdown-item" href="javascript:void(0)"
-                                    onclick="document.getElementById('logout-form').submit();">
+                                <a class="dropdown-item" href="javascript:void(0)" onclick="document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    style="display: none;">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
                                 </form>
                             </div>

@@ -1,7 +1,30 @@
 <template>
   <section class="container">
-    <contract-header></contract-header>
-
+    <div class="d-md-flex">
+      <div class="mr-auto mb-3 d-md-flex">
+        <div class="dropdown mr-1">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            {{ __("создать шаблон моего договора") }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <router-link
+              class="dropdown-item"
+              v-for="type in contractTypes"
+              :key="'type.' + type.id"
+              :to="'/personal/contracts/create/' + type.id"
+              >{{ type.name }}</router-link
+            >
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="table-responsive" id="templates">
       <table class="table table-bordered">
         <thead>

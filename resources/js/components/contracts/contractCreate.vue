@@ -32,13 +32,6 @@
               <td>{{ template.name }}</td>
               <td class="text-center">{{ template.version / 10 }}</td>
               <td class="text-center">
-                <router-link
-                  class="btn btn-secondary btn-sm"
-                  :to="
-                    '/personal/contracts/create/' + template.contract_type_id
-                  "
-                  ><i class="mdi mdi-eye" aria-hidden="true"></i
-                ></router-link>
                 <button
                   class="btn btn-sm"
                   v-bind:class="{
@@ -63,7 +56,6 @@
         </table>
       </div>
       <div class="form-group" v-if="!!contract.contract_template_id">
-        <span></span>
         <input
           type="text"
           placeholder="ООО ..."
@@ -76,6 +68,10 @@
             error
           }}</strong>
         </span>
+        <span>пример: ООО "Ромашка" в лице генерального директора Ромашов Павел Викторович, действующий на основании устава</span>
+      </div>
+      <div class="form-group text-right">
+        <button class="btn btn-primary" :disabled="!canSave">{{ __("добавить договор") }}</button>
       </div>
     </form>
   </section>
@@ -113,6 +109,7 @@ export default {
       contragent: null,
       contractTemplate: {},
       contractTemplates: [],
+      canSave: false,
       contract: {
         acceptor_header: this.user.contragents[0].title,
         contract_template_id: "",
