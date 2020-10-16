@@ -12,8 +12,10 @@ use Laracasts\Utilities\JavaScript\JavaScriptFacade as JavaScript;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Bet;
+use App\ContractType;
 use App\Contragent;
 use App\Interval;
+use App\ContractTemplate;
 use App\Kind;
 use App\Settlement;
 use Illuminate\Support\Facades\View;
@@ -54,6 +56,24 @@ class PersonalController extends Controller
             ]);
             return redirect('/personal');
         }
+
+        $templates = DB::table('contract_templates AS a')->select(DB::raw('a.*'))
+            ->leftJoin('contract_templates AS b', function ($join) {
+                $join->on('a.contract_type_id', '=', 'b.contract_type_id')
+                    ->on('a.version', '<', 'b.version');
+            })->where(
+                'a.contragent_id',
+                Auth::user()->contragents[0]->id
+            )->whereNull(
+                'b.version'
+            )
+            ->get();
+
+        JavaScript::put([
+            'contractTypes' => ContractType::all(),
+            'contractTypesMine' => $templates
+        ]);
+
         return view('personal.index', ['kinds' => Kind::all()]);
     }
 

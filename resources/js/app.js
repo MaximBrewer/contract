@@ -78,6 +78,10 @@ import Logistics from "./components/auctions/logistics.vue";
 import LogisticCreate from "./components/auctions/logisticCreate.vue";
 import LogisticEdit from "./components/auctions/logisticEdit.vue";
 import Finance from "./components/auctions/finance.vue";
+import Contracts from "./components/contracts/contractsIndex.vue";
+import ContractsReciever from "./components/contracts/contractsReciever.vue";
+import ContractsCreate from "./components/contracts/contractsCreate.vue";
+import ContractCreate from "./components/contracts/contractCreate.vue";
 
 import DisputesIndex from "./components/disputes/disputesIndex.vue";
 
@@ -202,9 +206,8 @@ const app = new Vue({
             {
                 path: "/personal/disputes/:id",
                 component: DisputesIndex,
-                name: "disputesIndex"
+                name: "disputesIndexItem"
             },
-
             {
                 path: "/personal/logistics",
                 component: Logistics,
@@ -224,7 +227,27 @@ const app = new Vue({
                 path: "/personal/finance",
                 component: Finance,
                 name: "finance"
-            }
+            },
+            {
+                path: "/personal/contracts",
+                component: Contracts,
+                name: "contracts"
+            },
+            {
+                path: "/personal/contracts/reciever",
+                component: ContractsReciever,
+                name: "contractsReciever"
+            },
+            {
+                path: "/personal/contracts/create/:id",
+                component: ContractsCreate,
+                name: "contractsCreate"
+            },
+            {
+                path: "/personal/contracts/get",
+                component: ContractCreate,
+                name: "contractCreate"
+            },
         ]
     }),
     created() {

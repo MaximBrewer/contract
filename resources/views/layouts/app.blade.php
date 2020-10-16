@@ -153,6 +153,8 @@
                                     {{ __('All targets (tenders)') }}</router-link>
                                 <router-link :to="{name: 'auctionArchive'}" class="dropdown-item">{{ __('Archive') }}
                                 </router-link>
+                                <router-link :to="{name: 'contracts'}" class="dropdown-item">{{ __('Contracts') }}
+                                </router-link>
                                 <router-link :to="{name: 'logistics'}" class="dropdown-item">{{ __('Logistics') }}
                                 </router-link>
                                 <router-link :to="{name: 'finance'}" class="dropdown-item">{{ __('Finance') }}

@@ -123,6 +123,12 @@ Route::group([
 
     Route::patch('disputes/{id}/proposal/{proposal_id}/vote', 'DisputesController@toggleVote');
     Route::patch('disputes/{id}/emails', 'DisputesController@sendEmails');
+
+
+    Route::get('contractTemplates/get', 'ContractTemplatesController@get');
+    Route::get('contractTemplates/contragent/{id}', 'ContractTemplatesController@contragent');
+    Route::resource('contractTemplates', 'ContractTemplatesController', ['except' => ['edit', 'create']]);
+    Route::resource('contracts', 'ContractsController', ['except' => ['edit', 'create']]);
 });
 
 Route::group(['prefix' => 'admin'], function () {
