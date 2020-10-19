@@ -57,13 +57,7 @@
       </div>
 
       <div class="form-group">
-        <textarea
-          v-model="template.text"
-          class="form-control"
-          rows="30"
-          :placeholder="__('Текст договора')"
-          v-bind:class="{ 'is-invalid': errors.text }"
-        ></textarea>
+        <vue-editor v-model="template.text"></vue-editor>
         <span role="alert" class="invalid-feedback" v-if="errors.text">
           <strong v-for="(error, index) in errors.text" :key="index">{{
             error
@@ -83,9 +77,11 @@
 <script>
 import contractHeader from "./header";
 import switchCheckbox from "./switchCheckbox";
+import { VueEditor } from "vue2-editor";
 export default {
   components: {
-    switchCheckbox: switchCheckbox,
+    switchCheckbox,
+    VueEditor
   },
   methods: {
     saveForm() {
@@ -96,12 +92,14 @@ export default {
       axios
         .post("/web/v1/contractTemplates", this.template)
         .then(function (res) {
-          app.$router.replace("/personal/contracts");
+          location.href = "/personal/contracts";
           loader.hide();
           return true;
         })
         .catch(function (err) {
-          app.errors = err.response.data.errors;
+          err.response &&
+            err.response.data &&
+            (app.errors = err.response.data.errors);
           loader.hide();
         });
     },

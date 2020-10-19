@@ -32,5 +32,10 @@ class Contract extends Model
         return $this->belongsTo('App\ContractTemplate');
     }
 
+    public function getDateAttribute()
+    {
+        return date("d.m.Y г.", strtotime($this->created_at));
+    }
+
 }
  

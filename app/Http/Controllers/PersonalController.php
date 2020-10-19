@@ -17,6 +17,7 @@ use App\Contragent;
 use App\Interval;
 use App\ContractTemplate;
 use App\Kind;
+use App\Contract;
 use App\Settlement;
 use Illuminate\Support\Facades\View;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -123,5 +124,17 @@ class PersonalController extends Controller
 
         return $pdf->stream();
         response()->view('pdf.invoiceNew', ['settlement' => $settlement], 200);
+    }
+
+    public function contract(Request $request, $id)
+    {
+        $contract = Contract::findOrfail($id);
+        $recivier = Contragent::findOrfail($contract->contragent_id);
+        $recipient = Contragent::findOrfail($contract->contractTemplate->contragent_id);
+
+        $pdf = PDF::loadView('pdf.contract', compact(['contract','recivier','recipient']));
+
+        return $pdf->stream();
+        return response()->view('pdf.contract', compact(['contract','recivier','recipient']));
     }
 }
