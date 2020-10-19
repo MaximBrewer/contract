@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Contract;
+use App\ContractTemplate;
+use App\Contragent;
 use App\Http\Resources\Contract as ContractResource;
 
 class ContractsController extends Controller
@@ -25,6 +27,72 @@ class ContractsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function signMy(Request $request, $id)
+    {
+        //
+        $contract = Contract::findOrFail($id);
+        if($contract->contractTemplate->contragent_id != Auth::user()->contragents[0]->id)
+            return Contragent::findOrFail(0);
+        $contract->update([
+            'status' => $contract->status == 0 ? 2 : ($contract->status == 1 ? 3 : $contract->status)
+        ]);
+        return ['contract' => new ContractResource($contract)];
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function unsignMy(Request $request, $id)
+    {
+        //
+        $contract = Contract::findOrFail($id);
+        if($contract->contractTemplate->contragent_id != Auth::user()->contragents[0]->id)
+            return Contragent::findOrFail(0);
+        $contract->update([
+            'status' => 0
+        ]);
+        return ['contract' => new ContractResource($contract)];
+
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sign(Request $request, $id)
+    {
+        //
+        $contract = Contract::findOrFail($id);
+        if($contract->contragent_id != Auth::user()->contragents[0]->id)
+            return Contragent::findOrFail(0);
+        $contract->update([
+            'status' => $contract->status == 0 ? 1 : ($contract->status == 2 ? 3 : $contract->status)
+        ]);
+        return ['contract' => new ContractResource($contract)];
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function unsign(Request $request, $id)
+    {
+        //
+        $contract = Contract::findOrFail($id);
+        if($contract->contragent_id != Auth::user()->contragents[0]->id)
+            return Contragent::findOrFail(0);
+        $contract->update([
+            'status' => 0
+        ]);
+        return ['contract' => new ContractResource($contract)];
+
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function my()
     {
         $contracts = DB::table('contracts AS c')
@@ -37,7 +105,7 @@ class ContractsController extends Controller
             })->where(
                 'ct.contragent_id',
                 Auth::user()->contragents[0]->id
-            )->get();
+            )->orderBy('c.created_at', 'DESC')->get();
 
         $contracts = $contracts->map(function ($item, $key) {
             return [
@@ -47,7 +115,8 @@ class ContractsController extends Controller
                 'contract_template_id' => $item->contract_template_id,
                 'contragent_id' => $item->contragent_id,
                 'recipient' => $item->recipient,
-                'status' => Contract::getStatus($item->status),
+                'statusText' => Contract::getStatus($item->status),
+                'status' => $item->status,
                 'date' => $item->created_at,
                 'version' => $item->version
             ];
@@ -90,10 +159,13 @@ class ContractsController extends Controller
             "contract_template_id" => "required|exists:contract_templates,id"
         ]);
 
+        $contractTemplate = ContractTemplate::find($request->post('contract_template_id'));
+
+
         $contract = Contract::create([
-            'contract_template_id' => $request->post('contract_template_id'),
+            'contract_template_id' => $contractTemplate->id,
             "acceptor_header" => $request->post('acceptor_header'),
-            "status" => 0,
+            "status" => $contractTemplate->accepting ? 2 : 0,
             "contragent_id" => Auth::user()->contragents[0]->id
         ]);
 

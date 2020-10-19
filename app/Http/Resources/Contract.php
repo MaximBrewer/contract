@@ -21,7 +21,8 @@ class Contract extends JsonResource
             'contract_template_id' => $this->contract_template_id,
             'contragent_id' => $this->contragent_id,
             'recipient' => $this->contractTemplate->contragent->title,
-            'status' => parent::getStatus($this->status),
+            'statusText' => parent::getStatus($this->status),
+            'status' => $this->status,
             'date' => $this->created_at,
             'version' => $this->contractTemplate->version
         ];

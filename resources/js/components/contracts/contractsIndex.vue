@@ -63,7 +63,7 @@
             <th>принявший договор</th>
             <th>дата договора</th>
             <th>номер редакции</th>
-            <th>статусподписания</th>
+            <th>статус подписания</th>
             <th></th>
           </tr>
         </thead>
@@ -75,7 +75,23 @@
             <td class="text-center">
               {{ contract.version / 10 }}
             </td>
-            <td class="text-center">{{ contract.status }}</td>
+            <td class="text-center">
+              {{ contract.statusText }}<br />
+              <a
+                v-if="contract.status < 2"
+                class="btn btn-success btn-sm"
+                @click="sign(contract.id)"
+                href="javascript:;"
+                ><span>Подписать</span></a
+              >
+              <a
+                v-if="contract.status > 2"
+                class="btn btn-danger btn-sm"
+                @click="unsign(contract.id)"
+                href="javascript:;"
+                ><span>Расторгнуть</span></a
+              >
+            </td>
             <td class="text-center">
               <a
                 class="btn btn-secondary btn-sm"
@@ -125,6 +141,53 @@ export default {
         loader.hide();
       });
   },
-  methods: {},
+  methods: {
+    sign(id) {
+      let app = this;
+      let loader = Vue.$loading.show();
+      axios
+        .patch("/web/v1/contracts/signMy/" + id)
+        .then(function (res) {
+          let nc = [];
+          for (let y in app.contracts) {
+            if (app.contracts[y].id == res.data.contract.id) {
+              nc.push(res.data.contract);
+            } else {
+              nc.push(app.contracts[y]);
+            }
+          }
+          app.contracts = nc;
+          loader.hide();
+          return true;
+        })
+        .catch(function (err) {
+          console.log(err);
+          loader.hide();
+        });
+    },
+    unsign(id) {
+      let app = this;
+      let loader = Vue.$loading.show();
+      axios
+        .patch("/web/v1/contracts/unsignMy/" + id)
+        .then(function (res) {
+          let nc = [];
+          for (let y in app.contracts) {
+            if (app.contracts[y].id == res.data.contract.id) {
+              nc.push(res.data.contract);
+            } else {
+              nc.push(app.contracts[y]);
+            }
+          }
+          app.contracts = nc;
+          loader.hide();
+          return true;
+        })
+        .catch(function (err) {
+          console.log(err);
+          loader.hide();
+        });
+    },
+  },
 };
 </script>

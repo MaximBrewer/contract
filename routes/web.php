@@ -125,6 +125,11 @@ Route::group([
     Route::patch('disputes/{id}/proposal/{proposal_id}/vote', 'DisputesController@toggleVote');
     Route::patch('disputes/{id}/emails', 'DisputesController@sendEmails');
 
+    Route::patch('contracts/sign/{id}', 'ContractsController@sign');
+    Route::patch('contracts/unsign/{id}', 'ContractsController@unsign');
+
+    Route::patch('contracts/signMy/{id}', 'ContractsController@signMy');
+    Route::patch('contracts/unsignMy/{id}', 'ContractsController@unsignMy');
 
     Route::get('contractTemplates/get', 'ContractTemplatesController@get');
     Route::get('contractTemplates/contragent/{id}', 'ContractTemplatesController@contragent');
