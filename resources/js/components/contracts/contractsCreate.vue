@@ -177,10 +177,16 @@ export default {
               text: res.data.text,
               accepting: res.data.accepting,
               contract_type_id: res.data.contract_type_id,
+              common_title: res.data.common_title,
+              recipient_title: res.data.recipient_title,
+              receiver_title: res.data.receiver_title,
             };
           } else {
             app.template = {
               title: app.contractType.title,
+              common_title: app.contractType.common_title,
+              recipient_title: app.contractType.recipient_title,
+              receiver_title: app.contractType.receiver_title,
               proposer_header: "",
               text: "",
               accepting: 0,
