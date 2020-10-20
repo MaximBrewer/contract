@@ -41,19 +41,70 @@
             >{{ error }}</strong
           >
         </span>
-        <div>, с одной стороны, и</div>
+        <div>(сторона/представитель пр.: ООО "ААА", в лице Иванова Ивана Ивановича, действующего на основании устава)</div>
       </div>
       <div class="form-group">
         <input
           type="text"
-          disabled
+          :placeholder="'поставщик'"
+          v-model="template.recipient_title"
           class="form-control"
-          placeholder="ООО ..., в лице ..., действующий на основании ... (не заполнять)"
+          v-bind:class="{ 'is-invalid': errors.recipient_title }"
         />
-        <div>
-          , с другой стороны, а вместе именуемые "Стороны", заключили договор о
-          нижеследующем:
-        </div>
+        <span
+          role="alert"
+          class="invalid-feedback"
+          v-if="errors.recipient_title"
+        >
+          <strong
+            v-for="(error, index) in errors.recipient_title"
+            :key="index"
+            >{{ error }}</strong
+          >
+        </span>
+        <div>(наименование предлагающей стороны, пр.: поставщик)</div>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          :placeholder="'покупатель'"
+          v-model="template.receiver_title"
+          class="form-control"
+          v-bind:class="{ 'is-invalid': errors.receiver_title }"
+        />
+        <span
+          role="alert"
+          class="invalid-feedback"
+          v-if="errors.receiver_title"
+        >
+          <strong
+            v-for="(error, index) in errors.receiver_title"
+            :key="index"
+            >{{ error }}</strong
+          >
+        </span>
+        <div>(наименование принимающей стороны, пр.: покупатель)</div>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          :placeholder="'стороны'"
+          v-model="template.common_title"
+          class="form-control"
+          v-bind:class="{ 'is-invalid': errors.common_title }"
+        />
+        <span
+          role="alert"
+          class="invalid-feedback"
+          v-if="errors.common_title"
+        >
+          <strong
+            v-for="(error, index) in errors.common_title"
+            :key="index"
+            >{{ error }}</strong
+          >
+        </span>
+        <div>(наименование сторон, пр.: стороны)</div>
       </div>
 
       <div class="form-group">

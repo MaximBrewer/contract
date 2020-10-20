@@ -91,6 +91,9 @@ class ContractTemplatesController extends Controller
             "proposer_header" => "required|min:4",
             "text" => "required|min:100",
             "title" => "required|min:6",
+            "common_title" => "required|min:6",
+            "recipient_title" => "required|min:6",
+            "receiver_title" => "required|min:6",
         ]);
 
         $template = ContractTemplate::where(

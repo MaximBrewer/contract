@@ -15,6 +15,9 @@ class ContractTemplate extends Model
         'text',
         'title',
         'accepting',
+        'common_title',
+        'recipient_title',
+        'receiver_title',
         'version'
     ];
 
