@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\ContractTemplate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\ContractType;
 
 class ContractTemplatesController extends Controller
 {
@@ -43,16 +44,17 @@ class ContractTemplatesController extends Controller
      */
     public function contragent(Request $request, $id)
     {
-        return DB::table('contract_templates AS a')->select(DB::raw('a.*'))
-            ->leftJoin('contract_templates AS b', function ($join) {
-                $join->on('a.contract_type_id', '=', 'b.contract_type_id')
-                    ->on('a.version', '<', 'b.version');
-            })->where(
-                'a.contragent_id',
-                $id
-            )->whereNull(
-                'b.version'
-            )->get();
+        $contractTypes = ContractType::all();
+
+        $templates = [];
+
+        foreach ($contractTypes as $ct) {
+            $templates[] = ContractTemplate::where('contragent_id', Auth::user()->contragents[0]->id)
+                ->where('contract_type_id', $ct->id)
+                ->orderBy('version', 'DESC')->first();
+        }
+
+        return $templates;
     }
 
     /**
