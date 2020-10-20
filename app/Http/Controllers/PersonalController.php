@@ -132,7 +132,7 @@ class PersonalController extends Controller
 
         $pdf = PDF::loadView('pdf.contract', compact(['contract', 'recivier', 'recipient']));
 
-        return $pdf->stream();
+        // return $pdf->stream();
         return response()->view('pdf.contract', compact(['contract', 'recivier', 'recipient']));
     }
 }

@@ -111,7 +111,7 @@ class ContractTemplatesController extends Controller
             "common_title" => $request->post('common_title'),
             "recipient_title" => $request->post('recipient_title'),
             "receiver_title" => $request->post('receiver_title'),
-            "text" => $request->post('text'),
+            "text" => nl2br($request->post('text')),
             "title" => $request->post('title'),
             "version" => $template ? $template->version + 1 : 10,
             "accepting" => $request->post('accepting')

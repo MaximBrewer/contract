@@ -46,13 +46,15 @@
                 </tr>
             </table>
         </div>
+        <div style="margin:1em 0 3em">{!! $contract->contractTemplate->proposer_header !!}, именуемый(ая/ое) в дальнейшем <b>«{{ mb_convert_case($contract->contractTemplate->recipient_title, MB_CASE_TITLE, "UTF-8") }}»</b>, с одной стороны, и {!! $contract->acceptor_header !!} с другой стороны, именуемый(ая/ое) в дальнейшем <b>«{{ mb_convert_case($contract->contractTemplate->receiver_title, MB_CASE_TITLE, "UTF-8") }}»</b>, а вместе именуемые <b>«{{ mb_convert_case($contract->contractTemplate->common_title, MB_CASE_TITLE, "UTF-8") }}»</b>», заключили договор о нижеследующем:</div>
+
         <div style="margin:1em 0 3em">{!! $contract->contractTemplate->text !!}</div>
 
         <div style="margin:1em 0 3em">
             <table style="width:100%;" class="bordered">
                 <tr>
-                    <td style="width:50%"><strong>Поставщик</strong></td>
-                    <td style="width:50%"><strong>Покупатель</strong></td>
+                    <td style="width:50%"><strong>{!! $contract->contractTemplate->recipient_title !!}</strong></td>
+                    <td style="width:50%"><strong>{!! $contract->contractTemplate->receiver_title !!}</strong></td>
                 </tr>
                 <tr>
                     <td style="width:50%">{!! $contract->contractTemplate->proposer_header !!}</td>
