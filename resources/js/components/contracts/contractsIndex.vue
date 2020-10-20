@@ -122,8 +122,10 @@ export default {
   mounted() {
     let app = this;
     for (let ctm of window.contractTypesMine) {
+      console.log(ctm)
       let name = "";
       for (let ct of window.contractTypes) {
+      console.log(ct)
         if (ctm.contract_type_id == ct.id) ctm.name = ct.name;
       }
       this.contractTypesMine.push(ctm);

@@ -368,9 +368,6 @@ export default {
         )
           app.auctionsList.push(a);
       }
-      console.log(f);
-      console.log(app.auctions);
-      console.log(app.auctionsList);
       if (app.auctions.length == cnt) app.sorByDistance();
     },
     sorByDistance() {

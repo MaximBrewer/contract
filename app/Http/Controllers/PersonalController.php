@@ -58,20 +58,18 @@ class PersonalController extends Controller
             return redirect('/personal');
         }
 
-        $templates = DB::table('contract_templates AS a')->select(DB::raw('a.*'))
-            ->leftJoin('contract_templates AS b', function ($join) {
-                $join->on('a.contract_type_id', '=', 'b.contract_type_id')
-                    ->on('a.version', '<', 'b.version');
-            })->where(
-                'a.contragent_id',
-                Auth::user()->contragents[0]->id
-            )->whereNull(
-                'b.version'
-            )
-            ->get();
+        $contractTypes = ContractType::all();
+
+        $templates = [];
+
+        foreach ($contractTypes as $ct) {
+            $templates[] = ContractTemplate::where('contragent_id', Auth::user()->contragents[0]->id)
+                ->where('contract_type_id', $ct->id)
+                ->orderBy('version', 'DESC')->first();
+        }
 
         JavaScript::put([
-            'contractTypes' => ContractType::all(),
+            'contractTypes' => $contractTypes,
             'contractTypesMine' => $templates
         ]);
 
@@ -132,9 +130,9 @@ class PersonalController extends Controller
         $recivier = Contragent::findOrfail($contract->contragent_id);
         $recipient = Contragent::findOrfail($contract->contractTemplate->contragent_id);
 
-        $pdf = PDF::loadView('pdf.contract', compact(['contract','recivier','recipient']));
+        $pdf = PDF::loadView('pdf.contract', compact(['contract', 'recivier', 'recipient']));
 
         return $pdf->stream();
-        return response()->view('pdf.contract', compact(['contract','recivier','recipient']));
+        return response()->view('pdf.contract', compact(['contract', 'recivier', 'recipient']));
     }
 }

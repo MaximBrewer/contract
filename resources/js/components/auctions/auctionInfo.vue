@@ -104,8 +104,6 @@ export default {
   },
   mounted() {
     let list = [];
-    console.log(this.auction);
-    console.log(this.imageList);
     for (let img of this.auction.images) {
       this.imageList.push({
         url: img.path,
