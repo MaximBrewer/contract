@@ -49,9 +49,10 @@ class ContractTemplatesController extends Controller
         $templates = [];
 
         foreach ($contractTypes as $ct) {
-            $templates[] = ContractTemplate::where('contragent_id', $id)
+            $template = ContractTemplate::where('contragent_id', $id)
                 ->where('contract_type_id', $ct->id)
                 ->orderBy('version', 'DESC')->first();
+            if ($template) $templates[] = $template;
         }
 
         return $templates;

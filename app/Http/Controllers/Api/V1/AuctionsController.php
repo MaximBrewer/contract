@@ -393,9 +393,16 @@ class AuctionsController extends Controller
      */
     public function unbid($id)
     {
+
+        if (Bet::where('auction_id', $id)->where('contragent_id', User::find(Auth::user()->id)->contragents[0]->id)->count())
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+            
         if (count(User::find(Auth::user()->id)->contragents)) User::find(Auth::user()->id)->contragents[0]->auctions()->detach($id);
 
-        Bet::where('auction_id', $id)->where('contragent_id', User::find(Auth::user()->id)->contragents[0]->id)->delete();
+        // Bet::where('auction_id', $id)->where('contragent_id', User::find(Auth::user()->id)->contragents[0]->id)->delete();
 
         $auction = Auction::findOrFail($id);
         if ($auction) event(new MessagePushed($auction));

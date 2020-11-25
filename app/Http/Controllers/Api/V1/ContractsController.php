@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Contract;
 use App\ContractTemplate;
 use App\Contragent;
+use App\User;
 use App\Http\Resources\Contract as ContractResource;
 
 class ContractsController extends Controller
@@ -31,7 +32,7 @@ class ContractsController extends Controller
     {
         //
         $contract = Contract::findOrFail($id);
-        if($contract->contractTemplate->contragent_id != Auth::user()->contragents[0]->id)
+        if ($contract->contractTemplate->contragent_id != Auth::user()->contragents[0]->id)
             return Contragent::findOrFail(0);
         $contract->update([
             'status' => $contract->status == 0 ? 2 : ($contract->status == 1 ? 3 : $contract->status)
@@ -47,13 +48,12 @@ class ContractsController extends Controller
     {
         //
         $contract = Contract::findOrFail($id);
-        if($contract->contractTemplate->contragent_id != Auth::user()->contragents[0]->id)
+        if ($contract->contractTemplate->contragent_id != Auth::user()->contragents[0]->id)
             return Contragent::findOrFail(0);
         $contract->update([
-            'status' => 0
+            'status' => 4
         ]);
         return ['contract' => new ContractResource($contract)];
-
     }
     /**
      * Display a listing of the resource.
@@ -62,9 +62,8 @@ class ContractsController extends Controller
      */
     public function sign(Request $request, $id)
     {
-        //
         $contract = Contract::findOrFail($id);
-        if($contract->contragent_id != Auth::user()->contragents[0]->id)
+        if ($contract->contragent_id != Auth::user()->contragents[0]->id)
             return Contragent::findOrFail(0);
         $contract->update([
             'status' => $contract->status == 0 ? 1 : ($contract->status == 2 ? 3 : $contract->status)
@@ -80,13 +79,12 @@ class ContractsController extends Controller
     {
         //
         $contract = Contract::findOrFail($id);
-        if($contract->contragent_id != Auth::user()->contragents[0]->id)
+        if ($contract->contragent_id != Auth::user()->contragents[0]->id)
             return Contragent::findOrFail(0);
         $contract->update([
-            'status' => 0
+            'status' => 5
         ]);
         return ['contract' => new ContractResource($contract)];
-
     }
     /**
      * Display a listing of the resource.

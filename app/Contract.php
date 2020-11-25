@@ -37,5 +37,10 @@ class Contract extends Model
         return date("d.m.Y г.", strtotime($this->created_at));
     }
 
+    public function contragent()
+    {
+        return $this->belongsTo('App\Contragent');
+    }
+
 }
  

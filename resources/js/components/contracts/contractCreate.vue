@@ -138,6 +138,7 @@ export default {
       handler() {
         let app = this;
         let loader = Vue.$loading.show();
+        app.contractTemplates = [];
         axios
           .get("/web/v1/contractTemplates/contragent/" + app.contragent.id)
           .then(function (res) {
@@ -149,6 +150,7 @@ export default {
               app.contractTemplates.push(ctm);
             }
             app.contract.contragent_id = app.contragent.id;
+        console.log(app.contract)
             loader.hide();
           })
           .catch(function (err) {
