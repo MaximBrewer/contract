@@ -34,6 +34,8 @@ class AuctionResource extends JsonResource
             'start_at' => $this->start_at,
             'finish_at' => $this->finish_at,
             'images' => $this->images,
+            'delay_sell' => $this->delay_sell,
+            'delay_buy' => $this->delay_buy,
             'autosale' => $this->autosale,
             'intervals' => IntervalResource::collection($this->intervals),
             'confirmed' => $this->confirmed,

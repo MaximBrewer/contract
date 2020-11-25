@@ -89,6 +89,36 @@
               <strong v-for="(error, index) in errors['multiplicity_id']" :key="index">{{ error }}</strong>
             </span>
           </div>
+          <div class="form-group" v-if="auction.mode == 'future'">
+            <label class="control-label">{{ __('Делэй продавца') }}</label>
+            <input
+              step="1"
+              type="number"
+              min="0"
+              max="300"
+              v-model="auction.delay_sell"
+              class="form-control"
+              v-bind:class="{ 'is-invalid': errors.delay_sell }"
+            />
+            <span role="alert" class="invalid-feedback" v-if="errors.delay_sell">
+              <strong v-for="(error, index) in errors.delay_sell" :key="index">{{ error }}</strong>
+            </span>
+          </div>
+          <div class="form-group" v-if="auction.mode == 'future'">
+            <label class="control-label">{{ __('Делэй покупателя') }}</label>
+            <input
+              step="1"
+              min="0"
+              max="300"
+              type="number"
+              v-model="auction.delay_buy"
+              class="form-control"
+              v-bind:class="{ 'is-invalid': errors.delay_buy }"
+            />
+            <span role="alert" class="invalid-feedback" v-if="errors.delay_buy">
+              <strong v-for="(error, index) in errors.delay_buy" :key="index">{{ error }}</strong>
+            </span>
+          </div>
           <div class="form-group">
             <label class="control-label">{{ __('Auction store') }}</label>
             <v-select

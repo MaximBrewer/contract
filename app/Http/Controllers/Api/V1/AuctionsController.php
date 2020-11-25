@@ -110,6 +110,8 @@ class AuctionsController extends Controller
             "store_id" => "required|exists:stores,id",
             "start_at" => "required",
             "finish_at" => "required|after:start_at",
+            "delay_sell" => "numeric|min:0|max:300",
+            "delay_buy" => "numeric|min:0|max:300",
             "comment" => "",
             "step" => "required",
             "can_bet" => "required",

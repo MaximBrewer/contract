@@ -30,6 +30,8 @@ export default {
         store: null,
         start_at: null,
         finish_at: null,
+        delay_sell: 30,
+        delay_buy: 30,
         comment: "",
         product: null,
         multiplicity: null,

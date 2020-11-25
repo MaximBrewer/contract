@@ -29,9 +29,27 @@ class Auction
         
     }
 
+    /**
+     * Handle the auction "created" event.
+     *
+     * @param  \App\Auction  $a
+     * @return void
+     */
+    public function creating(AuctionModel $a)
+    {
+        if($a->mode != 'future'){
+            $a->delay_sell = 0;
+            $a->delay_buy = 0;
+        }
+    }
+
 
     public function updating(AuctionModel $a)
     {
+        if($a->mode != 'future'){
+            $a->delay_sell = 0;
+            $a->delay_buy = 0;
+        }
         if ($a->isDirty('volume')) {
             $bets_vol_approved = Bet::where('auction_id', $a->id)->whereNotNull('approved_volume')->sum('volume');
             $freeVolume = $a->volume - $bets_vol_approved;
