@@ -42,10 +42,10 @@
   </div>
 </template>
 <script>
-import CloseIcon from "vue-beautiful-chat/src/assets/close-icon.png";
-import OpenIcon from "vue-beautiful-chat/src/assets/logo-no-bg.svg";
-import FileIcon from "vue-beautiful-chat/src/assets/file.svg";
-import CloseIconSvg from "vue-beautiful-chat/src/assets/close.svg";
+import CloseIcon from "../../icons/close-icon.png";
+import OpenIcon from "../../icons/logo-no-bg.svg";
+import FileIcon from "../../icons/file.svg";
+import CloseIconSvg from "../../icons/close.svg";
 export default {
   props: ["dispute"],
   computed: {

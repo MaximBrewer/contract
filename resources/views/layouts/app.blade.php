@@ -31,7 +31,7 @@
             font-size: .7em
         }
     </style>
-
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 </head>
 
 <body class="d-flex flex-column">
