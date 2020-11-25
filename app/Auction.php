@@ -28,6 +28,8 @@ class Auction extends Model
         'store_id',
         'comment',
         'start_at',
+        'delay_buy',
+        'delay_sell',
         'autosale',
         'finish_at',
         'product_id',
