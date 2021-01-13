@@ -154,9 +154,8 @@
                       href="javascript:void(0)"
                       class="btn-sm"
                       v-bind:class="{
-                        'btn-danger': !bet.approved_volume && !auction.finished,
-                        'btn-secondary':
-                          bet.approved_volume || auction.finished,
+                        'btn-danger': !auction.finished,
+                        'btn-secondary': auction.finished,
                       }"
                       @click="
                         auction.finished
