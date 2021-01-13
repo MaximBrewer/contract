@@ -180,12 +180,14 @@
                       "
                       href="javascript:void(0)"
                       class="btn btn-sm d-block mr-2"
+                      :disabled="!!auction.finished"
                       v-bind:class="{
                         'btn-success': !bet.guarantee,
                         'btn-danger': !!bet.guarantee,
+                        'btn-secondary': auction.finished,
                       }"
                       @click="
-                        bet.approved_volume
+                        auction.finished
                           ? function () {
                               return false;
                             }
