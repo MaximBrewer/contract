@@ -477,6 +477,9 @@ export default {
       //   !!app.auction.start_price ? app.auction.start_price : ""
       // );
       this.formData.set("step", !!app.auction.step ? app.auction.step : "");
+      this.formData.set("delay_sell", !!app.auction.delay_sell ? app.auction.delay_sell : 0);
+      this.formData.set("delay_buy", !!app.auction.delay_buy ? app.auction.delay_buy : 0);
+
 
       let intervals = [];
       for (let i in app.auction.intervals) {
