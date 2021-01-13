@@ -313,7 +313,7 @@ export default {
     },
     removeBet(bet) {
       var app = this;
-      app.$confirm(app.__("Are you sure?")).then(() => {
+      app.$confirm(app.__("Вы хотите удалить свою бронь. Вы уверены?")).then(() => {
         if (app.auction)
           axios
             .get("/web/v1/auctions/unbet/" + bet.id)
