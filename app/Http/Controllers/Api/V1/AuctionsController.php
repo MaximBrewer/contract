@@ -911,7 +911,7 @@ class AuctionsController extends Controller
 
         if (strtotime($auction->finish_at) - time() - $auction->delay_buy * 60 < 0) {
             return response()->json([
-                'message' => __('Уже нельзя удалить ставку!'),
+                'message' => __('До конца торгов Вы не можете удалять свои ставки!'),
                 'errors' => []
             ], 422);
         }
