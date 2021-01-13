@@ -149,6 +149,7 @@
                 >
                   <div class="d-flex">
                     <a
+                      v-if="bet.contragent_id == company.id"
                       v-tooltip="__('Delete bet')"
                       href="javascript:void(0)"
                       class="btn-sm"
@@ -158,9 +159,7 @@
                           bet.approved_volume || auction.finished,
                       }"
                       @click="
-                        auction.finished ||
-                        bet.approved_volume ||
-                        bet.approved_contract
+                        auction.finished
                           ? function () {
                               return false;
                             }

@@ -63,9 +63,7 @@
                             bet.approved_volume || auction.finished,
                         }"
                         @click="
-                          auction.finished ||
-                          bet.approved_volume ||
-                          bet.approved_contract
+                          auction.finished
                             ? function () {
                                 return false;
                               }

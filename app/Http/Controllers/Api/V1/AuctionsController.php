@@ -560,7 +560,7 @@ class AuctionsController extends Controller
             ], 422);
         }
 
-        if (strtotime($auction->finish_at) - time() - $auction->delay_sell < 0) {
+        if (strtotime($auction->finish_at) - time() - $auction->delay_sell * 60 < 0) {
             return response()->json([
                 'message' => __('Уже нельзя отменить бронь!'),
                 'errors' => []
@@ -909,7 +909,7 @@ class AuctionsController extends Controller
             ], 422);
         }
 
-        if (strtotime($auction->finish_at) - time() - $auction->delay_buy < 0) {
+        if (strtotime($auction->finish_at) - time() - $auction->delay_buy * 60 < 0) {
             return response()->json([
                 'message' => __('Уже нельзя удалить ставку!'),
                 'errors' => []
