@@ -540,6 +540,45 @@ class AuctionsController extends Controller
         return ['ok'];
     }
 
+    public function unApproveContract(Request $r)
+    {
+
+        $bet = Bet::findOrFail($r->id);
+        $auction = $bet->auction;
+
+        if (empty($auction) || $auction->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+
+        if ($auction->finished) {
+            return response()->json([
+                'message' => __('Аукцион уже завершен!'),
+                'errors' => []
+            ], 422);
+        }
+
+        if (strtotime($auction->finish_at) - time() - $auction->delay_sell < 0) {
+            return response()->json([
+                'message' => __('Уже нельзя отменить бронь!'),
+                'errors' => []
+            ], 422);
+        }
+
+        $bet->update([
+            'approved_contract' => null
+        ]);
+
+
+        $auction = Auction::findOrFail($auction->id);
+
+        event(new MessagePushed($auction));
+
+        return ['ok'];
+    }
+
     public function guaranteeBet(Request $r)
     {
 
@@ -563,6 +602,61 @@ class AuctionsController extends Controller
         event(new MessagePushed($auction));
 
         return ['bet' => $bet];
+    }
+
+    public function unApproveVolume($id)
+    {
+        $bet = Bet::findOrFail($id);
+        $auction = $bet->auction;
+
+
+        if (empty($auction) || $auction->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+
+        if ($auction->finished) {
+            return response()->json([
+                'message' => __('Аукцион уже завершен!'),
+                'errors' => []
+            ], 422);
+        }
+
+        if ($bet->approved_contract) {
+            return response()->json([
+                'message' => __('Сначала уберите утверждение контракта!'),
+                'errors' => []
+            ], 422);
+        }
+
+        if (strtotime($auction->finish_at) - time() - $auction->delay_sell < 0) {
+            return response()->json([
+                'message' => __('Уже нельзя отменить бронь!'),
+                'errors' => []
+            ], 422);
+        }
+
+        $bet->update([
+            'approved_volume' => null
+        ]);
+
+        // DB::table('auctions')->where('id', $auction->id)->update([
+        //     'volume' => ($auction->volume - $bet->volume)
+        // ]);
+
+        $auction = Auction::findOrFail($auction->id);
+
+        // if (!$auction->volume)
+        //     $auction->update([
+        //         'finish_at' => Carbon::now(),
+        //         'finished' => 1
+        //     ]);
+
+        event(new MessagePushed($auction));
+
+        return ['ok'];
     }
 
     public function approveVolume($id)
@@ -793,6 +887,41 @@ class AuctionsController extends Controller
 
             event(new MessagePushed($auction));
         }
+        return ['ok'];
+    }
+
+    public function unbet($id)
+    {
+        $bet = Bet::findOrFail($id);
+        $auction = $bet->auction;
+
+        if (empty($bet) || $bet->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+
+        if ($auction->finished) {
+            return response()->json([
+                'message' => __('Аукцион уже завершен!'),
+                'errors' => []
+            ], 422);
+        }
+
+        if (strtotime($auction->finish_at) - time() - $auction->delay_buy < 0) {
+            return response()->json([
+                'message' => __('Уже нельзя удалить ставку!'),
+                'errors' => []
+            ], 422);
+        }
+
+        $bet->delete();
+
+        $auction = Auction::findOrFail($auction->id);
+
+        event(new MessagePushed($auction));
+
         return ['ok'];
     }
     /**

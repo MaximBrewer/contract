@@ -348,9 +348,9 @@
     "give a guarantee to the supplier that your company will take this volume in any case": "дать гарантию поставщику, что ваша компания заберет данный объем в любом случае",
     "withdraw the guarantee to the supplier that you will take the given volume": "отозвать гарантию постащику, что заберете данный объем",
     "Get the Invoice": "Получить счет",
-    "To": "по",
-    "To": "по",
-    "To": "по",
+    "Already approved": "Уже одобрено",
+    "Not approved": "Не одобрено",
+    "Withdraw approval": "Снять утверждение",
     "To": "по",
     "To": "по"
 }

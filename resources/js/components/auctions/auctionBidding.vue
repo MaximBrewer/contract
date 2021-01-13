@@ -5,7 +5,7 @@
       <div class="row" v-if="!!can_bet && !auction.finished">
         <div class="col-md-2">
           <div class="form-group">
-            <label class="control-label">{{ __('Auction Volume') }}</label>
+            <label class="control-label">{{ __("Auction Volume") }}</label>
             <input
               type="number"
               v-model="bid.volume"
@@ -13,13 +13,17 @@
               v-bind:class="{ 'is-invalid': errors.volume }"
             />
             <span role="alert" class="invalid-feedback" v-if="errors.volume">
-              <strong v-for="(error, index) in errors.volume" v-bind:key="index">{{ error }}</strong>
+              <strong
+                v-for="(error, index) in errors.volume"
+                v-bind:key="index"
+                >{{ error }}</strong
+              >
             </span>
           </div>
         </div>
         <div class="col-md-2">
           <div class="form-group">
-            <label class="control-label">{{ __('Price') }}</label>
+            <label class="control-label">{{ __("Price") }}</label>
             <input
               type="number"
               v-model="bid.price"
@@ -27,42 +31,59 @@
               v-bind:class="{ 'is-invalid': errors.price }"
             />
             <span role="alert" class="invalid-feedback" v-if="errors.price">
-              <strong v-for="(error, index) in errors.price" v-bind:key="index">{{ error }}</strong>
+              <strong
+                v-for="(error, index) in errors.price"
+                v-bind:key="index"
+                >{{ error }}</strong
+              >
             </span>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label class="control-label">{{ __('Target store') }}</label>
+            <label class="control-label">{{ __("Target store") }}</label>
             <v-select
               label="address"
               :options="$root.stores"
               v-model="bid.store"
               v-bind:class="{ 'is-invalid': errors['store.id'] }"
             >
-              <div slot="no-options">{{ __('No Options Here!') }}</div>
+              <div slot="no-options">{{ __("No Options Here!") }}</div>
             </v-select>
-            <span role="alert" class="invalid-feedback" v-if="errors['store.id']">
-              <strong v-for="(error, index) in errors['store.id']" :key="index">{{ error }}</strong>
+            <span
+              role="alert"
+              class="invalid-feedback"
+              v-if="errors['store.id']"
+            >
+              <strong
+                v-for="(error, index) in errors['store.id']"
+                :key="index"
+                >{{ error }}</strong
+              >
             </span>
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
-            <label class="control-label">{{ __('Interval') }}</label>
+            <label class="control-label">{{ __("Interval") }}</label>
             <v-select
               label="label"
               :options="auction.intervals"
               v-model="bid.interval"
               v-bind:class="{ 'is-invalid': errors['auction.interval.id'] }"
             >
-              <div slot="no-options">{{ __('No Options Here!') }}</div>
+              <div slot="no-options">{{ __("No Options Here!") }}</div>
             </v-select>
-            <span role="alert" class="invalid-feedback" v-if="errors['auction.interval.id']">
+            <span
+              role="alert"
+              class="invalid-feedback"
+              v-if="errors['auction.interval.id']"
+            >
               <strong
                 v-for="(error, index) in errors['auction.interval.id']"
                 :key="index"
-              >{{ error }}</strong>
+                >{{ error }}</strong
+              >
             </span>
           </div>
         </div>
@@ -71,7 +92,9 @@
             <div>
               <label class="control-label">&nbsp;</label>
             </div>
-            <button class="btn btn-primary" @click="betIt()">{{ __('Bet') }}</button>
+            <button class="btn btn-primary" @click="betIt()">
+              {{ __("Bet") }}
+            </button>
           </div>
         </div>
       </div>
@@ -81,18 +104,20 @@
             <thead>
               <tr>
                 <th colspan="4">
-                  {{ __('Interval start price') }}: {{ interval.start_price }} |
-                  {{ __('Interval volume') }}: {{ interval.volume }} |
-                  {{ __('Active volume') }}: {{ interval.free_volume }} |
-                  {{ __('Approved volume') }}: {{ interval.volume - interval.free_volume }} |
-                  {{ __('Undistributed volume') }}: {{ interval.undistributed_volume }} |
-                  {{ __('Interval') }}: {{ interval.label }}
+                  {{ __("Interval start price") }}: {{ interval.start_price }} |
+                  {{ __("Interval volume") }}: {{ interval.volume }} |
+                  {{ __("Active volume") }}: {{ interval.free_volume }} |
+                  {{ __("Approved volume") }}:
+                  {{ interval.volume - interval.free_volume }} |
+                  {{ __("Undistributed volume") }}:
+                  {{ interval.undistributed_volume }} | {{ __("Interval") }}:
+                  {{ interval.label }}
                 </th>
               </tr>
               <tr>
-                <th>{{ __('Volume') }}</th>
-                <th>{{ __('Price') }}</th>
-                <th>{{ __('Time') }}</th>
+                <th>{{ __("Volume") }}</th>
+                <th>{{ __("Price") }}</th>
+                <th>{{ __("Time") }}</th>
                 <th></th>
               </tr>
             </thead>
@@ -100,7 +125,9 @@
               <tr
                 v-for="(bet, index) in filter(interval.bets)"
                 v-bind:key="index"
-                v-bind:class="{ 'table-success': bet.contragent_id == company.id}"
+                v-bind:class="{
+                  'table-success': bet.contragent_id == company.id,
+                }"
               >
                 <td>
                   <div v-if="bet.contragent" class="text-nowrap">
@@ -117,38 +144,97 @@
                     <div class="h6">{{ bet.created_at | formatDateTime }}</div>
                   </div>
                 </td>
-                <td v-if="!bet.approved_volume || bet.contragent_id == company.id">
+                <td
+                  v-if="!bet.approved_volume || bet.contragent_id == company.id"
+                >
                   <div class="d-flex">
                     <a
+                      v-tooltip="__('Delete bet')"
+                      href="javascript:void(0)"
+                      class="btn-sm"
+                      v-bind:class="{
+                        'btn-danger': !bet.approved_volume && !auction.finished,
+                        'btn-secondary':
+                          bet.approved_volume || auction.finished,
+                      }"
+                      @click="
+                        auction.finished ||
+                        bet.approved_volume ||
+                        bet.approved_contract
+                          ? function () {
+                              return false;
+                            }
+                          : removeBet(bet)
+                      "
+                    >
+                      <i class="mdi mdi-delete" aria-hidden="true"></i> </a
+                    >&nbsp;
+                    <a
                       v-if="bet.contragent_id == company.id"
-                      v-tooltip="!bet.guarantee ? __('give a guarantee to the supplier that your company will take this volume in any case') : __('withdraw the guarantee to the supplier that you will take the given volume')"
+                      v-tooltip="
+                        !bet.guarantee
+                          ? __(
+                              'give a guarantee to the supplier that your company will take this volume in any case'
+                            )
+                          : __(
+                              'withdraw the guarantee to the supplier that you will take the given volume'
+                            )
+                      "
                       href="javascript:void(0)"
                       class="btn btn-sm d-block mr-2"
                       :disabled="!!bet.approved_volume"
-                      v-bind:class="{ 'btn-success': !bet.guarantee, 'btn-danger': !!bet.guarantee, 'btn-secondary': bet.approved_volume }"
-                      @click="bet.approved_volume ? function(){ return false; } : guarantee(bet)"
+                      v-bind:class="{
+                        'btn-success': !bet.guarantee,
+                        'btn-danger': !!bet.guarantee,
+                        'btn-secondary': bet.approved_volume,
+                      }"
+                      @click="
+                        bet.approved_volume
+                          ? function () {
+                              return false;
+                            }
+                          : guarantee(bet)
+                      "
                     >
                       <i class="mdi mdi-star" aria-hidden="true"></i>
                     </a>
                     <div
-                      v-if="!!bet.approved_volume && bet.contragent_id == company.id"
+                      v-if="
+                        !!bet.approved_volume && bet.contragent_id == company.id
+                      "
                       class="text-nowrap mr-2"
                     >
-                      <div
-                        class="h6"
-                      >{{ __('The volume of bet has approved') }} {{ bet.correct ? __('Price') +": " + bet.correct : '' }}</div>
+                      <div class="h6">
+                        {{ __("The volume of bet has approved") }}
+                        {{
+                          bet.correct ? __("Price") + ": " + bet.correct : ""
+                        }}
+                      </div>
                     </div>
                     <div
-                      v-if="!!bet.approved_contract && bet.contragent_id == company.id"
+                      v-if="
+                        !!bet.approved_contract &&
+                        bet.contragent_id == company.id
+                      "
                       class="text-nowrap mr-2"
                     >
-                      <div class="h6">{{ __('The contract has approved') }}</div>
+                      <div class="h6">
+                        {{ __("The contract has approved") }}
+                      </div>
                     </div>
                     <div
-                      v-if="!!bet.approved_contract && bet.contragent_id == company.id"
+                      v-if="
+                        !!bet.approved_contract &&
+                        bet.contragent_id == company.id
+                      "
                       class="text-nowrap mr-2"
                     >
-                      <a :href="'/personal/invoice/' + bet.id" class="btn btn-primary btn-sm" target="_blank">{{__('Get the Invoice')}}</a>
+                      <a
+                        :href="'/personal/invoice/' + bet.id"
+                        class="btn btn-primary btn-sm"
+                        target="_blank"
+                        >{{ __("Get the Invoice") }}</a
+                      >
                     </div>
                   </div>
                 </td>
@@ -216,7 +302,7 @@ export default {
             store: app.bid.store ? app.bid.store.id : false,
           })
           .then(function (resp) {
-            app.$modal.hide("add_bidder");
+            //
           })
           .catch(function (err) {
             app.$fire({
@@ -226,6 +312,25 @@ export default {
               timer: 5000,
             });
           });
+    },
+    removeBet(bet) {
+      var app = this;
+      app.$confirm(app.__("Are you sure?")).then(() => {
+        if (app.auction)
+          axios
+            .get("/web/v1/auctions/unbet/" + bet.id)
+            .then(function (resp) {
+              //
+            })
+            .catch(function (err) {
+              app.$fire({
+                title: app.__("Error!"),
+                text: err.response.data.message,
+                type: "error",
+                timer: 5000,
+              });
+            });
+      });
     },
   },
 };

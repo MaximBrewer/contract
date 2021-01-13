@@ -69,13 +69,16 @@ Route::group([
     Route::post('auctions/guarantee', 'AuctionsController@guaranteeBet');
 
     Route::post('auctions/bet', 'AuctionsController@bet');
+    Route::get('auctions/unbet/{id}', 'AuctionsController@unbet');
     Route::post('auctions', 'AuctionsController@store');
     Route::post('auctions/{id}', 'AuctionsController@update');
     Route::get('auction/{id}', 'AuctionsController@show');
     Route::get('auctions/{action}', 'AuctionsController@index');
     Route::get('auctions/bet/remove/{id}', 'AuctionsController@betRemove');
     Route::post('auctions/bet/contract', 'AuctionsController@approveContract');
+    Route::post('auctions/bet/uncontract', 'AuctionsController@unApproveContract');
     Route::get('auctions/bet/volume/{id}', 'AuctionsController@approveVolume');
+    Route::get('auctions/bet/unvolume/{id}', 'AuctionsController@unApproveVolume');
     Route::get('auctions/bid/{id}', 'AuctionsController@bid');
     Route::get('auctions/unbid/{id}', 'AuctionsController@unbid');
     Route::post('auctions/bidder/toggle', 'AuctionsController@toggleBidder');
