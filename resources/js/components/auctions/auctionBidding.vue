@@ -172,19 +172,17 @@
                       v-tooltip="
                         !bet.guarantee
                           ? __(
-                              'give a guarantee to the supplier that your company will take this volume in any case'
+                              'я гарантирую приобрести данный объем'
                             )
                           : __(
-                              'withdraw the guarantee to the supplier that you will take the given volume'
+                              'отозвать гарантию'
                             )
                       "
                       href="javascript:void(0)"
                       class="btn btn-sm d-block mr-2"
-                      :disabled="!!bet.approved_volume"
                       v-bind:class="{
                         'btn-success': !bet.guarantee,
                         'btn-danger': !!bet.guarantee,
-                        'btn-secondary': bet.approved_volume,
                       }"
                       @click="
                         bet.approved_volume
