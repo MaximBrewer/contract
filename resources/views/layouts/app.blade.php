@@ -169,6 +169,9 @@
                                 <router-link :to="{name: 'company'}" class="dropdown-item">{{ __('Settings') }}
                                 </router-link>
 
+                                <router-link :to="{name: 'staff'}" class="dropdown-item">{{ __('Staff') }}
+                                </router-link>
+
                                 <router-link :to="{name: 'myResults'}" class="dropdown-item">{{ __('My results') }}
                                 </router-link>
                                 <router-link :to="{name: 'settlementsIndex'}" class="dropdown-item">{{ __('Mutual Settlements') }}

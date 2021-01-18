@@ -59,6 +59,7 @@ Route::group([
     Route::resource('messages', 'MessagesController', ['except' => ['edit', 'create']]);
 
     Route::get('company', 'ContragentsController@my');
+    Route::get('staff', 'ContragentsController@staff');
     Route::patch('company', 'ContragentsController@updateCompany');
 
     Route::post('address', 'RegionsController@address');

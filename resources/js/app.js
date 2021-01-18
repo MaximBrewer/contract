@@ -56,6 +56,7 @@ import ContragentIndex from "./components/contragents/contragentIndex.vue";
 import ContragentCreate from "./components/contragents/contragentCreate.vue";
 import ContragentEdit from "./components/contragents/contragentEdit.vue";
 import Company from "./components/contragents/company.vue";
+import Staff from "./components/contragents/staff.vue";
 import ContragentShow from "./components/contragents/contragentShow.vue";
 import AuctionIndex from "./components/auctions/auctionIndex.vue";
 import AuctionArchive from "./components/auctions/auctionArchive.vue";
@@ -156,6 +157,11 @@ const app = new Vue({
                 path: "/personal/company",
                 component: Company,
                 name: "company"
+            },
+            {
+                path: "/personal/staff",
+                component: Staff,
+                name: "staff"
             },
             {
                 path: "/personal/auctions/results",

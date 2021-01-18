@@ -9,6 +9,8 @@ use \App\Contragent;
 use Illuminate\Support\Facades\Auth;
 use \App\Store;
 use Illuminate\Support\Facades\Validator;
+use App\User;
+use Illuminate\Support\Facades\DB;
 
 class ContragentsController extends Controller
 {
@@ -98,6 +100,12 @@ class ContragentsController extends Controller
     {
         $contragent = Contragent::findOrFail(Auth::user()->contragents[0]->id);
         return $contragent;
+    }
+
+    public function staff()
+    {
+        $ids = DB::table('user_contragent')->where('contragent_id', Auth::user()->contragents[0]->id)->pluck('user_id')->toArray();
+        return User::whereIn('id', $ids)->get();
     }
 
 
