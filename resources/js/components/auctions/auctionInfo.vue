@@ -363,9 +363,10 @@
               <p class="text-left">
                 время до старта ограничения покупателя:
                 {{
-                  new Date(
-                    new Date(auction.finish_at).getTime() - new Date($root.time).getTime() - auction.delay_buy * 60000
-                  ) | formatDateTime
+                  (new Date(auction.finish_at).getTime() -
+                    new Date($root.time).getTime() -
+                    auction.delay_buy * 60000) /
+                  60000
                 }}
                 мин
               </p>
@@ -373,9 +374,13 @@
             <div class="w-50 pl-4">
               <p class="text-left">
                 время до старта ограничений продавца:
-                {{ new Date(
-                    new Date(auction.finish_at).getTime() - new Date($root.time).getTime() - auction.delay_sell * 60000
-                  ) | formatDateTime }} мин
+                {{
+                  (new Date(auction.finish_at).getTime() -
+                    new Date($root.time).getTime() -
+                    auction.delay_sell * 60000) /
+                  60000
+                }}
+                мин
               </p>
             </div>
           </li>
