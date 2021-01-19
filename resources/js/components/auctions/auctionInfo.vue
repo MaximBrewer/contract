@@ -365,8 +365,8 @@
                 {{auction.finish_at}}
                 {{$root.time}}
                 {{
-                  new Date(auction.finish_at).getTime() -
-                  new Date($root.time).getTime()
+                  (new Date(auction.finish_at).getTime() -
+                  new Date($root.time).getTime()) / 60000
                 }}
                 мин
               </p>
