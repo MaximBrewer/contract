@@ -402,6 +402,11 @@ const app = new Vue({
             );
             Echo.channel("every-minute").listen("PerMinute", function(e) {
                 app.time = e.time;
+                window.dispatchEvent(
+                    new CustomEvent("update-time", {
+                        detail: time
+                    })
+                );
                 e.started.forEach(auction =>
                     that.flash(
                         that.__("Auction #") + auction.id + that.__(" started"),
