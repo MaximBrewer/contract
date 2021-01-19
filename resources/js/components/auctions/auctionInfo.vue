@@ -360,26 +360,54 @@
           </li>
           <li class="list-group-item d-flex">
             <div class="w-50 border-right pr-4">
-              <p class="text-left">
+              <p
+                class="text-left"
+                v-if="
+                  Math.floor(
+                    (new Date(auction.finish_at).getTime() -
+                      new Date($root.time).getTime()) /
+                      60000
+                  ) -
+                    auction.delay_buy >
+                  0
+                "
+              >
                 время до старта ограничения покупателя:
-                {{auction.finish_at}}
-                {{$root.time}}
                 {{
-                  (new Date(auction.finish_at).getTime() -
-                  new Date($root.time).getTime()) / 60000
+                  Math.floor(
+                    (new Date(auction.finish_at).getTime() -
+                      new Date($root.time).getTime()) /
+                      60000
+                  ) - auction.delay_buy
                 }}
                 мин
               </p>
+              <p v-else>время до старта ограничения покупателя истекло</p>
             </div>
             <div class="w-50 pl-4">
-              <p class="text-left">
+              <p
+                class="text-left"
+                v-if="
+                  Math.floor(
+                    (new Date(auction.finish_at).getTime() -
+                      new Date($root.time).getTime()) /
+                      60000
+                  ) -
+                    auction.delay_sell >
+                  0
+                "
+              >
                 время до старта ограничений продавца:
                 {{
-                  new Date(auction.finish_at).getTime() -
-                  new Date($root.time).getTime()
+                  Math.floor(
+                    (new Date(auction.finish_at).getTime() -
+                      new Date($root.time).getTime()) /
+                      60000
+                  ) - auction.delay_sell
                 }}
                 мин
               </p>
+              <p v-else>время до старта ограничения продавца истекло</p>
             </div>
           </li>
         </ul>
