@@ -404,7 +404,7 @@ const app = new Vue({
                 app.time = e.time;
                 window.dispatchEvent(
                     new CustomEvent("update-time", {
-                        detail: time
+                        detail: e.time
                     })
                 );
                 e.started.forEach(auction =>
