@@ -14017,3 +14017,7 @@ span.online.is-offline {
   cursor: pointer;
 }
 
+.p-wpadding p {
+  margin: 0;
+}
+
