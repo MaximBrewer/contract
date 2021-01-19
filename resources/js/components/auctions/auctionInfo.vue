@@ -362,6 +362,8 @@
             <div class="w-50 border-right pr-4">
               <p class="text-left">
                 время до старта ограничения покупателя:
+                {{auction.finish_at}}
+                {{$root.time}}
                 {{
                   new Date(auction.finish_at).getTime() -
                   new Date($root.time).getTime()
