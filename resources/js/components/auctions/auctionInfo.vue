@@ -361,12 +361,21 @@
           <li class="list-group-item d-flex">
             <div class="w-50 border-right pr-4">
               <p class="text-left">
-                время до старта ограничения покупателя: __ мин
+                время до старта ограничения покупателя:
+                {{
+                  new Date(
+                    auction.finish_at.getTime() - $root.time.getTime() - auction.delay_buy * 60000
+                  ) | formatDateTime
+                }}
+                мин
               </p>
             </div>
             <div class="w-50 pl-4">
               <p class="text-left">
-                время до старта ограничений продавца: __ мин
+                время до старта ограничений продавца:
+                {{ new Date(
+                    auction.finish_at.getTime() - $root.time.getTime() - auction.delay_sell * 60000
+                  ) | formatDateTime }} мин
               </p>
             </div>
           </li>
