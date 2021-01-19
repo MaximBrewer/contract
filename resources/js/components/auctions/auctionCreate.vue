@@ -26,7 +26,7 @@ export default {
     return {
       auction: {
         contragent: null,
-        prepay: 10,
+        prepay: 100,
         store: null,
         start_at: null,
         finish_at: null,
@@ -37,7 +37,7 @@ export default {
         multiplicity: null,
         mode: 'price2day',
         can_bet: 'yes',
-        autosale: 'no',
+        autosale: 'yes',
         intervals: [
           {}
         ]
