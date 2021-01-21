@@ -33,7 +33,7 @@
             <td>{{ index + 1 }}</td>
             <td>
               <router-link
-                :to="'/personal/contragents/show/' + result.auction.id"
+                :to="'/personal/auctions/show/' + result.auction.id"
               >{{ result.auction.id }}</router-link>
             </td>
             <td>{{ result.auction.finish_at | formatDateTime }}</td>
