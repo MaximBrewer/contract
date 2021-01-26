@@ -25,12 +25,11 @@ class Bet
             $rest = ($b->correct - $auction->start_price) * $volume;
             $reward = 0.0005 * $sum + $rest * 0.05;
 
-            $settlements = Settlement::where('bet_id', $b->id)->get();
+            $settlement = Settlement::where('bet_id', $b->id)->where('type', 'debit')->first();
 
-            if (count($settlements)) {
-                $settlement = $settlements[0];
+            if ($settlement) {
                 $settlement->update([
-                    'contragent_id' => $b->contragent_id,
+                    'contragent_id' => $b->auction->contragent_id,
                     'bet_id' => $b->id,
                     'balance' => $reward,
                     'type' => 'debit',
@@ -38,7 +37,7 @@ class Bet
                 ]);
             } else
                 Settlement::create([
-                    'contragent_id' => $b->contragent_id,
+                    'contragent_id' => $b->auction->contragent_id,
                     'bet_id' => $b->id,
                     'balance' => $reward,
                     'type' => 'debit',
