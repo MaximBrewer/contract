@@ -116,6 +116,10 @@ class PersonalController extends Controller
             foreach ($users as $user) {
                 Mail::to($user->email)->send(new NewInvoiceReceiver($settlement, $receiver, $recipient));
             }
+        } else {
+            $settlement->update([
+                'balance' => round($bet->correct * $bet->volume * (float)$auction->multiplicity->coefficient * $auction->prepay) / 100
+            ]);
         }
 
         $pdf = PDF::loadView('pdf.invoiceNew', ['settlement' => $settlement, 'interval' => $interval, 'auction' => $auction, 'bet' => $bet, 'recipient' => $recipient]);
