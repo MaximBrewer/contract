@@ -40,8 +40,9 @@ class Bet
             }
 
             $sum = $b->correct * $volume;
-            $rest = ($b->correct - $auction->start_price) * $volume;
-            $reward = 0.0005 * $sum + $rest * 0.05;
+            //$rest = ($b->correct - $auction->start_price) * $volume;
+            $reward = 0.0005 * $sum;
+            // + $rest * 0.05;
 
             $settlement = Settlement::where('bet_id', $b->id)->where('type', 'debit')->first();
 
