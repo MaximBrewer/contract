@@ -164,7 +164,8 @@
                       </a>
                       <a
                         v-if="!!bet.approved_contract"
-                        href="javascript:void(0)"
+                        :href="'/personal/invoice/' + bet.id"
+                        target="_blank"
                         class="btn btn-primary"
                         >{{ __("Get the Invoice") }}</a
                       >
