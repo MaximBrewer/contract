@@ -9,7 +9,8 @@ class Defer extends Model
     protected $fillable = [
         'creditor_id',
         'supplier_id',
-        'description'
+        'description',
+        'status'
     ];
 
     public function supplier()

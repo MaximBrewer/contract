@@ -24,6 +24,7 @@ class Defer extends JsonResource
                 'id' => $this->supplier->id,
                 'title' => $this->supplier->title,
             ],
+            'status' => __("status.".$this->status),
             'description' => $this->description
         ];
     }

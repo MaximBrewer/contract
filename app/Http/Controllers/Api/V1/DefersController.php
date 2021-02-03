@@ -20,21 +20,45 @@ class DefersController extends Controller
      */
     public function index()
     {
-        return DeferResource::collection(Defer::all());
+        return DeferResource::collection(Defer::where('creditor_id', User::find(Auth::user()->id)->contragents[0]->id)->orWhere('supplier_id', User::find(Auth::user()->id)->contragents[0]->id)->get());
     }
 
-    public function store(Request $r){
-
-        Defer::create([
-            'creditor_id' => User::find(Auth::user()->id)->contragents[0]->id,
-            'supplier_id' => $r->post('supplier_id'),
-            'description' => $r->post('description'),
-        ]);
-        return DeferResource::collection(Defer::all());
-
+    public function store(Request $r)
+    {
+        if ($r->post('supplier_id')) {
+            if (
+                !($defer = Defer::where('supplier_id', $r->post('supplier_id'))
+                    ->where('creditor_id', User::find(Auth::user()->id)->contragents[0]->id)
+                    ->first())
+            )
+                Defer::create([
+                    'creditor_id' => User::find(Auth::user()->id)->contragents[0]->id,
+                    'supplier_id' => $r->post('supplier_id'),
+                    'description' => $r->post('description'),
+                    'status' => 'distributor'
+                ]);
+        } elseif ($r->post('creditor_id')) {
+            if (
+                !($defer = Defer::where('creditor_id', $r->post('creditor_id'))
+                    ->where('supplier_id', User::find(Auth::user()->id)->contragents[0]->id)
+                    ->first())
+            ) {
+                Defer::create([
+                    'creditor_id' => $r->post('creditor_id'),
+                    'supplier_id' => User::find(Auth::user()->id)->contragents[0]->id,
+                    'description' => $r->post('description'),
+                    'status' => 'manufacturer'
+                ]);
+            } else {
+                if ($defer->status == 'distributor')
+                    $defer->update(['status' => 'both']);
+            }
+        }
+        return $this->index();
     }
 
-    public function update(Request $r, $id){
+    public function update(Request $r, $id)
+    {
 
         $defer = Defer::findOrFail($id);
 
@@ -50,10 +74,11 @@ class DefersController extends Controller
             'description' => $r->post('description'),
         ]);
 
-        return DeferResource::collection(Defer::all());
+        return $this->index();
     }
 
-    public function destroy(Request $r, $id){
+    public function destroy(Request $r, $id)
+    {
 
         $defer = Defer::findOrFail($id);
 
@@ -65,7 +90,6 @@ class DefersController extends Controller
         }
 
         Defer::findOrFail($id)->delete();
-        return DeferResource::collection(Defer::all());
+        return $this->index();
     }
-
 }

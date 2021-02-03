@@ -1,27 +1,18 @@
 <template>
   <section class="container-fluid">
     <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <a
-            href="https://docs.google.com/spreadsheets/d/1P9L9G95rsVLXxxhK-XVpEaW14TtaWZWQo1KnN_rGa84/edit#gid=0"
-            target="_balnk"
-            class="btn btn-link btn-lg"
-          >{{ __('договор поставки поставщик-кредитор') }}</a>
-          <a
-            href="https://docs.google.com/spreadsheets/d/1P9L9G95rsVLXxxhK-XVpEaW14TtaWZWQo1KnN_rGa84"
-            target="_balnk"
-            class="btn btn-link btn-lg"
-          >{{ __('договор поставки с отсрочкой кредитор-покупатель') }}</a>
-        </div>
-      </div>
-      <div class="col-md-6 text-right">
+      <div class="col-md-12 text-right">
         <div class="form-group">
           <a
             href="javascript:void(0)"
             @click="createDeferred"
             class="btn btn-primary btn-lg"
-          >{{ __('Add a deferred service for the supplier') }}</a>
+          >{{ __('Добавить поставщика (создать предложение стать его дистрибьютером)') }}</a>
+          <a
+            href="javascript:void(0)"
+            @click="createDistributor"
+            class="btn btn-primary btn-lg"
+          >{{ __('Одобрить дистрибьютера (он будет отвечать за совместные заказы)') }}</a>
         </div>
       </div>
     </div>
@@ -60,8 +51,9 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>{{ __('Creditor') }}</th>
+            <th>{{ __('Дистрибьютор') }}</th>
             <th>{{ __('Supplier') }}</th>
+            <th>{{ __('Статус') }}</th>
             <th>{{ __('Description') }}</th>
             <th></th>
           </tr>
@@ -71,6 +63,7 @@
             <td>{{ index + 1 }}</td>
             <td>{{ defer.creditor.title }}</td>
             <td>{{ defer.supplier.title }}</td>
+            <td>{{ defer.status }}</td>
             <td>{{ defer.description }}</td>
             <td class="text-center">
               <a
@@ -99,7 +92,7 @@
     <modal name="modal_defer" height="auto" :adaptive="true" width="90%" :maxWidth="maxModalWidth">
       <div class="modal-header">
         <h5 class="modal-title">
-          <strong>{{ __('Add a deferred service for the supplier') }}</strong>
+          <strong>{{ form.title }}</strong>
         </h5>
         <button
           type="button"
@@ -112,7 +105,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="form-group">
+        <div class="form-group" v-if="form.type == 'creditor'">
           <v-select
             max-height="50px"
             :options="$root.contragents"
@@ -122,7 +115,17 @@
             <div slot="no-options">{{ __('No Options Here!') }}</div>
           </v-select>
         </div>
-        <div class="form-group">
+        <div class="form-group" v-if="form.type == 'supplier'">
+          <v-select
+            max-height="50px"
+            :options="$root.contragents"
+            label="title"
+            v-model="form.creditor"
+          >
+            <div slot="no-options">{{ __('No Options Here!') }}</div>
+          </v-select>
+        </div>
+        <div class="form-group" v-if="form.description !== false">
           <textarea v-model="form.description" class="form-control"></textarea>
         </div>
       </div>
@@ -169,8 +172,11 @@ export default {
       },
       form: {
         id: null,
+        type: null,
         description: null,
-        supplier: null
+        creditor: null,
+        supplier: null,
+        title: null
       },
       maxModalWidth: 600,
       defers: [],
@@ -200,8 +206,21 @@ export default {
     createDeferred() {
       let app = this;
       app.form.id = null;
-      app.form.description = null;
+      app.form.type = 'creditor';
+      app.form.creditor = app.user.contragents[0].id;
       app.form.supplier = null;
+      app.form.description = null;
+      app.form.title = 'Добавить поставщика (создать предложение стать его дистрибьютером)';
+      this.$modal.show("modal_defer");
+    },
+    createDistributor() {
+      let app = this;
+      app.form.id = null;
+      app.form.type = 'supplier';
+      app.form.creditor = null;
+      app.form.supplier = app.user.contragents[0].id;
+      app.form.description = false;
+      app.form.title = 'Одобрить дистрибьютера (он будет отвечать за совместные заказы)';
       this.$modal.show("modal_defer");
     },
     editDefer(defer, index) {
@@ -216,6 +235,7 @@ export default {
       let loader = Vue.$loading.show();
       axios
         .post("/web/v1/defers", {
+          creditor_id: app.form.creditor.id,
           supplier_id: app.form.supplier.id,
           description: app.form.description
         })
