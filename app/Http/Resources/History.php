@@ -20,6 +20,7 @@ class History extends JsonResource
         return [
             'id' => $this->id,
             'contragent' => Contragent::find($this->contragent_id)->first()->title,
+            'distributor' => Contragent::find($this->distributor_id)->first()->title,
             'price' => $this->price,
             'volume' => $this->volume,
             'created_at' => date("d.m.Y H:i", strtotime($this->created_at))

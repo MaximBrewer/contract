@@ -99,146 +99,152 @@
         </div>
       </div>
       <div class="row" v-for="(interval, ind) in auction.intervals" :key="ind">
-        <div class="table-responsive" id="auction_activity" v-if="!!observer">
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th colspan="4">
-                  {{ __("Interval start price") }}: {{ interval.start_price }} |
-                  {{ __("Interval volume") }}: {{ interval.volume }} |
-                  {{ __("Active volume") }}: {{ interval.free_volume }} |
-                  {{ __("Approved volume") }}:
-                  {{ interval.volume - interval.free_volume }} |
-                  {{ __("Undistributed volume") }}:
-                  {{ interval.undistributed_volume }} | {{ __("Interval") }}:
-                  {{ interval.label }}
-                </th>
-              </tr>
-              <tr>
-                <th>{{ __("Volume") }}</th>
-                <th>{{ __("Price") }}</th>
-                <th>{{ __("Time") }}</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(bet, index) in filter(interval.bets)"
-                v-bind:key="index"
-                v-bind:class="{
-                  'table-success': bet.contragent_id == company.id,
-                }"
-              >
-                <td>
-                  <div v-if="bet.contragent" class="text-nowrap">
-                    <div class="h6">{{ bet.volume }}</div>
-                  </div>
-                </td>
-                <td>
-                  <div v-if="bet.contragent" class="text-nowrap">
-                    <div class="h6">{{ bet.price }}₽</div>
-                  </div>
-                </td>
-                <td>
-                  <div v-if="bet.contragent" class="text-nowrap">
-                    <div class="h6">{{ bet.created_at | formatDateTime }}</div>
-                  </div>
-                </td>
-                <td
-                  v-if="!bet.approved_volume || bet.contragent_id == company.id"
+        <div class="col-12">
+          <div class="table-responsive" id="auction_activity" v-if="!!observer">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th colspan="4">
+                    {{ __("Interval start price") }}:
+                    {{ interval.start_price }} | {{ __("Interval volume") }}:
+                    {{ interval.volume }} | {{ __("Active volume") }}:
+                    {{ interval.free_volume }} | {{ __("Approved volume") }}:
+                    {{ interval.volume - interval.free_volume }} |
+                    {{ __("Undistributed volume") }}:
+                    {{ interval.undistributed_volume }} | {{ __("Interval") }}:
+                    {{ interval.label }}
+                  </th>
+                </tr>
+                <tr>
+                  <th>{{ __("Volume") }}</th>
+                  <th>{{ __("Price") }}</th>
+                  <th>{{ __("Time") }}</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="(bet, index) in filter(interval.bets)"
+                  v-bind:key="index"
+                  v-bind:class="{
+                    'table-success': bet.contragent_id == company.id,
+                  }"
                 >
-                  <div class="d-flex">
-                    <a
-                      v-if="bet.contragent_id == company.id"
-                      v-tooltip="__('Delete bet')"
-                      href="javascript:void(0)"
-                      class="btn-sm"
-                      v-bind:class="{
-                        'btn-danger': !auction.finished,
-                        'btn-secondary': auction.finished,
-                      }"
-                      @click="
-                        auction.finished
-                          ? function () {
-                              return false;
-                            }
-                          : removeBet(bet)
-                      "
-                    >
-                      <i class="mdi mdi-delete" aria-hidden="true"></i> </a
-                    >&nbsp;
-                    <a
-                      v-if="bet.contragent_id == company.id"
-                      v-tooltip="
-                        !bet.guarantee
-                          ? __(
-                              'я гарантирую приобрести данный объем'
-                            )
-                          : __(
-                              'отозвать гарантию'
-                            )
-                      "
-                      href="javascript:void(0)"
-                      class="btn btn-sm d-block mr-2"
-                      :disabled="!!auction.finished"
-                      v-bind:class="{
-                        'btn-success': !bet.guarantee,
-                        'btn-danger': !!bet.guarantee,
-                        'btn-secondary': auction.finished,
-                      }"
-                      @click="
-                        auction.finished
-                          ? function () {
-                              return false;
-                            }
-                          : guarantee(bet)
-                      "
-                    >
-                      <i class="mdi mdi-star" aria-hidden="true"></i>
-                    </a>
-                    <div
-                      v-if="
-                        !!bet.approved_volume && bet.contragent_id == company.id
-                      "
-                      class="text-nowrap mr-2"
-                    >
+                  <td>
+                    <div v-if="bet.contragent" class="text-nowrap">
+                      <div class="h6">{{ bet.volume }}</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div v-if="bet.contragent" class="text-nowrap">
+                      <div class="h6">{{ bet.price }}₽</div>
+                    </div>
+                  </td>
+                  <td>
+                    <div v-if="bet.contragent" class="text-nowrap">
                       <div class="h6">
-                        {{ __("The volume of bet has approved") }}
-                        {{
-                          bet.correct ? __("Price") + ": " + bet.correct : ""
-                        }}
+                        {{ bet.created_at | formatDateTime }}
                       </div>
                     </div>
-                    <div
-                      v-if="
-                        !!bet.approved_contract &&
-                        bet.contragent_id == company.id
-                      "
-                      class="text-nowrap mr-2"
-                    >
-                      <div class="h6">
-                        {{ __("The contract has approved") }}
-                      </div>
+                  </td>
+                  <td
+                    v-if="
+                      !bet.approved_volume || bet.contragent_id == company.id
+                    "
+                  >
+                    <div class="d-flex" v-if="bet.distributor">
+                      <strong>{{ __("Совместно с ") + bet.distributor }}</strong>
                     </div>
-                    <div
-                      v-if="
-                        !!bet.approved_contract &&
-                        bet.contragent_id == company.id
-                      "
-                      class="text-nowrap mr-2"
-                    >
+                    <div class="d-flex">
                       <a
-                        :href="'/personal/invoice/' + bet.id"
-                        class="btn btn-primary btn-sm"
-                        target="_blank"
-                        >{{ __("Get the Invoice") }}</a
+                        v-if="bet.contragent_id == company.id"
+                        v-tooltip="__('Delete bet')"
+                        href="javascript:void(0)"
+                        class="btn-sm"
+                        v-bind:class="{
+                          'btn-danger': !auction.finished,
+                          'btn-secondary': auction.finished,
+                        }"
+                        @click="
+                          auction.finished
+                            ? function () {
+                                return false;
+                              }
+                            : removeBet(bet)
+                        "
                       >
+                        <i class="mdi mdi-delete" aria-hidden="true"></i> </a
+                      >&nbsp;
+                      <a
+                        v-if="bet.contragent_id == company.id"
+                        v-tooltip="
+                          !bet.guarantee
+                            ? __('я гарантирую приобрести данный объем')
+                            : __('отозвать гарантию')
+                        "
+                        href="javascript:void(0)"
+                        class="btn btn-sm d-block mr-2"
+                        :disabled="!!auction.finished"
+                        v-bind:class="{
+                          'btn-success': !bet.guarantee,
+                          'btn-danger': !!bet.guarantee,
+                          'btn-secondary': auction.finished,
+                        }"
+                        @click="
+                          auction.finished
+                            ? function () {
+                                return false;
+                              }
+                            : guarantee(bet)
+                        "
+                      >
+                        <i class="mdi mdi-star" aria-hidden="true"></i>
+                      </a>
+                      <div
+                        v-if="
+                          !!bet.approved_volume &&
+                          bet.contragent_id == company.id
+                        "
+                        class="text-nowrap mr-2"
+                      >
+                        <div class="h6">
+                          {{ __("The volume of bet has approved") }}
+                          {{
+                            bet.correct ? __("Price") + ": " + bet.correct : ""
+                          }}
+                        </div>
+                      </div>
+                      <div
+                        v-if="
+                          !!bet.approved_contract &&
+                          bet.contragent_id == company.id
+                        "
+                        class="text-nowrap mr-2"
+                      >
+                        <div class="h6">
+                          {{ __("The contract has approved") }}
+                        </div>
+                      </div>
+                      <div
+                        v-if="
+                          !!bet.approved_contract &&
+                          bet.contragent_id == company.id
+                        "
+                        class="text-nowrap mr-2"
+                      >
+                        <a
+                          :href="'/personal/invoice/' + bet.id"
+                          class="btn btn-primary btn-sm"
+                          target="_blank"
+                          >{{ __("Get the Invoice") }}</a
+                        >
+                      </div>
                     </div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -295,6 +301,7 @@ export default {
             auction: app.auction.id,
             interval: app.bid.interval.id,
             bidder: app.user.contragents[0].id,
+            distributor: app.user.contragents[0].distributor ? app.user.contragents[0].distributor.id : null,
             volume: app.bid.volume,
             price: app.bid.price,
             store: app.bid.store ? app.bid.store.id : false,
@@ -313,22 +320,24 @@ export default {
     },
     removeBet(bet) {
       var app = this;
-      app.$confirm(app.__("Вы хотите удалить свою бронь. Вы уверены?")).then(() => {
-        if (app.auction)
-          axios
-            .get("/web/v1/auctions/unbet/" + bet.id)
-            .then(function (resp) {
-              //
-            })
-            .catch(function (err) {
-              app.$fire({
-                title: app.__("Error!"),
-                text: err.response.data.message,
-                type: "error",
-                timer: 5000,
+      app
+        .$confirm(app.__("Вы хотите удалить свою бронь. Вы уверены?"))
+        .then(() => {
+          if (app.auction)
+            axios
+              .get("/web/v1/auctions/unbet/" + bet.id)
+              .then(function (resp) {
+                //
+              })
+              .catch(function (err) {
+                app.$fire({
+                  title: app.__("Error!"),
+                  text: err.response.data.message,
+                  type: "error",
+                  timer: 5000,
+                });
               });
-            });
-      });
+        });
     },
   },
 };

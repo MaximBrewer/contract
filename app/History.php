@@ -14,15 +14,23 @@ class History extends Model
         'interval_id',
         'volume',
         'auction_id',
-        'contragent_id'
+        'contragent_id',
+        'distributor_id'
     ];
 
     protected $appends = [
-        'contragent'
+        'contragent',
+        'distributor'
     ];
 
     public function getContragentAttribute()
     {
         return new ContragentResource(Contragent::find($this->contragent_id));
+    }
+
+    public function getDistributorAttribute()
+    {
+        $distributor = Contragent::find($this->distributor_id);
+        return $distributor ? $distributor->title : "";
     }
 }

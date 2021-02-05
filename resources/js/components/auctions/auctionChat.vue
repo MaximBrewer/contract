@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="position:relative;z-index:1000">
     <beautiful-chat
       :participants="participants"
       :titleImageUrl="titleImageUrl"
@@ -178,5 +178,4 @@ export default {
     }
   }
 };
-</script>
 </script>

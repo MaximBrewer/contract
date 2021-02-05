@@ -780,6 +780,7 @@ class AuctionsController extends Controller
             'contragent_id' => $r->post('bidder'),
             'price' => (float) $r->post('price'),
             'volume' => $r->post('volume'),
+            'distributor_id' => $r->post('distributor'),
             'took_part' => Carbon::now(),
             'store_id' => $r->post('store'),
             'can_bet' => 1
@@ -859,6 +860,7 @@ class AuctionsController extends Controller
                         'interval_id' => $newBet->interval_id,
                         'volume' => $newBet->volume,
                         'price' => $newBet->price,
+                        'distributor_id' => $newBet->distributor_id,
                         'contragent_id' => $newBet->contragent_id,
                     ]);
                 }

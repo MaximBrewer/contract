@@ -19,6 +19,7 @@ class Contragent extends Model
         'bank',
         'nds',
         'bik',
+        'distributors',
         'rs',
         'requisites'
     ];
@@ -44,6 +45,7 @@ class Contragent extends Model
         $this->types;
         $this->federalDistrict;
         $this->region;
+        $this->distributors;
         // $this->auctions;
         return true;
     }
@@ -53,6 +55,12 @@ class Contragent extends Model
         $cnt0 = DB::select("SELECT sum(balance) as s FROM settlements where `contragent_id`=? and type = 'credit' and status='done'", [$this->id]);
         $cnt1 = DB::select("SELECT sum(balance) as s FROM settlements where `contragent_id`=? and type = 'debit' and status='done'", [$this->id]);
         return (float) ($cnt0[0]->s - $cnt1[0]->s);
+    }
+
+
+    public function distributors()
+    {
+        return $this->hasManyThrough('App\Contragent', 'App\Defer', 'supplier_id', 'id', 'id', 'creditor_id')->where('status', 'both');
     }
 
     public function region()

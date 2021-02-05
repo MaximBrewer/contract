@@ -16,6 +16,7 @@ class Bet extends Model
         'approved_volume',
         'approved_contract',
         'took_part',
+        'distributor_id',
         'can_bet',
         'correct',
         'store_id',
@@ -24,7 +25,8 @@ class Bet extends Model
     ];
 
     protected $appends = [
-        'contragent'
+        'contragent',
+        'distributor'
     ];
 
     public function getContragentAttribute()
@@ -37,6 +39,11 @@ class Bet extends Model
         ];
     }
 
+    public function getDistributorAttribute()
+    {
+        $distributor = \App\Contragent::find($this->distributor_id);
+        return $distributor ? $distributor->title : "";
+    }
 
     public function store()
     {

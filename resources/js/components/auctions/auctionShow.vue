@@ -3,20 +3,88 @@
     <div class="container">
       <auction-info :auction="auction"></auction-info>
       <auction-actions :auction="auction"></auction-actions>
+      <div>
+        <div class="dropdown">
+          <button
+            class="btn btn-danger w-100 dropdown-toggle"
+            type="button"
+            @click="
+              () => {
+                showDropdown = !showDropdown;
+              }
+            "
+          >
+            {{
+              user.contragents[0].distributor
+                ? user.contragents[0].distributor.title
+                : __("Принять участие в совместной закупке")
+            }}
+          </button>
+          <ul class="dropdown-menu w-100" v-bind:class="{ show: showDropdown }">
+            <li>
+              <a
+                class="dropdown-item"
+                href="javascript:;"
+                @click="
+                  () => {
+                    user.contragents[0].distributor = null;
+                    showDropdown = false;
+                  }
+                "
+                >{{ __("Отменить выбор") }}</a
+              >
+            </li>
+            <li
+              v-for="(item, index) in user.contragents[0].distributors"
+              :key="index"
+            >
+              <a
+                class="dropdown-item"
+                href="javascript:;"
+                @click="
+                  () => {
+                    user.contragents[0].distributor = item;
+                    showDropdown = false;
+                  }
+                "
+                >{{ item.title }}</a
+              >
+            </li>
+          </ul>
+        </div>
+        <br />
+      </div>
       <!--Started-->
       <div v-if="auction.started" class="pb-4">
-        <auction-bidding :auction="auction" :can_bet="can_bet" :observer="observer" v-if="bidding"></auction-bidding>
-        <auction-mine :auction="auction" v-if="auction.bets && auction.contragent.id == company.id"></auction-mine>
+        <auction-bidding
+          :auction="auction"
+          :can_bet="can_bet"
+          :observer="observer"
+          v-if="bidding"
+        ></auction-bidding>
+        <auction-mine
+          :auction="auction"
+          v-if="auction.bets && auction.contragent.id == company.id"
+        ></auction-mine>
       </div>
       <!--Bidders-->
       <div v-if="!auction.finished" class="pb-4">
-        <auction-bidders :auction="auction" v-if="auction.contragent.id == company.id"></auction-bidders>
+        <auction-bidders
+          :auction="auction"
+          v-if="auction.contragent.id == company.id"
+        ></auction-bidders>
       </div>
       <div v-if="auction.started" class="pb-4">
-        <auction-history :auction="auction" v-if="observer || auction.contragent.id == company.id"></auction-history>
+        <auction-history
+          :auction="auction"
+          v-if="observer || auction.contragent.id == company.id"
+        ></auction-history>
       </div>
       <div v-if="!auction.finished" class="pb-4">
-        <auction-mail :auction="auction" v-if="auction.contragent.id == company.id"></auction-mail>
+        <auction-mail
+          :auction="auction"
+          v-if="auction.contragent.id == company.id"
+        ></auction-mail>
       </div>
     </div>
     <auction-chat :auction="auction"></auction-chat>
@@ -42,43 +110,45 @@ export default {
     auctionFinishedMine: auctionFinishedMine,
     auctionBidders: auctionBidders,
     auctionChat: auctionChat,
-    auctionHistory: auctionHistory
+    auctionHistory: auctionHistory,
   },
   mounted() {
+    $(".dropdown-toggle").dropdown();
     let app = this;
     let id = app.$route.params.id;
     let loader = Vue.$loading.show();
-    app.$root.$on("gotAuction", function(auction) {
+    app.$root.$on("gotAuction", function (auction) {
       if (auction.id == app.auction.id) app.auction = auction;
       // console.log(auction.id == app.auction.id, auction);
       app.renew();
     });
     axios
       .get("/web/v1/auction/" + id)
-      .then(function(resp) {
+      .then(function (resp) {
         app.auction = resp.data.data;
         loader.hide();
         app.bid.price = app.auction.price;
         app.bid.volume = 1;
         app.renew();
       })
-      .catch(function(err) {
+      .catch(function (err) {
         app.$fire({
           title: app.__("Error!"),
           text: app.__("Failed to load auction"),
           type: "error",
-          timer: 5000
+          timer: 5000,
         });
         loader.hide();
       });
   },
-  data: function() {
+  data: function () {
     return {
+      showDropdown: false,
       bidding: 1,
       can_bet: 0,
       observer: 0,
       auction: {},
-      bid: {}
+      bid: {},
     };
   },
   methods: {
@@ -90,7 +160,7 @@ export default {
           this.bidding = 1;
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
