@@ -19,7 +19,6 @@ class Contragent extends Model
         'bank',
         'nds',
         'bik',
-        'distributors',
         'rs',
         'requisites'
     ];
