@@ -119,7 +119,7 @@
                   <th>{{ __("Volume") }}</th>
                   <th>{{ __("Price") }}</th>
                   <th>{{ __("Time") }}</th>
-                  <th></th>
+                  <th style="width:100%;"></th>
                 </tr>
               </thead>
               <tbody>
