@@ -27,7 +27,7 @@
                 href="javascript:;"
                 @click="
                   () => {
-                    user.contragents[0].distributor = null;
+                    auction.contragent.distributor = null;
                     showDropdown = false;
                   }
                 "
@@ -35,7 +35,7 @@
               >
             </li>
             <li
-              v-for="(item, index) in user.contragents[0].distributors"
+              v-for="(item, index) in auction.contragent.distributors"
               :key="index"
             >
               <a
@@ -43,7 +43,7 @@
                 href="javascript:;"
                 @click="
                   () => {
-                    user.contragents[0].distributor = item;
+                    auction.contragent.distributor = item;
                     showDropdown = false;
                   }
                 "
