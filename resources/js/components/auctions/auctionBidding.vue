@@ -267,6 +267,7 @@ export default {
       for (let i in bets) {
         if (
           bets[i].contragent_id == app.company.id ||
+          bets[i].distributor_id == app.company.id ||
           !bets[i].approved_contract
         )
           betsList.push(bets[i]);
