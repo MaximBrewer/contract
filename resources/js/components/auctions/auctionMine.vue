@@ -35,6 +35,11 @@
                   <td>
                     <div v-if="bet.contragent" class="text-nowrap">
                       <div class="h6">{{ bet.contragent.title }}</div>
+                      <div class="d-flex" v-if="bet.distributor">
+                        <strong>{{
+                          __("Совместно с ") + bet.distributor
+                        }}</strong>
+                      </div>
                     </div>
                   </td>
                   <td class="text-center">
