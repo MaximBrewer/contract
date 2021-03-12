@@ -34,11 +34,11 @@
                   {{ unit.contragent.title }}
                 </td>
                 <td class="text-center">{{ unit.created_at }}</td>
-                <th class="text-center">
+                <td class="text-center">
                   <div class="d-flex" v-if="unit.distributor">
                     <strong>{{ __("Совместно с ") + unit.distributor }}</strong>
                   </div>
-                </th>
+                </td>
               </tr>
             </tbody>
           </table>
