@@ -43,7 +43,7 @@
                 href="javascript:;"
                 @click="
                   () => {
-                    auction.contragent.distributor = item;
+                    user.contragents[0].distributor = item;
                     showDropdown = false;
                   }
                 "
