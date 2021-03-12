@@ -149,7 +149,7 @@
                   </td>
                   <td
                     v-if="
-                      !bet.approved_volume || bet.contragent_id == company.id
+                      !bet.approved_volume || bet.contragent_id == company.id || bet.distributor_id == company.id
                     "
                   >
                     <div class="d-flex" v-if="bet.distributor">
