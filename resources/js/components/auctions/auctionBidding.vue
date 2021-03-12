@@ -143,7 +143,7 @@
                   <td>
                     <div v-if="bet.contragent" class="text-nowrap">
                       <div class="h6">
-                        {{ bet.created_at | formatDateTime }}
+                        {{ bet.created_at | formatDateTimeBet }}
                       </div>
                     </div>
                   </td>

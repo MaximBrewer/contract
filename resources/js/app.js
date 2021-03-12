@@ -453,6 +453,14 @@ window.Vue.filter("formatDateTime", function(value) {
     return "";
 });
 
+window.Vue.filter("formatDateTimeBet", function(value) {
+    if (value) {
+        return moment(String(value))
+            .format("DD.MM.YYYY HH:mm");
+    }
+    return "";
+});
+
 window.Vue.filter("formatChatTime", function(value) {
     if (value) {
         return moment(String(value))
