@@ -155,9 +155,8 @@
                     <div class="d-flex" v-if="bet.distributor">
                       <strong>{{ __("Совместно с ") + bet.distributor }}</strong>
                     </div>
-                    <div class="d-flex">
+                    <div class="d-flex" v-if="bet.contragent_id == company.id">
                       <a
-                        v-if="bet.contragent_id == company.id"
                         v-tooltip="__('Delete bet')"
                         href="javascript:void(0)"
                         class="btn-sm"
@@ -176,7 +175,6 @@
                         <i class="mdi mdi-delete" aria-hidden="true"></i> </a
                       >&nbsp;
                       <a
-                        v-if="bet.contragent_id == company.id"
                         v-tooltip="
                           !bet.guarantee
                             ? __('я гарантирую приобрести данный объем')
@@ -202,8 +200,7 @@
                       </a>
                       <div
                         v-if="
-                          !!bet.approved_volume &&
-                          bet.contragent_id == company.id
+                          !!bet.approved_volume
                         "
                         class="text-nowrap mr-2"
                       >
@@ -216,8 +213,7 @@
                       </div>
                       <div
                         v-if="
-                          !!bet.approved_contract &&
-                          bet.contragent_id == company.id
+                          !!bet.approved_contract
                         "
                         class="text-nowrap mr-2"
                       >
@@ -227,8 +223,7 @@
                       </div>
                       <div
                         v-if="
-                          !!bet.approved_contract &&
-                          bet.contragent_id == company.id
+                          !!bet.approved_contract
                         "
                         class="text-nowrap mr-2"
                       >
