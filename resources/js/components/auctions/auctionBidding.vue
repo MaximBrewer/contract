@@ -100,7 +100,7 @@
       </div>
       <div class="row" v-for="(interval, ind) in auction.intervals" :key="ind">
         <div class="col-12">
-          <div class="table-responsive" id="auction_activity" v-if="!!observer">
+          <div class="table-responsive auction_activity" v-if="!!observer">
             <table class="table table-bordered">
               <thead>
                 <tr>
@@ -241,6 +241,7 @@
                       </div>
                     </div>
                   </td>
+                  <td v-else></td>
                 </tr>
               </tbody>
             </table>
