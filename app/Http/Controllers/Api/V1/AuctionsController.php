@@ -37,7 +37,7 @@ class AuctionsController extends Controller
     {
         switch ($action) {
             case "all":
-                $auctions = Auction::where('finished', '<>', 1);
+                $auctions = Auction::where('confirmed', 1)->where('mode', '<>', 'callApp')->where('finished', '<>', 1);
                 break;
             case "confirmed":
                 $auctions = Auction::where('confirmed', 1)->where('finished', '<>', 1);
