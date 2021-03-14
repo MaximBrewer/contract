@@ -197,7 +197,7 @@ export default {
       action = "all";
     let loader = Vue.$loading.show();
     axios
-      .get("/auctions/all")
+      .get("/auctions/alls")
       .then(function(resp) {
         app.filterAuctions(resp.data.data);
         app.auctions = resp.data.data;

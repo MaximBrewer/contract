@@ -37,8 +37,10 @@ class AuctionsController extends Controller
     {
         switch ($action) {
             case "all":
-                $auctions = Auction::where('confirmed', 1)->where('mode', '<>', 'callApp')->where('finished', '<>', 1);
+                $auctions = Auction::where('finished', '<>', 1);
                 break;
+            case "alls":
+                $auctions = Auction::where('confirmed', 1)->where('mode', '<>', 'callApp')->where('finished', '<>', 1);
             case "confirmed":
                 $auctions = Auction::where('confirmed', 1)->where('finished', '<>', 1);
                 break;
@@ -401,7 +403,7 @@ class AuctionsController extends Controller
                 'message' => __('It`s not yours!'),
                 'errors' => []
             ], 422);
-            
+
         if (count(User::find(Auth::user()->id)->contragents)) User::find(Auth::user()->id)->contragents[0]->auctions()->detach($id);
 
         // Bet::where('auction_id', $id)->where('contragent_id', User::find(Auth::user()->id)->contragents[0]->id)->delete();
