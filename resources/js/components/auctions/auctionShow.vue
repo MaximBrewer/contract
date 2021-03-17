@@ -27,7 +27,7 @@
                 href="javascript:;"
                 @click="
                   () => {
-                    auction.contragent.distributor = null;
+                    user.contragents[0].distributor = null;
                     showDropdown = false;
                   }
                 "
@@ -47,7 +47,7 @@
                     showDropdown = false;
                   }
                 "
-                >{{ item.title }}</a
+                >{{ item.title }} <span v-if="item.description">({{ item.description }})</span></a
               >
             </li>
           </ul>

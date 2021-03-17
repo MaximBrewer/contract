@@ -59,7 +59,7 @@ class Contragent extends Model
 
     public function distributors()
     {
-        return $this->hasManyThrough('App\Contragent', 'App\Defer', 'supplier_id', 'id', 'id', 'creditor_id')->where('status', 'both');
+        return $this->hasManyThrough('App\Contragent', 'App\Defer', 'supplier_id', 'id', 'id', 'creditor_id')->select(['contragents.title', 'contragents.id', 'defers.description'])->where('status', 'both');
     }
 
     public function region()
