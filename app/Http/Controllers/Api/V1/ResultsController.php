@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\Result as ResultResource;
+use App\Http\Resources\Purchases as PurchasesResource;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Bet;
@@ -43,7 +44,7 @@ class ResultsController extends Controller
      */
     public function purchases()
     {
-        return ['purchases' => ResultResource::collection(
+        return ['purchases' => PurchasesResource::collection(
             DB::table('bets')
                 ->leftJoin('auctions', 'bets.auction_id', '=', 'auctions.id')
                 ->leftJoin('contragents', 'bets.contragent_id', '=', 'contragents.id')
