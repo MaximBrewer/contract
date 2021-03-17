@@ -25,10 +25,7 @@ class Purchases extends JsonResource
         $rest = ($this->correct - $auction->start_price) * $volume;
         $tooltip = "0.05% * " . $sum . " + " . $rest . " * 5%";
         $reward = 0.0005 * $sum + $rest * 0.05;
-
-        return 
-        $this->deffers;
-;
+        
         return [
             'id' => $this->id,
             'contragent' => [
