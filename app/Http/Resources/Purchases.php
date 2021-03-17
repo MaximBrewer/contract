@@ -18,6 +18,19 @@ class Purchases extends JsonResource
      */
     public function toArray($request)
     {
+
+        $orbitsArr = [
+            "purchases" => "совместные закупки",
+            "delivery" => "совместная доставка",
+            "granting" => "предоставление отсрочки",
+            "warehouse" => "предоставление склада",
+            "otherwise" => "иное"
+        ];
+        $orbits = json_decode($this->orbits);
+        $orbits = $orbits ? array_map(function ($i) use ($orbitsArr) {
+            return $orbitsArr[$i];
+        }, $orbits) : [];
+
         $auction = Auction::find($this->auction_id);
         $contragent = Contragent::find($this->contragent_id);
         $volume = $auction->multiplicity->coefficient * $this->volume;
@@ -43,7 +56,7 @@ class Purchases extends JsonResource
             'sum' => $sum,
             'defer' => [
                 'description' => $this->description,
-                'orbits' => $this->orbits ? json_decode($this->orbits) : []
+                'orbits' => $orbits
             ],
             'rest' => $rest,
             'bid' => $this->correct,
