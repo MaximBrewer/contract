@@ -52,7 +52,7 @@ export default {
     axios
       .get("/web/v1/results/purchases")
       .then(function(res) {
-        app.results = res.data.results;
+        app.results = res.data.purchases;
         loader.hide();
       })
       .catch(function(err) {
