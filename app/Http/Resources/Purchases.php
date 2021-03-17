@@ -26,7 +26,7 @@ class Purchases extends JsonResource
         $tooltip = "0.05% * " . $sum . " + " . $rest . " * 5%";
         $reward = 0.0005 * $sum + $rest * 0.05;
 
-        return $this
+        return parent::toArray($request);
 ;
         return [
             'id' => $this->id,
