@@ -48,7 +48,7 @@ class ResultsController extends Controller
                 ->leftJoin('auctions', 'bets.auction_id', '=', 'auctions.id')
                 ->leftJoin('contragents', 'bets.contragent_id', '=', 'contragents.id')
                 ->leftJoin('defers', function ($join) {
-                    $join->on('bets.contragent_id', '=', 'defers.contragent_id')->andOn('bets.distributor_id', '=', 'defers.distributor_id');
+                    $join->on('bets.contragent_id', '=', 'defers.contragent_id')->where('bets.distributor_id', '=', 'defers.distributor_id');
                 })
                 ->select('bets.*')
                 ->where('bets.distributor_id', Auth::user()->contragents[0]->id)
