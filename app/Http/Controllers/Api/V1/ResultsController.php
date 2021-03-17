@@ -44,6 +44,19 @@ class ResultsController extends Controller
      */
     public function purchases()
     {
+
+        return DB::table('bets')
+        ->leftJoin('auctions', 'bets.auction_id', '=', 'auctions.id')
+        ->leftJoin('contragents', 'bets.contragent_id', '=', 'contragents.id')
+        ->leftJoin('defers', function ($join) {
+            $join->on('bets.contragent_id', '=', 'defers.creditor_id')->where('bets.distributor_id', '=', 'defers.supplier_id');
+        })
+        ->select('bets.*')
+        ->where('bets.distributor_id', Auth::user()->contragents[0]->id)
+        ->whereNotNull(['approved_contract'])
+        ->orderBy('id', 'DESC')
+        ->get();
+
         return ['purchases' => PurchasesResource::collection(
             DB::table('bets')
                 ->leftJoin('auctions', 'bets.auction_id', '=', 'auctions.id')
