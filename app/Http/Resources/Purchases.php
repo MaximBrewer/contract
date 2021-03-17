@@ -7,7 +7,6 @@ use App\Multiplicity;
 use App\Auction;
 use App\Contragent;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 
 class Purchases extends JsonResource
 {
