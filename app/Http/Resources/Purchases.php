@@ -43,7 +43,7 @@ class Purchases extends JsonResource
             'sum' => $sum,
             'defer' => [
                 'description' => $this->description,
-                'orbits' => $this->orbits
+                'orbits' => json_decode($this->orbits)
             ],
             'rest' => $rest,
             'bid' => $this->correct,
