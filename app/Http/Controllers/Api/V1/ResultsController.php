@@ -49,9 +49,9 @@ class ResultsController extends Controller
             ->leftJoin('auctions', 'bets.auction_id', '=', 'auctions.id')
             ->leftJoin('contragents', 'bets.contragent_id', '=', 'contragents.id')
             ->leftJoin('defers', function ($join) {
-                $join->on('bets.contragent_id', '=', 'defers.creditor_id')->where('bets.distributor_id', '=', 'defers.supplier_id');
+                $join->on('bets.contragent_id', '=', 'defers.supplier_id')->where('bets.distributor_id', '=', 'defers.creditor_id');
             })
-            ->select(['bets.*', 'defers.description', 'defers.orbits'])
+            ->select(['bets.*', 'defers.description', 'defers.orbits', 'defers.creditor_id'])
             ->where('bets.distributor_id', Auth::user()->contragents[0]->id)
             ->whereNotNull(['approved_contract'])
             ->orderBy('id', 'DESC')
