@@ -14,6 +14,19 @@ class Defer extends JsonResource
      */
     public function toArray($request)
     {
+
+        $orbitsArr = [
+            "purchases" => "совместные закупки",
+            "delivery" => "совместная доставка",
+            "granting" => "предоставление отсрочки",
+            "warehouse" => "предоставление склада",
+            "otherwise" => "иное"
+        ];
+        $orbits = json_decode($this->orbits);
+        $orbits = $orbits ? array_map(function ($i) use ($orbitsArr) {
+            return $orbitsArr[$i];
+        }, $orbits) : [];
+
         return [
             'id' => $this->id,
             'creditor' => [
@@ -24,8 +37,9 @@ class Defer extends JsonResource
                 'id' => $this->supplier->id,
                 'title' => $this->supplier->title,
             ],
-            'status' => __("status.".$this->status),
-            'description' => $this->description
+            'status' => __("status." . $this->status),
+            'description' => $this->description,
+            'orbits' => $orbits
         ];
     }
 }

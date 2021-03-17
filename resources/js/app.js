@@ -62,6 +62,7 @@ import AuctionIndex from "./components/auctions/auctionIndex.vue";
 import AuctionArchive from "./components/auctions/auctionArchive.vue";
 import AuctionMy from "./components/auctions/auctionMy.vue";
 import MyResults from "./components/auctions/myResults.vue";
+import JointPurchases from "./components/jointPurchases.vue";
 import AuctionBid from "./components/auctions/auctionBid.vue";
 import AuctionCreate from "./components/auctions/auctionCreate.vue";
 import AuctionEdit from "./components/auctions/auctionEdit.vue";
@@ -169,6 +170,11 @@ const app = new Vue({
                 name: "myResults"
             },
             {
+                path: "/personal/purchases",
+                component: JointPurchases,
+                name: "jointPurchases"
+            },
+            {
                 path: "/personal/auctions/show/:id",
                 component: AuctionShow,
                 name: "showAuction"
@@ -253,7 +259,7 @@ const app = new Vue({
                 path: "/personal/contracts/get",
                 component: ContractCreate,
                 name: "contractCreate"
-            },
+            }
         ]
     }),
     created() {
@@ -455,8 +461,7 @@ window.Vue.filter("formatDateTime", function(value) {
 
 window.Vue.filter("formatDateTimeBet", function(value) {
     if (value) {
-        return moment(String(value))
-            .format("DD.MM.YYYY HH:mm");
+        return moment(String(value)).format("DD.MM.YYYY HH:mm");
     }
     return "";
 });

@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+use App\Multiplicity;
+use App\Auction;
+use App\Contragent;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class Purchases extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function toArray($request)
+    {
+        $auction = Auction::find($this->auction_id);
+        $contragent = Contragent::find($this->contragent_id);
+        $volume = $auction->multiplicity->coefficient * $this->volume;
+        $sum = $this->correct * $volume;
+        $rest = ($this->correct - $auction->start_price) * $volume;
+        $tooltip = "0.05% * " . $sum . " + " . $rest . " * 5%";
+        $reward = 0.0005 * $sum + $rest * 0.05;
+
+        return [
+            'id' => $this->id,
+            'contragent' => [
+                'id' => $contragent->id,
+                'title' => $contragent->title
+            ],
+            'auction' => [
+                'id' => $auction->id,
+                'finish_at' => $auction->finish_at,
+                'multiplicity' => [
+                    'title' => $auction->multiplicity->title,
+                    'coefficient' => $auction->multiplicity->coefficient
+                ]
+            ],
+            'sum' => $sum,
+            'defer' => [
+                'description' => $this->description,
+                'orbits' => $this->orbits
+            ],
+            'rest' => $rest,
+            'bid' => $this->correct,
+            'volume' => $this->volume,
+            'message' => $this->message,
+            'reward' => [
+                'sum' => $reward,
+                'tooltip' => $tooltip,
+            ]
+        ];
+    }
+}

@@ -10,7 +10,8 @@ class Defer extends Model
         'creditor_id',
         'supplier_id',
         'description',
-        'status'
+        'status',
+        'orbits'
     ];
 
     public function supplier()

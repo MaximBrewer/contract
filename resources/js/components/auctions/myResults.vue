@@ -56,7 +56,6 @@
                 <button class="btn btn-primary" @click="send(result)">{{ __('Send') }}</button>
               </div>
             </td>
-            <td></td>
           </tr>
         </tbody>
       </table>

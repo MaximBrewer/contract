@@ -107,6 +107,7 @@ Route::group([
 
     Route::post('results', 'ResultsController@update');
     Route::get('results', 'ResultsController@index');
+    Route::get('results/purchases', 'ResultsController@purchases');
 
     Route::post('sendmail', 'MailController@send');
 

@@ -174,6 +174,10 @@
 
                                 <router-link :to="{name: 'myResults'}" class="dropdown-item">{{ __('My results') }}
                                 </router-link>
+
+                                <router-link :to="{name: 'jointPurchases'}" class="dropdown-item">{{ __('Совместные закупки') }}
+                                </router-link>
+                                
                                 <router-link :to="{name: 'settlementsIndex'}" class="dropdown-item">{{ __('Mutual Settlements') }}
                                 </router-link>
 

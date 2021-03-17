@@ -7,19 +7,29 @@
             href="javascript:void(0)"
             @click="createDeferred"
             class="btn btn-primary btn-lg"
-          >{{ __('Добавить поставщика (создать предложение стать его дистрибьютером)') }}</a>
+            >{{
+              __(
+                "Добавить поставщика (создать предложение стать его дистрибьютером)"
+              )
+            }}</a
+          >
           <a
             href="javascript:void(0)"
             @click="createDistributor"
             class="btn btn-primary btn-lg"
-          >{{ __('Одобрить дистрибьютера (он будет отвечать за совместные заказы)') }}</a>
+            >{{
+              __(
+                "Одобрить дистрибьютера (он будет отвечать за совместные заказы)"
+              )
+            }}</a
+          >
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-6 col-sm-6 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __('Creditor') }}</label>
+          <label class="control-label">{{ __("Creditor") }}</label>
           <v-select
             label="title"
             :searchable="true"
@@ -27,13 +37,13 @@
             :options="$root.contragents"
             v-model="filter.creditor"
           >
-            <div slot="no-options">{{ __('No Options Here!') }}</div>
+            <div slot="no-options">{{ __("No Options Here!") }}</div>
           </v-select>
         </div>
       </div>
       <div class="col-md-6 col-sm-6 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __('Supplier') }}</label>
+          <label class="control-label">{{ __("Supplier") }}</label>
           <v-select
             label="title"
             :searchable="true"
@@ -41,7 +51,7 @@
             :options="$root.contragents"
             v-model="filter.supplier"
           >
-            <div slot="no-options">{{ __('No Options Here!') }}</div>
+            <div slot="no-options">{{ __("No Options Here!") }}</div>
           </v-select>
         </div>
       </div>
@@ -51,10 +61,11 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>{{ __('Дистрибьютор') }}</th>
-            <th>{{ __('Supplier') }}</th>
-            <th>{{ __('Статус') }}</th>
-            <th>{{ __('Description') }}</th>
+            <th>{{ __("Дистрибьютор") }}</th>
+            <th>{{ __("Supplier") }}</th>
+            <th>{{ __("Статус") }}</th>
+            <th>{{ __("Description") }}</th>
+            <th>{{ __("Сферы") }}</th>
             <th></th>
           </tr>
         </thead>
@@ -65,6 +76,9 @@
             <td>{{ defer.supplier.title }}</td>
             <td>{{ defer.status }}</td>
             <td>{{ defer.description }}</td>
+            <td>
+              <div v-if="defer.orbits">{{ defer.orbits.join(", ") }}</div>
+            </td>
             <td class="text-center">
               <a
                 v-tooltip="__('Edit defer')"
@@ -89,7 +103,13 @@
         </tbody>
       </table>
     </div>
-    <modal name="modal_defer" height="auto" :adaptive="true" width="90%" :maxWidth="maxModalWidth">
+    <modal
+      name="modal_defer"
+      height="auto"
+      :adaptive="true"
+      width="90%"
+      :maxWidth="maxModalWidth"
+    >
       <div class="modal-header">
         <h5 class="modal-title">
           <strong>{{ form.title }}</strong>
@@ -112,7 +132,7 @@
             label="title"
             v-model="form.supplier"
           >
-            <div slot="no-options">{{ __('No Options Here!') }}</div>
+            <div slot="no-options">{{ __("No Options Here!") }}</div>
           </v-select>
         </div>
         <div class="form-group" v-if="form.type == 'supplier'">
@@ -122,7 +142,18 @@
             label="title"
             v-model="form.creditor"
           >
-            <div slot="no-options">{{ __('No Options Here!') }}</div>
+            <div slot="no-options">{{ __("No Options Here!") }}</div>
+          </v-select>
+        </div>
+        <div class="form-group" v-if="form.type == 'creditor'">
+          <v-select
+            max-height="100px"
+            :options="orbits"
+            label="title"
+            v-model="form.orbits"
+            :multiple="true"
+          >
+            <div slot="no-options">{{ __("No Options Here!") }}</div>
           </v-select>
         </div>
         <div class="form-group" v-if="form.description !== false">
@@ -134,8 +165,13 @@
           type="button"
           class="btn btn-success"
           data-dismiss="modal"
-          @click="$modal.hide('modal_defer');auDefer();"
-        >{{ form.id ? __('Update') : __('Add') }}</button>
+          @click="
+            $modal.hide('modal_defer');
+            auDefer();
+          "
+        >
+          {{ form.id ? __("Update") : __("Add") }}
+        </button>
       </div>
     </modal>
   </section>
@@ -147,28 +183,29 @@ export default {
   mounted() {
     let app = this;
     let loader = Vue.$loading.show();
+
     axios
       .get("/web/v1/defers")
-      .then(function(res) {
+      .then(function (res) {
         app.defers = res.data.data;
         app.filterList();
         loader.hide();
       })
-      .catch(function(res) {
+      .catch(function (res) {
         loader.hide();
         app.$fire({
           title: app.__("Error!"),
           text: app.__("Failed to load defers"),
           type: "error",
-          timer: 5000
+          timer: 5000,
         });
       });
   },
-  data: function() {
+  data: function () {
     return {
       filter: {
         creditor: null,
-        supplier: null
+        supplier: null,
       },
       form: {
         id: null,
@@ -176,11 +213,19 @@ export default {
         description: null,
         creditor: null,
         supplier: null,
-        title: null
+        title: null,
+        orbits: [],
       },
       maxModalWidth: 600,
       defers: [],
-      defersList: []
+      defersList: [],
+      orbits: [
+        { value: "purchases", title: "совместные закупки" },
+        { value: "delivery", title: "совместная доставка" },
+        { value: "granting", title: "предоставление отсрочки" },
+        { value: "warehouse", title: "предоставление склада" },
+        { value: "otherwise", title: "иное" },
+      ],
     };
   },
   methods: {
@@ -206,27 +251,32 @@ export default {
     createDeferred() {
       let app = this;
       app.form.id = null;
-      app.form.type = 'creditor';
+      app.form.type = "creditor";
       app.form.creditor = app.user.contragents[0].id;
       app.form.supplier = null;
       app.form.description = null;
-      app.form.title = 'Добавить поставщика (создать предложение стать его дистрибьютером)';
+      app.form.orbits = [];
+      app.form.title =
+        "Добавить поставщика (создать предложение стать его дистрибьютером)";
       this.$modal.show("modal_defer");
     },
     createDistributor() {
       let app = this;
       app.form.id = null;
-      app.form.type = 'supplier';
+      app.form.type = "supplier";
       app.form.creditor = null;
       app.form.supplier = app.user.contragents[0].id;
       app.form.description = false;
-      app.form.title = 'Одобрить дистрибьютера (он будет отвечать за совместные заказы)';
+      app.form.orbits = [];
+      app.form.title =
+        "Одобрить дистрибьютера (он будет отвечать за совместные заказы)";
       this.$modal.show("modal_defer");
     },
     editDefer(defer, index) {
       let app = this;
       app.form.id = defer.id;
       app.form.description = defer.description;
+      app.form.orbits = defer.orbits;
       app.form.supplier = defer.supplier;
       this.$modal.show("modal_defer");
     },
@@ -237,20 +287,21 @@ export default {
         .post("/web/v1/defers", {
           creditor_id: app.form.creditor.id,
           supplier_id: app.form.supplier.id,
-          description: app.form.description
+          description: app.form.description,
+          orbits: app.form.orbits,
         })
-        .then(function(res) {
+        .then(function (res) {
           app.defers = res.data.data;
           app.filterList();
           loader.hide();
         })
-        .catch(function(res) {
+        .catch(function (res) {
           loader.hide();
           app.$fire({
             title: app.__("Error!"),
             text: app.__("Failed to add defer"),
             type: "error",
-            timer: 5000
+            timer: 5000,
           });
         });
     },
@@ -258,13 +309,12 @@ export default {
       var app = this;
       if (defer)
         app.$confirm(app.__("Are you sure?")).then(() => {
-          axios
-            .delete("/web/v1/defers/" + defer.id)
-            .then(function(res) {
-              app.defers = res.data.data;
-              app.filterList();
-              loader.hide();s
-            });
+          axios.delete("/web/v1/defers/" + defer.id).then(function (res) {
+            app.defers = res.data.data;
+            app.filterList();
+            loader.hide();
+            s;
+          });
         });
     },
     updateDefer() {
@@ -273,23 +323,24 @@ export default {
       axios
         .patch("/web/v1/defers/" + app.form.id, {
           supplier_id: app.form.supplier.id,
-          description: app.form.description
+          description: app.form.description,
+          orbits: app.form.orbits,
         })
-        .then(function(res) {
+        .then(function (res) {
           app.defers = res.data.data;
           app.filterList();
           loader.hide();
         })
-        .catch(function(res) {
+        .catch(function (res) {
           loader.hide();
           app.$fire({
             title: app.__("Error!"),
             text: app.__("Failed to update defer"),
             type: "error",
-            timer: 5000
+            timer: 5000,
           });
         });
-    }
-  }
+    },
+  },
 };
 </script>

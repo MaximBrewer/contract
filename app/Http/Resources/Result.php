@@ -27,7 +27,10 @@ class Result extends JsonResource
 
         return [
             'id' => $this->id,
-            'contragent' => $contragent,
+            'contragent' => [
+                'id' => $contragent->id,
+                'title' => $contragent->title
+            ],
             'auction' => [
                 'id' => $auction->id,
                 'finish_at' => $auction->finish_at,

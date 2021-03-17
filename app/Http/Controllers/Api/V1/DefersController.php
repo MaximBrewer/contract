@@ -25,6 +25,9 @@ class DefersController extends Controller
 
     public function store(Request $r)
     {
+        $orbits = json_encode(is_array($r->post('orbits')) ? array_map(function ($i) {
+            return $i['value'];
+        }, $r->post('orbits')) : []);
         if ($r->post('supplier_id')) {
             if (
                 !($defer = Defer::where('supplier_id', $r->post('supplier_id'))
@@ -35,6 +38,7 @@ class DefersController extends Controller
                     'creditor_id' => User::find(Auth::user()->id)->contragents[0]->id,
                     'supplier_id' => $r->post('supplier_id'),
                     'description' => $r->post('description'),
+                    'orbits' => $orbits,
                     'status' => 'distributor'
                 ]);
         } elseif ($r->post('creditor_id')) {
@@ -47,6 +51,7 @@ class DefersController extends Controller
                     'creditor_id' => $r->post('creditor_id'),
                     'supplier_id' => User::find(Auth::user()->id)->contragents[0]->id,
                     'description' => $r->post('description'),
+                    'orbits' => $orbits,
                     'status' => 'manufacturer'
                 ]);
             } else {
