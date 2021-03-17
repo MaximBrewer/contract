@@ -44,7 +44,7 @@ class ResultsController extends Controller
      */
     public function purchases()
     {
-        return //['purchases' => PurchasesResource::collection(
+        return ['purchases' => PurchasesResource::collection(
             DB::table('bets')
                 ->leftJoin('defers', function ($join) {
                     $join->on('bets.contragent_id', '=', 'defers.creditor_id')->on('bets.distributor_id', '=', 'defers.supplier_id');
@@ -54,8 +54,7 @@ class ResultsController extends Controller
                 ->whereNotNull(['approved_contract'])
                 ->orderBy('id', 'DESC')
                 ->get()
-       //)]
-       ;
+        )];
     }
     /**
      * Display a listing of the resource.
