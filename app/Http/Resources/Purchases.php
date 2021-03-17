@@ -27,7 +27,7 @@ class Purchases extends JsonResource
             "otherwise" => "иное"
         ];
         $orbits = json_decode($this->orbits);
-        return $orbits;
+        return [$this->orbits, $orbits];
         $orbits = $orbits ? array_map(function ($i) use ($orbitsArr) {
             return $orbitsArr[$i];
         }, $orbits) : [];
