@@ -47,7 +47,12 @@
                     showDropdown = false;
                   }
                 "
-                >{{ item.title }} <span v-if="item.description">({{ item.description }})</span></a
+                >{{ item.title }}
+                <span
+                  style="display: block; font-size: 0.9em; white-space: normal"
+                  v-if="item.description"
+                  >{{ item.description }}</span
+                ></a
               >
             </li>
           </ul>
