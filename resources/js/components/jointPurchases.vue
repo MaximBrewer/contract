@@ -37,7 +37,7 @@
             <td>{{ result.bid }}₽</td>
             <td>{{ result.sum }}₽</td>
             <td>
-              <div v-if="result.orbits">{{ result.orbits.join(", ") }}</div>
+              <div v-if="result.defer.orbits">{{ result.defer.orbits.join(", ") }}</div>
             </td>
           </tr>
         </tbody>
