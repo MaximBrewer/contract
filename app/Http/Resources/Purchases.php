@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Multiplicity;
 use App\Auction;
 use App\Contragent;
+use App\Store;
 
 
 class Purchases extends JsonResource
@@ -33,6 +34,7 @@ class Purchases extends JsonResource
         }, $orbits) : [];
 
         $auction = Auction::find($this->auction_id);
+        $store = Store::find($this->store_id);
         $contragent = Contragent::find($this->contragent_id);
         $volume = $auction->multiplicity->coefficient * $this->volume;
         $sum = $this->correct * $volume;
@@ -42,6 +44,10 @@ class Purchases extends JsonResource
         
         return [
             'id' => $this->id,
+            'store' => [
+                'id' => $store->id,
+                'address' => $store->address
+            ],
             'contragent' => [
                 'id' => $contragent->id,
                 'title' => $contragent->title

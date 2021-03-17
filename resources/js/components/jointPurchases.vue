@@ -9,6 +9,7 @@
             <th>{{ __("Auction number") }}</th>
             <th>{{ __("End date") }}</th>
             <th>{{ __("Contragent name") }}</th>
+            <th>{{ __("Склад") }}</th>
             <th>{{ __("Contract volume") }}</th>
             <th>{{ __("Multiplicity") }}</th>
             <th>{{ __("Contract bid") }}</th>
@@ -32,12 +33,15 @@
                 >{{ result.contragent.title }}</router-link
               >
             </td>
+            <td>{{ result.store.address }}</td>
             <td>{{ result.volume }}</td>
             <td>{{ result.auction.multiplicity.title }}</td>
             <td>{{ result.bid }}₽</td>
             <td>{{ result.sum }}₽</td>
             <td>
-              <div v-if="result.defer.orbits">{{ result.defer.orbits.join(", ") }}</div>
+              <div v-if="result.defer.orbits">
+                {{ result.defer.orbits.join(", ") }}
+              </div>
             </td>
           </tr>
         </tbody>

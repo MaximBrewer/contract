@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Multiplicity;
 use App\Auction;
 use App\Contragent;
+use App\Store;
 
 class Result extends JsonResource
 {
@@ -18,6 +19,7 @@ class Result extends JsonResource
     public function toArray($request)
     {
         $auction = Auction::find($this->auction_id);
+        $store = Store::find($this->store_id);
         $contragent = Contragent::find($this->contragent_id);
         $volume = $auction->multiplicity->coefficient * $this->volume;
         $sum = $this->correct * $volume;
@@ -27,6 +29,10 @@ class Result extends JsonResource
 
         return [
             'id' => $this->id,
+            'store' => [
+                'id' => $store->id,
+                'address' => $store->address
+            ],
             'contragent' => [
                 'id' => $contragent->id,
                 'title' => $contragent->title
