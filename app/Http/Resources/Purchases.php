@@ -27,7 +27,7 @@ class Purchases extends JsonResource
         $reward = 0.0005 * $sum + $rest * 0.05;
 
         return 
-        $request;
+        $this->deffers;
 ;
         return [
             'id' => $this->id,
