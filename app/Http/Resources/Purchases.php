@@ -44,10 +44,10 @@ class Purchases extends JsonResource
         
         return [
             'id' => $this->id,
-            'store' => [
+            'store' => $store ? [
                 'id' => $store->id,
                 'address' => $store->address
-            ],
+            ] : null,
             'contragent' => [
                 'id' => $contragent->id,
                 'title' => $contragent->title

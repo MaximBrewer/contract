@@ -177,6 +177,11 @@
 
                                 <router-link :to="{name: 'jointPurchases'}" class="dropdown-item">{{ __('Совместные закупки') }}
                                 </router-link>
+
+                                <router-link :to="{name: 'historyPurchases'}" class="dropdown-item">{{ __('История закупок') }}
+                                </router-link>
+
+                                
                                 
                                 <router-link :to="{name: 'settlementsIndex'}" class="dropdown-item">{{ __('Mutual Settlements') }}
                                 </router-link>

@@ -63,6 +63,7 @@ import AuctionArchive from "./components/auctions/auctionArchive.vue";
 import AuctionMy from "./components/auctions/auctionMy.vue";
 import MyResults from "./components/auctions/myResults.vue";
 import JointPurchases from "./components/jointPurchases.vue";
+import HistoryPurchases from "./components/historyPurchases.vue";
 import AuctionBid from "./components/auctions/auctionBid.vue";
 import AuctionCreate from "./components/auctions/auctionCreate.vue";
 import AuctionEdit from "./components/auctions/auctionEdit.vue";
@@ -174,6 +175,12 @@ const app = new Vue({
                 component: JointPurchases,
                 name: "jointPurchases"
             },
+            {
+                path: "/personal/purchases/history",
+                component: HistoryPurchases,
+                name: "historyPurchases"
+            },
+
             {
                 path: "/personal/auctions/show/:id",
                 component: AuctionShow,

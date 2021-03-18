@@ -20,6 +20,7 @@
             <th>{{ __('End date') }}</th>
             <th>{{ __('Contragent name') }}</th>
             <th>{{ __("Склад") }}</th>
+            <th>{{ __("Лот") }}</th>
             <th>{{ __('Contract volume') }}</th>
             <th>{{ __('Multiplicity') }}</th>
             <th>{{ __('Contract bid') }}</th>
