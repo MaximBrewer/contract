@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid">
     <div class="table-responsive" id="results">
-      <div class="h2 text-center">{{ __("Совместные закупки") }}</div>
+      <div class="h2 text-center">{{ __("История закупок") }}</div>
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -15,7 +15,6 @@
             <th>{{ __("Multiplicity") }}</th>
             <th>{{ __("Contract bid") }}</th>
             <th>{{ __("Amount") }}</th>
-            <th>{{ __("Сферы") }}</th>
           </tr>
         </thead>
         <tbody>
@@ -40,11 +39,6 @@
             <td>{{ result.auction.multiplicity.title }}</td>
             <td>{{ result.bid }}₽</td>
             <td>{{ result.sum }}₽</td>
-            <td>
-              <div v-if="result.defer.orbits">
-                {{ result.defer.orbits.join(", ") }}
-              </div>
-            </td>
           </tr>
         </tbody>
       </table>
@@ -63,9 +57,9 @@ export default {
     var app = this;
     let loader = Vue.$loading.show();
     axios
-      .get("/web/v1/results/purchases")
+      .get("/web/v1/results/purchases/history")
       .then(function (res) {
-        app.results = res.data.purchases;
+        app.results = res.data.result;
         loader.hide();
       })
       .catch(function (err) {

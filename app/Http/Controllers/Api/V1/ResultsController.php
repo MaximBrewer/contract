@@ -61,6 +61,22 @@ class ResultsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function history()
+    {
+        return ['result' => ResultResource::collection(
+            DB::table('bets')
+                ->select(['bets.*'])
+                ->where('bets.contragent_id', Auth::user()->contragents[0]->id)
+                ->whereNotNull(['approved_contract'])
+                ->orderBy('id', 'DESC')
+                ->get()
+        )];
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $r)
     {
         $bet = Bet::find($r->id);
