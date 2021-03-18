@@ -57,7 +57,7 @@ export default {
     var app = this;
     let loader = Vue.$loading.show();
     axios
-      .get("/web/v1/results/purchases/history")
+      .get("/web/v1/results/history")
       .then(function (res) {
         app.results = res.data.result;
         loader.hide();
