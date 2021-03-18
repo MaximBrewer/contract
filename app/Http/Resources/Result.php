@@ -29,14 +29,18 @@ class Result extends JsonResource
 
         return [
             'id' => $this->id,
+            'lot' => $auction->lot ? [
+                'id' => $auction->lot->id,
+                'title' => $auction->lot->title
+            ] : null,
             'store' => $store ? [
                 'id' => $store->id,
                 'address' => $store->address
             ] : null,
-            'contragent' => [
+            'contragent' => $contragent ? [
                 'id' => $contragent->id,
                 'title' => $contragent->title
-            ],
+            ] : null,
             'auction' => [
                 'id' => $auction->id,
                 'finish_at' => $auction->finish_at,

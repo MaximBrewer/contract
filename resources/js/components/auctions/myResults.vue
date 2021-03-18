@@ -45,6 +45,7 @@
               >{{ result.contragent.title }}</router-link>
             </td>
             <td>{{ result.store ? result.store.address : "" }}</td>
+            <td>{{ result.lot ? result.lot.title : "" }}</td>
             <td>{{ result.volume }}</td>
             <td>{{ result.auction.multiplicity.title }}</td>
             <td>{{ result.bid }}₽</td>
