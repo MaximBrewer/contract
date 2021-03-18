@@ -1,7 +1,7 @@
 <template>
   <section class="container-fluid">
     <div class="table-responsive" id="results">
-      <div class="h2 text-center">{{ __("История закупок") }}</div>
+      <div class="h2 text-center">{{ __("История броней") }}</div>
       <table class="table table-bordered">
         <thead>
           <tr>
