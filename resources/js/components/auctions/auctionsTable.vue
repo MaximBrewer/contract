@@ -5,11 +5,11 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>{{ __('Auction') }}</th>
-          <th>{{ __('Intervals') }}</th>
-          <th>{{ __('Store') }}</th>
-          <th>{{ __('Description') }}</th>
-          <th v-if="action != 'archive'">{{ __('Confirmed') }}</th>
+          <th>{{ __("Auction") }}</th>
+          <th>{{ __("Intervals") }}</th>
+          <th>{{ __("Store") }}</th>
+          <th>{{ __("Description") }}</th>
+          <th v-if="action != 'archive'">{{ __("Confirmed") }}</th>
           <th></th>
         </tr>
       </thead>
@@ -18,98 +18,111 @@
           <th>{{ auction.id }}</th>
           <td>
             <div v-if="auction.contragent" class="text-nowrap">
-              <strong v-if="false">{{ __('Contragent') }}:</strong>
+              <strong v-if="false">{{ __("Contragent") }}:</strong>
               <div class="h6">
-                <router-link
-                  :to="'/personal/contragents/show/' + auction.contragent.id"
-                >{{ auction.contragent.title }}</router-link>
+                <a
+                  target="_blank"
+                  href="'/personal/contragents/show/' + auction.contragent.id"
+                  >{{ auction.contragent.title }}</a
+                >
               </div>
             </div>
             <div v-if="auction.contragent" class="text-nowrap">
-              <strong>{{ __('Rating') }}:</strong>
+              <strong>{{ __("Rating") }}:</strong>
               {{ auction.contragent.rating }}
             </div>
             <div v-if="auction.product" class="text-nowrap">
-              <strong>{{ __('Product') }}:</strong>
+              <strong>{{ __("Product") }}:</strong>
               <span>{{ auction.product.title }}</span>
             </div>
             <div v-if="auction.multiplicity" class="text-nowrap">
-              <strong>{{ __('Multiplicity') }}:</strong>
+              <strong>{{ __("Multiplicity") }}:</strong>
               <span>{{ auction.multiplicity.title }}</span>
             </div>
             <div class="text-nowrap">
-              <strong>{{ __('New can bet?') }}:</strong>
+              <strong>{{ __("New can bet?") }}:</strong>
               <span>{{ __(auction.can_bet) }}</span>
             </div>
             <div class="text-nowrap">
-              <strong>{{ __('Mode') }}:</strong>
+              <strong>{{ __("Mode") }}:</strong>
               <span>{{ __(auction.mode) }}</span>
             </div>
-            <div class="text-nowrap" v-if="auction.start_price && action == 'bid'">
-              <strong>{{ __('Auction minimal bet') }}:</strong>
+            <div
+              class="text-nowrap"
+              v-if="auction.start_price && action == 'bid'"
+            >
+              <strong>{{ __("Auction minimal bet") }}:</strong>
               <span>{{ auction.min_bet }}₽</span>
             </div>
             <div class="text-nowrap">
-              <strong>{{ __('Auction step') }}:</strong>
+              <strong>{{ __("Auction step") }}:</strong>
               <span>{{ auction.step }}₽</span>
             </div>
             <div class="text-nowrap">
-              <strong>{{ __('Autosale') }}:</strong>
+              <strong>{{ __("Autosale") }}:</strong>
               <span>{{ __(auction.autosale) }}</span>
             </div>
             <div class="text-nowrap">
-              <strong>{{ __('Auction start') }}:</strong>
+              <strong>{{ __("Auction start") }}:</strong>
               <span>{{ auction.start_at | formatDateTime }}</span>
             </div>
             <div class="text-nowrap">
-              <strong>{{ __('Auction finish') }}:</strong>
+              <strong>{{ __("Auction finish") }}:</strong>
               <span>{{ auction.finish_at | formatDateTime }}</span>
             </div>
             <div
               class="text-nowrap"
-              v-if="auction.range != undefined && auction.range != 10000 && store"
+              v-if="
+                auction.range != undefined && auction.range != 10000 && store
+              "
             >
-              <strong>{{ __('Range') }}:</strong>
-              <span>{{ auction.range * 1 }} {{ __('km') }}</span>
+              <strong>{{ __("Range") }}:</strong>
+              <span>{{ auction.range * 1 }} {{ __("km") }}</span>
             </div>
           </td>
           <td>
             <ul class="unstyled">
               <li v-for="(interval, idx) in auction.intervals" :key="idx">
                 <div class="text-nowrap">
-                  <strong>{{ __('Start Price') }}:</strong>
+                  <strong>{{ __("Start Price") }}:</strong>
                   <span>{{ interval.start_price }}</span>
                 </div>
                 <div class="text-nowrap">
-                  <strong>{{ __('Volume') }}:</strong>
+                  <strong>{{ __("Volume") }}:</strong>
                   <span>{{ interval.volume }}</span>
                 </div>
                 <div class="text-nowrap">
-                  <strong>{{ __('From') }}:</strong>
+                  <strong>{{ __("From") }}:</strong>
                   <span>{{ interval.from | formatDateTime }}</span>
                 </div>
                 <div class="text-nowrap">
-                  <strong>{{ __('To') }}:</strong>
+                  <strong>{{ __("To") }}:</strong>
                   <span>{{ interval.to | formatDateTime }}</span>
                 </div>
               </li>
             </ul>
           </td>
           <td>
-            <div v-if="auction.store && auction.store.federal_district" class="text-nowrap">
-              <strong>{{ __('Auction store federal district') }}:</strong>
+            <div
+              v-if="auction.store && auction.store.federal_district"
+              class="text-nowrap"
+            >
+              <strong>{{ __("Auction store federal district") }}:</strong>
               <span>{{ auction.store.federal_district.title }}</span>
             </div>
-            <div v-if="auction.store && auction.store.region" class="text-nowrap">
-              <strong>{{ __('Auction store region') }}:</strong>
+            <div
+              v-if="auction.store && auction.store.region"
+              class="text-nowrap"
+            >
+              <strong>{{ __("Auction store region") }}:</strong>
               <span>{{ auction.store.region.title }}</span>
             </div>
             <div v-if="auction.store">
-              <strong>{{ __('Auction store address') }}:</strong>
+              <strong>{{ __("Auction store address") }}:</strong>
               <span>{{ auction.store.address }}</span>
             </div>
             <div v-if="auction.store && false" class="text-nowrap">
-              <strong>{{ __('Auction store coords') }}:</strong>
+              <strong>{{ __("Auction store coords") }}:</strong>
               <br />
               <span>{{ auction.store.coords }}</span>
             </div>
@@ -119,9 +132,14 @@
           </td>
           <td v-if="action != 'archive'">
             <span
-              v-tooltip="auction.confirmed ? __('Confirmed') : __('Not confirmed')"
+              v-tooltip="
+                auction.confirmed ? __('Confirmed') : __('Not confirmed')
+              "
               class="online"
-              v-bind:class="{ 'is-online': auction.confirmed, 'is-offline': !auction.confirmed }"
+              v-bind:class="{
+                'is-online': auction.confirmed,
+                'is-offline': !auction.confirmed,
+              }"
             ></span>
           </td>
           <td>
@@ -164,7 +182,7 @@
               <router-link
                 v-if="company.id == auction.contragent.id"
                 v-tooltip="__('Edit auction')"
-                :to="{name: 'editAuction', 'params': {'id': auction.id}}"
+                :to="{ name: 'editAuction', params: { id: auction.id } }"
                 class="btn btn-primary"
               >
                 <i class="mdi mdi-pencil" aria-hidden="true"></i>
