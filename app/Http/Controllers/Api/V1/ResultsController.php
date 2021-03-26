@@ -28,7 +28,7 @@ class ResultsController extends Controller
                 ->leftJoin('auctions', 'bets.auction_id', '=', 'auctions.id')
                 ->select('bets.*')
                 ->where('auctions.contragent_id', Auth::user()->contragents[0]->id)
-                ->whereNotNull(['approved_contract'])
+                // ->whereNotNull(['approved_contract'])
                 ->orderBy('id', 'DESC')
                 ->get()
         ), 'logistic_logs' => LogisticLogResource::collection(
@@ -51,7 +51,7 @@ class ResultsController extends Controller
                 })
                 ->select(['bets.*', 'defers.description', 'defers.orbits', 'defers.creditor_id'])
                 ->where('bets.distributor_id', Auth::user()->contragents[0]->id)
-                ->whereNotNull(['approved_contract'])
+                // ->whereNotNull(['approved_contract'])
                 ->orderBy('id', 'DESC')
                 ->get()
         )];
@@ -67,7 +67,7 @@ class ResultsController extends Controller
             DB::table('bets')
                 ->select(['bets.*'])
                 ->where('bets.contragent_id', Auth::user()->contragents[0]->id)
-                ->whereNotNull(['approved_contract'])
+                // ->whereNotNull(['approved_contract'])
                 ->orderBy('id', 'DESC')
                 ->get()
         )];
