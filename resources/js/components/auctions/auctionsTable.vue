@@ -22,7 +22,7 @@
               <div class="h6">
                 <a
                   target="_blank"
-                  href="'/personal/contragents/show/' + auction.contragent.id"
+                  :href="'/personal/contragents/show/' + auction.contragent.id"
                   >{{ auction.contragent.title }}</a
                 >
               </div>
