@@ -8,6 +8,7 @@
             <th>#</th>
             <th>{{ __("Auction number") }}</th>
             <th>{{ __("Утвержден") }}</th>
+            <th>{{ __("Режим") }}</th>
             <th>{{ __("End date") }}</th>
             <th>{{ __("Contragent name") }}</th>
             <th>{{ __("Склад") }}</th>
@@ -27,6 +28,8 @@
                 >{{ result.auction.id }}</router-link
               >
             </td>
+            <td>{{ result.approved_contract ? __("Да") : __("Нет") }}</td>
+            <td>{{ __(result.auction.mode)}}</td>
             <td>{{ result.auction.finish_at | formatDateTime }}</td>
             <td>
               <router-link
@@ -34,7 +37,6 @@
                 >{{ result.contragent.title }}</router-link
               >
             </td>
-            <td>{{ result.approved_contract ? __("Да") : __("Нет") }}</td>
             <td>{{ result.store.address }}</td>
             <td>{{ result.lot ? result.lot.title : "" }}</td>
             <td>{{ result.volume }}</td>
