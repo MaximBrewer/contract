@@ -7,6 +7,7 @@
           <tr>
             <th>#</th>
             <th>{{ __("Auction number") }}</th>
+            <th>{{ __("Утвержден") }}</th>
             <th>{{ __("End date") }}</th>
             <th>{{ __("Contragent name") }}</th>
             <th>{{ __("Склад") }}</th>
@@ -33,6 +34,7 @@
                 >{{ result.contragent.title }}</router-link
               >
             </td>
+            <td>{{ result.approved_contract ? __("Да") : __("Нет") }}</td>
             <td>{{ result.store.address }}</td>
             <td>{{ result.lot ? result.lot.title : "" }}</td>
             <td>{{ result.volume }}</td>

@@ -17,6 +17,7 @@
           <tr>
             <th>#</th>
             <th>{{ __('Auction number') }}</th>
+            <th>{{ __("Утвержден") }}</th>
             <th>{{ __('End date') }}</th>
             <th>{{ __('Contragent name') }}</th>
             <th>{{ __("Склад") }}</th>
@@ -38,6 +39,7 @@
                 :to="'/personal/auctions/show/' + result.auction.id"
               >{{ result.auction.id }}</router-link>
             </td>
+            <td>{{ result.approved_contract ? __("Да") : __("Нет") }}</td>
             <td>{{ result.auction.finish_at | formatDateTime }}</td>
             <td>
               <router-link

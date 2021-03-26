@@ -59,6 +59,7 @@ class Purchases extends JsonResource
             'auction' => [
                 'id' => $auction->id,
                 'finish_at' => $auction->finish_at,
+                'mode' => $auction->mode,
                 'multiplicity' => [
                     'title' => $auction->multiplicity->title,
                     'coefficient' => $auction->multiplicity->coefficient
@@ -70,6 +71,7 @@ class Purchases extends JsonResource
                 'orbits' => $orbits
             ],
             'rest' => $rest,
+            'approved_contract' => $this->approved_contract,
             'bid' => $this->correct,
             'volume' => $this->volume,
             'message' => $this->message,

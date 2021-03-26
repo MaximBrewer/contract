@@ -44,12 +44,14 @@ class Result extends JsonResource
             'auction' => [
                 'id' => $auction->id,
                 'finish_at' => $auction->finish_at,
+                'mode' => $auction->mode,
                 'multiplicity' => [
                     'title' => $auction->multiplicity->title,
                     'coefficient' => $auction->multiplicity->coefficient
                 ]
             ],
             'sum' => $sum,
+            'approved_contract' => $this->approved_contract,
             'rest' => $rest,
             'bid' => $this->correct,
             'volume' => $this->volume,
