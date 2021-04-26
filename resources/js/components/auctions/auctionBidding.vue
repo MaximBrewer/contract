@@ -119,7 +119,7 @@
                   <th>{{ __("Volume") }}</th>
                   <th>{{ __("Price") }}</th>
                   <th>{{ __("Time") }}</th>
-                  <th style="width:100%;"></th>
+                  <th style="width: 100%"></th>
                 </tr>
               </thead>
               <tbody>
@@ -149,72 +149,90 @@
                   </td>
                   <td
                     v-if="
-                      !bet.approved_volume || bet.contragent_id == company.id || bet.distributor_id == company.id
+                      !bet.approved_volume ||
+                      bet.contragent_id == company.id ||
+                      bet.distributor_id == company.id
                     "
                   >
                     <div class="d-flex" v-if="bet.distributor">
-                      <strong>{{ __("Совместно с ") + bet.distributor }}</strong>
+                      <strong>{{
+                        __("Совместно с ") + bet.distributor
+                      }}</strong>
                     </div>
                     <div class="d-flex" v-if="bet.contragent_id == company.id">
-                      <a
-                        v-tooltip="__('Delete bet')"
-                        href="javascript:void(0)"
-                        class="btn-sm"
-                        v-bind:class="{
-                          'btn-danger': !auction.finished,
-                          'btn-secondary': auction.finished,
-                        }"
-                        @click="
-                          auction.finished
-                            ? function () {
-                                return false;
-                              }
-                            : removeBet(bet)
-                        "
-                      >
-                        <i class="mdi mdi-delete" aria-hidden="true"></i> </a
-                      >&nbsp;
-                      <a
-                        v-tooltip="
-                          !bet.guarantee
-                            ? __('я гарантирую приобрести данный объем')
-                            : __('отозвать гарантию')
-                        "
-                        href="javascript:void(0)"
-                        class="btn btn-sm d-block mr-2"
-                        :disabled="!!auction.finished"
-                        v-bind:class="{
-                          'btn-success': !bet.guarantee,
-                          'btn-danger': !!bet.guarantee,
-                          'btn-secondary': auction.finished,
-                        }"
-                        @click="
-                          auction.finished
-                            ? function () {
-                                return false;
-                              }
-                            : guarantee(bet)
-                        "
-                      >
-                        <i class="mdi mdi-star" aria-hidden="true"></i>
-                      </a>
-                      <div
-                        v-if="
-                          !!bet.approved_volume
-                        "
-                        class="text-nowrap mr-2"
-                      >
-                        <div class="h6">
+                      <div class="d-flex">
+                        <div>
+                          <a
+                            v-tooltip="__('Delete bet')"
+                            href="javascript:void(0)"
+                            class="btn btn-sm d-block mr-1"
+                            v-bind:class="{
+                              'btn-danger': !auction.finished,
+                              'btn-secondary': auction.finished,
+                            }"
+                            @click="
+                              auction.finished
+                                ? function () {
+                                    return false;
+                                  }
+                                : removeBet(bet)
+                            "
+                          >
+                            <i class="mdi mdi-delete" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                        <div>
+                          <a
+                            v-tooltip="
+                              !bet.guarantee
+                                ? __('я гарантирую приобрести данный объем')
+                                : __('отозвать гарантию')
+                            "
+                            href="javascript:void(0)"
+                            class="btn btn-sm d-block mr-2"
+                            :disabled="!!auction.finished"
+                            v-bind:class="{
+                              'btn-success': !bet.guarantee,
+                              'btn-danger': !!bet.guarantee,
+                              'btn-secondary': auction.finished,
+                            }"
+                            @click="
+                              auction.finished
+                                ? function () {
+                                    return false;
+                                  }
+                                : guarantee(bet)
+                            "
+                          >
+                            <i class="mdi mdi-star" aria-hidden="true"></i>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="text-nowrap mr-2">
+                        <div class="h6" v-if="!!bet.approved_volume">
                           {{ __("The volume of bet has approved") }}
                           {{
                             bet.correct ? __("Price") + ": " + bet.correct : ""
                           }}
                         </div>
+                        <div class="d-flex">
+                          <input
+                            style="max-width: 100px"
+                            type="number"
+                            step="0.01"
+                            v-model="bid.self"
+                            v-bind:class="{ 'is-invalid': errors.price }"
+                          />
+                          <button
+                            class="btn btn-sm btn-primary ml-1"
+                            @click="self(bet)"
+                          >
+                            предложить свою цену
+                          </button>
+                        </div>
                       </div>
                       <div
-                        v-if="
-                          !!bet.approved_contract
-                        "
+                        v-if="!!bet.approved_contract"
                         class="text-nowrap mr-2"
                       >
                         <div class="h6">
@@ -222,9 +240,7 @@
                         </div>
                       </div>
                       <div
-                        v-if="
-                          !!bet.approved_contract
-                        "
+                        v-if="!!bet.approved_contract"
                         class="text-nowrap mr-2"
                       >
                         <a
@@ -290,6 +306,33 @@ export default {
           });
       }
     },
+    self(bet) {
+      var app = this;
+      if (app.auction) {
+        bet.guarantee = !bet.guarantee * 1;
+        axios
+          .post("/web/v1/auctions/self", {
+            id: bet.id,
+            self: bet.self,
+          })
+          .then(function (resp) {
+            app.$fire({
+              title: "Успешно",
+              text: "Ваше предложение отправлено",
+              type: "succes",
+              timer: 5000,
+            });
+          })
+          .catch(function (err) {
+            app.$fire({
+              title: app.__("Error!"),
+              text: err.response.data.message,
+              type: "error",
+              timer: 5000,
+            });
+          });
+      }
+    },
     betIt() {
       var app = this;
       if (app.auction)
@@ -298,7 +341,9 @@ export default {
             auction: app.auction.id,
             interval: app.bid.interval.id,
             bidder: app.user.contragents[0].id,
-            distributor: app.user.contragents[0].distributor ? app.user.contragents[0].distributor.id : null,
+            distributor: app.user.contragents[0].distributor
+              ? app.user.contragents[0].distributor.id
+              : null,
             volume: app.bid.volume,
             price: app.bid.price,
             store: app.bid.store ? app.bid.store.id : false,

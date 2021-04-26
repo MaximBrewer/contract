@@ -607,6 +607,31 @@ class AuctionsController extends Controller
         return ['bet' => $bet];
     }
 
+    public function self(Request $r)
+    {
+
+        $bet = Bet::findOrFail($r->id);
+        $auction = $bet->auction;
+
+        if (empty($auction) || $bet->contragent_id != Auth::user()->contragents[0]->id) {
+            return response()->json([
+                'message' => __('It`s not yours!'),
+                'errors' => []
+            ], 422);
+        }
+
+        $bet->update([
+            'self' => !$r->self
+        ]);
+
+
+        $auction = Auction::find($auction->id);
+
+        event(new MessagePushed($auction));
+
+        return ['bet' => $bet];
+    }
+
     public function unApproveVolume($id)
     {
         $bet = Bet::findOrFail($id);

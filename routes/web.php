@@ -68,6 +68,7 @@ Route::group([
     
 
     Route::post('auctions/guarantee', 'AuctionsController@guaranteeBet');
+    Route::post('auctions/self', 'AuctionsController@self');
 
     Route::post('auctions/bet', 'AuctionsController@bet');
     Route::get('auctions/unbet/{id}', 'AuctionsController@unbet');
