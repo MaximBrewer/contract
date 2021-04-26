@@ -621,7 +621,7 @@ class AuctionsController extends Controller
         }
 
         $bet->update([
-            'self' => !$r->self
+            'self' => $r->self
         ]);
 
 
