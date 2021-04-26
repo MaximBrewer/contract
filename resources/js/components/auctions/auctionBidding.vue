@@ -220,7 +220,7 @@
                             style="max-width: 100px"
                             type="number"
                             step="0.01"
-                            v-model="bid.self"
+                            v-model="bet.self"
                             v-bind:class="{ 'is-invalid': errors.price }"
                           />
                           <button
