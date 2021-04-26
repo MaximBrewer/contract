@@ -22,6 +22,7 @@ class Bet extends Model
         'store_id',
         'guarantee',
         'message',
+        'self',
     ];
 
     protected $appends = [
