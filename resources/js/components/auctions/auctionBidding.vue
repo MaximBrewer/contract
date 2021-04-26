@@ -215,7 +215,13 @@
                             bet.correct ? __("Price") + ": " + bet.correct : ""
                           }}
                         </div>
-                        <div class="d-flex">
+                        <div
+                          class="d-flex"
+                          v-if="
+                            auction.mode == 'price2day' ||
+                            auction.mode == 'callApp'
+                          "
+                        >
                           <input
                             style="max-width: 100px"
                             type="number"
