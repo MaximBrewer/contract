@@ -28,6 +28,7 @@
                   <th>{{ __("Approve volume") }}</th>
                   <th>{{ __("Correcting price") }}</th>
                   <th>{{ __("Approve contract") }}</th>
+                  <th>{{ __("Желаемая цена") }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -172,6 +173,11 @@
                         class="btn btn-primary"
                         >{{ __("Get the Invoice") }}</a
                       >
+                    </div>
+                  </td>
+                  <td>
+                    <div class="text-nowrap">
+                      {{ bet.self }}
                     </div>
                   </td>
                 </tr>

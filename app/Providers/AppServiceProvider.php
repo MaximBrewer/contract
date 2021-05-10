@@ -17,6 +17,9 @@ use App\Observers\Logistic as LogisticObserver;
 use App\Observers\Contract as ContractObserver;
 use Jenssegers\Date\Date;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -43,5 +46,6 @@ class AppServiceProvider extends ServiceProvider
         Logistic::observe(LogisticObserver::class);
         Contract::observe(ContractObserver::class);
         Date::setlocale(config('app.locale'));
+
     }
 }
