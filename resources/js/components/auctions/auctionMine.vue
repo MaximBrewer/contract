@@ -177,7 +177,7 @@
                   </td>
                   <td>
                     <div class="text-nowrap">
-                      {{ bet.self }}
+                      {{ !!bet.self ? bet.self : "" }}
                     </div>
                   </td>
                 </tr>
