@@ -84,12 +84,12 @@ class JointsController extends Controller
 
     public function check(Request $r)
     {
-        $joint = Joint::where('creditor_id', $r->post('id'))
+        $joint = Joint::where('creditor_id', $r->item->id)
             ->where('supplier_id', User::find(Auth::user()->id)->contragents[0]->id)
             ->first();
         if (!$joint) {
             Joint::create([
-                'creditor_id' => $r->post('id'),
+                'creditor_id' => $r->item->id,
                 'supplier_id' => User::find(Auth::user()->id)->contragents[0]->id,
                 'status' => 'manufacturer'
             ]);
@@ -99,7 +99,7 @@ class JointsController extends Controller
                 $joint->update([
                     'status' => 'both',
                 ]);
-            return ['contragent' => Contragent::findOrFail($r->post('id'))];
+            return ['contragent' => Contragent::findOrFail($r->item->id)];
         }
     }
 
