@@ -93,7 +93,7 @@ class JointsController extends Controller
         return $this->index();
     }
 
-    public function check(Request $r, $id)
+    public function check(Request $r)
     {
 
         // $Joint = Joint::findOrFail($id);
