@@ -96,6 +96,8 @@ class JointsController extends Controller
     public function check(Request $r)
     {
 
+        // $defer = \App\Defer::fin
+
         // $Joint = Joint::findOrFail($id);
 
         // if ($Joint->creditor_id != Auth::user()->contragents[0]->id) {

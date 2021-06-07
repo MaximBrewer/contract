@@ -37,7 +37,7 @@ class Joint extends JsonResource
                 'id' => $this->supplier->id,
                 'title' => $this->supplier->title,
             ],
-            'status' => __("status." . $this->status),
+            'status' => __("joint.status." . $this->status),
             'description' => $this->description,
             'orbits' => $orbits
         ];
