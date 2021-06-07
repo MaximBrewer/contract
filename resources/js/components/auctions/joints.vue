@@ -5,7 +5,7 @@
         <div class="form-group">
           <a
             href="javascript:void(0)"
-            @click="createJoint"
+            @click="createDistributor"
             class="btn btn-primary btn-lg"
             >{{
               __(
@@ -15,7 +15,7 @@
           >
           <a
             href="javascript:void(0)"
-            @click="createDistributor"
+            @click="createJoint"
             class="btn btn-primary btn-lg"
             >{{
               __(
