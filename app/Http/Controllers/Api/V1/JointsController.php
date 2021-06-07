@@ -84,17 +84,29 @@ class JointsController extends Controller
 
     public function destroy(Request $r, $id)
     {
-
-        $Joint = Joint::findOrFail($id);
-
-        if ($Joint->creditor_id != Auth::user()->contragents[0]->id) {
+        $joint = Joint::findOrFail($id);
+        if ($joint->creditor_id == Auth::user()->contragents[0]->id) {
+            if ($joint->status == 'both') {
+                $joint->update([
+                    'status' => 'manufacturer',
+                ]);
+            } elseif($joint->status == 'distributor'){
+                $joint->delete();
+            }
+        } elseif ($joint->supplier_id == Auth::user()->contragents[0]->id) {
+            if ($joint->status == 'both') {
+                $joint->update([
+                    'status' => 'distributor',
+                ]);
+            } elseif($joint->status == 'manufacturer'){
+                $joint->delete();
+            }
+        } else {
             return response()->json([
                 'message' => __('It`s not yours!'),
                 'errors' => []
             ], 422);
         }
-
-        Joint::findOrFail($id)->delete();
         return $this->index();
     }
 }

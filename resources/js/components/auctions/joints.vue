@@ -29,7 +29,7 @@
     <div class="row">
       <div class="col-md-6 col-sm-6 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __("Creditor") }}</label>
+          <label class="control-label">{{ __("Посредник") }}</label>
           <v-select
             label="title"
             :searchable="true"
@@ -43,7 +43,7 @@
       </div>
       <div class="col-md-6 col-sm-6 col-12">
         <div class="form-group">
-          <label class="control-label">{{ __("Supplier") }}</label>
+          <label class="control-label">{{ __("Покупатель") }}</label>
           <v-select
             label="title"
             :searchable="true"
@@ -61,7 +61,7 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>{{ __("Дистрибьютор") }}</th>
+            <th>{{ __("Посредник") }}</th>
             <th>{{ __("Supplier") }}</th>
             <th>{{ __("Статус") }}</th>
             <th></th>
@@ -78,7 +78,6 @@
                 v-tooltip="__('Delete joint')"
                 href="javascript:void(0)"
                 class="btn btn-danger btn-sm"
-                v-if="joint.creditor.id == company.id"
                 @click="deleteJoint(joint)"
               >
                 <i class="mdi mdi-delete" aria-hidden="true"></i>

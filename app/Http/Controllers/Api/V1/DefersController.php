@@ -84,17 +84,29 @@ class DefersController extends Controller
 
     public function destroy(Request $r, $id)
     {
-
         $defer = Defer::findOrFail($id);
-
-        if ($defer->creditor_id != Auth::user()->contragents[0]->id) {
+        if ($defer->creditor_id == Auth::user()->contragents[0]->id) {
+            if ($defer->status == 'both') {
+                $defer->update([
+                    'status' => 'manufacturer',
+                ]);
+            } elseif($defer->status == 'distributor'){
+                $defer->delete();
+            }
+        } elseif ($defer->supplier_id == Auth::user()->contragents[0]->id) {
+            if ($defer->status == 'both') {
+                $defer->update([
+                    'status' => 'distributor',
+                ]);
+            } elseif($defer->status == 'manufacturer'){
+                $defer->delete();
+            }
+        } else {
             return response()->json([
                 'message' => __('It`s not yours!'),
                 'errors' => []
             ], 422);
         }
-
-        Defer::findOrFail($id)->delete();
         return $this->index();
     }
 }

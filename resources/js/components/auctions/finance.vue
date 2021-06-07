@@ -61,7 +61,7 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>{{ __("Дистрибьютор") }}</th>
+            <th>{{ __("Посредник") }}</th>
             <th>{{ __("Supplier") }}</th>
             <th>{{ __("Статус") }}</th>
             <th>{{ __("Description") }}</th>
@@ -93,7 +93,6 @@
                 v-tooltip="__('Delete defer')"
                 href="javascript:void(0)"
                 class="btn btn-danger btn-sm"
-                v-if="defer.creditor.id == company.id"
                 @click="deleteDefer(defer)"
               >
                 <i class="mdi mdi-delete" aria-hidden="true"></i>
