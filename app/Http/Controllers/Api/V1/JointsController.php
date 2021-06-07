@@ -26,9 +26,6 @@ class JointsController extends Controller
 
     public function store(Request $r)
     {
-        $orbits = json_encode(is_array($r->post('orbits')) ? array_map(function ($i) {
-            return $i['value'];
-        }, $r->post('orbits')) : []);
         if ($r->post('supplier_id')) {
             $joint = Joint::where('supplier_id', $r->post('supplier_id'))
                 ->where('creditor_id', User::find(Auth::user()->id)->contragents[0]->id)
@@ -37,16 +34,12 @@ class JointsController extends Controller
                 Joint::create([
                     'creditor_id' => User::find(Auth::user()->id)->contragents[0]->id,
                     'supplier_id' => $r->post('supplier_id'),
-                    'description' => $r->post('description'),
-                    'orbits' => $orbits,
                     'status' => 'distributor'
                 ]);
             else {
                 if ($joint->status == 'manufacturer')
                     $joint->update([
-                        'status' => 'both',
-                        'description' => $r->post('description'),
-                        'orbits' => $orbits
+                        'status' => 'both'
                     ]);
             }
         } elseif ($r->post('creditor_id')) {
@@ -57,16 +50,12 @@ class JointsController extends Controller
                 Joint::create([
                     'creditor_id' => $r->post('creditor_id'),
                     'supplier_id' => User::find(Auth::user()->id)->contragents[0]->id,
-                    'description' => $r->post('description'),
-                    'orbits' => $orbits,
                     'status' => 'manufacturer'
                 ]);
             } else {
                 if ($joint->status == 'distributor')
                     $joint->update([
-                        'status' => 'both',
-                        'description' => $r->post('description'),
-                        'orbits' => $orbits
+                        'status' => 'both'
                     ]);
             }
         }
@@ -102,8 +91,6 @@ class JointsController extends Controller
             Joint::create([
                 'creditor_id' => $r->post('id'),
                 'supplier_id' => User::find(Auth::user()->id)->contragents[0]->id,
-                'description' => "",
-                'orbits' => "[]",
                 'status' => 'manufacturer'
             ]);
             return ['contragent' => null];
@@ -111,8 +98,6 @@ class JointsController extends Controller
             if ($joint->status == 'distributor')
                 $joint->update([
                     'status' => 'both',
-                    'description' => "",
-                    'orbits' => "[]"
                 ]);
             return ['contragent' => Contragent::findOrFail($r->post('id'))];
         }
