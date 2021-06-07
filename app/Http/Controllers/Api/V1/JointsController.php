@@ -29,25 +29,31 @@ class JointsController extends Controller
             return $i['value'];
         }, $r->post('orbits')) : []);
         if ($r->post('supplier_id')) {
-            if (
-                !($Joint = Joint::where('supplier_id', $r->post('supplier_id'))
-                    ->where('creditor_id', User::find(Auth::user()->id)->contragents[0]->id)
-                    ->first())
-            )
-                Joint::create([
+            $defer = Defer::where('supplier_id', $r->post('supplier_id'))
+                ->where('creditor_id', User::find(Auth::user()->id)->contragents[0]->id)
+                ->first();
+            if (!$defer)
+                Defer::create([
                     'creditor_id' => User::find(Auth::user()->id)->contragents[0]->id,
                     'supplier_id' => $r->post('supplier_id'),
                     'description' => $r->post('description'),
                     'orbits' => $orbits,
                     'status' => 'distributor'
                 ]);
+            else {
+                if ($defer->status == 'manufacturer')
+                    $defer->update([
+                        'status' => 'both',
+                        'description' => $r->post('description'),
+                        'orbits' => $orbits
+                    ]);
+            }
         } elseif ($r->post('creditor_id')) {
-            if (
-                !($Joint = Joint::where('creditor_id', $r->post('creditor_id'))
-                    ->where('supplier_id', User::find(Auth::user()->id)->contragents[0]->id)
-                    ->first())
-            ) {
-                Joint::create([
+            $defer = Defer::where('creditor_id', $r->post('creditor_id'))
+                ->where('supplier_id', User::find(Auth::user()->id)->contragents[0]->id)
+                ->first();
+            if (!$defer) {
+                Defer::create([
                     'creditor_id' => $r->post('creditor_id'),
                     'supplier_id' => User::find(Auth::user()->id)->contragents[0]->id,
                     'description' => $r->post('description'),
@@ -55,8 +61,12 @@ class JointsController extends Controller
                     'status' => 'manufacturer'
                 ]);
             } else {
-                if ($Joint->status == 'distributor')
-                    $Joint->update(['status' => 'both']);
+                if ($defer->status == 'distributor')
+                    $defer->update([
+                        'status' => 'both',
+                        'description' => $r->post('description'),
+                        'orbits' => $orbits
+                    ]);
             }
         }
         return $this->index();

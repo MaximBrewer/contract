@@ -29,11 +29,10 @@ class DefersController extends Controller
             return $i['value'];
         }, $r->post('orbits')) : []);
         if ($r->post('supplier_id')) {
-            if (
-                !($defer = Defer::where('supplier_id', $r->post('supplier_id'))
-                    ->where('creditor_id', User::find(Auth::user()->id)->contragents[0]->id)
-                    ->first())
-            )
+            $defer = Defer::where('supplier_id', $r->post('supplier_id'))
+                ->where('creditor_id', User::find(Auth::user()->id)->contragents[0]->id)
+                ->first();
+            if (!$defer)
                 Defer::create([
                     'creditor_id' => User::find(Auth::user()->id)->contragents[0]->id,
                     'supplier_id' => $r->post('supplier_id'),
@@ -41,12 +40,19 @@ class DefersController extends Controller
                     'orbits' => $orbits,
                     'status' => 'distributor'
                 ]);
+            else {
+                if ($defer->status == 'manufacturer')
+                    $defer->update([
+                        'status' => 'both',
+                        'description' => $r->post('description'),
+                        'orbits' => $orbits
+                    ]);
+            }
         } elseif ($r->post('creditor_id')) {
-            if (
-                !($defer = Defer::where('creditor_id', $r->post('creditor_id'))
-                    ->where('supplier_id', User::find(Auth::user()->id)->contragents[0]->id)
-                    ->first())
-            ) {
+            $defer = Defer::where('creditor_id', $r->post('creditor_id'))
+                ->where('supplier_id', User::find(Auth::user()->id)->contragents[0]->id)
+                ->first();
+            if (!$defer) {
                 Defer::create([
                     'creditor_id' => $r->post('creditor_id'),
                     'supplier_id' => User::find(Auth::user()->id)->contragents[0]->id,
@@ -56,7 +62,11 @@ class DefersController extends Controller
                 ]);
             } else {
                 if ($defer->status == 'distributor')
-                    $defer->update(['status' => 'both']);
+                    $defer->update([
+                        'status' => 'both',
+                        'description' => $r->post('description'),
+                        'orbits' => $orbits
+                    ]);
             }
         }
         return $this->index();
@@ -90,7 +100,7 @@ class DefersController extends Controller
                 $defer->update([
                     'status' => 'manufacturer',
                 ]);
-            } elseif($defer->status == 'distributor'){
+            } elseif ($defer->status == 'distributor') {
                 $defer->delete();
             }
         } elseif ($defer->supplier_id == Auth::user()->contragents[0]->id) {
@@ -98,7 +108,7 @@ class DefersController extends Controller
                 $defer->update([
                     'status' => 'distributor',
                 ]);
-            } elseif($defer->status == 'manufacturer'){
+            } elseif ($defer->status == 'manufacturer') {
                 $defer->delete();
             }
         } else {

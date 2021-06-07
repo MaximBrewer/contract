@@ -278,7 +278,7 @@
     "Logistics": "Логистика",
     "Finance": "Финансы",
     "status.manufacturer": "Согласован производителем",
-    "status.distributor": "Согласован дистрибьютором",
+    "status.distributor": "Согласован посредником",
     "status.both": "Согласован обеими сторонами",
     "Add a defer": "Добавить отсрочку",
     "Add a deferred service for the supplier": "Добавить услугу отсрочки для поставщика",
