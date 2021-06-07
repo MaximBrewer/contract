@@ -116,6 +116,7 @@ Route::group([
 
 
     Route::resource('defers', 'DefersController', ['except' => ['edit', 'create']]);
+    Route::resource('joints', 'JointsController', ['except' => ['edit', 'create']]);
     Route::resource('logistics', 'LogisticsController', ['except' => ['edit', 'create']]);
 
 

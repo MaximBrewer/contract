@@ -153,6 +153,8 @@
                                 </router-link>
                                 <router-link :to="{name: 'finance'}" class="dropdown-item">{{ __('Посредники') }}
                                 </router-link>
+                                <router-link :to="{name: 'joints'}" class="dropdown-item">{{ __('Совместные закупки') }}
+                                </router-link>
                             </div>
                         </li>
 
