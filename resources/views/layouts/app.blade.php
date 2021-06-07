@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="http://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}?ver=3.52" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}?ver=3.53" rel="stylesheet">
     <script>
         window._translations = {!! cache('translations'); !!};
     </script>
@@ -217,7 +217,7 @@
     <!-- Footer -->
     @include ('footer')
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}?ver=3.52" defer></script>
+    <script src="{{ asset('js/app.js') }}?ver=3.53" defer></script>
     <script src="//code.jivosite.com/widget/SgKrZgYDyo" async></script>
 </body>
 
