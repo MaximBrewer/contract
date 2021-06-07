@@ -103,7 +103,7 @@ class JointsController extends Controller
                 'creditor_id' => $r->post('id'),
                 'supplier_id' => User::find(Auth::user()->id)->contragents[0]->id,
                 'description' => "",
-                'orbits' => [],
+                'orbits' => "[]",
                 'status' => 'manufacturer'
             ]);
             return ['contragent' => null];
@@ -112,7 +112,7 @@ class JointsController extends Controller
                 $joint->update([
                     'status' => 'both',
                     'description' => "",
-                    'orbits' => []
+                    'orbits' => "[]"
                 ]);
             return ['contragent' => Contragent::findOrFail($r->post('id'))];
         }
