@@ -8,6 +8,7 @@ use App\Joint;
 use App\Http\Resources\Joint as JointResource;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use App\Contragent;
 
 class JointsController extends Controller
 {
@@ -92,6 +93,26 @@ class JointsController extends Controller
         return $this->index();
     }
 
+    public function check(Request $r, $id)
+    {
+
+        // $Joint = Joint::findOrFail($id);
+
+        // if ($Joint->creditor_id != Auth::user()->contragents[0]->id) {
+        //     return response()->json([
+        //         'message' => __('It`s not yours!'),
+        //         'errors' => []
+        //     ], 422);
+        // }
+
+        // $Joint->update([
+        //     'supplier_id' => $r->post('supplier_id'),
+        //     'description' => $r->post('description'),
+        // ]);
+
+        return ['contragent' => Contragent::first()];
+    }
+
     public function destroy(Request $r, $id)
     {
         $joint = Joint::findOrFail($id);
@@ -100,7 +121,7 @@ class JointsController extends Controller
                 $joint->update([
                     'status' => 'manufacturer',
                 ]);
-            } elseif($joint->status == 'distributor'){
+            } elseif ($joint->status == 'distributor') {
                 $joint->delete();
             }
         } elseif ($joint->supplier_id == Auth::user()->contragents[0]->id) {
@@ -108,7 +129,7 @@ class JointsController extends Controller
                 $joint->update([
                     'status' => 'distributor',
                 ]);
-            } elseif($joint->status == 'manufacturer'){
+            } elseif ($joint->status == 'manufacturer') {
                 $joint->delete();
             }
         } else {

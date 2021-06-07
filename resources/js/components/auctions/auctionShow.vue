@@ -41,12 +41,7 @@
               <a
                 class="dropdown-item"
                 href="javascript:;"
-                @click="
-                  () => {
-                    user.contragents[0].distributor = item;
-                    showDropdown = false;
-                  }
-                "
+                @click="() => checkJoint(item)"
                 >{{ item.title }}
                 <span
                   style="display: block; font-size: 0.9em; white-space: normal"
@@ -157,6 +152,40 @@ export default {
     };
   },
   methods: {
+    checkJoint(item) {
+      let app = this;
+      let loader = Vue.$loading.show();
+      axios
+        .post("/web/v1/joints/check/", {
+          item: item,
+        })
+        .then(function (res) {
+          if (res.data.contragent) {
+            app.user.contragents[0].distributor = item;
+          } else {
+            app.user.contragents[0].distributor = null;
+            app.$fire({
+              // title: app.__("Error!"),
+              text: app.__(
+                `Запрос в ${item.title} отправлен, совместная закупка с Вами не согласована!`
+              ),
+              type: "success",
+              timer: 5000,
+            });
+          }
+          app.showDropdown = false;
+          loader.hide();
+        })
+        .catch(function (err) {
+          app.$fire({
+            title: app.__("Error!"),
+            text: app.__("Failed to load auction"),
+            type: "error",
+            timer: 5000,
+          });
+          loader.hide();
+        });
+    },
     renew() {
       for (let r in this.auction.bidders) {
         if (this.auction.bidders[r].id == this.company.id) {

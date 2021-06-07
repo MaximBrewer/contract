@@ -65,7 +65,7 @@ Route::group([
     Route::post('address', 'RegionsController@address');
 
     Route::get('show_phone/{id}', 'LogisticsController@showPhone');
-    
+
 
     Route::post('auctions/guarantee', 'AuctionsController@guaranteeBet');
     Route::post('auctions/self', 'AuctionsController@self');
@@ -110,13 +110,14 @@ Route::group([
     Route::get('results', 'ResultsController@index');
     Route::get('results/purchases', 'ResultsController@purchases');
     Route::get('results/history', 'ResultsController@history');
-    
+
 
     Route::post('sendmail', 'MailController@send');
 
 
     Route::resource('defers', 'DefersController', ['except' => ['edit', 'create']]);
     Route::resource('joints', 'JointsController', ['except' => ['edit', 'create']]);
+    Route::post('joints/check', 'JointsController@check');
     Route::resource('logistics', 'LogisticsController', ['except' => ['edit', 'create']]);
 
 
