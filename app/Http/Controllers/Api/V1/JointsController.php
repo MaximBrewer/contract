@@ -95,24 +95,27 @@ class JointsController extends Controller
 
     public function check(Request $r)
     {
-
-        // $defer = \App\Defer::fin
-
-        // $Joint = Joint::findOrFail($id);
-
-        // if ($Joint->creditor_id != Auth::user()->contragents[0]->id) {
-        //     return response()->json([
-        //         'message' => __('It`s not yours!'),
-        //         'errors' => []
-        //     ], 422);
-        // }
-
-        // $Joint->update([
-        //     'supplier_id' => $r->post('supplier_id'),
-        //     'description' => $r->post('description'),
-        // ]);
-
-        return ['contragent' => Contragent::first()];
+        $joint = Joint::where('creditor_id', $r->post('id'))
+            ->where('supplier_id', User::find(Auth::user()->id)->contragents[0]->id)
+            ->first();
+        if (!$joint) {
+            Joint::create([
+                'creditor_id' => $r->post('id'),
+                'supplier_id' => User::find(Auth::user()->id)->contragents[0]->id,
+                'description' => "",
+                'orbits' => [],
+                'status' => 'manufacturer'
+            ]);
+            return ['contragent' => null];
+        } else {
+            if ($joint->status == 'distributor')
+                $joint->update([
+                    'status' => 'both',
+                    'description' => "",
+                    'orbits' => []
+                ]);
+            return ['contragent' => Contragent::findOrFail($r->post('id'))];
+        }
     }
 
     public function destroy(Request $r, $id)
