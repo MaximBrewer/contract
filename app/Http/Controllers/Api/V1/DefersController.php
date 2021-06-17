@@ -56,16 +56,12 @@ class DefersController extends Controller
                 Defer::create([
                     'creditor_id' => $r->post('creditor_id'),
                     'supplier_id' => User::find(Auth::user()->id)->contragents[0]->id,
-                    'description' => $r->post('description'),
-                    'orbits' => $orbits,
                     'status' => 'manufacturer'
                 ]);
             } else {
                 if ($defer->status == 'distributor')
                     $defer->update([
-                        'status' => 'both',
-                        'description' => $r->post('description'),
-                        'orbits' => $orbits
+                        'status' => 'both'
                     ]);
             }
         }
