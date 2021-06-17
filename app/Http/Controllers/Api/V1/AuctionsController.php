@@ -344,6 +344,16 @@ class AuctionsController extends Controller
             ]);
         }
 
+        foreach ($auction->intervals as $interval) {
+            Interval::create([
+                'auction_id' => $new_auction->id,
+                'start_price' => $interval['start_price'],
+                'volume' => $interval['volume'],
+                'from' => $interval['from'],
+                'to' => $interval['to'],
+            ]);
+        }
+
         $path = 'auctions' . DIRECTORY_SEPARATOR . $new_auction->id . DIRECTORY_SEPARATOR;
         $oldpath = 'auctions' . DIRECTORY_SEPARATOR . $auction->id . DIRECTORY_SEPARATOR;
         $fullpath = storage_path() . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $path;
