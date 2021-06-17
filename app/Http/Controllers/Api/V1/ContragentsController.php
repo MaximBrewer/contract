@@ -11,6 +11,8 @@ use \App\Store;
 use Illuminate\Support\Facades\Validator;
 use App\User;
 use Illuminate\Support\Facades\DB;
+use App\Bet;
+use App\Target;
 
 class ContragentsController extends Controller
 {
@@ -34,7 +36,7 @@ class ContragentsController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $validator = Validator::make($request->all(), [
             "title" => "required|min:3",
             "fio" => "required|min:3",
@@ -154,7 +156,13 @@ class ContragentsController extends Controller
                     }
                 }
             }
-            Store::whereNotIn('id', $storesIds)->where("contragent_id", $contragent->id)->delete();
+            $stores = Store::whereNotIn('id', $storesIds)->where("contragent_id", $contragent->id)->get();
+            foreach ($stores as $store) {
+                if (Bet::where('store_id', $store->id)->first() || Target::where('store_id', $store->id)->first()) {
+                } else {
+                    $store->delete();
+                }
+            }
         }
 
 
