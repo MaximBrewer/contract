@@ -2,7 +2,7 @@
   <section class="container-fluid">
     <div class="table-responsive" id="results">
       <div class="h2 text-center">{{ __("Совместные закупки") }}</div>
-      <table class="table table-bordered">
+      <table class="table table-bordered table-sm">
         <thead>
           <tr>
             <th>#</th>

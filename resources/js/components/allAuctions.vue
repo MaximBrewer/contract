@@ -54,7 +54,7 @@
       </div>
       <br />
       <div class="table-responsive" id="auctions">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-sm">
           <thead>
             <tr>
               <th>#</th>

@@ -6,16 +6,15 @@
           #{{ auction.id }} {{ auction.contragent.title }}
         </div>
         <ul class="list-group list-group-flush" v-if="auction.store">
-          <li class="list-group-item" v-if="auction.store.federal_district">
-            {{ auction.store.federal_district.title }}
-          </li>
-          <li class="list-group-item" v-if="auction.store.region">
-            {{ auction.store.region.title }}
-          </li>
           <li class="list-group-item" v-if="auction.store.address">
             {{ auction.store.address }}
           </li>
-          <li class="list-group-item">{{ __(auction.mode) }}</li>
+          <li class="list-group-item" v-if="auction.contragent">
+            {{ auction.contragent.fio }}
+          </li>
+          <li class="list-group-item" v-if="auction.contragent">
+            {{ auction.contragent.phone }}
+          </li>
           <li class="list-group-item" style="display: flex; flex-wrap: wrap">
             <div
               v-for="(n, index) in imageList"
@@ -41,18 +40,13 @@
           {{ auction.product.title }}
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item" v-if="auction.contragent">
-            {{ auction.contragent.fio }}
-          </li>
-          <li class="list-group-item" v-if="auction.contragent">
-            {{ auction.contragent.phone }}
-          </li>
           <li class="list-group-item" v-if="auction.multiplicity">
             {{ __("Auction multiplicity") }}: {{ auction.multiplicity.title }}
           </li>
           <li class="list-group-item">
             {{ __("Auction step") }}: {{ auction.step }}₽
           </li>
+          <li class="list-group-item">{{ __(auction.mode) }}</li>
           <li v-if="auction.tags.length" class="list-group-item">
             {{ __("Auction tags") }}:
             <ul>
@@ -67,8 +61,8 @@
     </div>
     <div class="col-md-12 p-wpadding" v-if="auction.mode === 'price2day'">
       <div class="card text-center">
-        <div class="card-header">{{ __("Условия торгов") }}</div>
-        <ul class="list-group list-group-flush">
+        <div class="card-header dropdown-toggle" data-toggle="collapse" data-target="#collapseI">{{ __("Условия торгов") }}</div>
+        <ul class="list-group list-group-flush collapse" id="collapseI">
           <li class="list-group-item">
             С начала и до конца торгов в любое время
           </li>
@@ -163,8 +157,8 @@
     </div>
     <div class="col-md-12 p-wpadding" v-if="auction.mode === 'callApp'">
       <div class="card text-center">
-        <div class="card-header">{{ __("Условия торгов") }}</div>
-        <ul class="list-group list-group-flush">
+        <div class="card-header dropdown-toggle" data-toggle="collapse" data-target="#collapseI">{{ __("Условия торгов") }}</div>
+        <ul class="list-group list-group-flush collapse" id="collapseI">
           <li class="list-group-item">
             С начала и до конца торгов в любое время
           </li>
@@ -237,8 +231,8 @@
     </div>
     <div class="col-md-12 p-wpadding" v-if="auction.mode === 'future'">
       <div class="card text-center">
-        <div class="card-header">{{ __("Условия торгов") }}</div>
-        <ul class="list-group list-group-flush">
+        <div class="card-header dropdown-toggle" data-toggle="collapse" data-target="#collapseI">{{ __("Условия торгов") }}</div>
+        <ul class="list-group list-group-flush collapse" id="collapseI">
           <li class="list-group-item d-flex">
             <div class="w-50 border-right pr-4">
               <h5 class="text-left">

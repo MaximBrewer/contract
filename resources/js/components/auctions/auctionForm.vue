@@ -287,7 +287,7 @@
             </span>
           </div>
           <div class="form-group">
-            <label class="control-label">{{ __("Auction comment") }}</label>
+            <label class="control-label">{{ __("Описание") }}</label>
             <textarea
               v-model="auction.comment"
               class="form-control"
@@ -299,6 +299,23 @@
               v-if="errors['auction.comment']"
             >
               <strong v-for="(error, index) in errors.comment" :key="index">{{
+                error
+              }}</strong>
+            </span>
+          </div>
+          <div class="form-group">
+            <label class="control-label">{{ __("Auction comment") }}</label>
+            <textarea
+              v-model="auction.ncomment"
+              class="form-control"
+              v-bind:class="{ 'is-invalid': errors.ncomment }"
+            ></textarea>
+            <span
+              role="alert"
+              class="invalid-feedback"
+              v-if="errors['auction.ncomment']"
+            >
+              <strong v-for="(error, index) in errors.ncomment" :key="index">{{
                 error
               }}</strong>
             </span>
@@ -587,6 +604,10 @@ export default {
       this.formData.set(
         "comment",
         !!app.auction.comment ? app.auction.comment : ""
+      );
+      this.formData.set(
+        "ncomment",
+        !!app.auction.ncomment ? app.auction.ncomment : ""
       );
       // this.formData.set(
       //   "volume",

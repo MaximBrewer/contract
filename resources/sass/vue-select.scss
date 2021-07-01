@@ -79,7 +79,7 @@
     border: 1px solid rgba(60, 60, 60, .26);
     border-radius: 4px;
     white-space: normal;
-    min-height: calc(1.6em + 0.75rem + 2px);
+    min-height: calc($line-height-base + 0.75rem + 2px);
 }
 
 .vs__selected-options {

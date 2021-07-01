@@ -5,7 +5,7 @@
         <div class="form-group">
           <input class="form-control" v-model="search" :placeholder="__('Search')"/>
         </div>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-sm">
           <thead>
             <tr>
               <th>{{ __('Title') }}</th>

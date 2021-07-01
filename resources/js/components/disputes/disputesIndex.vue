@@ -3,7 +3,7 @@
     <div class="container">
       <div class="h2 text-center">{{ __('Disputes') }}</div>
       <div class="table-responsive" id="disputes">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-sm">
           <tr>
             <th style="width:20%">{{ __('Disputes') }}</th>
             <th style="width:80%">

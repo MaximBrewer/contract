@@ -9,7 +9,7 @@
     </div>
 
     <div class="table-responsive" id="templates">
-      <table class="table table-bordered">
+      <table class="table table-bordered table-sm">
         <thead>
           <tr class="text-center">
             <th>номер договора</th>

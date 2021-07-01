@@ -2,9 +2,9 @@
 $body-bg: #f8fafc;
 
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
+$font-family-sans-serif: "Nunito", sans-serif;
 $font-size-base: 0.9rem;
-$line-height-base: 1.6;
+$line-height-base: 1.2;
 
 // Colors
 $blue: #3490dc;
@@ -17,3 +17,18 @@ $yellow: #ffed4a;
 $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
+
+$grid-gutter-width:           10px !default;
+
+$table-cell-padding-sm: 0.15rem !default;
+
+$card-spacer-y: 0.15rem !default;
+$list-group-item-padding-y: 0.15rem !default;
+
+$card-spacer-x: 0.75rem !default;
+$list-group-item-padding-x: 0.75rem !default;
+
+$form-grid-gutter-width:                5px !default;
+$form-group-margin-bottom:              .5rem !default;
+
+$input-btn-line-height-lg: $line-height-base !default;;

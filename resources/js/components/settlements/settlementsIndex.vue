@@ -53,7 +53,7 @@
     </form>
     <div class="table-responsive my-3" id="settlements" v-if="settlements.length">
       <div class="h2 text-center">Взаиморасчеты</div>
-      <table class="table table-bordered">
+      <table class="table table-bordered table-sm">
         <thead>
           <tr class="text-center">
             <th class="align-middle">#</th>

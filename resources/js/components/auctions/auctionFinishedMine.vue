@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-header">{{ __("Auction Bets") }}</div>
       <div class="table-responsive" id="auction_bets">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-sm">
           <thead>
             <tr>
               <th>{{ __('Contragent') }}</th>

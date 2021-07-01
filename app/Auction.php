@@ -27,6 +27,7 @@ class Auction extends Model
         'kind_id',
         'store_id',
         'comment',
+        'ncomment',
         'start_at',
         'delay_buy',
         'delay_sell',

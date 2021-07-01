@@ -3,57 +3,6 @@
     <div class="container">
       <auction-info :auction="auction"></auction-info>
       <auction-actions :auction="auction"></auction-actions>
-      <div>
-        <div class="dropdown">
-          <button
-            class="btn btn-danger w-100 dropdown-toggle"
-            type="button"
-            @click="
-              () => {
-                showDropdown = !showDropdown;
-              }
-            "
-          >
-            {{
-              user.contragents[0].distributor
-                ? user.contragents[0].distributor.title
-                : __("Принять участие в совместной закупке")
-            }}
-          </button>
-          <ul class="dropdown-menu w-100" v-bind:class="{ show: showDropdown }">
-            <li>
-              <a
-                class="dropdown-item"
-                href="javascript:;"
-                @click="
-                  () => {
-                    user.contragents[0].distributor = null;
-                    showDropdown = false;
-                  }
-                "
-                >{{ __("Отменить выбор") }}</a
-              >
-            </li>
-            <li
-              v-for="(item, index) in auction.contragent.distributors"
-              :key="index"
-            >
-              <a
-                class="dropdown-item"
-                href="javascript:;"
-                @click="() => checkJoint(item)"
-                >{{ item.title }}
-                <span
-                  style="display: block; font-size: 0.9em; white-space: normal"
-                  v-if="item.description"
-                  >{{ item.description }}</span
-                ></a
-              >
-            </li>
-          </ul>
-        </div>
-        <br />
-      </div>
       <!--Started-->
       <div v-if="auction.started" class="pb-4">
         <auction-bidding

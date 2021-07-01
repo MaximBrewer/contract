@@ -6,7 +6,7 @@
           {{ __("Auction history") }}
         </div>
         <div class="table-responsive" id="auction_history">
-          <table class="table table-bordered line-height-22">
+          <table class="table table-bordered line-height-22 table-sm">
             <thead>
               <tr>
                 <th class="text-center">#</th>

@@ -57,7 +57,7 @@
       </div>
     </div>
     <div class="table-responsive" id="deferTable">
-      <table class="table table-bordered">
+      <table class="table table-bordered table-sm">
         <thead>
           <tr>
             <th>#</th>

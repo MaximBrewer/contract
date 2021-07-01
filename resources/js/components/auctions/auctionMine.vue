@@ -6,18 +6,17 @@
         <div class="card">
           <div class="card-header">
             <strong>
+              {{ __("Interval") }}: {{ interval.label }} |
               {{ __("Interval start price") }}: {{ interval.start_price }} |
-              {{ __("Interval volume") }}: {{ interval.volume }} |
-              {{ __("Active volume") }}: {{ interval.free_volume }} |
-              {{ __("Approved volume") }}:
-              {{ interval.volume - interval.free_volume }} |
+              {{ __("Interval volume") }}: {{ interval.volume }} <br />
               {{ __("Undistributed volume") }}:
-              {{ interval.undistributed_volume }} | {{ __("Interval") }}:
-              {{ interval.label }}
+              {{ interval.undistributed_volume }} | {{ __("Active volume") }}:
+              {{ interval.free_volume }} | {{ __("Approved volume") }}:
+              {{ interval.volume - interval.free_volume }}
             </strong>
           </div>
           <div class="table-responsive" id="auction_activity">
-            <table class="table table-bordered line-height-22">
+            <table class="table table-bordered line-height-22 table-sm">
               <thead>
                 <tr>
                   <th>{{ __("Contragent") }}</th>

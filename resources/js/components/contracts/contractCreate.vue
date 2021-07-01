@@ -15,7 +15,7 @@
         id="templates"
         v-if="contractTemplates.length"
       >
-        <table class="table table-bordered">
+        <table class="table table-bordered table-sm">
           <thead>
             <tr>
               <th>тип договора</th>

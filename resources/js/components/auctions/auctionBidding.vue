@@ -1,7 +1,61 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <div class="h4">{{ __("You are an auction participant") }}</div>
+      <div class="h4" style="font-weight: 900">
+        {{ __("You are an auction participant") }}
+      </div>
+
+      <div>
+        <div class="dropdown">
+          <button
+            class="btn btn-danger w-100 dropdown-toggle"
+            type="button"
+            @click="
+              () => {
+                showDropdown = !showDropdown;
+              }
+            "
+          >
+            {{
+              user.contragents[0].distributor
+                ? user.contragents[0].distributor.title
+                : __("Принять участие в совместной закупке")
+            }}
+          </button>
+          <ul class="dropdown-menu w-100" v-bind:class="{ show: showDropdown }">
+            <li>
+              <a
+                class="dropdown-item"
+                href="javascript:;"
+                @click="
+                  () => {
+                    user.contragents[0].distributor = null;
+                    showDropdown = false;
+                  }
+                "
+                >{{ __("Отменить выбор") }}</a
+              >
+            </li>
+            <li
+              v-for="(item, index) in auction.contragent.distributors"
+              :key="index"
+            >
+              <a
+                class="dropdown-item"
+                href="javascript:;"
+                @click="() => checkJoint(item)"
+                >{{ item.title }}
+                <span
+                  style="display: block; font-size: 0.9em; white-space: normal"
+                  v-if="item.description"
+                  >{{ item.description }}</span
+                ></a
+              >
+            </li>
+          </ul>
+        </div>
+        <br />
+      </div>
       <div class="row" v-if="!!can_bet && !auction.finished">
         <div class="col-md-2">
           <div class="form-group">
@@ -101,18 +155,19 @@
       <div class="row" v-for="(interval, ind) in auction.intervals" :key="ind">
         <div class="col-12">
           <div class="table-responsive auction_activity" v-if="!!observer">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-sm">
               <thead>
                 <tr>
                   <th colspan="4">
+                    {{ __("Interval") }}: {{ interval.label }} |
                     {{ __("Interval start price") }}:
                     {{ interval.start_price }} | {{ __("Interval volume") }}:
-                    {{ interval.volume }} | {{ __("Active volume") }}:
-                    {{ interval.free_volume }} | {{ __("Approved volume") }}:
-                    {{ interval.volume - interval.free_volume }} |
+                    {{ interval.volume }} <br />
                     {{ __("Undistributed volume") }}:
-                    {{ interval.undistributed_volume }} | {{ __("Interval") }}:
-                    {{ interval.label }}
+                    {{ interval.undistributed_volume }} |
+                    {{ __("Active volume") }}: {{ interval.free_volume }} |
+                    {{ __("Approved volume") }}:
+                    {{ interval.volume - interval.free_volume }}
                   </th>
                 </tr>
                 <tr>
@@ -273,11 +328,46 @@ export default {
   props: ["auction", "can_bet", "observer"],
   data: function () {
     return {
+      showDropdown: false,
       bid: {},
       errors: {},
     };
   },
   methods: {
+    checkJoint(item) {
+      let app = this;
+      let loader = Vue.$loading.show();
+      axios
+        .post("/web/v1/joints/check/", {
+          item: item,
+        })
+        .then(function (res) {
+          if (res.data.contragent) {
+            app.user.contragents[0].distributor = item;
+          } else {
+            app.user.contragents[0].distributor = null;
+            app.$fire({
+              // title: app.__("Error!"),
+              text: app.__(
+                `Запрос в ${item.title} отправлен, совместная закупка с Вами не согласована!`
+              ),
+              type: "success",
+              timer: 5000,
+            });
+          }
+          app.showDropdown = false;
+          loader.hide();
+        })
+        .catch(function (err) {
+          app.$fire({
+            title: app.__("Error!"),
+            text: app.__("Failed to load auction"),
+            type: "error",
+            timer: 5000,
+          });
+          loader.hide();
+        });
+    },
     filter(bets) {
       var app = this;
       let betsList = [];

@@ -35,6 +35,7 @@ class AuctionFull extends JsonResource
             'bidders' => $this->bidders,
             'can_bet' => $this->can_bet,
             'comment' => $this->comment,
+            'ncomment' => $this->ncomment,
             'delay_sell' => $this->delay_sell,
             'delay_buy' => $this->delay_buy,
             'confirmed' => $this->confirmed,

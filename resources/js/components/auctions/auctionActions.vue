@@ -19,10 +19,11 @@
             @click="showPopupAddBidder(auction.id)"
           >
             <i class="mdi mdi-account-plus" aria-hidden="true"></i>
+            <span>добавить участника</span>
           </a>
           <router-link
             v-tooltip="__('Edit auction')"
-            :to="{name: 'editAuction', 'params': {'id': auction.id}}"
+            :to="{ name: 'editAuction', params: { id: auction.id } }"
             v-if="auction.contragent.id == company.id"
             class="btn btn-dark"
           >
@@ -46,7 +47,7 @@
           >
             <div class="modal-header">
               <h5 class="modal-title">
-                <strong>{{ __('Auction bidder add') }}</strong>
+                <strong>{{ __("Auction bidder add") }}</strong>
               </h5>
               <button
                 type="button"
@@ -66,7 +67,10 @@
                   label="title"
                   :multiple="true"
                   v-model="add_bidders"
-                ><div slot="no-options">{{ __('No Options Here!') }}</div></v-select>
+                  ><div slot="no-options">
+                    {{ __("No Options Here!") }}
+                  </div></v-select
+                >
                 <br />
                 <br />
                 <br />
@@ -77,18 +81,41 @@
                 type="button"
                 class="btn btn-success"
                 data-dismiss="modal"
-                @click="$modal.hide('target');addBidder()"
-              >{{ __('Add bidder') }}</button>
+                @click="
+                  $modal.hide('target');
+                  addBidder();
+                "
+              >
+                {{ __("Add bidder") }}
+              </button>
             </div>
           </modal>
         </div>
       </div>
     </div>
-    <div v-bind:class="{'col-md-8': !auction.finished, 'col-md-12': auction.finished}">
+    <div
+      v-bind:class="{
+        'col-md-8': !auction.finished,
+        'col-md-12': auction.finished,
+      }"
+    >
       <div class="card">
-        <div class="card-header">{{ __('Auction comment') }}</div>
+        <div class="card-header">{{ __("Описание") }}</div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item" v-if="auction.comment">{{ auction.comment }}</li>
+          <li class="list-group-item" v-if="auction.comment">
+            {{ auction.comment }}
+          </li>
+        </ul>
+      </div>
+      <br />
+    </div>
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">{{ __("Auction comment") }}</div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" v-if="auction.ncomment">
+            {{ auction.ncomment }}
+          </li>
         </ul>
       </div>
       <br />
@@ -100,19 +127,19 @@ export default {
   props: {
     auction: {
       type: Object,
-      default: {}
-    }
+      default: {},
+    },
   },
-  data: function() {
+  data: function () {
     return {
       bidders: [],
       add_bidders: [],
-      maxModalWidth: 600
+      maxModalWidth: 600,
     };
   },
   mounted() {
     var app = this;
-    axios.get("/web/v1/contragents").then(function(res) {
+    axios.get("/web/v1/contragents").then(function (res) {
       app.bidders = res.data;
     });
   },
@@ -123,9 +150,9 @@ export default {
         axios
           .post("/web/v1/addbidder", {
             auction: app.auction.id,
-            bidders: app.add_bidders
+            bidders: app.add_bidders,
           })
-          .then(function(res) {
+          .then(function (res) {
             // app.auction = res.data;
             app.$modal.hide("add_bidder");
           });
@@ -136,7 +163,7 @@ export default {
         app.$confirm(app.__("Are you sure?")).then(() => {
           axios
             .get("/web/v1/auction/delete/" + app.auction.id)
-            .then(function(res) {
+            .then(function (res) {
               app.$router.replace("/personal/auctions");
             });
         });
@@ -147,7 +174,7 @@ export default {
         app.$confirm(app.__("Are you sure?")).then(() => {
           axios
             .get("/web/v1/auction/confirm/" + app.auction.id)
-            .then(function(res) {
+            .then(function (res) {
               // app.auction = res.data;
             });
         });
@@ -155,14 +182,14 @@ export default {
     fetchBidders(search, loading) {
       var app = this;
       loading(true);
-      axios.get("/web/v1/contragents?search=" + search).then(function(res) {
+      axios.get("/web/v1/contragents?search=" + search).then(function (res) {
         app.bidders = res.data;
         loading(false);
       });
     },
     showPopupAddBidder() {
       this.$modal.show("add_bidder");
-    }
-  }
+    },
+  },
 };
 </script>
