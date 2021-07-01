@@ -9,7 +9,7 @@
             <th>{{ __("Auction number") }}</th>
             <th>{{ __("Утвержден") }}</th>
             <th>{{ __("Режим") }}</th>
-            <th>{{ __("End date") }}</th>
+            <th>{{ __("Интервал отгрузки") }}</th>
             <th>{{ __("Contragent name") }}</th>
             <th>{{ __("Склад") }}</th>
             <th>{{ __("Лот") }}</th>
@@ -29,8 +29,17 @@
               >
             </td>
             <td>{{ result.approved_contract ? __("Да") : __("Нет") }}</td>
-            <td>{{ __(result.auction.mode)}}</td>
-            <td>{{ result.auction.finish_at | formatDateTime }}</td>
+            <td>{{ __(result.auction.mode) }}</td>
+            <td>
+              <div class="text-nowrap">
+                <strong>{{ __("From") }}:</strong>
+                <span>{{ result.interval.from | formatDateTime }}</span>
+              </div>
+              <div class="text-nowrap">
+                <strong>{{ __("To") }}:</strong>
+                <span>{{ result.interval.to | formatDateTime }}</span>
+              </div>
+            </td>
             <td>
               <router-link
                 :to="'/personal/contragents/show/' + result.contragent.id"

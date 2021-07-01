@@ -8,7 +8,6 @@
             <th>#</th>
             <th>{{ __("Auction") }}</th>
             <th>{{ __("Intervals") }}</th>
-            <th>{{ __("Store") }}</th>
             <th>{{ __("Description") }}</th>
           </tr>
         </thead>
@@ -107,11 +106,19 @@
               </div>
               <div v-if="auction.product" class="text-nowrap">
                 <strong>{{ __("Product") }}:</strong>
-                <span>{{ auction.product.title }}</span>
+                <span style="font-weight:bold;font-size:125%">{{ auction.product.title }}</span>
               </div>
               <div v-if="auction.multiplicity" class="text-nowrap">
                 <strong>{{ __("Multiplicity") }}:</strong>
                 <span>{{ auction.multiplicity.title }}</span>
+              </div>
+              <div class="text-nowrap">
+                <strong>{{ __("Auction start") }}:</strong>
+                <span>{{ auction.start_at | formatDateTime }}</span>
+              </div>
+              <div class="text-nowrap">
+                <strong>{{ __("Auction finish") }}:</strong>
+                <span>{{ auction.finish_at | formatDateTime }}</span>
               </div>
               <div class="text-nowrap">
                 <strong>{{ __("New can bet?") }}:</strong>
@@ -132,13 +139,28 @@
                 <strong>{{ __("Autosale") }}:</strong>
                 <span>{{ __(auction.autosale) }}</span>
               </div>
-              <div class="text-nowrap">
-                <strong>{{ __("Auction start") }}:</strong>
-                <span>{{ auction.start_at | formatDateTime }}</span>
+              <!-- <div
+                v-if="auction.store && auction.store.federal_district"
+                class="text-nowrap"
+              >
+                <strong>{{ __("Auction store federal district") }}:</strong>
+                <span>{{ auction.store.federal_district.title }}</span>
               </div>
-              <div class="text-nowrap">
-                <strong>{{ __("Auction finish") }}:</strong>
-                <span>{{ auction.finish_at | formatDateTime }}</span>
+              <div
+                v-if="auction.store && auction.store.region"
+                class="text-nowrap"
+              >
+                <strong>{{ __("Auction store region") }}:</strong>
+                <span>{{ auction.store.region.title }}</span>
+              </div> -->
+              <div v-if="auction.store">
+                <strong>{{ __("Auction store address") }}:</strong>
+                <span>{{ auction.store.address }}</span>
+              </div>
+              <div v-if="auction.store && false" class="text-nowrap">
+                <strong>{{ __("Auction store coords") }}:</strong>
+                <br />
+                <span>{{ auction.store.coords }}</span>
               </div>
               <div
                 class="text-nowrap"
@@ -168,8 +190,6 @@
                   <div class="text-nowrap">
                     <strong>{{ __("From") }}:</strong>
                     <span>{{ interval.from | formatDateTime }}</span>
-                  </div>
-                  <div class="text-nowrap">
                     <strong>{{ __("To") }}:</strong>
                     <span>{{ interval.to | formatDateTime }}</span>
                   </div>
@@ -177,32 +197,8 @@
               </ul>
             </td>
             <td>
-              <div
-                v-if="auction.store && auction.store.federal_district"
-                class="text-nowrap"
-              >
-                <strong>{{ __("Auction store federal district") }}:</strong>
-                <span>{{ auction.store.federal_district.title }}</span>
-              </div>
-              <div
-                v-if="auction.store && auction.store.region"
-                class="text-nowrap"
-              >
-                <strong>{{ __("Auction store region") }}:</strong>
-                <span>{{ auction.store.region.title }}</span>
-              </div>
-              <div v-if="auction.store">
-                <strong>{{ __("Auction store address") }}:</strong>
-                <span>{{ auction.store.address }}</span>
-              </div>
-              <div v-if="auction.store && false" class="text-nowrap">
-                <strong>{{ __("Auction store coords") }}:</strong>
-                <br />
-                <span>{{ auction.store.coords }}</span>
-              </div>
-            </td>
-            <td>
               <span>{{ auction.comment }}</span>
+              <span v-if="auction.ncomment"><br/><br/>{{ auction.ncomment }}</span>
             </td>
           </tr>
         </tbody>

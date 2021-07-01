@@ -15,21 +15,6 @@
           <li class="list-group-item" v-if="auction.contragent">
             {{ auction.contragent.phone }}
           </li>
-          <li class="list-group-item" style="display: flex; flex-wrap: wrap">
-            <div
-              v-for="(n, index) in imageList"
-              :data-index="index"
-              :key="index"
-              style="padding: 0.5em 0.7em"
-            >
-              <img
-                :src="n.url"
-                alt
-                style="max-width: 10em; cursor: pointer"
-                @click="open($event)"
-              />
-            </div>
-          </li>
         </ul>
       </div>
       <br />
@@ -54,6 +39,21 @@
                 {{ tag.title }}
               </li>
             </ul>
+          </li>
+          <li class="list-group-item" style="display: flex; flex-wrap: wrap">
+            <div
+              v-for="(n, index) in imageList"
+              :data-index="index"
+              :key="index"
+              style="padding: 0.5em 0.7em"
+            >
+              <img
+                :src="n.url"
+                alt
+                style="max-width: 10em; cursor: pointer"
+                @click="open($event)"
+              />
+            </div>
           </li>
         </ul>
       </div>

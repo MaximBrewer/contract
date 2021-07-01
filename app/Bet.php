@@ -56,4 +56,10 @@ class Bet extends Model
     {
         return $this->belongsTo('App\Auction');
     }
+
+
+    public function interval()
+    {
+        return $this->belongsTo('App\Interval');
+    }
 }

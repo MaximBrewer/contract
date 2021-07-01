@@ -21,6 +21,7 @@ class Result extends JsonResource
         $auction = Auction::find($this->auction_id);
         $store = Store::find($this->store_id);
         $contragent = Contragent::find($this->contragent_id);
+        $interval = \App\Interval::find($this->interval_id);
         $volume = $auction->multiplicity->coefficient * $this->volume;
         $sum = $this->correct * $volume;
         $rest = ($this->correct - $auction->start_price) * $volume;
@@ -51,6 +52,7 @@ class Result extends JsonResource
                 ]
             ],
             'sum' => $sum,
+            'interval' => $interval,
             'approved_contract' => $this->approved_contract,
             'rest' => $rest,
             'bid' => $this->correct,

@@ -23,6 +23,7 @@ class History extends JsonResource
             'distributor' => Contragent::find($this->distributor_id)->first()->title,
             'price' => $this->price,
             'volume' => $this->volume,
+            'interval' => $this->interval,
             'created_at' => date("d.m.Y H:i", strtotime($this->created_at))
         ];
     }
