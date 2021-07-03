@@ -10,6 +10,7 @@
     <meta name="server-time" content="{{ date(DATE_ATOM) }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="manifest" href="/manifest.json">
 
 
     <!-- Fonts -->
