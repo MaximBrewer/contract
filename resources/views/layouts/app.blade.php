@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}?ver=3.57" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}?ver=3.58" rel="stylesheet">
     <script>
         window._translations = {!! cache('translations') !!};
     </script>
@@ -243,7 +243,7 @@
     <!-- Footer -->
     @include ('footer')
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}?ver=3.57" defer></script>
+    <script src="{{ asset('js/app.js') }}?ver=3.58" defer></script>
     <script src="//code.jivosite.com/widget/SgKrZgYDyo" async></script>
     <script>
         if ('serviceWorker' in navigator) {
