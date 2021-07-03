@@ -49,7 +49,7 @@ class Sign extends Notification
             ->greeting('Договор между ' . $this->contract->contragent->title . 
             ' и ' . $this->contract->contractTemplate->contragent->title . '.')
             ->line('Данный договор был согласован сторонами, просьба распечатать и подписать экземпляр договора. Направить его в адрес другой стороны.')
-            ->action('Распечатать', "http://project.cross-contract.ru/personal/contracts/pdf/" . $this->contract->id);
+            ->action('Распечатать', "https://project.cross-contract.ru/personal/contracts/pdf/" . $this->contract->id);
     }
 
     /**

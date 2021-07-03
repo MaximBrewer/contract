@@ -54,7 +54,7 @@ class Unsign extends Notification
                 $this->c1->title . ' и ' .
                 $this->c2->title . ' редакция №' . $this->contract->contractTemplate->version / 10)
             ->line($this->c1->title . ' уведомляет ' . $this->c2->title . ' о расторжении ' . $this->contract->contractTemplate->title . ' в редакции № ' . $this->contract->contractTemplate->version / 10)
-            ->action('Перейти', "http://project.cross-contract.ru/personal/contracts" . $this->contract->id);
+            ->action('Перейти', "https://project.cross-contract.ru/personal/contracts" . $this->contract->id);
     }
 
     /**

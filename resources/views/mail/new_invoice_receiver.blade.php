@@ -1,2 +1,2 @@
 </p>Вашей компании был выставлен счет № {{ $settlement->id }}, продавцом {{ $recipient->ttile }}</p>
-<p><a href="http://project.cross-contract.ru/personal/invoice/{{ $settlement->bet->id }}">просмотреть счет</a></p>
+<p><a href="https://project.cross-contract.ru/personal/invoice/{{ $settlement->bet->id }}">просмотреть счет</a></p>

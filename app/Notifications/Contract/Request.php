@@ -47,7 +47,7 @@ class Request extends Notification
             $this->contract->contractTemplate->contragent->title . '.')
             ->greeting($this->contract->contragent->title . ' запрашивает разрешение на подписание договора с ' . 
             $this->contract->contractTemplate->contragent->title . '.')
-            ->action('Перейти', "http://project.cross-contract.ru/personal/contracts" . $this->contract->id);
+            ->action('Перейти', "https://project.cross-contract.ru/personal/contracts" . $this->contract->id);
     }
 
     /**

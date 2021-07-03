@@ -32,7 +32,7 @@ class ContragentMessage extends Mailable
             ->view('mail.contragent_message')->with([
                 'text' => $this->text,
                 'contragent' => $this->contragent->title,
-                'contragent_link' => 'http://project.cross-contract.ru/personal/contragents/show/' . $this->contragent->id
+                'contragent_link' => 'https://project.cross-contract.ru/personal/contragents/show/' . $this->contragent->id
             ]);;
     }
 }

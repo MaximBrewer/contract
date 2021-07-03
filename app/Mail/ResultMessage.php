@@ -32,12 +32,12 @@ class ResultMessage extends Mailable
     public function build()
     {
         $uids = Settlement::where('bet_id', $this->result->id)->get();
-        if(count($uids)) $ulink = '<br><a href="http://project.cross-contract.ru/admin/settlements/7/edit' . $uids[0].'">Ссылка на расчет</a>';
+        if(count($uids)) $ulink = '<br><a href="https://project.cross-contract.ru/admin/settlements/7/edit' . $uids[0].'">Ссылка на расчет</a>';
         else $ulink = '';
         return $this->subject('Не согласен с расчетами!')
             ->view('mail.result_message')->with([
                 'result' => $this->result,
-                'link' => 'http://project.cross-contract.ru/admin/bets/' . $this->result->id,
+                'link' => 'https://project.cross-contract.ru/admin/bets/' . $this->result->id,
                 'ulink' => $ulink
             ]);;
     }

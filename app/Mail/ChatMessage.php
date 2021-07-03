@@ -32,8 +32,8 @@ class ChatMessage extends Mailable
             ->view('mail.chat_message')->with([
                 'text' => $this->text,
                 'contragent' => $this->auction->contragent->title,
-                'contragent_link' => 'http://project.cross-contract.ru/personal/contragents/show/' . $this->auction->contragent->id,
-                'auction_link' => 'http://project.cross-contract.ru/personal/auctions/show/' . $this->auction->id
+                'contragent_link' => 'https://project.cross-contract.ru/personal/contragents/show/' . $this->auction->contragent->id,
+                'auction_link' => 'https://project.cross-contract.ru/personal/auctions/show/' . $this->auction->id
             ]);;
     }
 }

@@ -15,8 +15,8 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="http://cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
+    <link href="//fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.5.94/css/materialdesignicons.min.css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}?ver=3.57" rel="stylesheet">
@@ -33,7 +33,7 @@
         }
 
     </style>
-    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script src="//js.pusher.com/7.0/pusher.min.js"></script>
 </head>
 
 <body class="d-flex flex-column">
